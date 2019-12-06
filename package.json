@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.7.1",
+    "@material-ui/icons": "^4.5.1",
     "email-validator": "^2.0.4",
     "firebase": "^7.5.0",
+    "material-ui-password-field": "^2.1.0",
     "password-validator": "^5.0.3",
     "phone": "^2.4.3",
     "react": "^16.11.0",

@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
+import { Link, Typography, TextField, Button, Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
 import firebase from "firebase";
+import {Visibility, VisibilityOff, Phone, Email} from "@material-ui/icons"
+import InputAdornment from '@material-ui/core/InputAdornment';
+import InputLabel from '@material-ui/core/InputLabel';
+import IconButton from '@material-ui/core/IconButton';
+
+ 
+
 var firebaseConfig = {
     apiKey: "AIzaSyAEjOCmERrjnQpDEHCMPcfSUGKYs-qPP4I",
     authDomain: "sitngo-8a880.firebaseapp.com",
@@ -13,14 +20,15 @@ var firebaseConfig = {
 
 
 };
-let PasswordValidator = require('password-validator');
+
 
 firebase.initializeApp(firebaseConfig)
-const db = firebase.firestore()
+// const db = firebase.firestore()
 
-db.collection("users").get().then((querySnapshot) => {
-    // console.log(querySnapshot.docs[0].data())
-});
+// db.collection("users").get().then((querySnapshot) => {
+//     // console.log(querySnapshot.docs[0].data())
+// });
+let PasswordValidator = require('password-validator');
 export default function MainRegister() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -28,6 +36,7 @@ export default function MainRegister() {
     const [email, setEmail] = useState("");
     const [gender, setGender] = useState("");
     const [phone, setPhone] = useState("");
+    const [showPassword,setShowPassword] = useState(false)
     const [errors, setErrors] = useState({
         passwordError: { bool: false, errText: "" },
         emailError: false,
@@ -47,8 +56,6 @@ export default function MainRegister() {
                 return item;
             }
         })
-        console.log(arrFromErrorsValues, (arrFromErrorsValues.every(item => item === false)))
-        console.log(hasConfirmPasswordError)
         //////////////////check errors/////////////////////
 
         if ((arrFromErrorsValues.every(item => item === false) && !hasConfirmPasswordError)) {
@@ -111,57 +118,122 @@ export default function MainRegister() {
 
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-            <TextField
-                margin="dense"
-                error={errors.emailError}
-                helperText={errors.emailError ? "Email is not valid or already is in use" : null}
-                color="primary"
-                variant="standard"
-                label="Email"
-                onChange={(e) => { setEmail(e.target.value) }}
-            />
-            <TextField
-                margin="dense"
-                error={errors.passwordError.bool}
-                helperText={errors.passwordError.bool ? errors.passwordError.errText.map((element, i) => {
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "100vh", width: "100%", }}>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column",padding: "20px 0 20px 0", width: "50%"}}>
+                <Typography variant="h2" component="h2" margin="normal">
+                    Sign up with email
+                </Typography>
+                <TextField
+                    margin="dense"
+                    error={errors.emailError}
+                    helperText={errors.emailError ? "Email is not valid or already is in use" : null}
+                    color="primary"
+                    variant="outlined"
+                    label="Email"
+                    onChange={(e) => { setEmail(e.target.value) }}
+                    InputProps={{
+                        endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            edge="end"
+                          >
+                            <Email/>
+                          </IconButton>
+                        </InputAdornment>
+                        )
+                    }}
+                />
+                <TextField
+                    margin="dense"
+                    type={showPassword ? "text" : "password"}
+                    error={errors.passwordError.bool}
+                    helperText={errors.passwordError.bool ? errors.passwordError.errText.map((element, i) => {
 
-                    return (<p key={i}> {element}</p>)
+                        return (<p key={i}> {element}</p>)
 
-                }) : null}
-                color="primary"
-                variant="standard"
-                label="Password"
-                onChange={(e) => { setPassword(e.target.value) }}
+                    }) : null}
+                    color="primary"
+                    variant="outlined"
+                    label="Password"
+                    onChange={(e) => { setPassword(e.target.value) }}
+                    InputProps={{
+                        endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={()=>{ showPassword ? setShowPassword(false) : setShowPassword(true)}}
+                            edge="end"
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                        )
+                    }}
+                />
+                <TextField
+                    margin="dense"
+                    type={showPassword ? "text" : "password"}
+                    error={hasConfirmPasswordError}
+                    helperText={hasConfirmPasswordError ? "Confirm password do not match" : null}
+                    color="primary"
+                    variant="outlined"
+                    label="Confirm Password"
+                    onChange={(e) => { setConfirmPassword(e.target.value) }}
+                    InputProps={{
+                        endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={()=>{ showPassword ? setShowPassword(false) : setShowPassword(true)}}
+                            edge="end"
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                        )
+                    }}
+                />
 
-            />
-            <TextField
-                margin="dense"
-                error={hasConfirmPasswordError}
-                helperText={hasConfirmPasswordError ? "Confirm password do not match" : null}
-                color="primary"
-                variant="standard"
-                label="Confirm Password"
-                onChange={(e) => { setConfirmPassword(e.target.value) }}
-            />
-
-            <TextField
-                margin="dense"
-                // error={errors.emailError}
-                // helperText={errors.emailError ? "Email is not valid" : null}
-                color="primary"
-                variant="standard"
-                label="Phone"
-                onChange={(e) => { setPhone(e.target.value) }}
-            />
-            <RadioGroup aria-label="gender" name="gender1" onChange={(e) => { setGender(e.target.value) }}>
-                <FormControlLabel value="male" control={<Radio />} label="Male" />
-                <FormControlLabel value="female" control={<Radio />} label="Female" />
-            </RadioGroup>
-            <Button
-                color="primary"
-                variant="outlined"
-                onClick={checkErrorsHandler}>Submit</Button>
+                <TextField
+                    margin="dense"
+                    // error={errors.emailError}
+                    // helperText={errors.emailError ? "Email is not valid" : null}
+                    color="primary"
+                    variant="outlined"
+                    label="Phone"
+                    onChange={(e) => { setPhone(e.target.value) }}
+                    InputProps={{
+                        endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            edge="end"
+                          >
+                            <Phone/>
+                          </IconButton>
+                        </InputAdornment>
+                        )
+                    }}
+                />
+                <RadioGroup row aria-label="gender" name="gender1" onChange={(e) => { setGender(e.target.value) }}>
+                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                </RadioGroup>
+                <Button
+                    color="primary"
+                    variant="outlined"
+                    onClick={checkErrorsHandler}>Submit</Button>
+                    <Typography variant="body2" component="h1" display="block" align="left" lineHeight={10}>
+                    Already a member?<Link href="#"> Log in</Link>
+                    </Typography>
+                    <Typography variant="body2" component="h1" display="block" align="justify">
+                    By continuing, you accept our T&Cs and Privacy Policy. This information is collected by COMUTO SA for the purposes of creating your account,
+                    managing your booking, use and improve our services and ensuring the security of our platform.
+                    You have rights on your personal data and can exercise them by contacting SitnGo through our contact form or by email under <Link href="#">Sitngo.am@gmail.com</Link>.
+                    You can learn more about your rights and how we handle your personal data in our <Link href="#">Privacy Policy</Link>.
+                    </Typography>
+            </div>
         </div>
     )
 }
