@@ -13,7 +13,7 @@ const HeaderImage = () => {
     }
 
     return(
-        <section id="home" style={classes.section}>
+        <section style={classes.section}>
         </section>
     );
 };

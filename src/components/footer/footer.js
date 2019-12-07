@@ -11,7 +11,11 @@ const useStyles = makeStyles(theme =>({
         justifyContent: 'space-between',
         alignItems: 'center',
         width:"100%",
-        padding: '30px 0',
+        maxHeight: '10vh',
+        padding: '30px',
+        position: 'relative',
+        zIndex: 1000,
+        bottom: 0,
     },
     socialIcons: {
         backgroundColor: '#fb9403',
@@ -43,7 +47,7 @@ function Footer() {
                 <Fab  href='#' className={classes.socialIcons}><TwitterIcon/></Fab >
             </div>
             <div className={classes.copyrightContainer}>
-                &copy; | All Rights Reserved.
+                &copy; | All Rights received.
             </div>
         </footer>
     );

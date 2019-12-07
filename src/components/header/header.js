@@ -1,19 +1,18 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link as LinkRouter } from "react-router-dom";
-
-import { makeStyles, Link, Button } from "@material-ui/core";
+import {makeStyles, Link, Button} from "@material-ui/core";
+import {Link as RouterLink} from 'react-router-dom'
 
 const styles = makeStyles(() => ({
     navbar: {
-        position: "fixed",
-        zIndex: 10,
-        margin: 0,
         width: '100%',
+        maxHeight: '10vh',
         display: 'flex',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        padding: "10px 0",
+        padding: '10px 20px',
         backgroundColor: '#282e34',
+        position: 'relative',
+        zIndex: 1000,
     },
     logoContainer: {
         width: '8%'
@@ -22,13 +21,10 @@ const styles = makeStyles(() => ({
         width: '100%'
     },
     menuContainer: {
-        width: '50%'
+        width: '82%'
     },
     headerButtonsContainer: {
-        width: '12%',
-        // paddingRight: 40,
-        justifyContent: "space-evenly",
-        display: 'flex',
+        width: '10%'
     },
     menu: {
         display: 'flex',
@@ -54,21 +50,19 @@ const Header = () => {
 
     const classes = styles();
 
-    return (
+    return(
         <header className={classes.navbar}>
             <div className={classes.logoContainer}>
-                <a href='#'><img className={classes.logo} src="images/Logo.png" alt="Logo" title='Karoxa gites sax kyanqs taxi em qshel' /></a>
+                <a href='#'><img className={classes.logo} src="images/Logo.png" alt="Logo"/></a>
             </div>
             <div className={classes.menuContainer}>
                 <ul className={classes.menu}>
                     <li className={classes.menuItem}>
-                        <LinkRouter to="/">
-                            <Link
-                                underline='hover'
-                                className={classes.menuLink}
-                                href="#home"
-                            >Home</Link>
-                        </LinkRouter>
+                        <Link
+                            underline='hover'
+                            className={classes.menuLink}
+                            href="#"
+                        >Home</Link>
                     </li>
                     <li className='menu-list__item'>
                         <Link
@@ -87,17 +81,12 @@ const Header = () => {
                 </ul>
             </div>
             <div className={classes.headerButtonsContainer}>
-                <LinkRouter to="/login">
+                <RouterLink to='signup'>
                     <Button
                         variant='contained'
                         className={classes.sign}
-                    >Log In</Button>
-                </LinkRouter>
-                <LinkRouter to="/signup">
-                    <Button
-                        variant='contained'
-                        className={classes.sign}
-                    >Sign Up</Button></LinkRouter>
+                    >Sign In</Button>
+                </RouterLink>
             </div>
         </header>
     );
