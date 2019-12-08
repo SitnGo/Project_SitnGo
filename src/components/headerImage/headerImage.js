@@ -1,17 +1,7 @@
 import React from 'react';
+import {classes} from './style';
 
 const HeaderImage = () => {
-    const classes = {
-        section: {
-            height: '100vh',
-            background: 'url(./images/share.jpg)',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '100%',
-            backgroundPositionY: '63%',
-            backgroundAttachment: 'fixed'
-        },
-    }
-
     return(
         <section style={classes.section}>
         </section>

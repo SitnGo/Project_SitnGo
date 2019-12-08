@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import {classes} from './style';
 import { Link, Typography, TextField, Button, Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
 import firebase from "firebase";
 import { Visibility, VisibilityOff, Phone, Email, AccountBox } from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
+import {Link as RouterLink} from 'react-router-dom';
 
 let firebaseConfig = {
     apiKey: "AIzaSyAEjOCmERrjnQpDEHCMPcfSUGKYs-qPP4I",
@@ -18,7 +20,6 @@ let firebaseConfig = {
 let PasswordValidator = require('password-validator');
 
 firebase.initializeApp(firebaseConfig);
-
 
 const SignUp = () => {
     const [name, setName] = useState("");
@@ -143,36 +144,6 @@ const SignUp = () => {
                 break;
         }
     }
-
-    const classes = {
-        section: {
-            height: "80vh",
-            width: "100%",
-            background: 'url(./images/signup.jpg)',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-        },
-        signUpContainer: {
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            padding: "10px 0",
-            width: "50%",
-            margin: '0 auto',
-            position: 'relative',
-            zIndex: 2,
-        },
-        imageCover: {
-            width: '100%',
-            height: '100vh',
-            position: 'absolute',
-            top: 0,
-            backgroundColor: '#b7b3b4',
-            zIndex: 1,
-            opacity: 0.5
-        },
-    };
 
     return(
         <section style={classes.section}>
@@ -310,17 +281,20 @@ const SignUp = () => {
                     }}
                 />
                 <RadioGroup row aria-label="gender" name="gender1" onChange={(e) => { setGender(e.target.value) }}>
-                    <FormControlLabel  value="male" control={<Radio />} label="Male" />
-                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                    <FormControlLabel  value="male" control={<Radio style={classes.radio} />} label="Male" />
+                    <FormControlLabel value="female" control={<Radio style={classes.radio} />} label="Female" />
                 </RadioGroup>
                 <Button
                     fullWidth
-                    color="primary"
+                    style={classes.signUpButton}
                     variant="contained"
                     onClick={checkErrorsHandler}>Submit</Button>
                 <div style={{margin: "20px 0 0"}}>
                     <Typography variant="body2" component="h1" display="block" align="left" lineHeight={10}>
-                        Already a member?<Link href="#"> Log in</Link>
+                        Already a member?
+                        <RouterLink to='/'>
+                            <Link style={classes.login}>Log in</Link>
+                        </RouterLink>
                     </Typography>
                 </div>
             </div>

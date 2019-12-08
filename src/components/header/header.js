@@ -1,50 +1,7 @@
 import React from 'react';
-import {makeStyles, Link, Button} from "@material-ui/core";
+import {styles} from "./style";
+import {Link, Button} from "@material-ui/core";
 import {Link as RouterLink} from 'react-router-dom'
-
-const styles = makeStyles(() => ({
-    navbar: {
-        width: '100%',
-        maxHeight: '10vh',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '10px 20px',
-        backgroundColor: '#282e34',
-        position: 'relative',
-        zIndex: 1000,
-    },
-    logoContainer: {
-        width: '8%'
-    },
-    logo: {
-        width: '100%'
-    },
-    menuContainer: {
-        width: '82%'
-    },
-    headerButtonsContainer: {
-        width: '10%'
-    },
-    menu: {
-        display: 'flex',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
-        listStyleType: 'none'
-    },
-    menuLink: {
-        color: '#ddd'
-    },
-    sign: {
-        background: '#fb9403',
-        fontSize: '80%',
-        color: '#282e34',
-        '&:hover': {
-            background: '#fb9403',
-            opacity: 0.95,
-        }
-    }
-}));
 
 const Header = () => {
 
@@ -53,16 +10,17 @@ const Header = () => {
     return(
         <header className={classes.navbar}>
             <div className={classes.logoContainer}>
-                <a href='#'><img className={classes.logo} src="images/Logo.png" alt="Logo"/></a>
+                <RouterLink to='/'><img className={classes.logo} src="images/Logo.png" alt="Logo"/></RouterLink>
             </div>
             <div className={classes.menuContainer}>
                 <ul className={classes.menu}>
                     <li className={classes.menuItem}>
-                        <Link
-                            underline='hover'
-                            className={classes.menuLink}
-                            href="#"
-                        >Home</Link>
+                        <RouterLink to='/'>
+                            <Link
+                                underline='hover'
+                                className={classes.menuLink}
+                            >Home</Link>
+                        </RouterLink>
                     </li>
                     <li className='menu-list__item'>
                         <Link
@@ -81,7 +39,7 @@ const Header = () => {
                 </ul>
             </div>
             <div className={classes.headerButtonsContainer}>
-                <RouterLink to='signup'>
+                <RouterLink to='signup' className={classes.signButton}>
                     <Button
                         variant='contained'
                         className={classes.sign}
