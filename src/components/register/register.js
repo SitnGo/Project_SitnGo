@@ -290,12 +290,12 @@ const SignUp = () => {
                     variant="contained"
                     onClick={checkErrorsHandler}>Submit</Button>
                 <div style={{margin: "20px 0 0"}}>
-                    <Typography variant="body2" component="h1" display="block" align="left" lineHeight={10}>
+                    {/* <Typography variant="body2" component="h1" display="block" align="left" lineHeight={10}>
                         Already a member?
                         <RouterLink to='/'>
                             <Link style={classes.login}>Log in</Link>
                         </RouterLink>
-                    </Typography>
+                    </Typography> */}
                 </div>
             </div>
             <div style={classes.imageCover}></div>

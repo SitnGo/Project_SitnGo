@@ -19,10 +19,13 @@ export const styles = makeStyles(() => ({
         width: '100%'
     },
     menuContainer: {
-        width: '82%'
+        width: '72%'
     },
     headerButtonsContainer: {
-        width: '10%'
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alineItems: 'center',
+        width: '20%'
     },
     menu: {
         display: 'flex',

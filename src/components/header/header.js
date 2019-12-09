@@ -43,7 +43,13 @@ const Header = () => {
                     <Button
                         variant='contained'
                         className={classes.sign}
-                    >Sign In</Button>
+                    >Sign UP</Button>
+                </RouterLink>
+                <RouterLink to='#' className={classes.signButton}>
+                    <Button
+                        variant='contained'
+                        className={classes.sign}
+                    >Sign in</Button>
                 </RouterLink>
             </div>
         </header>
