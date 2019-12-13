@@ -47,7 +47,7 @@ function Footer() {
                 <Fab  href='#' className={classes.socialIcons}><TwitterIcon/></Fab >
             </div>
             <div className={classes.copyrightContainer}>
-                &copy; | All Rights received.
+                &copy; | All Rights Reserved.
             </div>
         </footer>
     );

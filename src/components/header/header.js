@@ -1,6 +1,6 @@
 import React from 'react';
-import {makeStyles, Link, Button} from "@material-ui/core";
-import {Link as RouterLink} from 'react-router-dom'
+import { makeStyles, Link, Button } from "@material-ui/core";
+import { Link as RouterLink } from 'react-router-dom';
 
 const styles = makeStyles(() => ({
     navbar: {
@@ -21,10 +21,11 @@ const styles = makeStyles(() => ({
         width: '100%'
     },
     menuContainer: {
-        width: '82%'
+        width: '72%'
     },
     headerButtonsContainer: {
-        width: '10%'
+        width: '20%',
+        display: 'flex',
     },
     menu: {
         display: 'flex',
@@ -46,14 +47,14 @@ const styles = makeStyles(() => ({
     }
 }));
 
-const Header = () => {
-
+const Header = (props) => {
     const classes = styles();
 
-    return(
+
+    return (
         <header className={classes.navbar}>
             <div className={classes.logoContainer}>
-                <a href='#'><img className={classes.logo} src="images/Logo.png" alt="Logo"/></a>
+                <a href='#'><img className={classes.logo} src="images/Logo.png" alt="Logo" /></a>
             </div>
             <div className={classes.menuContainer}>
                 <ul className={classes.menu}>
@@ -81,12 +82,27 @@ const Header = () => {
                 </ul>
             </div>
             <div className={classes.headerButtonsContainer}>
+                {props.user ?
+                 <Button
+                        variant='contained'
+                        className={classes.sign}
+                        onClick={()=>props.setUser(null)}
+                    >Logout</Button>
+                    :
+                    <>
                 <RouterLink to='signup'>
                     <Button
                         variant='contained'
                         className={classes.sign}
-                    >Sign In</Button>
+                    >Sign Up</Button>
                 </RouterLink>
+                <Button
+                    variant='contained'
+                    className={classes.sign}
+                    onClick={()=>{props.setOpen(true)}}
+                >Sign In</Button>
+                </>
+                }
             </div>
         </header>
     );
