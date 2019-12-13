@@ -34,6 +34,7 @@ export function Login(props) {
         //  dispatch(loggedReducer()) 
         props.setUser(fire.auth().currentUser);
         props.setOpen(false);
+        setIsAnError(false);
 
         })
       .catch(error => {
@@ -115,10 +116,10 @@ export function Login(props) {
             )
           }}
         />
-        {(isAnError === true) ? <div style={{ fontSize: 10, color: "red" }}>{errorMessage}</div> : null}
         <TextField
           style={{ width: "100%" }}
           required
+          helperText= {(isAnError === true) ? <div style={{ fontSize: 10, color: "red" }}>{errorMessage}</div> : null}
           name="password"
           margin="dense"
           value={password}
