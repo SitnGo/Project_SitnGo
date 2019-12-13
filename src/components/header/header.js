@@ -3,11 +3,12 @@ import {styles} from "./style";
 import {Link, Button} from "@material-ui/core";
 import {Link as RouterLink} from 'react-router-dom'
 
-const Header = () => {
+const Header = (props) => {
 
     const classes = styles();
 
-    return(
+
+    return (
         <header className={classes.navbar}>
             <div className={classes.logoContainer}>
                 <RouterLink to='/'><img className={classes.logo} src="images/Logo.png" alt="Logo"/></RouterLink>
@@ -39,18 +40,27 @@ const Header = () => {
                 </ul>
             </div>
             <div className={classes.headerButtonsContainer}>
-                <RouterLink to='signup' className={classes.signButton}>
+                {props.user ?
+                 <Button
+                        variant='contained'
+                        className={classes.sign}
+                        onClick={()=>props.setUser(null)}
+                    >Logout</Button>
+                    :
+                    <>
+                <RouterLink to='signup'>
                     <Button
                         variant='contained'
                         className={classes.sign}
-                    >Sign UP</Button>
+                    >Sign Up</Button>
                 </RouterLink>
-                <RouterLink to='#' className={classes.signButton}>
-                    <Button
-                        variant='contained'
-                        className={classes.sign}
-                    >Sign in</Button>
-                </RouterLink>
+                <Button
+                    variant='contained'
+                    className={classes.sign}
+                    onClick={()=>{props.setOpen(true)}}
+                >Sign In</Button>
+                </>
+                }
             </div>
         </header>
     );
