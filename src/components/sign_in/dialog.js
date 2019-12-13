@@ -40,7 +40,6 @@ const AlertDialogSlide = (props) => {
         Login
       </Button> */}
       <Dialog
-      fullScreen
       ignoreEscapeKeyUp
         title="Dialog" 
         modal = {true} 
