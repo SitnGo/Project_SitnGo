@@ -110,7 +110,7 @@ const SignUp = () => {
                     setErrors(Object.assign(err, { phoneError: false }))
                 }
                 break;
-            case 12:
+            case 12: //096 case
                 if(
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}`==="+37410"||
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}`==="+37411"||

@@ -7,7 +7,6 @@ import { Checkbox } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { loggedReducer } from './actions';
 import FormDialog from './forgot';
-//import {increment} from './actions';
 
 export function Login(props) {
 
@@ -21,7 +20,7 @@ export function Login(props) {
   //const isLogged = useSelector(state => state.isLogged);
   // const counter = useSelector(state =>state.counter);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const handleChange = name => event => {
     setChecked(event.target.checked);
@@ -31,7 +30,7 @@ export function Login(props) {
     fire.auth().signInWithEmailAndPassword(email, password)
       .then(u => { })
       .then(a => {
-        //  dispatch(loggedReducer()) 
+        dispatch(loggedReducer()) 
         props.setUser(fire.auth().currentUser);
         props.setOpen(false);
         setIsAnError(false);
@@ -89,8 +88,6 @@ export function Login(props) {
       flexWrap: "wrap",
 
     }}>
-      {/* <h1>Counter {counter}</h1>
-                <button onClick = {()=> dispatch(increment())}> +</button> */}
       <div>
         <TextField
           style={{ width: "100%" }}

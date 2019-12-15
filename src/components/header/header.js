@@ -1,11 +1,20 @@
 import React from 'react';
 import {styles} from "./style";
 import {Link, Button} from "@material-ui/core";
-import {Link as RouterLink} from 'react-router-dom'
+import {Link as RouterLink} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {loggedReducer} from '../sign_in/actions';
+import fire from '../../ConfigFirebase/Fire';
 
 const Header = (props) => {
 
     const classes = styles();
+    const dispatch = useDispatch();
+
+    function logout() {
+       fire.auth().signOut();
+       dispatch(loggedReducer());
+   }
 
 
     return (
@@ -44,7 +53,8 @@ const Header = (props) => {
                  <Button
                         variant='contained'
                         className={classes.sign}
-                        onClick={()=>props.setUser(null)}
+                        onClick = {logout}
+                        //onClick={()=>props.setUser(null)}
                     >Logout</Button>
                     :
                     <>
