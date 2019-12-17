@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Header from "./components/header/header";
 import HeaderImage from "./components/headerImage/headerImage";
@@ -9,13 +9,40 @@ import Contact from "./components/contact/contact";
 import ToTop from "./components/totop/toTop";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import SignUp from "./components/register/register";
+import AlertDialogSlide from "./components/sign_in/dialog";
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import allReducers from './components/sign_in/reducers/index';
+import fire from './ConfigFirebase/Fire';
+import PersonalInfo from './components/profilePage/personalInfo';
+
+const store = createStore(allReducers)
 
 function App() {
+    const [open, setOpen] = React.useState(false);
+    const [user, setUser] = useState(null);
+
+    // useEffect(()=>{authListener()},[user]);
+    // function authListener() {
+    // fire.auth().onAuthStateChanged((user) => {
+    //   console.log(user);
+    //   if (user) {
+    //     setUser(user);
+    //     localStorage.setItem('user', user.id);
+    //   } else {
+    //     setUser(null);
+    //     localStorage.removeItem('user');
+    //   }
+    // });
+// }
 
     return (
         <div className="App">
             <Router>
-                <Header/>
+                {/* <Provider store = {store}> */}
+                <Header user={user} setUser={setUser} setOpen={setOpen}/>
+                {/* </Provider> */}
+                <AlertDialogSlide setUser={setUser} open={open} setOpen={setOpen}/>
                 <Switch>
                     <Route exact path="/">
                         <HeaderImage/>
@@ -26,6 +53,9 @@ function App() {
                     </Route>
                     <Route path="/signup">
                         <SignUp/>
+                    </Route>
+                    <Route path="/profile">
+                        <PersonalInfo/>
                     </Route>
                 </Switch>
                 <Footer/>
