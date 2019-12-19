@@ -1,17 +1,19 @@
+import { auth } from "firebase";
+
 export const classes = {
     section: {
         height: '100vh',
         display: 'flex',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-around',
         alignItems: 'center',
         color: '#282e34',
-        padding: '20px',
+        padding: '40px',
         backgroundImage: 'url("./images/contact.jpg")',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         position: "relative",
     },
-    aboutId: {
+    contactId: {
         position: 'absolute',
         top: 0
     },
@@ -24,7 +26,7 @@ export const classes = {
         zIndex: 1,
         opacity: 0.5
     },
-    aboutHeader:{
+    contactHeader:{
         marginBottom: '50px',
         fontSize: '42px'
     },
@@ -37,5 +39,20 @@ export const classes = {
         textAlign: 'justify',
         fontSize: '20px',
         letterSpacing: '2px'
+    },
+    contactsContainer: {
+        width: '30%',
+        zIndex: 100,
+        color: '#000',
+        fontSize: '20px',
+        marginTop: '50px'
+    },
+    contacts: {
+        display: 'flex',
+        alignItems: 'center',
+        margin: '10px',
+    },
+    icon: {
+        marginRight: '30px'
     }
 };
