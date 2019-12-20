@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import {classes} from './style';
-import { Link, Typography, TextField, Button, Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
+import { Typography, TextField, Button, Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
 import { Visibility, VisibilityOff, Phone, Email, AccountBox } from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import fire from '../../ConfigFirebase/Fire';
-
-
+import { openSignUPAction } from "../sign_in/actions"
+import { useDispatch } from 'react-redux';
 
 let PasswordValidator = require('password-validator');
 
-
 const SignUp = (props) => {
+    const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [password, setPassword] = useState("");
@@ -282,15 +282,9 @@ const SignUp = (props) => {
                         fullWidth
                         style={classes.cancelButton}
                         variant="outlined"
-                        onClick={()=>props.setOpenSignUPBox(false)}
+                        onClick={()=>dispatch(openSignUPAction())}
                     >Cancel</Button>
                     <div style={{margin: "20px 0 0"}}>
-                        {/* <Typography variant="body2" component="h1" display="block" align="left" lineHeight={10}>
-                        Already a member?
-                        <RouterLink to='/'>
-                            <Link style={classes.login}>Log in</Link>
-                        </RouterLink>
-                    </Typography> */}
                     </div>
                 </div>
             </div>

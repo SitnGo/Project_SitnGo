@@ -21,13 +21,13 @@ const AlertDialogSlideSignUp = (props) => {
   return (
     <div>
       <Dialog
-      ignoreEscapeKeyUp
+        ignoreEscapeKeyUp
         title="Dialog" 
         open={props.willOpenSignUP}
         TransitionComponent={Transition}
         onClose={handleClose}
-        >
-            <SignUp />
+      >
+        <SignUp />
       </Dialog>
     </div>
   );

@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import fire from '../../ConfigFirebase/Fire';
-import { Button } from '@material-ui/core/';
+import { Button, Fab } from '@material-ui/core/';
 import { TextField, InputAdornment, IconButton } from '@material-ui/core';
-import { Visibility, VisibilityOff, Email } from "@material-ui/icons";
+import { Visibility, VisibilityOff, Email, Close } from "@material-ui/icons";
 import { Checkbox } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { loggedAction } from './actions';
 import FormDialog from './forgot';
+import { openSignInAction } from "./actions"
+import {styles} from './style';
 
 export function Login(props) {
   const [email, setEmail] = useState("");
@@ -17,29 +19,33 @@ export function Login(props) {
   const [checked, setChecked] = useState(false);
 
   const dispatch = useDispatch();
+  const setIsErsed = props.setIsErsed;
 
+  const handleClose = () => {
+    dispatch(openSignInAction())
+      setEmail("");
+      setPassword("");
+      setErrorMessage("")
+  };
+  
   const handleChange = name => event => {
     setChecked(event.target.checked);
   };
 
   function login() {
     fire.auth().signInWithEmailAndPassword(email, password)
-      .then(u => { })
       .then(a => {
         dispatch(loggedAction()) 
-        // props.setUser(fire.auth().currentUser);
-        // props.setOpenSignInBox(false);
-
         setIsAnError(false);
-
+        setEmail("");
+        setPassword("");
         })
       .catch(error => {
-        console.log(error);
         setIsAnError(true);
         setErrorMessage(error.message)
       });
   }
-
+  
   function signup(e) {
     e.preventDefault()
     fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
@@ -74,20 +80,11 @@ export function Login(props) {
       });
   }
   return (
-    <div style={{
-      alignItems: "center",
-      display: "flex",
-      margin: "auto",
-      textAlign: "center",
-      padding: '20px',
-      verticalAlign: "center",
-      flexDirection: "column",
-      flexWrap: "wrap",
-
-    }}>
+    <div style={styles.signInContainer}>
       <div>
         <TextField
-          style={{ width: "100%" }}
+          fullWidth='true'
+          size="large"
           autoFocus
           required
           name="email"
@@ -111,9 +108,9 @@ export function Login(props) {
           }}
         />
         <TextField
-          style={{ width: "100%" }}
+          fullWidth='true'
           required
-          helperText= {(isAnError === true) ? <div style={{ fontSize: 10, color: "red" }}>{errorMessage}</div> : null}
+          helperText= {(isAnError === true) ? <div style={styles.error}>{errorMessage}</div> : null}
           name="password"
           margin="dense"
           value={password}
@@ -149,6 +146,10 @@ export function Login(props) {
         </div>
         <Button type="submit" onClick={login}> Login </Button>
         <Button onClick={signup} style={{ marginLeft: '25px' }}>Sign up</Button>
+        <Fab onClick={handleClose} 
+          size="small"
+          position = "absolute"
+          style={styles.close}><Close/></Fab>
         <FormDialog />
       </div>
     </div>

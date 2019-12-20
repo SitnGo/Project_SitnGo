@@ -1,17 +1,22 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
+import React, {useState} from 'react';
+import {Button, Fab} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
+import {Close } from "@material-ui/icons";
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import fire from '../../ConfigFirebase/Fire';
+import { styles } from './style';
 
 
 export default function FormDialog() {
-  const [open, setOpen] = React.useState(false);
-  const [email, setEmail] = React.useState("");
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [isAnError, setIsAnError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -19,15 +24,19 @@ export default function FormDialog() {
 
   const handleClose = () => {
     setOpen(false);
+    setEmail("");
+    setErrorMessage("");
   };
   const forgotPassword = () => {
-    //   email = email.toString();
+    
     fire.auth().sendPasswordResetEmail(email)
       .then(function (u) {
         alert('Please check your email...')
       }).catch(function (e) {
-        console.log(e)
-        console.log(email)
+        console.log(e);
+        console.log(email);
+        setIsAnError(true);
+        setErrorMessage(e.message)        
       })
   } ;
 
@@ -40,24 +49,33 @@ export default function FormDialog() {
         <DialogTitle id="form-dialog-title">Password recovery</DialogTitle>
         <DialogContent>
           <DialogContentText>
-           Please rewrite your email here 
+          To get a verification code, <br/>
+          first confirm the recovery email address
           </DialogContentText>
           <TextField
             autoFocus
             required
+            style={{ width: "100%" }}
+            helperText ={(isAnError === true) ? <div style={{ fontSize: 10, color: "red" }}>{errorMessage}</div> : null}
+            autofocus
             name = "email"
             value={email}
             margin = "dense"
             color = "primary"
             variant = "outlined"
-            label = "Email"
-            onChange={e => {setEmail(e.target.value); console.log(email)}}
+            label = "Enter recovery email address"
+            onChange={e => {setEmail(e.target.value)}}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={forgotPassword} color="primary">
-            Send code 
+            Send 
           </Button>
+          <Fab onClick={handleClose} 
+          position = "absolute"
+          color="primary"
+        size="small"
+        style={styles.close}><Close/></Fab>
         </DialogActions>
       </Dialog>
     </div>

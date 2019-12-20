@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {styles} from "./style";
 import {Link as RouterLink} from 'react-router-dom'
 import HeaderWhenUserLoggedIn from './HeaderWhenUserLoggedIn'
