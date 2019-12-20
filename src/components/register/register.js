@@ -5,6 +5,9 @@ import { Visibility, VisibilityOff, Phone, Email, AccountBox } from "@material-u
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import fire from '../../ConfigFirebase/Fire';
+import { openSignUPAction } from "../sign_in/actions"
+import { useDispatch } from 'react-redux';
+
 
 
 
@@ -12,6 +15,7 @@ let PasswordValidator = require('password-validator');
 
 
 const SignUp = (props) => {
+    const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [password, setPassword] = useState("");
@@ -282,7 +286,7 @@ const SignUp = (props) => {
                         fullWidth
                         style={classes.cancelButton}
                         variant="outlined"
-                        onClick={()=>props.setOpenSignUPBox(false)}
+                        onClick={()=>dispatch(openSignUPAction())}
                     >Cancel</Button>
                     <div style={{margin: "20px 0 0"}}>
                         {/* <Typography variant="body2" component="h1" display="block" align="left" lineHeight={10}>

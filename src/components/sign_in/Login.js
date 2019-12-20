@@ -7,6 +7,8 @@ import { Checkbox } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { loggedAction } from './actions';
 import FormDialog from './forgot';
+import { openSignInAction } from "./actions"
+
 
 export function Login(props) {
   const [email, setEmail] = useState("");
@@ -28,7 +30,7 @@ export function Login(props) {
   // });
 
   const handleClose = () => {
-    props.setOpen(false);
+    dispatch(openSignInAction())
       setEmail("");
       setPassword("");
       setErrorMessage("")

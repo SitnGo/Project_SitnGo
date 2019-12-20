@@ -10,15 +10,6 @@ import ToTop from "./components/totop/toTop";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import SignUp from "./components/register/register1";
 import AlertDialogSlide from "./components/sign_in/dialog";
-<<<<<<< HEAD
-// import { createStore } from 'redux';
-// import { Provider } from 'react-redux';
-// import allReducers from './components/sign_in/reducers/index';
-// import fire from './ConfigFirebase/Fire';
-
-
-//const store = createStore(allReducers)
-=======
 import AlertDialogSlideSignUp from "./components/register/dialogSignUp"
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -29,7 +20,6 @@ import { useSelector } from 'react-redux';
 
 // const store = createStore(allReducers)
 const store = createStore(reducers);
->>>>>>> e99c361df82326772435ba1a6f3ef3cb2d925c57
 
 function App() {
     const [openSignInBox, setOpenSignInBox] = useState(false);
@@ -56,19 +46,12 @@ function App() {
     return (
         <div className="App">
             <Router>
-<<<<<<< HEAD
-                {/* <Provider store = {store}> */}
-                <Header user={user} setUser={setUser} setOpen={setOpen}/>
-                {/* </Provider> */}
-                <AlertDialogSlide  setUser={setUser} open={open} setOpen={setOpen}/>
-=======
                 <Provider store = {store}>
                 <Header />
                 
                 <AlertDialogSlide />
                 <AlertDialogSlideSignUp />
                 </Provider>
->>>>>>> e99c361df82326772435ba1a6f3ef3cb2d925c57
                 <Switch>
                     <Route exact path="/">
                         <HeaderImage/>
