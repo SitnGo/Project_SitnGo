@@ -1,18 +1,26 @@
+<<<<<<< HEAD
 import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
+=======
+import React from 'react';
+>>>>>>> e99c361df82326772435ba1a6f3ef3cb2d925c57
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import Login from './Login';
+<<<<<<< HEAD
 
+=======
+import { useDispatch, connect } from 'react-redux';
+import { openSignInAction } from "./actions"
+>>>>>>> e99c361df82326772435ba1a6f3ef3cb2d925c57
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const AlertDialogSlide = (props) => {
+<<<<<<< HEAD
   // const [open, setOpen] = React.useState(false);
 
   // const handleClickOpen = () => {
@@ -22,13 +30,17 @@ const AlertDialogSlide = (props) => {
   // let gago='2'
 
   //const {setEmail, setErrorMessage, setPassword} = props;
+=======
+>>>>>>> e99c361df82326772435ba1a6f3ef3cb2d925c57
 
   const handleClose = () => {
-    props.setOpen(false);
+    dispatch(openSignInAction())
   };
+  const dispatch = useDispatch();
 
   return (
     <div>
+<<<<<<< HEAD
       {/* <Button variant="outlined" color="primary" 
       // onClick={handleClickOpen}
       >
@@ -42,12 +54,14 @@ const AlertDialogSlide = (props) => {
         autoScrollBodyContent={true}
         contentStyle={{width: "80%", maxWidth: "none"}}
         open={props.open}
+=======
+      <Dialog
+        open={props.willOpenSignIN}
+>>>>>>> e99c361df82326772435ba1a6f3ef3cb2d925c57
         TransitionComponent={Transition}
-        keepMounted
         onClose={handleClose}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
       >
+<<<<<<< HEAD
         <DialogTitle id="alert-dialog-slide-title">{}</DialogTitle>
         <DialogContent 
         maxWidth = "md">
@@ -61,9 +75,19 @@ const AlertDialogSlide = (props) => {
             Close
           </Button> */}
         </DialogActions>
+=======
+        <DialogContent
+          maxWidth="md">
+          <Login setOpenSignInBox={props.setOpenSignInBox} openSignInBox={props.openSignInBox} />
+        </DialogContent>
+>>>>>>> e99c361df82326772435ba1a6f3ef3cb2d925c57
       </Dialog>
     </div>
   );
 }
-
-export default AlertDialogSlide;
+function mapStateToProps(state) {
+  return {
+    willOpenSignIN: state.willOpenSignIN,
+  };
+}
+export default connect(mapStateToProps)(AlertDialogSlide)

@@ -5,20 +5,16 @@ import { TextField, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff, Email, Close } from "@material-ui/icons";
 import { Checkbox } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
-import { loggedReducer } from './actions';
+import { loggedAction } from './actions';
 import FormDialog from './forgot';
 
 export function Login(props) {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAnError, setIsAnError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [checked, setChecked] = useState(false);
-
-  //const isLogged = useSelector(state => state.isLogged);
-  // const counter = useSelector(state =>state.counter);
 
   const dispatch = useDispatch();
   const setIsErsed = props.setIsErsed;
@@ -45,9 +41,10 @@ export function Login(props) {
   function login() {
     fire.auth().signInWithEmailAndPassword(email, password)
       .then(a => {
-        dispatch(loggedReducer()) 
-        props.setUser(fire.auth().currentUser);
-        props.setOpen(false);
+        dispatch(loggedAction()) 
+        // props.setUser(fire.auth().currentUser);
+        // props.setOpenSignInBox(false);
+
         setIsAnError(false);
         setEmail("");
         setPassword("");
