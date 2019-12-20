@@ -1,26 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import {classes} from './style';
 import { Link, Typography, TextField, Button, Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
-// import firebase from "firebase";
 import { Visibility, VisibilityOff, Phone, Email, AccountBox } from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import fire from '../../ConfigFirebase/Fire';
 
 
-// let firebaseConfig = {
-//     apiKey: "AIzaSyAEjOCmERrjnQpDEHCMPcfSUGKYs-qPP4I",
-//     authDomain: "sitngo-8a880.firebaseapp.com",
-//     databaseURL: "https://sitngo-8a880.firebaseio.com",
-//     projectId: "sitngo-8a880",
-//     storageBucket: "sitngo-8a880.appspot.com",
-//     messagingSenderId: "sender-id",
-//     appId: "app-id",
-//     measurementId: "G-measurement-id",
-// };
+
 let PasswordValidator = require('password-validator');
 
-// firebase.initializeApp(firebaseConfig);
 
 const SignUp = (props) => {
     const [name, setName] = useState("");

@@ -13,11 +13,13 @@ import AlertDialogSlide from "./components/sign_in/dialog";
 import AlertDialogSlideSignUp from "./components/register/dialogSignUp"
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import allReducers from './components/sign_in/reducers/index';
+// import allReducers from './components/sign_in/reducers/index';
+import reducers from "./components/sign_in/reducers/reducers"
 import fire from './ConfigFirebase/Fire';
 import { useSelector } from 'react-redux';
 
-const store = createStore(allReducers)
+// const store = createStore(allReducers)
+const store = createStore(reducers);
 
 function App() {
     const [openSignInBox, setOpenSignInBox] = useState(false);
@@ -45,10 +47,10 @@ function App() {
         <div className="App">
             <Router>
                 <Provider store = {store}>
-                <Header setOpenSignInBox={setOpenSignInBox} setOpenSignUPBox={setOpenSignUPBox}/>
+                <Header />
                 
-                <AlertDialogSlide setOpenSignInBox={setOpenSignInBox} openSignInBox={openSignInBox} />
-                <AlertDialogSlideSignUp openSignUPBox={openSignUPBox} setOpenSignUPBox={setOpenSignUPBox}/>
+                <AlertDialogSlide />
+                <AlertDialogSlideSignUp />
                 </Provider>
                 <Switch>
                     <Route exact path="/">

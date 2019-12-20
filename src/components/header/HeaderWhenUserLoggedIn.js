@@ -3,7 +3,8 @@ import { styles } from "./style";
 import { Link, Button } from "@material-ui/core";
 import { Link as RouterLink } from 'react-router-dom'
 import { connect, useDispatch } from 'react-redux';
-import { loggedReducer } from '../sign_in/actions';
+// import { loggedReducer } from '../sign_in/actions';
+import { loggedAction } from '../sign_in/actions';
 
 
 
@@ -12,7 +13,8 @@ function HeaderWhenUserLoggedIn(props) {
 
     const classes = styles();
     function handleSignOut(){
-        dispatch(loggedReducer());
+        // dispatch(loggedReducer());
+        dispatch(loggedAction())
         console.log(props)
 
 
@@ -57,7 +59,7 @@ function HeaderWhenUserLoggedIn(props) {
 }
 function mapStateToProps(state) {
     return {
-        isLoggedInUser: state.isLogged,
+        isLoggedInUser: state.isLoggedInUser,
     };
 }
 export default connect(mapStateToProps)(HeaderWhenUserLoggedIn)

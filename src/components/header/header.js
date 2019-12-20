@@ -17,13 +17,13 @@ const Header = (props) => {
             <div className={classes.logoContainer}>
                 <RouterLink to='/'><img className={classes.logo} src="images/Logo.png" alt="Logo"/></RouterLink>
             </div>
-                {props.isLoggedInUser ? <HeaderWhenUserLoggedIn  setOpenSignInBox={props.setOpenSignInBox}/> : <HeaderWhenUserLoggedOut setOpenSignInBox={props.setOpenSignInBox} setOpenSignUPBox={props.setOpenSignUPBox}/> }
+                {props.isLoggedInUser ? <HeaderWhenUserLoggedIn  /> : <HeaderWhenUserLoggedOut /> }
         </header>
     );
 }
 function mapStateToProps(state) {
     return {
-        isLoggedInUser: state.isLogged,
+        isLoggedInUser: state.isLoggedInUser,
     };
 }
 

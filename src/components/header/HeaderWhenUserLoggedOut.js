@@ -2,23 +2,26 @@ import React from 'react';
 import { styles } from "./style";
 import { Link, Button } from "@material-ui/core";
 import { Link as RouterLink } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
-import {openSignInAction} from '../sign_in/actions';
+import { useDispatch, useSelector, connect } from 'react-redux';
+import {openSignInAction, openSignUPAction} from '../sign_in/actions';
 // import { loggedReducer } from '../sign_in/actions';
 // import openSignInReducer from '../sign_in/reducers/openSignIn';
 
 
 
-export default function HeaderWhenUserLoggedOut(props) {
+ function HeaderWhenUserLoggedOut(props) {
 
     const classes = styles();
     const dispatch =useDispatch();
     const StoreopenSignIn = useSelector(state => state.openSignIn);
     function handleSigninClick(){
-        props.setOpenSignInBox(true);
+        console.log(props)
+        // props.setOpenSignInBox(true);
+        dispatch(openSignInAction())
     }
     function handleSignUPClick(){
-        props.setOpenSignUPBox(true);
+        // props.setOpenSignUPBox(true);
+        dispatch(openSignUPAction())
     }
     return (
         <>
@@ -66,3 +69,10 @@ export default function HeaderWhenUserLoggedOut(props) {
         </>
     )
 }
+
+function mapStateToProps(state) {
+    return {
+        willOpenSignIN: state.willOpenSignIN,
+    };
+}
+export default connect(mapStateToProps)(HeaderWhenUserLoggedOut)

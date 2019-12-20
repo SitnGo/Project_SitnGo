@@ -1,16 +1,10 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import SignUp from './register';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch ,connect } from 'react-redux';
+import {openSignUPAction} from "../sign_in/actions"
 
-import { ViewModule } from '@material-ui/icons';
-
-//import { makeStyles} from '@material-ui/core/Styles';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -20,10 +14,8 @@ const AlertDialogSlideSignUp = (props) => {
 
 
   const handleClose = () => {
-    // dispatch(openSignIn({}))
-    props.setOpenSignUPBox(false);
+    dispatch(openSignUPAction())
   };
-    const openSignIn = useSelector(state => state.openSignIn);
     const dispatch = useDispatch();
 
   return (
@@ -31,14 +23,18 @@ const AlertDialogSlideSignUp = (props) => {
       <Dialog
       ignoreEscapeKeyUp
         title="Dialog" 
-        open={props.openSignUPBox}
+        open={props.willOpenSignUP}
         TransitionComponent={Transition}
         onClose={handleClose}
         >
-            <SignUp  setOpenSignUPBox={props.setOpenSignUPBox}/>
+            <SignUp />
       </Dialog>
     </div>
   );
 }
-
-export default AlertDialogSlideSignUp;
+function mapStateToProps(state) {
+  return {
+      willOpenSignUP: state.willOpenSignUP,
+  };
+}
+export default connect(mapStateToProps)(AlertDialogSlideSignUp)
