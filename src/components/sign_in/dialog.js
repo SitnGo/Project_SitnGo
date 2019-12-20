@@ -6,8 +6,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import Login from './Login';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { ViewModule } from '@material-ui/icons';
 
 //import { makeStyles} from '@material-ui/core/Styles';
+
+
 
 // const styles = theme => ({
 //     dialog: {
@@ -26,11 +31,14 @@ const AlertDialogSlide = (props) => {
   // const handleClickOpen = () => {
   //   setOpen(true);
   // };
-  const {setUser, setOpen} = props;
+  // const {setUser, setOpen} = props;
 
   const handleClose = () => {
-    props.setOpen(false);
+    // dispatch(openSignIn({}))
+    props.setOpenSignInBox(false);
   };
+    const openSignIn = useSelector(state => state.openSignIn);
+    const dispatch = useDispatch();
 
   return (
     <div>
@@ -47,7 +55,7 @@ const AlertDialogSlide = (props) => {
         autoDetectWindowHeight={true} 
         autoScrollBodyContent={true}
         contentStyle={{width: "80%", maxWidth: "none"}}
-        open={props.open}
+        open={props.openSignInBox}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
@@ -57,7 +65,7 @@ const AlertDialogSlide = (props) => {
         <DialogTitle id="alert-dialog-slide-title">{}</DialogTitle>
         <DialogContent
         maxWidth = "md">
-            <Login setOpen={setOpen} setUser={setUser}/>
+            <Login  setOpenSignInBox={props.setOpenSignInBox} openSignInBox={props.openSignInBox}/>
           {/* <DialogContentText id="alert-dialog-slide-description">
            
           </DialogContentText> */}

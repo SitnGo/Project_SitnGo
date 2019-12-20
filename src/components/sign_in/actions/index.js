@@ -1,6 +1,12 @@
-export const loggedReducer =() =>{
+export const loggedReducer = () =>{
     return {
         type:'SIGN_IN'
+    };
+};
+
+export const openSignInReducer = () =>{
+    return {
+        type:'OPEN'
     };
 };
 

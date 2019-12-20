@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import {classes} from './style';
 import { Link, Typography, TextField, Button, Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
+// import firebase from "firebase";
 import { Visibility, VisibilityOff, Phone, Email, AccountBox } from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
-import {Link as RouterLink} from 'react-router-dom';
 import fire from '../../ConfigFirebase/Fire';
 
+
+// let firebaseConfig = {
+//     apiKey: "AIzaSyAEjOCmERrjnQpDEHCMPcfSUGKYs-qPP4I",
+//     authDomain: "sitngo-8a880.firebaseapp.com",
+//     databaseURL: "https://sitngo-8a880.firebaseio.com",
+//     projectId: "sitngo-8a880",
+//     storageBucket: "sitngo-8a880.appspot.com",
+//     messagingSenderId: "sender-id",
+//     appId: "app-id",
+//     measurementId: "G-measurement-id",
+// };
 let PasswordValidator = require('password-validator');
-const SignUp = () => {
+
+// firebase.initializeApp(firebaseConfig);
+
+const SignUp = (props) => {
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [password, setPassword] = useState("");
@@ -110,7 +124,7 @@ const SignUp = () => {
                     setErrors(Object.assign(err, { phoneError: false }))
                 }
                 break;
-            case 12: //096 case
+            case 12:
                 if(
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}`==="+37410"||
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}`==="+37411"||
@@ -133,160 +147,164 @@ const SignUp = () => {
     }
 
     return(
-        <section style={classes.section}>
-            <div style={classes.signUpContainer}>
-                {/*<Typography variant="h3" component="h3" margin="normal">*/}
-                {/*    Sign up with email*/}
-                {/*</Typography>*/}
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    color="primary"
-                    variant="outlined"
-                    label="Name"
-                    onChange={(e) => { setName(e.target.value) }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle"
-                                    edge="end"
-                                >
-                                    <AccountBox />
-                                </IconButton>
-                            </InputAdornment>
-                        )
-                    }}
-                />
-                <TextField
-                    margin="dense"
-                    color="primary"
-                    variant="outlined"
-                    label="Surname"
-                    onChange={(e) => { setSurname(e.target.value) }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle"
-                                    edge="end"
-                                >
-                                    <AccountBox />
-                                </IconButton>
-                            </InputAdornment>
-                        )
-                    }}
-                />
-                <TextField
-                    margin="dense"
-                    error={errors.emailError}
-                    helperText={errors.emailError ? "Email is not valid or already is in use" : null}
-                    color="primary"
-                    variant="outlined"
-                    label="Email"
-                    onChange={(e) => { setEmail(e.target.value) }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle"
-                                    edge="end"
-                                >
-                                    <Email />
-                                </IconButton>
-                            </InputAdornment>
-                        )
-                    }}
-                />
-                <TextField
-                    margin="dense"
-                    type={showPassword ? "text" : "password"}
-                    error={errors.passwordError.bool}
-                    helperText={errors.passwordError.bool ? errors.passwordError.errText.map((element, i) => {
-                        return (<p key={i}> {element}</p>)
-                    }) : null}
-                    color="primary"
-                    variant="outlined"
-                    label="Password"
-                    onChange={(e) => { setPassword(e.target.value) }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={() => { showPassword ? setShowPassword(false) : setShowPassword(true) }}
-                                    edge="end"
-                                >
-                                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                        )
-                    }}
-                />
-                <TextField
-                    margin="dense"
-                    type={showPassword ? "text" : "password"}
-                    error={hasConfirmPasswordError}
-                    helperText={hasConfirmPasswordError ? "Confirm password do not match" : null}
-                    color="primary"
-                    variant="outlined"
-                    label="Confirm Password"
-                    onChange={(e) => { setConfirmPassword(e.target.value) }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={() => { showPassword ? setShowPassword(false) : setShowPassword(true) }}
-                                    edge="end"
-                                >
-                                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                        )
-                    }}
-                />
-                <TextField
-                    margin="dense"
-                    error={errors.phoneError}
-                    helperText={errors.phoneError ? "Phone number is not valid" : null}
-                    color="primary"
-                    variant="outlined"
-                    label="Phone"
-                    onChange={(e) => { setPhone(e.target.value) }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle"
-                                    edge="end"
-                                >
-                                    <Phone />
-                                </IconButton>
-                            </InputAdornment>
-                        )
-                    }}
-                />
-                <RadioGroup row aria-label="gender" name="gender1" onChange={(e) => { setGender(e.target.value) }}>
-                    <FormControlLabel  value="male" control={<Radio style={classes.radio} />} label="Male" />
-                    <FormControlLabel value="female" control={<Radio style={classes.radio} />} label="Female" />
-                </RadioGroup>
-                <Button
-                    fullWidth
-                    style={classes.signUpButton}
-                    variant="contained"
-                    onClick={checkErrorsHandler}>Submit</Button>
-                <div style={{margin: "20px 0 0"}}>
-                    {/* <Typography variant="body2" component="h1" display="block" align="left" lineHeight={10}>
+            <div style={{display: props.display}}>
+                <div style={classes.signUpContainer} >
+                    <Typography variant="h3" component="h3" margin="normal">Sign up</Typography>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        color="primary"
+                        variant="outlined"
+                        label="Name"
+                        onChange={(e) => { setName(e.target.value) }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle"
+                                        edge="end"
+                                    >
+                                        <AccountBox />
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                    <TextField
+                        margin="dense"
+                        color="primary"
+                        variant="outlined"
+                        label="Surname"
+                        onChange={(e) => { setSurname(e.target.value) }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle"
+                                        edge="end"
+                                    >
+                                        <AccountBox />
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                    <TextField
+                        margin="dense"
+                        error={errors.emailError}
+                        helperText={errors.emailError ? "Email is not valid or already is in use" : null}
+                        color="primary"
+                        variant="outlined"
+                        label="Email"
+                        onChange={(e) => { setEmail(e.target.value) }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle"
+                                        edge="end"
+                                    >
+                                        <Email />
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                    <TextField
+                        margin="dense"
+                        type={showPassword ? "text" : "password"}
+                        error={errors.passwordError.bool}
+                        helperText={errors.passwordError.bool ? errors.passwordError.errText.map((element, i) => {
+                            return (<p key={i}> {element}</p>)
+                        }) : null}
+                        color="primary"
+                        variant="outlined"
+                        label="Password"
+                        onChange={(e) => { setPassword(e.target.value) }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={() => { showPassword ? setShowPassword(false) : setShowPassword(true) }}
+                                        edge="end"
+                                    >
+                                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                    <TextField
+                        margin="dense"
+                        type={showPassword ? "text" : "password"}
+                        error={hasConfirmPasswordError}
+                        helperText={hasConfirmPasswordError ? "Confirm password do not match" : null}
+                        color="primary"
+                        variant="outlined"
+                        label="Confirm Password"
+                        onChange={(e) => { setConfirmPassword(e.target.value) }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={() => { showPassword ? setShowPassword(false) : setShowPassword(true) }}
+                                        edge="end"
+                                    >
+                                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                    <TextField
+                        margin="dense"
+                        error={errors.phoneError}
+                        helperText={errors.phoneError ? "Phone number is not valid" : null}
+                        color="primary"
+                        variant="outlined"
+                        label="Phone"
+                        onChange={(e) => { setPhone(e.target.value) }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle"
+                                        edge="end"
+                                    >
+                                        <Phone />
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                    <RadioGroup row aria-label="gender" name="gender1" onChange={(e) => { setGender(e.target.value) }}>
+                        <FormControlLabel  value="male" control={<Radio style={classes.radio} />} label="Male" />
+                        <FormControlLabel value="female" control={<Radio style={classes.radio} />} label="Female" />
+                    </RadioGroup>
+                    <Button
+                        fullWidth
+                        style={classes.signUpButton}
+                        variant="contained"
+                        onClick={checkErrorsHandler}
+                    >Submit</Button>
+                    <Button
+                        fullWidth
+                        style={classes.cancelButton}
+                        variant="outlined"
+                        onClick={()=>props.setOpenSignUPBox(false)}
+                    >Cancel</Button>
+                    <div style={{margin: "20px 0 0"}}>
+                        {/* <Typography variant="body2" component="h1" display="block" align="left" lineHeight={10}>
                         Already a member?
                         <RouterLink to='/'>
                             <Link style={classes.login}>Log in</Link>
                         </RouterLink>
                     </Typography> */}
+                    </div>
                 </div>
             </div>
-            <div style={classes.imageCover}></div>
-        </section>
     );
 }
 

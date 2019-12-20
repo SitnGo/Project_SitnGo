@@ -21,7 +21,7 @@ export const styles = makeStyles(() => ({
     menuContainer: {
         width: '72%'
     },
-    headerButtonsContainer: {
+    signButtonsContainer: {
         display: 'flex',
         justifyContent: 'space-evenly',
         alineItems: 'center',
@@ -31,7 +31,8 @@ export const styles = makeStyles(() => ({
         display: 'flex',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        listStyleType: 'none'
+        listStyleType: 'none',
+        width: '60%',
     },
     menuLink: {
         color: '#ddd'
@@ -46,6 +47,12 @@ export const styles = makeStyles(() => ({
         '&:hover': {
             background: '#fb9403',
             opacity: 0.95,
+        }
+    },
+    profile: {
+        color: '#fb9403',
+        '&:hover': {
+            textDecoration: 'underline'
         }
     }
 }));

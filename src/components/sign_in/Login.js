@@ -9,7 +9,6 @@ import { loggedReducer } from './actions';
 import FormDialog from './forgot';
 
 export function Login(props) {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAnError, setIsAnError] = useState(false);
@@ -31,8 +30,9 @@ export function Login(props) {
       .then(u => { })
       .then(a => {
         dispatch(loggedReducer()) 
-        props.setUser(fire.auth().currentUser);
-        props.setOpen(false);
+        // props.setUser(fire.auth().currentUser);
+        props.setOpenSignInBox(false);
+
         setIsAnError(false);
 
         })
