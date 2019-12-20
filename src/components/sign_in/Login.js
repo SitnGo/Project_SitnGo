@@ -7,7 +7,7 @@ import { Checkbox } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { loggedReducer } from './actions';
 import FormDialog from './forgot';
-import {Link as RouterLink, Route} from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 export function Login(props) {
 
   const [email, setEmail] = useState("");
@@ -17,9 +17,9 @@ export function Login(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [checked, setChecked] = useState(false);
 
-  const isLogged = useSelector(state => state.isLogged);
+  let isLogged1 = useSelector(state => state.isLogged);
   // const counter = useSelector(state =>state.counter);
-
+// alert(typeof isLogged);
   const dispatch = useDispatch();
 
   const handleChange = name => event => {
@@ -28,8 +28,8 @@ export function Login(props) {
 
   function login() {
     fire.auth().signInWithEmailAndPassword(email, password)
-      .then(u => { })
-      .then(a => {
+      .then(() => { })
+      .then(() => {
         dispatch(loggedReducer()) 
         props.setUser(fire.auth().currentUser);
         props.setOpen(false);
@@ -150,9 +150,9 @@ export function Login(props) {
             }}
           />
         </div>
-        <RouterLink to={isLogged ? "profile" : ""}>
-          <Button type="submit" onClick={login}> Login </Button>
-        </RouterLink>  
+            <RouterLink to="profile">
+             <Button type="submit" onClick={login}> Login </Button>
+           </RouterLink>         
           <Button onClick={signup} style={{ marginLeft: '25px' }}>Sign up</Button>
           <FormDialog />
       </div>

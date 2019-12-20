@@ -3,34 +3,30 @@ import {classes} from "./style";
 import RoomIcon from '@material-ui/icons/Room';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MailIcon from '@material-ui/icons/Mail';
+import AppMap from '../AppMap/AppMap';
 
 const Contact = () => {
     return(
         <section style={classes.section}>
-            <span style={classes.aboutId} id='contact'></span>
+            <span style={classes.contactId} id='contact'></span>
             <div style={classes.textContainer}>
-                <h1 style={classes.aboutHeader}>Contact Us</h1>
-                <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                    been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
-                    type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
-                    leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-                    release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                    like Aldus PageMaker including versions of Lorem Ipsum.
-                </p>
+                <h1 style={classes.contactHeader}>Contact Us</h1>
+                <div>
+                    <AppMap />
+                </div>
             </div>
-            <div className={classes.iconsBlock1}>
-                <div className={classes.leftSideIconsBlock}>
-                    <RoomIcon className={classes.icon}/>
-                    <p className={classes.leftSideP}>Hakob Hakobyan</p>
+            <div style={classes.contactsContainer}>
+                <div style={classes.contacts}>
+                    <RoomIcon fontSize='large' style={classes.icon}/>
+                    <p className={classes.leftSideP}>Hakob Hakobyan 3</p>
                 </div>
-                <div className={classes.leftSideIconsBlock}>
-                    <PhoneIcon className={classes.icon}/>
-                    <p className={classes.leftSideP}>+131-937-12</p>
+                <div style={classes.contacts}>
+                    <PhoneIcon fontSize='large' style={classes.icon}/>
+                    <p className={classes.leftSideP}>(012) 48-16-32</p>
                 </div>
-                <div className={classes.leftSideIconsBlock}>
-                    <MailIcon className={classes.icon}/>
-                    <p className={classes.leftSideP}>support@gmail.com</p>
+                <div style={classes.contacts}>
+                    <MailIcon fontSize='large' style={classes.icon}/>
+                    <p className={classes.leftSideP}>info@aca.am</p>
                 </div>
             </div>
             <div style={classes.imageCover}></div>

@@ -14,7 +14,6 @@ const Header = (props) => {
     function logout() {
        fire.auth().signOut();
        dispatch(loggedReducer());
-       console.log(store);
    }
 
 

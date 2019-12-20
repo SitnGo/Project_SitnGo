@@ -11,7 +11,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import SignUp from "./components/register/register";
 import AlertDialogSlide from "./components/sign_in/dialog";
 import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import allReducers from './components/sign_in/reducers/index';
 import fire from './ConfigFirebase/Fire';
 import PersonalInfo from './components/profilePage/personalInfo';
@@ -21,7 +21,7 @@ const store = createStore(allReducers)
 function App() {
     const [open, setOpen] = React.useState(false);
     const [user, setUser] = useState(null);
-
+    let isLogged = useSelector(state => state.isLogged);
     // useEffect(()=>{authListener()},[user]);
     // function authListener() {
     // fire.auth().onAuthStateChanged((user) => {
@@ -54,7 +54,7 @@ function App() {
                     <Route path="/signup">
                         <SignUp/>
                     </Route>
-                    <Route path="/profile">
+                    <Route exact path="/profile">
                         <PersonalInfo/>
                     </Route>
                 </Switch>
