@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import fire from '../../ConfigFirebase/Fire';
-import { Button } from '@material-ui/core/';
+import { Button, Fab } from '@material-ui/core/';
 import { TextField, InputAdornment, IconButton } from '@material-ui/core';
-import { Visibility, VisibilityOff, Email } from "@material-ui/icons";
+import { Visibility, VisibilityOff, Email, Close } from "@material-ui/icons";
 import { Checkbox } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { loggedReducer } from './actions';
@@ -21,20 +21,36 @@ export function Login(props) {
   // const counter = useSelector(state =>state.counter);
 
   const dispatch = useDispatch();
+  const setIsErsed = props.setIsErsed;
 
+  // useEffect( ()=>{
+  //     if (ersed){
+  //     setEmail("444");
+  //     setPassword("");
+  //     setErrorMessage("");
+  //         }
+  // });
+
+  const handleClose = () => {
+    props.setOpen(false);
+      setEmail("");
+      setPassword("");
+      setErrorMessage("")
+  };
+  
   const handleChange = name => event => {
     setChecked(event.target.checked);
   };
 
   function login() {
     fire.auth().signInWithEmailAndPassword(email, password)
-      .then(u => { })
       .then(a => {
         dispatch(loggedReducer()) 
         props.setUser(fire.auth().currentUser);
         props.setOpen(false);
         setIsAnError(false);
-
+        setEmail("");
+        setPassword("");
         })
       .catch(error => {
         console.log(error);
@@ -42,7 +58,7 @@ export function Login(props) {
         setErrorMessage(error.message)
       });
   }
-
+  
   function signup(e) {
     e.preventDefault()
     fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
@@ -90,6 +106,7 @@ export function Login(props) {
     }}>
       <div>
         <TextField
+        autoFocus
           style={{ width: "100%" }}
           autoFocus
           required
@@ -120,7 +137,8 @@ export function Login(props) {
           name="password"
           margin="dense"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+           onChange={e => setPassword(e.target.value)}
+          //onChange={props.gago}
           type={showPassword ? "text" : "password"}
           color="primary"
           variant="outlined"
@@ -152,6 +170,11 @@ export function Login(props) {
         </div>
         <Button type="submit" onClick={login}> Login </Button>
         <Button onClick={signup} style={{ marginLeft: '25px' }}>Sign up</Button>
+        <Fab onClick={handleClose} 
+        color="primary"
+        size="small"
+        position = "absolute"
+        style={{top: '10px', right: '10px', position: 'absolute'}}><Close/></Fab>
         <FormDialog />
       </div>
     </div>

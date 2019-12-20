@@ -1,19 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {styles} from "./style";
 import {Link, Button} from "@material-ui/core";
 import {Link as RouterLink} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {loggedReducer} from '../sign_in/actions';
 import fire from '../../ConfigFirebase/Fire';
 
+
+//import { Store } from '@material-ui/icons';
+
 const Header = (props) => {
+    
 
     const classes = styles();
     const dispatch = useDispatch();
-
+    const store = useSelector (state => state.isLogged);
+    
     function logout() {
        fire.auth().signOut();
        dispatch(loggedReducer());
+       console.log(store)
+    
    }
 
 
@@ -49,7 +56,7 @@ const Header = (props) => {
                 </ul>
             </div>
             <div className={classes.headerButtonsContainer}>
-                {props.user ?
+                {store ?
                  <Button
                         variant='contained'
                         className={classes.sign}

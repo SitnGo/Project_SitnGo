@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -7,14 +7,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import Login from './Login';
 
-//import { makeStyles} from '@material-ui/core/Styles';
-
-// const styles = theme => ({
-//     dialog: {
-//       width: '80%',
-//       maxHeight: 435,
-//     },
-//   });
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -27,6 +19,9 @@ const AlertDialogSlide = (props) => {
   //   setOpen(true);
   // };
   const {setUser, setOpen} = props;
+  // let gago='2'
+
+  //const {setEmail, setErrorMessage, setPassword} = props;
 
   const handleClose = () => {
     props.setOpen(false);
@@ -39,8 +34,7 @@ const AlertDialogSlide = (props) => {
       >
         Login
       </Button> */}
-      <Dialog
-      ignoreEscapeKeyUp
+      <Dialog 
         title="Dialog" 
         modal = {true} 
         maxWidth = "sm"
@@ -55,19 +49,16 @@ const AlertDialogSlide = (props) => {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle id="alert-dialog-slide-title">{}</DialogTitle>
-        <DialogContent
+        <DialogContent 
         maxWidth = "md">
-            <Login setOpen={setOpen} setUser={setUser}/>
+            <Login  setOpen={setOpen} setUser={setUser}/>
           {/* <DialogContentText id="alert-dialog-slide-description">
            
           </DialogContentText> */}
         </DialogContent>
-        <DialogActions>
+        <DialogActions >
           {/* <Button onClick={handleClose} color="primary">
-            Disagree
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Agree
+            Close
           </Button> */}
         </DialogActions>
       </Dialog>

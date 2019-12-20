@@ -10,13 +10,13 @@ import ToTop from "./components/totop/toTop";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import SignUp from "./components/register/register";
 import AlertDialogSlide from "./components/sign_in/dialog";
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import allReducers from './components/sign_in/reducers/index';
-import fire from './ConfigFirebase/Fire';
+// import { createStore } from 'redux';
+// import { Provider } from 'react-redux';
+// import allReducers from './components/sign_in/reducers/index';
+// import fire from './ConfigFirebase/Fire';
 
 
-const store = createStore(allReducers)
+//const store = createStore(allReducers)
 
 function App() {
     const [open, setOpen] = React.useState(false);
@@ -42,7 +42,7 @@ function App() {
                 {/* <Provider store = {store}> */}
                 <Header user={user} setUser={setUser} setOpen={setOpen}/>
                 {/* </Provider> */}
-                <AlertDialogSlide setUser={setUser} open={open} setOpen={setOpen}/>
+                <AlertDialogSlide  setUser={setUser} open={open} setOpen={setOpen}/>
                 <Switch>
                     <Route exact path="/">
                         <HeaderImage/>
