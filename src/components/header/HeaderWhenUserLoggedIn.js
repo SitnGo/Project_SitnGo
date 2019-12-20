@@ -3,7 +3,6 @@ import { styles } from "./style";
 import { Link, Button } from "@material-ui/core";
 import { Link as RouterLink } from 'react-router-dom'
 import { connect, useDispatch } from 'react-redux';
-// import { loggedReducer } from '../sign_in/actions';
 import { loggedAction } from '../sign_in/actions';
 
 
@@ -13,11 +12,8 @@ function HeaderWhenUserLoggedIn(props) {
 
     const classes = styles();
     function handleSignOut(){
-        // dispatch(loggedReducer());
         dispatch(loggedAction())
         console.log(props)
-
-
     }
     return (
         <>
@@ -41,17 +37,16 @@ function HeaderWhenUserLoggedIn(props) {
             </ul>
 
             <div className={classes.signButtonsContainer}>
-                <RouterLink to='#' className={classes.signButton}>
+                <RouterLink to='ProfilePage' className={classes.signButton}>
                     <Button
                         variant='text'
                         className={classes.profile}
-                    // onClick={}
                     >My Profile</Button>
                 </RouterLink>
                 <Button
                     variant='contained'
                     className={classes.sign}
-                onClick={handleSignOut}
+                    onClick={handleSignOut}
                 >Sign Out</Button>
             </div>
         </>
