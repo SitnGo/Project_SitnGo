@@ -8,7 +8,7 @@ import About from "./components/about/about";
 import Contact from "./components/contact/contact";
 import ToTop from "./components/totop/toTop";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import SignUp from "./components/register/register1";
+// import SignUp from "./components/register/register1";
 import AlertDialogSlide from "./components/sign_in/dialog";
 import AlertDialogSlideSignUp from "./components/register/dialogSignUp"
 import { createStore } from 'redux';
@@ -60,9 +60,7 @@ function App() {
                         <Contact/>
                         <ToTop/>
                     </Route>
-                    <Route path="/signup">
-                        <SignUp/>
-                    </Route>
+
                 </Switch>
                 <Footer/>
             </Router>
