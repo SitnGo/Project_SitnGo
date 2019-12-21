@@ -3,7 +3,7 @@ import {classes} from "./style";
 import RoomIcon from '@material-ui/icons/Room';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MailIcon from '@material-ui/icons/Mail';
-import MapBasics from '../AppMap/AppMap';
+import AppMap from '../AppMap/AppMap';
 import MapParams from '../AppMap/setMap';
 import FillContainer from '../AppMap/resize';
 
@@ -14,8 +14,7 @@ const Contact = () => {
             <div style={classes.textContainer}>
                 <h1 style={classes.contactHeader}>Contact Us</h1>
                 <div>
-                    <MapParams/>
-                    <MapBasics/>
+                <AppMap/>
                 </div>
             </div>
             <div style={classes.contactsContainer}>
