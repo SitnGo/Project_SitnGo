@@ -8,9 +8,9 @@ import About from "./components/about/about";
 import Contact from "./components/contact/contact";
 import ToTop from "./components/totop/toTop";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import SignUp from "./components/register/register";
-import AlertDialogSlide from "./components/sign_in/dialog";
-import AlertDialogSlideSignUp from "./components/register/dialogSignUp"
+import SignUp from "./components/signUp/signUp";
+import AlertDialogSlide from "./components/sign_in/dialogSignIn";
+import AlertDialogSlideSignUp from "./components/signUp/dialogSignUp"
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducers from "./components/sign_in/reducers/reducers"
