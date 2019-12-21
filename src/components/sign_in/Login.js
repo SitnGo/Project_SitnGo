@@ -4,12 +4,11 @@ import { Button } from '@material-ui/core/';
 import { TextField, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff, Email } from "@material-ui/icons";
 import { Checkbox } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { loggedReducer } from './actions';
+import { useDispatch } from 'react-redux';
+import { loggedAction } from './actions';
 import FormDialog from './forgot';
 import {Link as RouterLink} from 'react-router-dom';
 export function Login(props) {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAnError, setIsAnError] = useState(false);
@@ -17,22 +16,20 @@ export function Login(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [checked, setChecked] = useState(false);
 
-  let isLogged1 = useSelector(state => state.isLogged);
-  // const counter = useSelector(state =>state.counter);
-// alert(typeof isLogged);
   const dispatch = useDispatch();
 
   const handleChange = name => event => {
     setChecked(event.target.checked);
   };
-
-  function login() {
+function login() {
+  
     fire.auth().signInWithEmailAndPassword(email, password)
-      .then(() => { })
-      .then(() => {
-        dispatch(loggedReducer()) 
-        props.setUser(fire.auth().currentUser);
-        props.setOpen(false);
+      .then(u => { })
+      .then(a => {
+        dispatch(loggedAction()) 
+        // props.setUser(fire.auth().currentUser);
+        // props.setOpenSignInBox(false);
+
         setIsAnError(false);
 
         })
@@ -42,7 +39,6 @@ export function Login(props) {
         setErrorMessage(error.message)
       });
   }
-
   function signup(e) {
     e.preventDefault()
     fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {

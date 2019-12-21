@@ -8,20 +8,24 @@ import About from "./components/about/about";
 import Contact from "./components/contact/contact";
 import ToTop from "./components/totop/toTop";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import SignUp from "./components/register/register";
+import SignUp from "./components/register/register1";
 import AlertDialogSlide from "./components/sign_in/dialog";
+import AlertDialogSlideSignUp from "./components/register/dialogSignUp"
 import { createStore } from 'redux';
-import { Provider, useSelector } from 'react-redux';
-import allReducers from './components/sign_in/reducers/index';
+import { Provider } from 'react-redux';
+// import allReducers from './components/sign_in/reducers/index';
+import reducers from "./components/sign_in/reducers/reducers"
 import fire from './ConfigFirebase/Fire';
-import PersonalInfo from './components/profilePage/personalInfo';
-
-const store = createStore(allReducers)
+import { useSelector } from 'react-redux';
+import PersonalInfo from "./components/profilePage/personalInfo";
+// const store = createStore(allReducers)
+const store = createStore(reducers);
 
 function App() {
-    const [open, setOpen] = React.useState(false);
-    const [user, setUser] = useState(null);
-    let isLogged = useSelector(state => state.isLogged);
+    const [openSignInBox, setOpenSignInBox] = useState(false);
+    const [openSignUPBox, setOpenSignUPBox] = useState(false);
+    // const [user, setUser] = useState(null);
+
     // useEffect(()=>{authListener()},[user]);
     // function authListener() {
     // fire.auth().onAuthStateChanged((user) => {
@@ -36,13 +40,18 @@ function App() {
     // });
 // }
 
+  const isLogged = useSelector(state => state.isLogged);
+  const openSignIn = useSelector(state => state.openSignIn);
+
     return (
         <div className="App">
             <Router>
-                {/* <Provider store = {store}> */}
-                <Header user={user} setUser={setUser} setOpen={setOpen}/>
-                {/* </Provider> */}
-                <AlertDialogSlide setUser={setUser} open={open} setOpen={setOpen}/>
+                <Provider store = {store}>
+                <Header />
+                
+                <AlertDialogSlide />
+                <AlertDialogSlideSignUp />
+                </Provider>
                 <Switch>
                     <Route exact path="/">
                         <HeaderImage/>
