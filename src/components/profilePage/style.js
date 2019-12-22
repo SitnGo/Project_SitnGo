@@ -32,7 +32,9 @@ const useStyles = makeStyles(theme => ({
         position:"absolute",
         top:"6%",
         right:"4%",
-    
+    },
+    hideEditButton : {
+        display:"none",
     },
 
     textField : {
@@ -63,6 +65,10 @@ const useStyles = makeStyles(theme => ({
         height:368,
     },
 
+    confirmButton : {
+        width:"80%",
+        margin:24,
+    }
    
 }));
 export default useStyles;

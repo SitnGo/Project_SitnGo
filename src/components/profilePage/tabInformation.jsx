@@ -64,7 +64,6 @@ const useStyles = makeStyles(theme => ({
           textColor="primary"
           variant="fullWidth"
           aria-label="full width tabs example"
-        //   scrollButtons="scroll"
         >
           <Tab label="Item One" {...a11yProps(0)} />
           <Tab label="Item Two" {...a11yProps(1)} />
@@ -84,6 +83,17 @@ const useStyles = makeStyles(theme => ({
           <p>sad22asdasd</p>
           <p>sad22asdasd</p>
           <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
         <p>sadas111dasasd</p>

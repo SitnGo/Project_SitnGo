@@ -7,7 +7,7 @@ import fire from '../../ConfigFirebase/Fire';
 // import { FilePicker } from 'react-file-picker'
 function aa () {
     //where("name", "==", true)
-   let a =  fire.firestore().collection("users")
+     fire.firestore().collection("users")
     .get()
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
@@ -25,12 +25,14 @@ aa();
 function usePersonalInfo() {
     const [isEdit, setEditValue] = useState(true);
     const classes = useStyles();
-    let dataList = ["Name","Surname","Phone"];
-    const typographyArr = [];
+    // let dataList = ["Name","Surname","Phone"];
+    // const typographyArr = [];
     function isEditBtnClick() {
-        setEditValue(!isEdit);
-        alert("A");
-     
+        setEditValue(false); 
+    }
+    function isConfirmBtnClick() {
+        setEditValue(true);
+        
     }
     return(
     <div> 
@@ -44,28 +46,45 @@ function usePersonalInfo() {
                 {/* <Avatar className={classes.bigAvatar} style={{cursor:"pointer"}}> A </Avatar>    */}
             {/* </FilePicker>) } */}
         {/* </div> */}
-           <div>
-            <div className={classes.personalInfoBlock1}>
-                <span style={{display:"none"}}>{isEdit === false ? dataList = ["Name","Surname", "Change Password", "Repeat password", "Phone"] : ""} </span>
-                {dataList.forEach(function (el,i) {
-                typographyArr.push( isEdit ?
+          
+        <div className={classes.personalInfoBlock1}>
+                {/* <span style={{display:"none"}}>{isEdit === false ? dataList = ["Name","Surname", "Change Password", "Repeat password", "Phone"] : ""} </span> */}
+                {/* {dataList.forEach(function (el,i) { */}
+                {/* // typographyArr.push( isEdit ? */}
                 
-                (<Typography className={classes.textColor} 
-                    key={i}>{el}
+                {/* // (<Typography className={classes.textColor}  */}
+                    {/* // key={i}>{el} */}
                     {/* - {fire.firestore().collection("users").doc("ZMnMnvAF9jZ3lMGUFElr")} */}
-                </Typography> )
-                    :
-                (<TextField className={classes.textField} key={i} placeholder={el} InputProps={{className:classes.input}}/>));
-                })}
-                    
-                <Button className={classes.editButton} variant="contained" color="secondary" onClick={isEditBtnClick}> <EditIcon/> {isEdit ? "Edit" : "Confirm"}</Button>
-                {typographyArr}
-            </div>
-
-            <div className={classes.personalInfoBlock2}>
-                <Tab/> 
-            </div>
-        </div>    
+                {/* // </Typography> ) */}
+                    {/* // : */}
+                {/* // (<TextField className={classes.textField} key={i} placeholder={el} InputProps={{className:classes.input}}/>)); */}
+                {/* // })} */}
+            {isEdit ? (
+                <>
+                <Typography className={classes.textColor}>Name</Typography>
+                <Typography className={classes.textColor}>Surname</Typography>
+                <Typography className={classes.textColor}>Phone</Typography>
+                </>
+                ) : (
+                <>
+                <TextField className={classes.textField}  placeholder="Name" InputProps={{className:classes.input}}/>
+                <TextField className={classes.textField}  placeholder="Surname" InputProps={{className:classes.input}}/>
+                <TextField className={classes.textField}  placeholder="Change Password" InputProps={{className:classes.input}}/>
+                <TextField className={classes.textField}  placeholder="Repeat Password" InputProps={{className:classes.input}}/>
+                <TextField className={classes.textField}  placeholder="Phone" InputProps={{className:classes.input}}/>
+                <Button className={classes.confirmButton} onClick={isConfirmBtnClick} variant="contained" color="secondary">Confirm</Button>
+                </>
+            )}
+            <Button className={isEdit ? classes.editButton : classes.hideEditButton} 
+                    variant="contained" color="secondary"
+                    onClick={isEditBtnClick}>
+                        <EditIcon/>Edit
+            </Button>
+                    {/* {typographyArr} */}
+        </div>
+        <div className={classes.personalInfoBlock2}>
+            <Tab/> 
+        </div>
     </div>
 
     );
