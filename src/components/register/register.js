@@ -47,9 +47,25 @@ const SignUp = (props) => {
         //////////////////check errors/////////////////////
 
         if ((arrFromErrorsValues.every(item => item === false) && !hasConfirmPasswordError)) {
-            fire.auth()
-                .createUserWithEmailAndPassword(email, password)
+            let userId;
+            fire.auth().createUserWithEmailAndPassword(email, password)
+                .then(()=>{
+                    fire.auth().signInWithEmailAndPassword(email, password)
+                })
+                .then(()=>{
+                    userId = fire.auth().currentUser.uid;
+                })
+                .then(()=>{
+                    fire.firestore().collection("users").doc(userId).set({
+                        name: name,
+                        surname: surname,
+                        email: email,
+                        gender: gender,
+                        phone: phone,
+                      });
+                })
                 .catch(function (error) {
+                    console.log(error)
                     let err = Object.assign({}, errors);
                     setErrors(Object.assign(err, { emailError: true }))
                 });
@@ -138,6 +154,9 @@ const SignUp = (props) => {
                 break;
         }
     }
+
+
+
 
     return(
             <div style={{display: props.display}}>

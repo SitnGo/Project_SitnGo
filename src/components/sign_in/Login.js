@@ -46,6 +46,8 @@ export function Login(props) {
         dispatch(loggedAction()) 
         // props.setUser(fire.auth().currentUser);
         // props.setOpenSignInBox(false);
+        const userId = fire.auth().currentUser.uid;
+        console.log(userId)
 
         setIsAnError(false);
         setEmail("");

@@ -18,7 +18,7 @@
 
 
 
-// class Login extends Component {
+// class SignIn extends Component {
 //   constructor(props) {
 //     super(props);
 //     this.login = this.login.bind(this);
@@ -173,7 +173,7 @@
 //         </div>
         
 //       </div>
-//       <Button type="submit" onClick={this.login}> Login </Button>
+//       <Button type="submit" onClick={this.login}> SignIn </Button>
 //       <Button onClick={this.signup} style={{marginLeft: '25px'}}>Sign up</Button>
 
  
@@ -182,4 +182,4 @@
 //     );
 //   }
 // }
-// export default Login;
+// export default SignIn;
