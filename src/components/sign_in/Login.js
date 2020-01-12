@@ -4,8 +4,8 @@ import { Button, Fab } from '@material-ui/core/';
 import { TextField, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff, Email, Close } from "@material-ui/icons";
 import { Checkbox } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { loggedAction } from './actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { SignInAction } from './actions';
 import FormDialog from './forgot';
 import { openSignInAction } from "./actions"
 
@@ -33,7 +33,7 @@ export function Login(props) {
     dispatch(openSignInAction())
       setEmail("");
       setPassword("");
-      setErrorMessage("")
+      setErrorMessage("");
   };
   
   const handleChange = name => event => {
@@ -43,12 +43,7 @@ export function Login(props) {
   function login() {
     fire.auth().signInWithEmailAndPassword(email, password)
       .then(a => {
-        dispatch(loggedAction()) 
-        // props.setUser(fire.auth().currentUser);
-        // props.setOpenSignInBox(false);
-        const userId = fire.auth().currentUser.uid;
-        console.log(userId)
-
+        dispatch(SignInAction()) 
         setIsAnError(false);
         setEmail("");
         setPassword("");

@@ -20,6 +20,7 @@ const Header = (props) => {
 function mapStateToProps(state) {
     return {
         isLoggedInUser: state.isLoggedInUser,
+        user: state.user,
     };
 }
 

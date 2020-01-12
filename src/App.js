@@ -22,12 +22,9 @@ function App() {
     return (
         <div className="App">
             <Router>
-                <Provider store = {store}>
-                <Header />
-                
-                <AlertDialogSlide />
-                <AlertDialogSlideSignUp />
-                </Provider>
+                    <Header />
+                    <AlertDialogSlide />
+                    <AlertDialogSlideSignUp />
                 <Switch>
                     <Route exact path="/">
                         <HeaderImage/>
@@ -36,7 +33,6 @@ function App() {
                         <Contact/>
                         <ToTop/>
                     </Route>
-
                 </Switch>
                 <Footer/>
             </Router>

@@ -4,8 +4,8 @@ import { Button, Fab } from '@material-ui/core/';
 import { Typography,TextField, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff, Email, Close } from "@material-ui/icons";
 import { Checkbox } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { loggedAction } from './actions';
+import { useDispatch, useSelector, connect} from 'react-redux';
+import { SignInAction } from './actions';
 import FormDialog from './forgot';
 import { openSignInAction } from "./actions"
 import {styles} from './style';
@@ -31,11 +31,21 @@ export function SignIn(props) {
     const handleChange = name => event => {
         setChecked(event.target.checked);
     };
+    let Id = useSelector(state=>state.userId)
 
     function login() {
         fire.auth().signInWithEmailAndPassword(email, password)
         .then(a => {
-            dispatch(loggedAction())
+            async function getMarker(user={}) {
+                const userId = fire.auth().currentUser.uid;
+                user = await fire.firestore().collection("users").doc(userId).get()
+                user = user.data();
+                return user;
+            }
+            getMarker().then(result => {
+                dispatch(SignInAction(result));
+                dispatch(openSignInAction());
+            });
             setIsAnError(false);
             setEmail("");
             setPassword("");
@@ -161,5 +171,11 @@ export function SignIn(props) {
         </div>
     );
 }
-
-export default SignIn;
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+        willOpenSignIN: state.willOpenSignIN,
+        isLoggedInUser: state.isLoggedInUser,
+    };
+}
+export default connect(mapStateToProps)(SignIn)

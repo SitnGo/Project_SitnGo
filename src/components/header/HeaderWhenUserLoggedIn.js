@@ -3,7 +3,9 @@ import { styles } from "./style";
 import { Link, Button } from "@material-ui/core";
 import { Link as RouterLink } from 'react-router-dom'
 import { connect, useDispatch } from 'react-redux';
-import { loggedAction } from '../sign_in/actions';
+import { signOutAction } from '../sign_in/actions';
+import fire from '../../ConfigFirebase/Fire';
+
 
 
 
@@ -12,8 +14,11 @@ function HeaderWhenUserLoggedIn(props) {
 
     const classes = styles();
     function handleSignOut(){
-        dispatch(loggedAction())
-        console.log(props)
+        fire.auth().signOut().then(function() {
+            dispatch(signOutAction())          
+        }).catch(function(error) {
+            alert(error);
+          });
     }
     return (
         <>
@@ -55,6 +60,7 @@ function HeaderWhenUserLoggedIn(props) {
 function mapStateToProps(state) {
     return {
         isLoggedInUser: state.isLoggedInUser,
+        user: state.user,
     };
 }
 export default connect(mapStateToProps)(HeaderWhenUserLoggedIn)
