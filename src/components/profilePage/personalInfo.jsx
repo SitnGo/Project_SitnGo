@@ -1,93 +1,99 @@
-import React,{useState} from 'react';
-import {Typography, Button, TextField} from '@material-ui/core';
+import React,{useState, useEffect} from 'react';
+import {Typography, Button, Avatar, Paper, Grid} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import Tab from './tabInformation';
 import useStyles from './style';
 import fire from '../../ConfigFirebase/Fire';
-// import { FilePicker } from 'react-file-picker'
-function aa () {
-    //where("name", "==", true)
-     fire.firestore().collection("users")
+import SignUp from '../signUp/signUp';
+import FadeIn from 'react-fade-in';
+import { FilePicker } from 'react-file-picker'
+import Skeleton from '@material-ui/lab/Skeleton';
+const dataList = [];
+function usePersonalInfo() {
+    const [isEdit, setEditValue] = useState(true);
+    const [bool, changeBool] = useState(false);
+    const classes = useStyles();
+    useEffect(()=>{
+        fire.firestore().collection("users")
     .get()
     .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.data());
+        
+        
+        querySnapshot.docs.forEach((doc)=> {
+            
+            if(doc.id === "qr0L25B09EWkZccWgtG8RbyCrds1") {
+                
+                dataList.push(doc.data());
+                
+            }
         });
-        // console.log(querySnapshot);
+        changeBool(true);
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
-    })
-    // console.log(a);
-}
-aa();
-function usePersonalInfo() {
-    const [isEdit, setEditValue] = useState(true);
-    const classes = useStyles();
-    // let dataList = ["Name","Surname","Phone"];
-    // const typographyArr = [];
+    });
+    
+    });
     function isEditBtnClick() {
         setEditValue(false); 
     }
     function isConfirmBtnClick() {
         setEditValue(true);
-        
     }
-    return(
-    <div> 
-        {/* <div className={classes.header2}> */}
-          {/* { !isEdit ? ( <Avatar className={classes.bigAvatar} > A </Avatar>) */}
-             {/* : */}
-            {/* (<FilePicker  */}
-                {/* extensions={['jpg', 'jpeg', 'png']} */}
-                {/* dims={{minWidth: 100, maxWidth: 500, minHeight: 100, maxHeight: 500}} */}
-            {/* > */}
-                {/* <Avatar className={classes.bigAvatar} style={{cursor:"pointer"}}> A </Avatar>    */}
-            {/* </FilePicker>) } */}
-        {/* </div> */}
-          
-        <div className={classes.personalInfoBlock1}>
-                {/* <span style={{display:"none"}}>{isEdit === false ? dataList = ["Name","Surname", "Change Password", "Repeat password", "Phone"] : ""} </span> */}
-                {/* {dataList.forEach(function (el,i) { */}
-                {/* // typographyArr.push( isEdit ? */}
-                
-                {/* // (<Typography className={classes.textColor}  */}
-                    {/* // key={i}>{el} */}
-                    {/* - {fire.firestore().collection("users").doc("ZMnMnvAF9jZ3lMGUFElr")} */}
-                {/* // </Typography> ) */}
-                    {/* // : */}
-                {/* // (<TextField className={classes.textField} key={i} placeholder={el} InputProps={{className:classes.input}}/>)); */}
-                {/* // })} */}
-            {isEdit ? (
-                <>
-                <Typography className={classes.textColor}>Name</Typography>
-                <Typography className={classes.textColor}>Surname</Typography>
-                <Typography className={classes.textColor}>Phone</Typography>
-                </>
-                ) : (
-                <>
-                <TextField className={classes.textField}  placeholder="Name" InputProps={{className:classes.input}}/>
-                <TextField className={classes.textField}  placeholder="Surname" InputProps={{className:classes.input}}/>
-                <TextField className={classes.textField}  placeholder="Change Password" InputProps={{className:classes.input}}/>
-                <TextField className={classes.textField}  placeholder="Repeat Password" InputProps={{className:classes.input}}/>
-                <TextField className={classes.textField}  placeholder="Phone" InputProps={{className:classes.input}}/>
-                <Button className={classes.confirmButton} onClick={isConfirmBtnClick} variant="contained" color="secondary">Confirm</Button>
-                </>
-            )}
-            <Button className={isEdit ? classes.editButton : classes.hideEditButton} 
-                    variant="contained" color="secondary"
-                    onClick={isEditBtnClick}>
-                        <EditIcon/>Edit
-            </Button>
-                    {/* {typographyArr} */}
-        </div>
-        <div className={classes.personalInfoBlock2}>
-            <Tab/> 
-        </div>
-    </div>
 
+    return(
+<Grid container sm={12}  className={classes.profileContainer}>
+    {/* <div className={classes.profileContainer}>  */}
+    
+        {/* Don't remove!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+            <Grid item sm={4} xs={12}>
+                <Paper elevation={3} className={classes.personalInfoBlock1}>
+            
+                <div className={classes.header2}>
+            {isEdit ? (<Avatar className={classes.bigAvatar} src="./images/avatar.png"></Avatar>)
+                :
+                (<FilePicker 
+                    extensions={['jpg', 'jpeg', 'png']}
+                    dims={{minWidth: 100, maxWidth: 500, minHeight: 100, maxHeight: 500}}
+                >
+                    <Avatar className={classes.bigAvatar} style={{cursor:"pointer"}}><img src="./images/avatar.png" width="100%" alt="avatar"/></Avatar>   
+                </FilePicker>) }
+            </div>
+                  <hr/>
+                    {isEdit ? (
+                    
+                            <>  
+                    {bool ? <Typography className={classes.typography}>Name  -  {dataList[0].name} </Typography>:<Skeleton height={60} component="p"/>}
+                    {bool ? <Typography className={classes.typography}>Surname  -  {dataList[0].surname}</Typography>:<Skeleton height={60} component="p"/> }
+                    {bool ? <Typography className={classes.typography}>Phone  -  {dataList[0].phone}</Typography>:<Skeleton height={60} component="p"/> } 
+                    {bool ? <Typography className={classes.typography}>Email  -  {dataList[0].email}</Typography>:<Skeleton height={60} component="p"/>}
+                        </>
+                        ) : (
+                            <>
+                            <FadeIn>
+                                <SignUp  changeSignUpStyle={isEdit}/>
+                                <Button className={classes.confirmButton} onClick={isConfirmBtnClick} variant="contained"   color="secondary">cancel</Button>
+                            </FadeIn>
+                        </>
+                    )}
+                
+                    <Button className={isEdit ? classes.editButton : classes.hideEditButton} 
+                        variant="contained" color="secondary"
+                        onClick={isEditBtnClick}>
+                            <EditIcon/>Edit
+                </Button>
+               
+             </Paper>
+            </Grid>
+             <Grid item sm={8} xs={12}>
+                <Paper elevation={4} className={classes.personalInfoBlock2}>
+                <Tab/>
+                </Paper>
+            </Grid>
+     
+     {/* </div> */}
+</Grid>
     );
 }
-
+//  
 export default usePersonalInfo;

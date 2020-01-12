@@ -9,7 +9,7 @@ import { loggedAction } from './actions';
 import FormDialog from './forgot';
 import {Link as RouterLink} from 'react-router-dom';
 import { openSignInAction } from "./actions"
-import {styles} from './style';
+
 
 export function Login(props) {
   const [email, setEmail] = useState("");
@@ -21,6 +21,14 @@ export function Login(props) {
 
   const dispatch = useDispatch();
   const setIsErsed = props.setIsErsed;
+
+  // useEffect( ()=>{
+  //     if (ersed){
+  //     setEmail("444");
+  //     setPassword("");
+  //     setErrorMessage("");
+  //         }
+  // });
 
   const handleClose = () => {
     dispatch(openSignInAction())
@@ -37,11 +45,17 @@ function login() {
     fire.auth().signInWithEmailAndPassword(email, password)
       .then(a => {
         dispatch(loggedAction()) 
+        // props.setUser(fire.auth().currentUser);
+        // props.setOpenSignInBox(false);
+        const userId = fire.auth().currentUser.uid;
+        console.log(userId)
+
         setIsAnError(false);
         setEmail("");
         setPassword("");
         })
       .catch(error => {
+        console.log(error);
         setIsAnError(true);
         setErrorMessage(error.message)
       });
@@ -81,11 +95,21 @@ function login() {
       });
   }
   return (
-    <div style={styles.signInContainer}>
+    <div style={{
+      alignItems: "center",
+      display: "flex",
+      margin: "auto",
+      textAlign: "center",
+      padding: '20px',
+      verticalAlign: "center",
+      flexDirection: "column",
+      flexWrap: "wrap",
+
+    }}>
       <div>
         <TextField
-          fullWidth='true'
-          size="large"
+        autoFocus
+          style={{ width: "100%" }}
           autoFocus
           required
           name="email"
@@ -109,13 +133,14 @@ function login() {
           }}
         />
         <TextField
-          fullWidth='true'
+          style={{ width: "100%" }}
           required
-          helperText= {(isAnError === true) ? <div style={styles.error}>{errorMessage}</div> : null}
+          helperText= {(isAnError === true) ? <div style={{ fontSize: 10, color: "red" }}>{errorMessage}</div> : null}
           name="password"
           margin="dense"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+           onChange={e => setPassword(e.target.value)}
+          //onChange={props.gago}
           type={showPassword ? "text" : "password"}
           color="primary"
           variant="outlined"
@@ -153,9 +178,10 @@ function login() {
         <Button type="submit" onClick={login}> Login </Button>
         <Button onClick={signup} style={{ marginLeft: '25px' }}>Sign up</Button>
         <Fab onClick={handleClose} 
-          size="small"
-          position = "absolute"
-          style={styles.close}><Close/></Fab>
+        color="primary"
+        size="small"
+        position = "absolute"
+        style={{top: '10px', right: '10px', position: 'absolute'}}><Close/></Fab>
         <FormDialog />
       </div>
     </div>

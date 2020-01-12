@@ -1,74 +1,65 @@
 import  {makeStyles} from '@material-ui/core/styles';
+
 const useStyles = makeStyles(theme => ({
-    // header2: {
-    //     backgroundImage:`url(${bg})`,
-    //     width:"100%",
-    //     height: 150,
-    // },
+    profileContainer: {
+        height: '80vh',
+        flexGrow:1,
+        backgroundImage:"url('./images/share.jpg')",
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: '100%',
+        backgroundPositionY: '63%',
+        backgroundAttachment: 'fixed',
+    },
     personalInfoBlock1: {
         float:"left",
         position:"relative",
-        backgroundColor:"#212121",
-        width:"20%",
-        height:"654px",
-        marginTop:"5%",
-        padding:"30px",
-        paddingTop:"5%",
+        backgroundColor:"rgba(255, 255, 255, 0.68)",  //"#f5f5f5",
+        width:"100%",
+        height:"100%",
+        // height:"calc(100vh-40vh)",
+        // padding:"30px",
+        [theme.breakpoints.down('xs')]: {
+            width: "100%",
+        },
     },
     bigAvatar: {
-        position:"absolute",
-        top:"11%",
-        left:"4%",
-        // cursor:"pointer",   
+        position:"relative",
+        top:"2%",
+        left:"36%",   
         width:120,
         height:120,
+        zIndex:222,
     },
-    textColor: {
-        color:"#fff",
-        margin:theme.spacing(4),
-        
+    typography: {
+        margin: theme.spacing(4),
     },
     editButton: {
         position:"absolute",
-        top:"6%",
+        top:"2%",
         right:"4%",
     },
     hideEditButton : {
         display:"none",
-    },
-
-    textField : {
-        display:"flex",
-        justifyContent:"center",
-        alignItems:"left",
-        width:"80%",
-        margin:theme.spacing(3),
-        '& .MuiInput-underline:before': {
-            borderBottom:"2px solid #18FFFF",
-        },
-        '& .MuiInput-underline:after' : {
-            borderBottom:"2px solid #F57F17",
-        },
-        '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
-            borderBottom:"2px solid #6200EA",
-        }
     },
     input: {
         color:"#fff",
     },
 
     personalInfoBlock2 : {
-        width:"50%",
+        width:"40%",
         float:"right",
-        marginTop:"5%",
-        padding:"30px",
-        height:368,
+        height:"100%",
+        [theme.breakpoints.down('xs')]: {
+            width: "100%",
+        },
     },
 
     confirmButton : {
-        width:"80%",
-        margin:24,
-    }
-   
+        width: "40%",
+        margin:"1% 0 0 25%",
+        [theme.breakpoints.down('xs')] : {
+            width:"46%",
+        },
+    },
 }));
 export default useStyles;

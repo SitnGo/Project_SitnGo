@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {classes} from './style';
-import { Typography, TextField, Button, Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
+import { Link, Typography, TextField, Button, Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
 import { Visibility, VisibilityOff, Phone, Email, AccountBox } from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,7 +8,11 @@ import fire from '../../ConfigFirebase/Fire';
 import { openSignUPAction } from "../sign_in/actions"
 import { useDispatch } from 'react-redux';
 
+
+
+
 let PasswordValidator = require('password-validator');
+
 
 const SignUp = (props) => {
     const dispatch = useDispatch();
@@ -43,9 +47,25 @@ const SignUp = (props) => {
         //////////////////check errors/////////////////////
 
         if ((arrFromErrorsValues.every(item => item === false) && !hasConfirmPasswordError)) {
-            fire.auth()
-                .createUserWithEmailAndPassword(email, password)
+            let userId;
+            fire.auth().createUserWithEmailAndPassword(email, password)
+                .then(()=>{
+                    fire.auth().signInWithEmailAndPassword(email, password)
+                })
+                .then(()=>{
+                    userId = fire.auth().currentUser.uid;
+                })
+                .then(()=>{
+                    fire.firestore().collection("users").doc(userId).set({
+                        name: name,
+                        surname: surname,
+                        email: email,
+                        gender: gender,
+                        phone: phone,
+                      });
+                })
                 .catch(function (error) {
+                    console.log(error)
                     let err = Object.assign({}, errors);
                     setErrors(Object.assign(err, { emailError: true }))
                 });
@@ -134,6 +154,9 @@ const SignUp = (props) => {
                 break;
         }
     }
+
+
+
 
     return(
             <div style={{display: props.display}}>
@@ -285,6 +308,12 @@ const SignUp = (props) => {
                         onClick={()=>dispatch(openSignUPAction())}
                     >Cancel</Button>
                     <div style={{margin: "20px 0 0"}}>
+                        {/* <Typography variant="body2" component="h1" display="block" align="left" lineHeight={10}>
+                        Already a member?
+                        <RouterLink to='/'>
+                            <Link style={classes.login}>Log in</Link>
+                        </RouterLink>
+                    </Typography> */}
                     </div>
                 </div>
             </div>

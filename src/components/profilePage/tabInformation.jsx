@@ -37,7 +37,7 @@ function a11yProps(index) {
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 500
+    width: "100%",
   }
 }));
 
@@ -70,7 +70,7 @@ const useStyles = makeStyles(theme => ({
         </Tabs>
       </AppBar>
        <SwipeableViews
-         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={value}
         onChangeIndex={handleChangeIndex}
       > 
