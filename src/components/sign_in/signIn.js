@@ -4,12 +4,12 @@ import { Button, Fab } from '@material-ui/core/';
 import { Typography,TextField, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff, Email, Close } from "@material-ui/icons";
 import { Checkbox } from '@material-ui/core';
-import { useDispatch , useSelector} from 'react-redux';
-import { loggedAction } from './actions';
+import { useDispatch, useSelector, connect} from 'react-redux';
+import { SignInAction } from './actions';
 import FormDialog from './forgot';
 import { openSignInAction } from "./actions"
 import {styles} from './style';
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, withRouter } from 'react-router-dom'
 
 export function SignIn(props) {
     const [email, setEmail] = useState("");
@@ -20,7 +20,6 @@ export function SignIn(props) {
     const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
     const setIsErsed = props.setIsErsed;
-   
     const handleClose = () => {
         dispatch(openSignInAction())
         setEmail("");
@@ -31,12 +30,22 @@ export function SignIn(props) {
     const handleChange = name => event => {
         setChecked(event.target.checked);
     };
+    let Id = useSelector(state=>state.userId)
 
     function login() {
         fire.auth().signInWithEmailAndPassword(email, password)
         .then(a => {
-            dispatch(loggedAction());
-            
+            async function getMarker(user={}) {
+                const userId = fire.auth().currentUser.uid;
+                user = await fire.firestore().collection("users").doc(userId).get()
+                user = user.data();
+                return user;
+            }
+            getMarker().then(result => {
+                dispatch(SignInAction(result));
+                dispatch(openSignInAction());
+            });
+            props.history.push("/profile");
             setIsAnError(false);
             setEmail("");
             setPassword("");
@@ -151,9 +160,9 @@ export function SignIn(props) {
                     }}/>
                 </div>
                 <div style={styles.signContainer}>
-                    <RouterLink to="profile">
+                    {/* <RouterLink to="profile"> */}
                      <Button type="submit"  style={styles.signButton} onClick={login}> Sign In </Button>
-                    </RouterLink>
+                    {/* </RouterLink> */}
                     <Button onClick={signup} style={styles.signButton}>Sign up</Button>
                 </div>
                 <Fab onClick={handleClose}
@@ -165,5 +174,12 @@ export function SignIn(props) {
         </div>
     );
 }
-
-export default SignIn;
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+        willOpenSignIN: state.willOpenSignIN,
+        isLoggedInUser: state.isLoggedInUser,
+    };
+}
+let signInWithRouter = withRouter(SignIn);
+export default connect(mapStateToProps)(signInWithRouter);

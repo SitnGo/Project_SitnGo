@@ -14,6 +14,7 @@ function usePersonalInfo() {
     const [bool, changeBool] = useState(false);
     const classes = useStyles();
     useEffect(()=>{
+        
         fire.firestore().collection("users")
     .get()
     .then(function(querySnapshot) {
@@ -43,8 +44,6 @@ function usePersonalInfo() {
 
     return(
 <Grid container sm={12}  className={classes.profileContainer}>
-    {/* <div className={classes.profileContainer}>  */}
-    
         {/* Don't remove!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
             <Grid item sm={4} xs={12}>
                 <Paper elevation={3} className={classes.personalInfoBlock1}>
@@ -71,7 +70,9 @@ function usePersonalInfo() {
                         ) : (
                             <>
                             <FadeIn>
-                                <SignUp  changeSignUpStyle={isEdit}/>
+                                {/* Delete sign up*/}
+                                <SignUp/>
+                                {/* // */}
                                 <Button className={classes.confirmButton} onClick={isConfirmBtnClick} variant="contained"   color="secondary">cancel</Button>
                             </FadeIn>
                         </>
@@ -90,10 +91,8 @@ function usePersonalInfo() {
                 <Tab/>
                 </Paper>
             </Grid>
-     
-     {/* </div> */}
 </Grid>
     );
 }
-//  
+
 export default usePersonalInfo;

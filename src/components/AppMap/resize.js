@@ -1,34 +1,42 @@
-import React from 'react';
-import { YMaps, Map } from 'react-yandex-maps';
-
-const mapState = { center: [55.755768, 37.617671], zoom: 10 };
-
-class FillContainer extends React.Component {
-  state = { width: 300, height: 200, small: true };
-
-  resizeMap(prevProps) {
-    if (prevProps.small) {
-      return { width: 350, height: 300, small: false };
-    } else {
-      return { width: 300, height: 200, small: true };
-    }
+export default [
+  {
+    title: "Placemark 1",
+    descr: "Some description",
+    coords: [40.199236, 44.491040]
+  },
+  {
+    title: "Placemark 2",
+    descr: "Some description",
+    coords: [55.763338, 37.565466]
+  },
+  {
+    title: "Placemark 3",
+    descr: "Some description",
+    coords: [55.763338, 37.565466]
+  },
+  {
+    title: "Placemark 4",
+    descr: "Some description",
+    coords: [55.744522, 37.616378]
+  },
+  {
+    title: "Placemark 5",
+    descr: "Some description",
+    coords: [55.780898, 37.642889]
+  },
+  {
+    title: "Placemark 6",
+    descr: "Some description",
+    coords: [55.793559, 37.435983]
+  },
+  {
+    title: "Placemark 7",
+    descr: "Some description",
+    coords: [55.800584, 37.675638]
+  },
+  {
+    title: "Placemark 8",
+    descr: "Some description",
+    coords: [55.716733, 37.589988]
   }
-
-  render() {
-    const { width, height, small } = this.state;
-
-    return (
-      <YMaps>
-        <div id="map-basics">
-          <button onClick={() => this.setState(this.resizeMap)}>
-            {small ? 'Expand' : 'Collapse'}
-          </button>
-
-          <Map state={mapState} width={width} height={height} />
-        </div>
-      </YMaps>
-    );
-  }
-}
-
-export default FillContainer;
+];

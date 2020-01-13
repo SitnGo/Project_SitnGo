@@ -13,7 +13,6 @@ import {openSignInAction, openSignUPAction} from '../sign_in/actions';
     const dispatch =useDispatch();
     const StoreopenSignIn = useSelector(state => state.openSignIn);
     function handleSigninClick(){
-        console.log(props)
         dispatch(openSignInAction())
     }
     function handleSignUPClick(){

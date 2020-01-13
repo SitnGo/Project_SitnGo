@@ -16,22 +16,17 @@ import { Provider } from 'react-redux';
 import reducers from "./components/sign_in/reducers/reducers"
 import { useSelector } from 'react-redux';
 import  PersonalInfo from './components/profilePage/personalInfo';
+import NotFound from './components/404notFound/404notFoundScript';
 const store = createStore(reducers);
 
 function App() {
-    let isLogged = useSelector(state => state.isLogged);
-
-    // if(true) {
-    //     return <Redirect to="/profile"/>
-    // }
+    let isLogged = useSelector((state)=> state.isLoggedInUser);
     return (
         <div className="App">
             <Router>
-                <Provider store = {store}>
-                <Header />    
-                <AlertDialogSlide />
-                <AlertDialogSlideSignUp />
-                </Provider>
+                    <Header />
+                    <AlertDialogSlide />
+                    <AlertDialogSlideSignUp />
                 <Switch>
                     <Route exact path="/">
                         <HeaderImage/>
@@ -40,9 +35,9 @@ function App() {
                         <Contact/>
                         <ToTop/>
                     </Route>
-                   <Route path="/profile" component={PersonalInfo}/> 
-                
-                    <Route path="*" component={()=> "404 Not found"}/>
+                    { isLogged ?  <Route exact path="/profile" component={PersonalInfo}/> : null }
+                     
+                    <Route path="*" component={NotFound}/>
                 </Switch>
                 <Footer/>
             </Router>

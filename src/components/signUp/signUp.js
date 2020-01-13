@@ -5,7 +5,7 @@ import { Visibility, VisibilityOff, Phone, Email, AccountBox } from "@material-u
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import fire from '../../ConfigFirebase/Fire';
-import { openSignUPAction, loggedAction } from "../sign_in/actions"
+import { openSignUPAction, SignInAction } from "../sign_in/actions"
 import { useDispatch, connect } from 'react-redux';
 
 let PasswordValidator = require('password-validator');
@@ -23,17 +23,19 @@ const SignUp = (props) => {
     const [showPassword, setShowPassword] = useState(false)
     const [errors, setErrors] = useState({
         passwordError: { bool: false, errText: "" },
-        emailError: false,
+        emailError: { bool: false, errText: "" },
         nameError: { bool: false, errText: "" },
         surnameError: { bool: false, errText: "" },
         genderError: false,
+        phoneError: false,
     });
     useEffect(() => {
         confirmPassword === password ? setHasConfirmPasswordError(false) : setHasConfirmPasswordError(true)
-    }, [confirmPassword, password])
+    }, [confirmPassword])
 
     useEffect((() => {
         //////////////////////get all errors in array/////////////////////////////////////
+        console.log(errors)
         let arrFromErrorsValues = Object.values(errors)
         arrFromErrorsValues = arrFromErrorsValues.map(item => {
             if (item.hasOwnProperty("bool")) {
@@ -44,31 +46,37 @@ const SignUp = (props) => {
         })
         //////////////////check errors/////////////////////
 
-        if (((arrFromErrorsValues.every(item => item === false) && !hasConfirmPasswordError))) {
-            let userId;
+        if ((arrFromErrorsValues.every(item => item === false) && !hasConfirmPasswordError)) {
             fire.auth().createUserWithEmailAndPassword(email, password)
                 .then(() => {
                     fire.auth().signInWithEmailAndPassword(email, password)
                 })
                 .then(() => {
-                    userId = fire.auth().currentUser.uid;
+                    let userId = fire.auth().currentUser.uid;
+                    return userId
                 })
-                .then(() => {
-                    fire.firestore().collection("users").doc(userId).set({
+                .then((userId) => {
+                    let user = {
+                        userId: userId,
+                        userInfo: {
                         name: name,
                         surname: surname,
                         email: email,
                         gender: gender,
                         phone: phone,
-                    });
-                }).then(() => {
+                    }}
+                    fire.firestore().collection("users").doc(userId).set(user);
+                    return user;
+                }).then((user) => {
+                    dispatch(SignInAction(user));
+                }).then(()=>{
                     dispatch(openSignUPAction());
-                    dispatch(loggedAction());
                 })
                 .catch(function (error) {
-                    console.log(error)
                     let err = Object.assign({}, errors);
-                    setErrors(Object.assign(err, { emailError: true }))
+                    console.log(error)
+                    setErrors(Object.assign(err, { emailError: {bool: true, errText: "Email is not valid"} }))
+
                 });
         }
     }), [errors])
@@ -165,7 +173,7 @@ const SignUp = (props) => {
         /////////////////////////////////////////////////email/////////////////////////////////
         let validator = require("email-validator");
         if (!validator.validate(email)) {
-            setErrors(Object.assign(err, { emailError: true }))
+            setErrors(Object.assign(err, { emailError: {bool: true, errText: "Email is not valid or already in use"} }))
         } else {
             setErrors(Object.assign(err, { emailError: false }))
         }
@@ -183,11 +191,15 @@ const SignUp = (props) => {
                     `${phone[0]}${phone[1]}${phone[2]}` === "093" ||
                     `${phone[0]}${phone[1]}${phone[2]}` === "094" ||
                     `${phone[0]}${phone[1]}${phone[2]}` === "095" ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === "096" ||
                     `${phone[0]}${phone[1]}${phone[2]}` === "098"
                 ) {
                     setErrors(Object.assign(err, { phoneError: false }))
+                    break;
+                }else{
+                    setErrors(Object.assign(err, { phoneError: true }))
+                    break;
                 }
-                break;
             case 12:
                 if (
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === "+37410" ||
@@ -199,11 +211,16 @@ const SignUp = (props) => {
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === "+37493" ||
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === "+37494" ||
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === "+37495" ||
+                    `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === "+37496" ||
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === "+37498"
                 ) {
                     setErrors(Object.assign(err, { phoneError: false }))
                     break;
+                }else{
+                    setErrors(Object.assign(err, { phoneError: true }))
+                    break;
                 }
+                
             default:
                 setErrors(Object.assign(err, { phoneError: true }))
                 break;
@@ -212,16 +229,15 @@ const SignUp = (props) => {
 
     return (
         <div>
-            <div style={props.changeSignUpStyle ? classes.signUpContainer : classes.changeSignUpContainer} >
-               {
-               props.changeSignUpStyle ? 
-               (<Typography
+            <div style={classes.signUpContainer}>
+              
+               <Typography
                     variant="h3"
                     component="h3"
                     margin="normal"
-               >Sign up</Typography>) : 
-               null
-               }
+               >Sign up</Typography> 
+               
+               
                 <TextField 
                     autoFocus
                     margin="dense"
@@ -267,8 +283,8 @@ const SignUp = (props) => {
                 />
                 <TextField
                     margin="dense"
-                    error={errors.emailError}
-                    helperText={errors.emailError ? "Email is not valid or already is in use" : null}
+                    error={errors.emailError.bool}
+                    helperText={errors.emailError ? errors.emailError.errText : null}
                     color="primary"
                     variant="outlined"
                     label="Email"
@@ -355,30 +371,28 @@ const SignUp = (props) => {
                         )
                     }}
                 />
-                {/* {props.changeSignUpStyle ? <> */}
+                
                 <div style={errors.genderError ? {border: "1px solid red", borderRadius: "5px", marginBottom: 2} : {border: "none"}}>
                 <RadioGroup error row aria-label="gender" name="gender1" onChange={(e) => { setGender(e.target.value) }}>
                     <FormControlLabel value="male" control={<Radio style={classes.radio} />} label="Male" />
                     <FormControlLabel value="female" control={<Radio style={classes.radio} />} label="Female" />
                 </RadioGroup>
                 </div>
-                {/* </> : null */}
-                {/* } */}
+                
                 <Button
                     fullWidth
-                    style={props.changeSignUpStyle ?  classes.signUpButton : classes.changeSignUpButton}
+                    style={classes.signUpButton}
                     variant="contained"
                     onClick={checkErrorsHandler}
                 >Submit</Button>
-                {props.changeSignUpStyle ? <>
+                
                 <Button
                     fullWidth
                     style={classes.cancelButton}
                     variant="outlined"
                     onClick={() => dispatch(openSignUPAction())}
                 >Cancel</Button>
-                </> : null
-                }
+                
 
             </div>
         </div>

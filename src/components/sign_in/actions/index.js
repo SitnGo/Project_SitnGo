@@ -1,6 +1,12 @@
-export const loggedAction = () =>{
+export const SignInAction = (user) =>{
     return {
-        type:'SIGN_IN__SIGN_OUT'
+        type:'SIGN_IN',
+        payload: user,
+    };
+};
+export const signOutAction = () =>{
+    return {
+        type:'SIGN_OUT'
     };
 };
 export const openSignInAction = () =>{

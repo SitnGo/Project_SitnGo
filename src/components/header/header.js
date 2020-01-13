@@ -9,7 +9,6 @@ const Header = (props) => {
     const classes = styles();
     return(
     <header className={classes.navbar}>
-        {console.log(props)}
             <div className={classes.logoContainer}>
                 <RouterLink to='/'><img className={classes.logo} src="images/Logo.png" alt="Logo"/></RouterLink>
             </div>
@@ -20,6 +19,7 @@ const Header = (props) => {
 function mapStateToProps(state) {
     return {
         isLoggedInUser: state.isLoggedInUser,
+        user: state.user,
     };
 }
 

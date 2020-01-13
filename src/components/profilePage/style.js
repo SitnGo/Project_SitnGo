@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
     },
 
     confirmButton : {
-        width: "40%",
+        width: "46%",
         margin:"1% 0 0 25%",
         [theme.breakpoints.down('xs')] : {
             width:"46%",
