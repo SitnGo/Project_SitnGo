@@ -15,7 +15,8 @@ function HeaderWhenUserLoggedIn(props) {
     const classes = styles();
     function handleSignOut(){
         fire.auth().signOut().then(function() {
-            dispatch(signOutAction())          
+            dispatch(signOutAction())   
+            localStorage.setItem('isLogged','');       
         }).catch(function(error) {
             alert(error);
           });
@@ -32,7 +33,7 @@ function HeaderWhenUserLoggedIn(props) {
                     </RouterLink>
                 </li>
                 <li className={classes.menuItem}>
-                    <RouterLink to='/'>
+                    <RouterLink to='/OfferRoute'>
                         <Link
                             underline='hover'
                             className={classes.menuLink}

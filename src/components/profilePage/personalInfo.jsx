@@ -14,17 +14,13 @@ function usePersonalInfo() {
     const [bool, changeBool] = useState(false);
     const classes = useStyles();
     useEffect(()=>{
-        
         fire.firestore().collection("users")
     .get()
     .then(function(querySnapshot) {
-        
-        
         querySnapshot.docs.forEach((doc)=> {
-            
-            if(doc.id === "qr0L25B09EWkZccWgtG8RbyCrds1") {
-                
-                dataList.push(doc.data());
+            if(doc.id === fire.auth().currentUser.uid) {
+                let user = doc.data();
+                dataList.push(user.userInfo);
                 
             }
         });
@@ -60,7 +56,6 @@ function usePersonalInfo() {
             </div>
                   <hr/>
                     {isEdit ? (
-                    
                             <>  
                     {bool ? <Typography className={classes.typography}>Name  -  {dataList[0].name} </Typography>:<Skeleton height={60} component="p"/>}
                     {bool ? <Typography className={classes.typography}>Surname  -  {dataList[0].surname}</Typography>:<Skeleton height={60} component="p"/> }

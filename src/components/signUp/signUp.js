@@ -7,6 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import fire from '../../ConfigFirebase/Fire';
 import { openSignUPAction, SignInAction } from "../sign_in/actions"
 import { useDispatch, connect } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom'
+
 
 let PasswordValidator = require('password-validator');
 
@@ -71,6 +73,7 @@ const SignUp = (props) => {
                     dispatch(SignInAction(user));
                 }).then(()=>{
                     dispatch(openSignUPAction());
+                    // props.history.push("/profile");
                 })
                 .catch(function (error) {
                     let err = Object.assign({}, errors);
@@ -378,13 +381,14 @@ const SignUp = (props) => {
                     <FormControlLabel value="female" control={<Radio style={classes.radio} />} label="Female" />
                 </RadioGroup>
                 </div>
-                
+                <RouterLink to='/profile'>
                 <Button
                     fullWidth
                     style={classes.signUpButton}
                     variant="contained"
                     onClick={checkErrorsHandler}
                 >Submit</Button>
+                </RouterLink>
                 
                 <Button
                     fullWidth

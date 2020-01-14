@@ -8,8 +8,10 @@ export default function reducers(state = {
     switch (action.type) {
         
         case 'SIGN_IN':
+            localStorage.setItem('isLogged', 'true');
             return Object.assign({},state,{
-                isLoggedInUser: true,
+                isLoggedInUser: action.isLoggedInUser
+                ,
                 user: {
                     ...action.payload,
                 },
@@ -17,7 +19,7 @@ export default function reducers(state = {
 
         case 'SIGN_OUT':
             return Object.assign({},state,{
-                isLoggedInUser: false,
+                isLoggedInUser: localStorage.getItem('isLogged'),
                 user: null,
             });
         case 'OPEN_OR_CLOSE_SIGN_IN':
