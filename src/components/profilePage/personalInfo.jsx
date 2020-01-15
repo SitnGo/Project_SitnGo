@@ -50,10 +50,9 @@ function usePersonalInfo(props) {
                 <Paper elevation={3} className={classes.personalInfoBlock1}>
             
                 <div className={classes.header2}>
-                {   isEdit ? (<Avatar className={classes.bigAvatar} src="./images/avatar.png"></Avatar>)
+                {   isEdit ? (<Avatar className={classes.bigAvatar} src={localStorage.getItem("url")}></Avatar>)
                  :
                     <DropzoneDialog/>
-                    // <Fileup/>
                 }
                 
             </div>
@@ -68,7 +67,7 @@ function usePersonalInfo(props) {
                         ) : (
                             <>
                             <FadeIn>
-                                <UpdateForm data={bool ? [dataList[0].email, dataList[0].phone] : null} userId={fire.auth().currentUser.uid}/>
+                                <UpdateForm data={bool ? [user.userInfo.email, user.userInfo.email] : null} userId={fire.auth().currentUser.uid}/>
                                 <Button className={classes.confirmButton} onClick={isConfirmBtnClick} variant="contained"   color="secondary">cancel</Button>
                             </FadeIn>
                         </>
