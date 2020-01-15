@@ -13,11 +13,9 @@ const useStyles = makeStyles(theme => ({
     personalInfoBlock1: {
         float:"left",
         position:"relative",
-        backgroundColor:"rgba(255, 255, 255, 0.68)",  //"#f5f5f5",
+        backgroundColor:"rgba(255, 255, 255, 0.68)",
         width:"100%",
         height:"100%",
-        // height:"calc(100vh-40vh)",
-        // padding:"30px",
         [theme.breakpoints.down('xs')]: {
             width: "100%",
         },
@@ -30,6 +28,11 @@ const useStyles = makeStyles(theme => ({
         height:120,
         zIndex:222,
     },
+    textfield: {
+        margin:theme.spacing(1),
+        width:"50%",              
+    },
+ 
     typography: {
         margin: theme.spacing(4),
     },
@@ -55,7 +58,7 @@ const useStyles = makeStyles(theme => ({
     },
 
     confirmButton : {
-        width: "46%",
+        width: "50%",
         margin:"1% 0 0 25%",
         [theme.breakpoints.down('xs')] : {
             width:"46%",

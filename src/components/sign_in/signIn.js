@@ -9,7 +9,7 @@ import { SignInAction } from './actions';
 import FormDialog from './forgot';
 import { openSignInAction } from "./actions"
 import {styles} from './style';
-import { Link as RouterLink, withRouter } from 'react-router-dom'
+import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom'
 
 export function SignIn(props) {
     const [email, setEmail] = useState("");

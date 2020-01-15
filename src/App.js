@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import Header from "./components/header/header";
 import HeaderImage from "./components/headerImage/headerImage";
@@ -7,7 +7,7 @@ import Footer from './components/footer/footer'
 import About from "./components/about/about";
 import Contact from "./components/contact/contact";
 import ToTop from "./components/totop/toTop";
-import {BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import SignUp from "./components/signUp/signUp";
 import AlertDialogSlide from "./components/sign_in/dialogSignIn";
 import AlertDialogSlideSignUp from "./components/signUp/dialogSignUp"
@@ -20,7 +20,12 @@ import NotFound from './components/404notFound/404notFoundScript';
 const store = createStore(reducers);
 
 function App() {
+    
     let isLogged = useSelector((state)=> state.isLoggedInUser);
+
+    
+        
+        
     return (
         <div className="App">
             <Router>
@@ -35,8 +40,7 @@ function App() {
                         <Contact/>
                         <ToTop/>
                     </Route>
-                    { isLogged ?  <Route exact path="/profile" component={PersonalInfo}/> : null }
-                     
+                     <Route  exact path="/profile" component={PersonalInfo}/>
                     <Route path="*" component={NotFound}/>
                 </Switch>
                 <Footer/>

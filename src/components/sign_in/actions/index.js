@@ -19,3 +19,9 @@ export const openSignUPAction = () =>{
         type:'OPEN_OR_CLOSE_SIGN_UP'
     };
 };
+
+export const confirmUpdate = () => {
+    return { 
+        type:'CONFIRM_DATA_UPDATE'
+    }
+}
