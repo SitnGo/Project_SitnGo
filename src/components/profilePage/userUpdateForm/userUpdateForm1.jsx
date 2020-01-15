@@ -13,13 +13,36 @@ function UpdateForm (props) {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [phone, setPhone] = useState(props.data[1]);
-    console.log(props.userId);
+    const [errors, setErrors] = useState({
+        passwordError: { bool: false, errText: "" },
+        emailError: { bool: false, errText: "" },
+        nameError: { bool: false, errText: "" },
+        surnameError: { bool: false, errText: "" },
+        genderError: false,
+        phoneError: false,
+    });
     fire.firestore().collection("users").doc(props.userId).update({phone: "077897"});
+
+
+//     function checkErrorsHandler() {
+//         let text = null;
+//         let err = Object.assign({}, errors);
+// /////////////////////////////////////////////////email/////////////////////////////////
+//         let validator = require("email-validator");
+//         if (!validator.validate(email)) {
+//             setErrors(Object.assign(err, { emailError: {bool: true, errText: "Email is not valid or already in use"} }))
+//         } else {
+//             setErrors(Object.assign(err, { emailError: false }))
+//         }
+//     }    
     return (
         <Grid container direction="column" justify="center" alignItems="center" className={classes.updateBlock}>
-            <TextField  className={classes.textfield} label="email" variant="filled" onChange={(e) => {setEmail(e.target.value)}}
+            <TextField  className={classes.textfield} 
+            label="email" 
+            variant="filled"
+            onChange={(e) => {setEmail(e.target.value)}}
             value={email}
-            
+            // helperText={errors.emailError ? errors.emailError.errText : null}
             InputProps={{
                 endAdornment: (
                     <InputAdornment position="end">

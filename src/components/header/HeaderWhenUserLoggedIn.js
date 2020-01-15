@@ -60,7 +60,6 @@ function HeaderWhenUserLoggedIn(props) {
                         className={classes.sign}
                         onClick={handleSignOut}
                     >Sign Out</Button>
-                    {/* {localStorage.setItem("url", "")} */}
                 </RouterLink>
             </div>
         </>

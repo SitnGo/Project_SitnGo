@@ -11,7 +11,6 @@ import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
 import { useDispatch, useSelector, connect} from 'react-redux';
 
-const dataList = [];
 function usePersonalInfo(props) {
     const [isEdit, setEditValue] = useState(true);
     const [bool, changeBool] = useState(false);
@@ -67,7 +66,7 @@ function usePersonalInfo(props) {
                         ) : (
                             <>
                             <FadeIn>
-                                <UpdateForm data={bool ? [user.userInfo.email, user.userInfo.email] : null} userId={fire.auth().currentUser.uid}/>
+                                <UpdateForm data={bool ? [user.userInfo.email, user.userInfo.phone] : null} userId={fire.auth().currentUser.uid}/>
                                 <Button className={classes.confirmButton} onClick={isConfirmBtnClick} variant="contained"   color="secondary">cancel</Button>
                             </FadeIn>
                         </>
