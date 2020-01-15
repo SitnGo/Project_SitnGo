@@ -1,12 +1,16 @@
-export const SignInAction = (user) =>{
+export const SignInAction = (user, bool) =>{
     return {
         type:'SIGN_IN',
-        payload: user,
+        payload: {
+            user: user,
+            bool: bool,
+        },
     };
 };
-export const signOutAction = () =>{
+export const signOutAction = (bool) =>{
     return {
-        type:'SIGN_OUT'
+        type:'SIGN_OUT',
+        payload: bool,
     };
 };
 export const openSignInAction = () =>{

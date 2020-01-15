@@ -8,6 +8,8 @@ import fire from '../../ConfigFirebase/Fire';
 import { openSignUPAction, SignInAction } from "../sign_in/actions"
 import { useDispatch, connect } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom'
+import {useCookies} from 'react-cookie';
+
 
 
 let PasswordValidator = require('password-validator');
@@ -31,6 +33,8 @@ const SignUp = (props) => {
         genderError: false,
         phoneError: false,
     });
+    const [cookies, setCookie, removeCookie] = useCookies(['loginPassword']);
+
     useEffect(() => {
         confirmPassword === password ? setHasConfirmPasswordError(false) : setHasConfirmPasswordError(true)
     }, [confirmPassword])
@@ -49,6 +53,7 @@ const SignUp = (props) => {
         //////////////////check errors/////////////////////
 
         if ((arrFromErrorsValues.every(item => item === false) && !hasConfirmPasswordError)) {
+            let loginPassword = {email: email, password: password}
             fire.auth().createUserWithEmailAndPassword(email, password)
                 .then(() => {
                     fire.auth().signInWithEmailAndPassword(email, password)
@@ -68,12 +73,17 @@ const SignUp = (props) => {
                         phone: phone,
                     }}
                     fire.firestore().collection("users").doc(userId).set(user);
-                    return user;
-                }).then((user) => {
-                    dispatch(SignInAction(user));
-                }).then(()=>{
+                    localStorage.setItem("isLogged","true");
+                    setCookie('loginPassword', loginPassword, { path: '/' });
+                    localStorage.setItem("userId",userId); 
+                    return {user: user, id:userId};
+                }).then((result) => {
+                    dispatch(SignInAction(result.user));
+                    return result
+
+                }).then((result)=>{
                     dispatch(openSignUPAction());
-                    // props.history.push("/profile");
+                    return result
                 })
                 .catch(function (error) {
                     let err = Object.assign({}, errors);

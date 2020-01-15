@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import { styles } from "./style";
 import { Link, Button } from "@material-ui/core";
 import { Link as RouterLink } from 'react-router-dom'
@@ -15,9 +15,14 @@ function HeaderWhenUserLoggedIn(props) {
     const classes = styles();
     function handleSignOut(){
         fire.auth().signOut().then(function() {
-            dispatch(signOutAction())   
-            localStorage.setItem('isLogged','');       
-        }).catch(function(error) {
+                    localStorage.setItem('isLogged','false');
+                    localStorage.removeItem("userId")
+                    return JSON.parse(localStorage.getItem("isLogged"))      
+        })
+        .then((result)=>{
+            dispatch(signOutAction(result))
+        })
+        .catch(function(error) {
             alert(error);
           });
     }
