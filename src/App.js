@@ -8,7 +8,6 @@ import About from "./components/about/about";
 import Contact from "./components/contact/contact";
 import ToTop from "./components/totop/toTop";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import SignUp from "./components/signUp/signUp";
 import AlertDialogSlide from "./components/sign_in/dialogSignIn";
 import AlertDialogSlideSignUp from "./components/signUp/dialogSignUp"
 import { createStore } from 'redux';
@@ -17,6 +16,7 @@ import reducers from "./components/sign_in/reducers/reducers"
 import { useSelector } from 'react-redux';
 import  PersonalInfo from './components/profilePage/personalInfo';
 import NotFound from './components/404notFound/404notFoundScript';
+import OfferRoute from './components/Offer Route/offerRoute'
 const store = createStore(reducers);
 
 function App() {
@@ -40,7 +40,15 @@ function App() {
                         <Contact/>
                         <ToTop/>
                     </Route>
-                     <Route  exact path="/profile" component={PersonalInfo}/>
+                    { localStorage.getItem('isLogged') ?  
+                    <>
+                    <Route exact path="/profile" component={PersonalInfo}/>
+                     <Route exact path ="/offerRoute" > 
+                     <HeaderImage/> 
+                     <OfferRoute/>
+                    </Route> 
+                    </>
+                    : null }
                     <Route path="*" component={NotFound}/>
                 </Switch>
                 <Footer/>

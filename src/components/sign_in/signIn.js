@@ -46,6 +46,7 @@ export function SignIn(props) {
                 dispatch(openSignInAction());
             });
             props.history.push("/profile");
+
             setIsAnError(false);
             setEmail("");
             setPassword("");

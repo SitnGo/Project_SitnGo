@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect} from 'react';     
 import {Typography, Button, Avatar, Paper, Grid} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -9,24 +9,22 @@ import fire from '../../ConfigFirebase/Fire';
 import { useDispatch, connect } from 'react-redux';
 import {confirmUpdate} from '../sign_in/actions/index';
 import FadeIn from 'react-fade-in';
-import { FilePicker } from 'react-file-picker'
+
 import DropzoneDialog from './uploadImage/upload';
+
+// import Fileup from './uploadImage/upload';
 
 const dataList = [];
 
-function usePersonalInfo() {
-    
+function usePersonalInfo() {    
     const [isEdit, setEditValue] = useState(true);
     const [bool, changeBool] = useState(false);
     const classes = useStyles();
     const dispatch = useDispatch();
     useEffect(()=>{
-        
         fire.firestore().collection("users")
     .get()
     .then(function(querySnapshot) {
-        
-        
         querySnapshot.docs.forEach((doc)=> {
             
             if(doc.id === fire.auth().currentUser.uid) {
@@ -60,12 +58,12 @@ function usePersonalInfo() {
                 {   isEdit ? (<Avatar className={classes.bigAvatar} src="./images/avatar.png"></Avatar>)
                  :
                     <DropzoneDialog/>
+                    // <Fileup/>
                 }
                 
             </div>
                   <hr/>
                     {isEdit ? (
-                    
                             <>  
                     {bool ? <Typography className={classes.typography}>Name  -  {dataList[0].name} </Typography>:<Skeleton height={60} component="p"/>}
                     {bool ? <Typography className={classes.typography}>Surname  -  {dataList[0].surname}</Typography>:<Skeleton height={60} component="p"/> }
