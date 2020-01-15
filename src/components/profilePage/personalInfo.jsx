@@ -6,40 +6,35 @@ import Tab from './tabInformation';
 import UpdateForm from './userUpdateForm/userUpdateForm1';
 import useStyles from './style';
 import fire from '../../ConfigFirebase/Fire';
-import { useDispatch, connect } from 'react-redux';
 import {confirmUpdate} from '../sign_in/actions/index';
 import FadeIn from 'react-fade-in';
-
 import DropzoneDialog from './uploadImage/upload';
-
-// import Fileup from './uploadImage/upload';
+import { useDispatch, useSelector, connect} from 'react-redux';
 
 const dataList = [];
-
-function usePersonalInfo() {    
+function usePersonalInfo(props) {
     const [isEdit, setEditValue] = useState(true);
     const [bool, changeBool] = useState(false);
+    const [user, setUser] = useState({});
     const classes = useStyles();
     const dispatch = useDispatch();
     useEffect(()=>{
-        fire.firestore().collection("users")
-    .get()
-    .then(function(querySnapshot) {
-        querySnapshot.docs.forEach((doc)=> {
-            
-            if(doc.id === fire.auth().currentUser.uid) {
-                
-                dataList.push(doc.data());
-                
+        async function getMarker(user={}) {
+            let userId;
+            if (localStorage.getItem("userId")){
+                userId = localStorage.getItem("userId")                
+            }else{
+                userId = fire.auth().currentUser.uid;
             }
+            user = await fire.firestore().collection("users").doc(userId).get()
+                user = user.data();
+            return user;
+        }
+        getMarker().then(result => {
+            setUser(result);
+            changeBool(true);
         });
-        changeBool(true);
-    })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });
-    
-    });
+    },[]);
     function isEditBtnClick() {
         setEditValue(false);
         dispatch(confirmUpdate());
@@ -65,11 +60,10 @@ function usePersonalInfo() {
                   <hr/>
                     {isEdit ? (
                             <>  
-                    {bool ? <Typography className={classes.typography}>Name  -  {dataList[0].name} </Typography>:<Skeleton height={60} component="p"/>}
-                    {bool ? <Typography className={classes.typography}>Surname  -  {dataList[0].surname}</Typography>:<Skeleton height={60} component="p"/> }
-                    {bool ? <Typography className={classes.typography}>Email  -  {dataList[0].email}</Typography>:<Skeleton height={60} component="p"/>}
-                    {bool ? <Typography className={classes.typography}>Phone  -  {dataList[0].phone}</Typography>:<Skeleton height={60} component="p"/> } 
-                    
+                    {bool ? <Typography className={classes.typography}>Name  -  {user.userInfo.name} </Typography>:<Skeleton height={60} component="p"/>}
+                    {bool ? <Typography className={classes.typography}>Surname  -  {user.userInfo.surname}</Typography>:<Skeleton height={60} component="p"/> }
+                    {bool ? <Typography className={classes.typography}>Phone  -  {user.userInfo.phone}</Typography>:<Skeleton height={60} component="p"/> } 
+                    {bool ? <Typography className={classes.typography}>Email  -  {user.userInfo.email}</Typography>:<Skeleton height={60} component="p"/>}
                         </>
                         ) : (
                             <>
@@ -96,9 +90,11 @@ function usePersonalInfo() {
 </Grid>
     );
 }
+
 function mapStateToProps(state) {
     return {
-        confirmUpdate: state.confirmUpdate
+        user: state.user,
+        isLoggedInUser: state.isLoggedInUser,
     };
 }
-export default connect(mapStateToProps)(usePersonalInfo);
+export default connect(mapStateToProps)(usePersonalInfo)

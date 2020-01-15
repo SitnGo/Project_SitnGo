@@ -9,7 +9,8 @@ import { SignInAction } from './actions';
 import FormDialog from './forgot';
 import { openSignInAction } from "./actions"
 import {styles} from './style';
-import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom'
+import { Link as RouterLink, withRouter } from 'react-router-dom'
+import {useCookies} from 'react-cookie';
 
 export function SignIn(props) {
     const [email, setEmail] = useState("");
@@ -19,6 +20,7 @@ export function SignIn(props) {
     const [showPassword, setShowPassword] = useState(false);
     const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
+    const [cookies, setCookie, removeCookie] = useCookies(['loginPassword']);
     const setIsErsed = props.setIsErsed;
     const handleClose = () => {
         dispatch(openSignInAction())
@@ -33,16 +35,21 @@ export function SignIn(props) {
     let Id = useSelector(state=>state.userId)
 
     function login() {
+        let loginPassword = {email: email, password: password}
+        console.log(loginPassword)
         fire.auth().signInWithEmailAndPassword(email, password)
         .then(a => {
             async function getMarker(user={}) {
                 const userId = fire.auth().currentUser.uid;
                 user = await fire.firestore().collection("users").doc(userId).get()
                 user = user.data();
+                localStorage.setItem("isLogged","true");
+                setCookie('loginPassword', loginPassword, { path: '/' });
+                localStorage.setItem("userId",userId);    
                 return user;
             }
             getMarker().then(result => {
-                dispatch(SignInAction(result));
+                dispatch(SignInAction(result, JSON.parse(localStorage.getItem("isLogged"))));
                 dispatch(openSignInAction());
             });
             props.history.push("/profile");
