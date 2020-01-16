@@ -6,7 +6,6 @@ import Tab from './tabInformation';
 import UpdateForm from './userUpdateForm/userUpdateForm1';
 import useStyles from './style';
 import fire from '../../ConfigFirebase/Fire';
-import {confirmUpdate} from '../sign_in/actions/index';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
 import { useDispatch, useSelector, connect} from 'react-redux';
@@ -17,11 +16,12 @@ function usePersonalInfo(props) {
     // })
     // fire.auth().onAuthStateChanged(function(user) {
     //     if (user) {
-    //       user.updateEmail("asd110@gmail.com").then(()=>{
+    //     //   user.updateEmail("asd11@gmail.com").then(()=>{
     //             console.log(user.email);
-    //         })
+    //             console.log("AW");
+    //         // })
     //     } else {
-    //       // No user is signed in.
+    //     //   No user is signed in.
     //       alert("null");
     //     }
     //   });
@@ -29,7 +29,7 @@ function usePersonalInfo(props) {
     const [bool, changeBool] = useState(false);
     const [user, setUser] = useState({});
     const classes = useStyles();
-    const dispatch = useDispatch();
+
     useEffect(()=>{
         async function getMarker(user={}) {
             let userId;
@@ -49,13 +49,11 @@ function usePersonalInfo(props) {
     },[]);
     function isEditBtnClick() {
         setEditValue(false);
-        dispatch(confirmUpdate());
     }
     function isConfirmBtnClick() {
         setEditValue(true);
     
     }
-  
     return(
 <Grid container sm={12}  className={classes.profileContainer}>
             <Grid item sm={4} xs={12}>

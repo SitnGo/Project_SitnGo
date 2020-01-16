@@ -35,6 +35,7 @@ export function SignIn(props) {
     let Id = useSelector(state=>state.userId)
 
     function login() {
+       
         let loginPassword = {email: email, password: password}
         console.log(loginPassword)
         fire.auth().signInWithEmailAndPassword(email, password)
@@ -57,12 +58,12 @@ export function SignIn(props) {
             setIsAnError(false);
             setEmail("");
             setPassword("");
+        
         })
         .catch(error => {
             setIsAnError(true);
             setErrorMessage(error.message)
-        });
-        
+        }); 
     }
 
     function signup(e) {
@@ -121,12 +122,7 @@ export function SignIn(props) {
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle"
-                                    edge="end"
-                                >
-                                    <Email />
-                                </IconButton>
+                                <Email />
                             </InputAdornment>
                         )
                     }}

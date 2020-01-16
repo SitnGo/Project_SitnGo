@@ -5,13 +5,14 @@ import { Visibility, VisibilityOff, Phone, Email} from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import fire from '../../../ConfigFirebase/Fire';
-import { useSelector } from 'react-redux';
-
-
+import {confirmUpdate} from '../../sign_in/actions/index';
+import { useDispatch, connect } from 'react-redux';
 let PasswordValidator = require('password-validator');
 
 function UpdateForm (props) {
+    
     const classes = useStyles();
+    const dispatch = useDispatch();
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState(props.data[0]);
     const [password, setPassword] = useState("");
@@ -31,7 +32,8 @@ function UpdateForm (props) {
     }, [confirmPassword])
 
 //////////////////////get all errors in array/////////////////////////////////////
-    let arrFromErrorsValues = Object.values(errors)
+useEffect((() => {  
+let arrFromErrorsValues = Object.values(errors)
     arrFromErrorsValues = arrFromErrorsValues.map(item => {
         if (item.hasOwnProperty("bool")) {
             return item.bool;
@@ -40,29 +42,31 @@ function UpdateForm (props) {
         }
     })
 
-    // fire.auth().onAuthStateChanged(function(user) {
-    //     if (user) {
-    //         alert(user);
-    //     //   user.updateEmail(doc.data().userInfo.email).then(()=>{
-    //     //         console.log(user.email);
-    //     //     })
-    //     } else {
-        
-    //       // No user is signed in.
-    //     }
-    // });
      //////////////////check errors/////////////////////
-    fire.firestore().collection("users").doc(props.userId).get().then((doc)=>{
+     if ((arrFromErrorsValues.every(item => item === false) && !hasConfirmPasswordError)) {
         // console.log(fire.auth().currentUser);
-        // fire.auth().onAuthStateChanged((user)=>{
-        //     console.log(user);
-        // })
-        // fire.auth().currentUser.updateEmail("asd11@mail.ru").then(()=> {console.log("AWD")}).catch((e)=>{console.log(e)});
+     fire.firestore().collection("users").doc(props.userId).get().then((doc)=>{
+         
+    fire.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            alert(user);
+            user.updateEmail(email).then(()=>{
+            // fire.auth().signInWithEmailAndPassword(email, "asddsaA1")
+            console.log(user.email);
+            })
 
-       
+            user.updatePassword(password).then(()=> {
+                console.log("AWD");
+            })
+        } else {
+            // alert(null);
+            console.log(null);
+          // No user is signed in.
+        }
+    });
         fire.firestore().collection("users").doc(props.userId).update({
             userInfo: {
-                // name:doc.data().userInfo.name,
+                name:doc.data().userInfo.name,
                 surname: doc.data().userInfo.surname,
                 email: email,
                 gender: doc.data().userInfo.gender,
@@ -72,24 +76,9 @@ function UpdateForm (props) {
         });
     });
     
-
-    //  if ((arrFromErrorsValues.every(item => item === false) && !hasConfirmPasswordError)) {
-        // console.log(fire.auth().currentUser);
-     fire.firestore().collection("users").doc(props.userId).get().then((doc)=>{
-        // fire.auth().currentUser.updateEmail("asd111@mail.ru").then(()=> {console.log("AWD")}).catch((e)=>{console.log(e)});
-        fire.firestore().collection("users").doc(props.userId).update({
-            userInfo: {
-                // name:doc.data().userInfo.name,
-                surname: doc.data().userInfo.surname,
-                email: email,
-                gender: doc.data().userInfo.gender,
-                phone: phone,
-            }
-        
-        });
-    });
-    //  }
-
+    dispatch(confirmUpdate());
+     }
+    }), [errors])
     function checkErrorsHandler() {
         let text = null;
         let err = Object.assign({}, errors);
@@ -105,8 +94,11 @@ function UpdateForm (props) {
             .has().lowercase()                            // Must have lowercase letters
             .has().digits()                                    // Must have digits
             .has().not().spaces()
-        if (!passwordValidator.validate(password)) {
+        if (password.trim() !== "" && !passwordValidator.validate(password)) {
             let failedList = passwordValidator.validate(password, { list: true });
+           
+
+           
             for (let i = 0; i < failedList.length; i++) {
                 switch (failedList[i]) {
                     case "min":
@@ -123,9 +115,9 @@ function UpdateForm (props) {
                         break;
                 }
             }
-            if(password.trim() !== "") {
-                setErrors(Object.assign(err, { passwordError: { bool: true, errText: text } }))
-            }
+            
+            setErrors(Object.assign(err, { passwordError: { bool: true, errText: text } }))
+            
             
         } else {
             setErrors(Object.assign(err, { passwordError: { bool: false, errText: null } }))
@@ -186,6 +178,7 @@ function UpdateForm (props) {
                 setErrors(Object.assign(err, { phoneError: true }))
                 break;
         }
+        
     }    
     return (
         <Grid container direction="column" justify="center" alignItems="center" className={classes.updateBlock}>
@@ -275,5 +268,11 @@ function UpdateForm (props) {
         
     );
 }
-
-export default UpdateForm;
+function mapStateToProps(state) {
+    return {
+        confirmUpdate:state.confirmUpdate,
+        // willOpenSignUP: state.willOpenSignUP,
+        // isLoggedInUser: state.isLoggedInUser,
+    };
+}
+export default connect(mapStateToProps)(UpdateForm);

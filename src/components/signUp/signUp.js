@@ -106,7 +106,7 @@ const SignUp = (props) => {
             .has().not().spaces()
             .has().not().digits()
             .is().min(2)
-            .is().max(10)
+            .is().max(20)
         if (!inputValidator.validate(name)) {
             let failedListName = inputValidator.validate(name, { list: true });
             for (let i = 0; i < failedListName.length; i++) {
