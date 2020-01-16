@@ -14,7 +14,7 @@ import AlertDialogSlideSignUp from "./components/signUp/dialogSignUp"
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducers from "./components/sign_in/reducers/reducers"
-import { useSelector } from 'react-redux';
+
 
 const store = createStore(reducers);
 
@@ -24,7 +24,6 @@ function App() {
             <Router>
                 <Provider store = {store}>
                 <Header />
-                
                 <AlertDialogSlide />
                 <AlertDialogSlideSignUp />
                 </Provider>

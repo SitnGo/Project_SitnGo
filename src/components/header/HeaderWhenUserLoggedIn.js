@@ -5,8 +5,6 @@ import { Link as RouterLink } from 'react-router-dom'
 import { connect, useDispatch } from 'react-redux';
 import { loggedAction } from '../sign_in/actions';
 
-
-
 function HeaderWhenUserLoggedIn(props) {
     const dispatch = useDispatch();
 
@@ -19,7 +17,7 @@ function HeaderWhenUserLoggedIn(props) {
         <>
             <ul className={classes.menu} >
                 <li className={classes.menuItem}>
-                    <RouterLink to='/'>
+                    <RouterLink to='/GetRout'>
                         <Link
                             underline='hover'
                             className={classes.menuLink}
