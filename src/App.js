@@ -7,23 +7,20 @@ import Footer from './components/footer/footer'
 import About from "./components/about/about";
 import Contact from "./components/contact/contact";
 import ToTop from "./components/totop/toTop";
+import reducers from "./components/sign_in/reducers/reducers"
+import NotFound from './components/404notFound/404notFoundScript';
+import {useCookies} from 'react-cookie';
+import { signOutAction, SignInAction } from './components/sign_in/actions/index';
+import OfferRoute from './components/offerRoute/offerRoute'
+import GetRout from "./components/getRout/getRout";
+import { useDispatch} from 'react-redux';
+import fire from './ConfigFirebase/Fire';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { createStore } from 'redux';
+import { useSelector } from 'react-redux';
 import AlertDialogSlide from "./components/sign_in/dialogSignIn";
 import AlertDialogSlideSignUp from "./components/signUp/dialogSignUp"
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import reducers from "./components/sign_in/reducers/reducers"
-import { useSelector } from 'react-redux';
-import  PersonalInfo from './components/profilePage/personalInfo';
-import NotFound from './components/404notFound/404notFoundScript';
-import OfferRoute from './components/Offer Route/offerRoute'
-import {useCookies} from 'react-cookie';
-import { useDispatch} from 'react-redux';
-import { signOutAction, SignInAction } from './components/sign_in/actions/index';
-import fire from './ConfigFirebase/Fire';
-
-
-   
+import PersonalInfo from './components/profilePage/personalInfo';
 
 const store = createStore(reducers);
 
@@ -51,9 +48,6 @@ function App() {
                     dispatch(SignInAction(result));
                 });
             })
-    
-
-            
 
 
         //     async function getMarker(user={}) {
@@ -74,9 +68,9 @@ function App() {
     return (
         <div className="App">
             <Router>
-                    <Header />
-                    <AlertDialogSlide />
-                    <AlertDialogSlideSignUp />
+                <Header />
+                <AlertDialogSlide />
+                <AlertDialogSlideSignUp />
                 <Switch>
                     <Route exact path="/">
                         <HeaderImage/>
@@ -87,12 +81,14 @@ function App() {
                     </Route>
                     { JSON.parse(localStorage.getItem('isLogged')) ?  
                     <>
-                    <Route exact path="/profile" component={PersonalInfo}/>
-                     <Route exact path ="/offerRoute" > 
-                     <HeaderImage/> 
-                     <OfferRoute/>
-                    </Route> 
-                    
+                        <Route exact path="/profile" component={PersonalInfo}/>
+                        <Route exact path ="/offerRoute" >
+                            <HeaderImage/>
+                            <OfferRoute/>
+                        </Route>
+                        <Route path="/getRout">
+                            <GetRout/>
+                        </Route>
                     </>
                     : <Route path="*" component={NotFound}/> }
                     <Route path="*" component={NotFound}/>
@@ -102,6 +98,5 @@ function App() {
         </div>
     );
 }
-
 
 export default App;

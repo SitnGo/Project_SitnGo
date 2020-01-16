@@ -1,12 +1,10 @@
-import React ,{useState} from 'react';
+import React from 'react';
 import { styles } from "./style";
 import { Link, Button } from "@material-ui/core";
 import { Link as RouterLink } from 'react-router-dom'
 import { connect, useDispatch } from 'react-redux';
 import { signOutAction } from '../sign_in/actions';
 import fire from '../../ConfigFirebase/Fire';
-
-
 
 
 function HeaderWhenUserLoggedIn(props) {
@@ -30,7 +28,7 @@ function HeaderWhenUserLoggedIn(props) {
         <>
             <ul className={classes.menu} >
                 <li className={classes.menuItem}>
-                    <RouterLink to='/'>
+                    <RouterLink to='/GetRout'>
                         <Link
                             underline='hover'
                             className={classes.menuLink}
@@ -38,7 +36,7 @@ function HeaderWhenUserLoggedIn(props) {
                     </RouterLink>
                 </li>
                 <li className={classes.menuItem}>
-                    <RouterLink to='/OfferRoute'>
+                    <RouterLink to='/offerRoute'>
                         <Link
                             underline='hover'
                             className={classes.menuLink}
@@ -46,7 +44,6 @@ function HeaderWhenUserLoggedIn(props) {
                     </RouterLink>
                 </li>
             </ul>
-
             <div className={classes.signButtonsContainer}>
                 <RouterLink to='profile' className={classes.signButton}>
                     <Button
@@ -60,7 +57,6 @@ function HeaderWhenUserLoggedIn(props) {
                         className={classes.sign}
                         onClick={handleSignOut}
                     >Sign Out</Button>
-                    {/* {localStorage.setItem("url", "")} */}
                 </RouterLink>
             </div>
         </>
