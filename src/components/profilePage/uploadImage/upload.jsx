@@ -4,6 +4,7 @@ import {Avatar} from '@material-ui/core';
 import {DropzoneDialog} from 'material-ui-dropzone'
 import storage from '../../../ConfigFirebase/storage';
 import fire from '../../../ConfigFirebase/Fire';
+let imgUrl = "a";
 class DropzoneDialogModeal extends React.Component {
     
     constructor(props) {
@@ -11,7 +12,7 @@ class DropzoneDialogModeal extends React.Component {
         this.state = {
             open: false,
             bool:false,
-            url:"",
+            // url:"",
             files: []
 
         };
@@ -28,8 +29,7 @@ class DropzoneDialogModeal extends React.Component {
             files, 
             open: false
         });
-        //  if (fire.auth().currentUser.uid === ) {
-
+  
         
         const uploadFile = storage.ref(`images/${fire.auth().currentUser.uid}/${files[0].name}`).put(...files);
         uploadFile.on("state_changed", 
@@ -44,11 +44,11 @@ class DropzoneDialogModeal extends React.Component {
                 storage.ref(`images/${fire.auth().currentUser.uid}`).child(files[0].name).getDownloadURL().then(url=>{
                     // localStorage.setItem("url", url);
                     this.setState(()=>({url,}));
+                    
                     // console.log(fire.auth().currentUser.uid);
                     // this.setState({bool: !this.state.bool});
                 })
             });
-        // }  
     }
     
     handleOpen = () => {

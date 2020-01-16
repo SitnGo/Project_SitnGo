@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     personalInfoBlock1: {
         float:"left",
         position:"relative",
-        backgroundColor:"rgba(255, 255, 255, 0.68)",
+        backgroundColor:"rgba(255, 252, 252, 0.88)",
         width:"100%",
         height:"100%",
         [theme.breakpoints.down('xs')]: {

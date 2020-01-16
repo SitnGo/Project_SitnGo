@@ -12,6 +12,19 @@ import DropzoneDialog from './uploadImage/upload';
 import { useDispatch, useSelector, connect} from 'react-redux';
 
 function usePersonalInfo(props) {
+    // fire.auth().currentUser.updateEmail("asd10@gmail.com").then(()=>{
+    //     console.log(fire.auth().currentUser.email);
+    // })
+    // fire.auth().onAuthStateChanged(function(user) {
+    //     if (user) {
+    //       user.updateEmail("asd110@gmail.com").then(()=>{
+    //             console.log(user.email);
+    //         })
+    //     } else {
+    //       // No user is signed in.
+    //       alert("null");
+    //     }
+    //   });
     const [isEdit, setEditValue] = useState(true);
     const [bool, changeBool] = useState(false);
     const [user, setUser] = useState({});
@@ -49,7 +62,7 @@ function usePersonalInfo(props) {
                 <Paper elevation={3} className={classes.personalInfoBlock1}>
             
                 <div className={classes.header2}>
-                {   isEdit ? (<Avatar className={classes.bigAvatar} src={localStorage.getItem("url")}></Avatar>)
+                {   isEdit ? (<Avatar className={classes.bigAvatar} src=""></Avatar>)
                  :
                     <DropzoneDialog/>
                 }
@@ -66,7 +79,7 @@ function usePersonalInfo(props) {
                         ) : (
                             <>
                             <FadeIn>
-                                <UpdateForm data={bool ? [user.userInfo.email, user.userInfo.phone] : null} userId={fire.auth().currentUser.uid}/>
+                                <UpdateForm data={bool ? [user.userInfo.email, user.userInfo.phone] : null} userId={localStorage.getItem("userId")}/>
                                 <Button className={classes.confirmButton} onClick={isConfirmBtnClick} variant="contained"   color="secondary">cancel</Button>
                             </FadeIn>
                         </>

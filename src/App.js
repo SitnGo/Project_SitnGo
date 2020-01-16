@@ -58,17 +58,18 @@ function App() {
             
 
 
-        //     async function getMarker(user={}) {
-        //         const userId = JSON.parse(localStorage.getItem("userId"))
+            // async function getMarker(user={}) {
+            //     const userId = JSON.parse(localStorage.getItem("userId"))
 
-        //         user = await fire.firestore().collection("users").doc(userId).get()
-        //         user = user.data();
-        //         localStorage.setItem("isLogged","true");
-        //         return user;
-        //     }
-        //     getMarker().then(result => {
-        //         dispatch(SignInAction(result, JSON.parse(localStorage.getItem("isLogged"))));
-        //     });
+            //     user = await fire.firestore().collection("users").doc(userId).get()
+            //     user = user.data();
+            //     localStorage.setItem("isLogged","true");
+            //     return user;
+            // }
+            // getMarker().then(result => {
+            //     dispatch(SignInAction(result, JSON.parse(localStorage.getItem("isLogged"))));
+            // });
+        
         }else{
             dispatch(signOutAction(JSON.parse(localStorage.getItem("isLogged"))));
         }
