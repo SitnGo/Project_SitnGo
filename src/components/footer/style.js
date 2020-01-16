@@ -6,7 +6,7 @@ export const useStyles = makeStyles(theme =>({
         justifyContent: 'space-between',
         alignItems: 'center',
         width:"100%",
-        maxHeight: '10vh',
+        height: '10vh',
         padding: '30px',
         position: 'relative',
         zIndex: 1000,
@@ -25,6 +25,9 @@ export const useStyles = makeStyles(theme =>({
     socialContainer: {
         width: "20%",
         textAlign:"center",
+        [theme.breakpoints.down('xs')]: {
+            width: "40%",
+          },
     },
     copyrightContainer: {
         width: "30%",

@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core";
 export const styles = makeStyles(() => ({
     navbar: {
         width: '100%',
-        maxHeight: '10vh',
+        height: '10vh',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',

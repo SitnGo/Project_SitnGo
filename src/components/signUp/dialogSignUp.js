@@ -25,7 +25,7 @@ return (
             TransitionComponent={Transition}
             onClose={handleClose}
         >
-            <SignUp />
+            <SignUp handleDialogClose={handleClose}/>
         </Dialog>
     </div>
 );

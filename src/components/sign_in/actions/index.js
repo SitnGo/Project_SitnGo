@@ -1,9 +1,18 @@
-export const loggedAction = () =>{
+export const SignInAction = (user, bool) =>{
     return {
-        type:'SIGN_IN__SIGN_OUT'
+        type:'SIGN_IN',
+        payload: {
+            user: user,
+            bool: bool,
+        },
     };
 };
-
+export const signOutAction = (bool) =>{
+    return {
+        type:'SIGN_OUT',
+        payload: bool,
+    };
+};
 export const openSignInAction = () =>{
     return {
         type:'OPEN_OR_CLOSE_SIGN_IN'
@@ -15,3 +24,8 @@ export const openSignUPAction = () =>{
     };
 };
 
+export const confirmUpdate = () => {
+    return { 
+        type:'CONFIRM_DATA_UPDATE'
+    }
+}

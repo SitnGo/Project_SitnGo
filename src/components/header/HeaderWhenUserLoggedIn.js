@@ -3,15 +3,26 @@ import { styles } from "./style";
 import { Link, Button } from "@material-ui/core";
 import { Link as RouterLink } from 'react-router-dom'
 import { connect, useDispatch } from 'react-redux';
-import { loggedAction } from '../sign_in/actions';
+import { signOutAction } from '../sign_in/actions';
+import fire from '../../ConfigFirebase/Fire';
+
 
 function HeaderWhenUserLoggedIn(props) {
     const dispatch = useDispatch();
 
     const classes = styles();
     function handleSignOut(){
-        dispatch(loggedAction())
-        console.log(props)
+        fire.auth().signOut().then(function() {
+                    localStorage.setItem('isLogged','false');
+                    localStorage.removeItem("userId")
+                    return JSON.parse(localStorage.getItem("isLogged"))      
+        })
+        .then((result)=>{
+            dispatch(signOutAction(result))
+        })
+        .catch(function(error) {
+            alert(error);
+          });
     }
     return (
         <>
@@ -25,7 +36,7 @@ function HeaderWhenUserLoggedIn(props) {
                     </RouterLink>
                 </li>
                 <li className={classes.menuItem}>
-                    <RouterLink to='/'>
+                    <RouterLink to='/offerRoute'>
                         <Link
                             underline='hover'
                             className={classes.menuLink}
@@ -33,19 +44,20 @@ function HeaderWhenUserLoggedIn(props) {
                     </RouterLink>
                 </li>
             </ul>
-
             <div className={classes.signButtonsContainer}>
-                <RouterLink to='ProfilePage' className={classes.signButton}>
+                <RouterLink to='profile' className={classes.signButton}>
                     <Button
                         variant='text'
                         className={classes.profile}
                     >My Profile</Button>
                 </RouterLink>
-                <Button
-                    variant='contained'
-                    className={classes.sign}
-                    onClick={handleSignOut}
-                >Sign Out</Button>
+                <RouterLink to="/">
+                    <Button
+                        variant='contained'
+                        className={classes.sign}
+                        onClick={handleSignOut}
+                    >Sign Out</Button>
+                </RouterLink>
             </div>
         </>
     )
@@ -53,6 +65,7 @@ function HeaderWhenUserLoggedIn(props) {
 function mapStateToProps(state) {
     return {
         isLoggedInUser: state.isLoggedInUser,
+        user: state.user,
     };
 }
 export default connect(mapStateToProps)(HeaderWhenUserLoggedIn)
