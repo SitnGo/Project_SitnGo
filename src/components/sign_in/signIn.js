@@ -5,6 +5,8 @@ import { Typography,TextField, InputAdornment, IconButton } from '@material-ui/c
 import { Visibility, VisibilityOff, Email, Close } from "@material-ui/icons";
 import { Checkbox } from '@material-ui/core';
 import { useDispatch, useSelector, connect} from 'react-redux';
+import {openSignUPAction} from '../sign_in/actions/index'
+
 import { SignInAction } from './actions';
 import FormDialog from './forgot';
 import { openSignInAction } from "./actions"
@@ -67,37 +69,39 @@ export function SignIn(props) {
     }
 
     function signup(e) {
-        e.preventDefault()
-        fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
-        }).then((u) => { console.log(u) })
-        .catch(error => {
-            switch (error.code) {
-                case 'auth/email-already-in-use':
-                    console.log(`Email address ${email} already in use.`);
-                    setIsAnError(true);
-                    setErrorMessage(`Email address ${email} already in use.`);
-                    break;
-                case 'auth/invalid-email':
-                    console.log(`Email address ${email} is invalid.`);
-                    setIsAnError(true);
-                    setErrorMessage(`Email address ${email} is invalid.`);
-                    break;
-                case 'auth/operation-not-allowed':
-                    console.log(`Enterance is denied.`);
-                    setIsAnError(true);
-                    setErrorMessage(`Entrance is denied`);
-                    break;
-                case 'auth/weak-password':
-                    console.log('Password is not strong enough. Add additional characters including special characters and numbers.');
-                    setIsAnError(true);
-                    setErrorMessage(`Password is not strong enough.`)
-                    break;
-                default:
-                    console.log(error.message);
-                    setIsAnError(true);
-                    break;
-        }
-    });
+        dispatch(openSignUPAction());
+        dispatch(openSignInAction());
+    //     e.preventDefault()
+    //     fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
+    //     }).then((u) => { console.log(u) })
+    //     .catch(error => {
+    //         switch (error.code) {
+    //             case 'auth/email-already-in-use':
+    //                 console.log(`Email address ${email} already in use.`);
+    //                 setIsAnError(true);
+    //                 setErrorMessage(`Email address ${email} already in use.`);
+    //                 break;
+    //             case 'auth/invalid-email':
+    //                 console.log(`Email address ${email} is invalid.`);
+    //                 setIsAnError(true);
+    //                 setErrorMessage(`Email address ${email} is invalid.`);
+    //                 break;
+    //             case 'auth/operation-not-allowed':
+    //                 console.log(`Enterance is denied.`);
+    //                 setIsAnError(true);
+    //                 setErrorMessage(`Entrance is denied`);
+    //                 break;
+    //             case 'auth/weak-password':
+    //                 console.log('Password is not strong enough. Add additional characters including special characters and numbers.');
+    //                 setIsAnError(true);
+    //                 setErrorMessage(`Password is not strong enough.`)
+    //                 break;
+    //             default:
+    //                 console.log(error.message);
+    //                 setIsAnError(true);
+    //                 break;
+    //     }
+    // });
     }
     return (
         <div>

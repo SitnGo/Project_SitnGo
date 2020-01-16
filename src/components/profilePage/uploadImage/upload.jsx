@@ -4,7 +4,7 @@ import {Avatar} from '@material-ui/core';
 import {DropzoneDialog} from 'material-ui-dropzone'
 import storage from '../../../ConfigFirebase/storage';
 import fire from '../../../ConfigFirebase/Fire';
-let imgUrl = "a";
+
 class DropzoneDialogModeal extends React.Component {
     
     constructor(props) {

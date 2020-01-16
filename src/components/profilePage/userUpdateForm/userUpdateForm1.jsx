@@ -3,10 +3,10 @@ import useStyles from './style';
 import {Grid, TextField, Button} from '@material-ui/core';
 import { Visibility, VisibilityOff, Phone, Email} from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
 import fire from '../../../ConfigFirebase/Fire';
 import {confirmUpdate} from '../../sign_in/actions/index';
 import { useDispatch, connect } from 'react-redux';
+import ForgotPassword from '../Forgotpassword/forgotPassword';
 let PasswordValidator = require('password-validator');
 
 function UpdateForm (props) {
@@ -43,7 +43,7 @@ let arrFromErrorsValues = Object.values(errors)
     })
 
      //////////////////check errors/////////////////////
-     if ((arrFromErrorsValues.every(item => item === false) && !hasConfirmPasswordError)) {
+     if ((arrFromErrorsValues.every(item => item === false) && !hasConfirmPasswordError && email !== props.data[0] && phone !==  props.data[1])) {
         // console.log(fire.auth().currentUser);
      fire.firestore().collection("users").doc(props.userId).get().then((doc)=>{
          
@@ -54,10 +54,9 @@ let arrFromErrorsValues = Object.values(errors)
             // fire.auth().signInWithEmailAndPassword(email, "asddsaA1")
             console.log(user.email);
             })
-
-            user.updatePassword(password).then(()=> {
-                console.log("AWD");
-            })
+            // user.updatePassword(password).then(()=> {
+            //     console.log("AWD");
+            // })
         } else {
             // alert(null);
             console.log(null);
@@ -75,8 +74,6 @@ let arrFromErrorsValues = Object.values(errors)
         
         });
     });
-    
-    dispatch(confirmUpdate());
      }
     }), [errors])
     function checkErrorsHandler() {
@@ -198,7 +195,7 @@ let arrFromErrorsValues = Object.values(errors)
             }}
             
             />
-            <TextField  className={classes.textfield}
+            {/* <TextField  className={classes.textfield}
             type={showPassword ? "text" : "password"}
             label="password" 
             variant="filled" 
@@ -246,7 +243,7 @@ let arrFromErrorsValues = Object.values(errors)
             }}
             
             
-            />
+            /> */}
             <TextField  className={classes.textfield}
             label="phone"
             variant="filled"
@@ -263,7 +260,10 @@ let arrFromErrorsValues = Object.values(errors)
             }}
             
             />
-            <Button variant="contained" color="primary" onClick={checkErrorsHandler}>Update</Button>
+            <ForgotPassword/>
+            <Button className={classes.confirmButton} variant="contained" color="primary" onClick={checkErrorsHandler}>Update</Button>
+            {/* <Button className={classes.confirmButton}  color="primary" >Forgot password</Button> */}
+           
         </Grid>
         
     );
@@ -271,8 +271,6 @@ let arrFromErrorsValues = Object.values(errors)
 function mapStateToProps(state) {
     return {
         confirmUpdate:state.confirmUpdate,
-        // willOpenSignUP: state.willOpenSignUP,
-        // isLoggedInUser: state.isLoggedInUser,
     };
 }
 export default connect(mapStateToProps)(UpdateForm);

@@ -9,7 +9,7 @@ import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
 import { useDispatch, useSelector, connect} from 'react-redux';
-
+import {confirmUpdate} from '../sign_in/actions/index';
 function usePersonalInfo(props) {
     // fire.auth().currentUser.updateEmail("asd10@gmail.com").then(()=>{
     //     console.log(fire.auth().currentUser.email);
@@ -25,11 +25,13 @@ function usePersonalInfo(props) {
     //       alert("null");
     //     }
     //   });
+    const dispatch = useDispatch();
     const [isEdit, setEditValue] = useState(true);
     const [bool, changeBool] = useState(false);
     const [user, setUser] = useState({});
     const classes = useStyles();
-
+    
+    let update = useSelector(state => state.confirmUpdate);
     useEffect(()=>{
         async function getMarker(user={}) {
             let userId;
@@ -49,10 +51,11 @@ function usePersonalInfo(props) {
     },[]);
     function isEditBtnClick() {
         setEditValue(false);
+        // dispatch(confirmUpdate())
     }
+
     function isConfirmBtnClick() {
         setEditValue(true);
-    
     }
     return(
 <Grid container sm={12}  className={classes.profileContainer}>
@@ -77,8 +80,10 @@ function usePersonalInfo(props) {
                         ) : (
                             <>
                             <FadeIn>
-                                <UpdateForm data={bool ? [user.userInfo.email, user.userInfo.phone] : null} userId={localStorage.getItem("userId")}/>
-                                <Button className={classes.confirmButton} onClick={isConfirmBtnClick} variant="contained"   color="secondary">cancel</Button>
+                                <UpdateForm data={bool ? [user.userInfo.email, user.userInfo.phone] : [user.userInfo.email, user.userInfo.phone]} userId={localStorage.getItem("userId")}/>
+                                <Button className={classes.confirmButton} 
+                        variant="contained" color="secondary"
+                        onClick={isConfirmBtnClick}>cancle</Button>
                             </FadeIn>
                         </>
                     )}
