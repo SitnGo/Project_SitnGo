@@ -34,24 +34,34 @@ const GetRout = () => {
     ////////////
     const [page, setPage] = React.useState(0);
 
-    function createData(name, car, plate, count) {
-        const density = population / count;
-        return { name, car, plate, count, density };
-    }
+    const [info, setInfo] = useState(
+        {
+            '1': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '2': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '3': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '4': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '5': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '6': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '7': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '8': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '9': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '10': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '11': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '12': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '13': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '14': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '15': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '16': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '17': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '18': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '19': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '20': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '21': {name: 'Name Surname', car: 'Nissan', plate: '777OO77', count: 4},
+        }
+    )
 
-    const rows = [
-        createData('Name Surname', 'BMW', '777OO77', 4),
-        createData('Name Surname', 'BMW', '777OO77', 4),
-        createData('Name Surname', 'BMW', '777OO77', 4),
-        createData('Name Surname', 'BMW', '777OO77', 4),
-        createData('Name Surname', 'BMW', '777OO77', 4),
-        createData('Name Surname', 'BMW', '777OO77', 4),
-        createData('Name Surname', 'BMW', '777OO77', 4),
-        createData('Name Surname', 'BMW', '777OO77', 4),
-        createData('Name Surname', 'BMW', '777OO77', 4),
-        createData('Name Surname', 'BMW', '777OO77', 4),
-    ];
-    const rowsPerPage = 5;
+    const rows = Object.values(info);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -105,63 +115,30 @@ const GetRout = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                                {rows.map(row => {
+                                    let tableRow = Object.values(row);
                                     return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                            {columns.map(column => {
-                                                const value = row[column.id];
-                                                return (
-                                                    <TableCell key={column.id} align={column.align}>
-                                                        {/*{column.format && typeof value === 'number' ? column.format(value) : value}*/}
-                                                        aaa
-                                                    </TableCell>
-                                                );
-                                            })}
+                                        <TableRow hover role="checkbox" key={row.count}>
+                                            {
+                                                tableRow.map(column => {
+                                                    return (
+                                                        <TableCell key={column.count}  align='center'>
+                                                            {column}
+                                                        </TableCell>
+                                                    );
+                                                })
+                                            }
                                         </TableRow>
                                     );
                                 })}
-
-                                <TableRow hover={true} onClick={() => {handleClick(1)}}>
-                                    <TableCell align='center'>Name Surname</TableCell>
-                                    <TableCell align='center'>BMW</TableCell>
-                                    <TableCell align='center'>777OO77</TableCell>
-                                    <TableCell align='center'>4</TableCell>
-                                </TableRow>
-                                <TableRow hover={true} onClick={() => {handleClick(2)}}>
-                                    <TableCell align='center'>Name Surname</TableCell>
-                                    <TableCell align='center'>Mercedes-Benz</TableCell>
-                                    <TableCell align='center'>77GL777</TableCell>
-                                    <TableCell align='center'>1</TableCell>
-                                </TableRow>
-                                <TableRow hover={true} onClick={() => {handleClick(3)}}>
-                                    <TableCell align='center'>Name Surname</TableCell>
-                                    <TableCell align='center'>Lada Niva</TableCell>
-                                    <TableCell align='center'>76LL666</TableCell>
-                                    <TableCell align='center'>2</TableCell>
-                                </TableRow>
-                                <TableRow hover={true} onClick={() => {handleClick(4)}}>
-                                    <TableCell align='center'>Name Surname</TableCell>
-                                    <TableCell align='center'>Nissan Tida</TableCell>
-                                    <TableCell align='center'>34LO457</TableCell>
-                                    <TableCell align='center'>3</TableCell>
-                                </TableRow>
-                                <TableRow hover={true} onClick={() => {handleClick(5)}}>
-                                    <TableCell align='center'>Name Surname</TableCell>
-                                    <TableCell align='center'>Toyota Camry</TableCell>
-                                    <TableCell align='center'>658LL01</TableCell>
-                                    <TableCell align='center'>3</TableCell>
-                                </TableRow>
                             </TableBody>
                             <TableFooter>
-                                {/*Take from firebase the count of suggested rides*/}
                                 <TablePagination
-                                    count={rows}
-                                    onChangePage={1 + 1}
+                                    count={rows.length}
                                     page={page}
                                     rowsPerPage={rowsPerPage}
                                     rowsPerPageOptions={[]}
                                     onChangePage={handleChangePage}
-
                                 />
                             </TableFooter>
                         </Table>

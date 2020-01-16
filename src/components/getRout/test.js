@@ -70,7 +70,7 @@ const useStyles = makeStyles({
 export default function Test() {
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
-    const rowsPerPage = 5;
+    const rowsPerPage = 7;
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
