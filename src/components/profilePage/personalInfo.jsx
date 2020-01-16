@@ -67,7 +67,7 @@ function usePersonalInfo(props) {
                         ) : (
                             <>
                             <FadeIn>
-                                <UpdateForm data={bool ? [user.userInfo.email, user.userInfo.email] : null} userId={fire.auth().currentUser.uid}/>
+                                <UpdateForm data={bool ? [user.userInfo.email, user.userInfo.phone] : null} userId={fire.auth().currentUser.uid}/>
                                 <Button className={classes.confirmButton} onClick={isConfirmBtnClick} variant="contained"   color="secondary">cancel</Button>
                             </FadeIn>
                         </>

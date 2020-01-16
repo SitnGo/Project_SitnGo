@@ -5,7 +5,7 @@ import { Visibility, VisibilityOff, Phone, Email} from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import fire from '../../../ConfigFirebase/Fire';
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
 function UpdateForm (props) {
     const classes = useStyles();
     const [showPassword, setShowPassword] = useState(false);
