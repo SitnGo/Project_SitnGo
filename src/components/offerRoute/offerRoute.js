@@ -2,6 +2,7 @@ import React, {useState}from 'react';
 import {classes} from "./style";
 import {TextField, Table, TableRow, TableHead, TableBody, TableCell, TableFooter, TablePagination, Button} from '@material-ui/core';
 // import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
+import MLeafletApp from './Leafletmaps/final'
 
 const OfferRout = () => {
     // const [from,setFrom] = useState("");
@@ -108,6 +109,7 @@ const OfferRout = () => {
                 />
                 <Button onClick={onSubmitClick}>Submit</Button>
             </div>
+            <MLeafletApp/>
         </section>
     );
 }
