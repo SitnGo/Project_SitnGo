@@ -1,9 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {classes} from "./style";
-import {TextField, Table, TableRow, TableHead, TableBody, TableCell, TableFooter, TablePagination} from '@material-ui/core';
-// import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
+import {
+    TextField,
+    Table,
+    TableRow,
+    TableHead,
+    TableBody,
+    TableCell,
+    TableFooter,
+    TablePagination,
+    Paper,
+    Button
+} from '@material-ui/core';
 
 const GetRout = () => {
+
+    let [mapId, setMapId] = useState(1);
+    const handleClick = (id) => {
+        setMapId(id);
+    }
+    console.log(mapId);
+
     let d = new Date();
     let day = d.getDate();
     let month;
@@ -14,7 +31,43 @@ const GetRout = () => {
     }
     let year = d.getFullYear();
     let date = `${year}-${month}-${day}T23:59`;
+    ////////////
+    const [page, setPage] = React.useState(0);
 
+    const [info, setInfo] = useState(
+        {
+            '1': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '2': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '3': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '4': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '5': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '6': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '7': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '8': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '9': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '10': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '11': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '12': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '13': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '14': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '15': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '16': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '17': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '18': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '19': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '20': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '21': {name: 'Name Surname', car: 'Nissan', plate: '777OO77', count: 4},
+        }
+    )
+
+    const rows = Object.values(info);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    ///////
 
     return(
         <section style={classes.section}>
@@ -45,155 +98,55 @@ const GetRout = () => {
                     label='Persons'
                     style={classes.routeListItem}
                 />
+                <Button
+                    variant='outlined'
+                >Search</Button>
             </div>
-            <div style={classes.offers}>
-                <Table stickyHeader>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Driver</TableCell>
-                            <TableCell>Car Model</TableCell>
-                            <TableCell>Car plate</TableCell>
-                            <TableCell>Total Sits</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                    </TableBody>
-                    <TableFooter>
-                        {/*Take from firebase the count of suggested rides*/}
-                        <TablePagination
-                            count={100}
-                            onChangePage={1 + 1}
-                            page={1}
-                            rowsPerPage={6}
-                        />
-                    </TableFooter>
-                </Table>
+            <div style={classes.offersContainer}>
+                <div style={classes.offers}>
+                    <Paper>
+                        <Table stickyHeader>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align='center'>Driver</TableCell>
+                                    <TableCell align='center'>Car Model</TableCell>
+                                    <TableCell align='center'>Car plate</TableCell>
+                                    <TableCell align='center'>Total Sits</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {rows.map(row => {
+                                    let tableRow = Object.values(row);
+                                    return (
+                                        <TableRow hover role="checkbox" key={row.count}>
+                                            {
+                                                tableRow.map(column => {
+                                                    return (
+                                                        <TableCell key={column.count}  align='center'>
+                                                            {column}
+                                                        </TableCell>
+                                                    );
+                                                })
+                                            }
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                            <TableFooter>
+                                <TablePagination
+                                    count={rows.length}
+                                    page={page}
+                                    rowsPerPage={rowsPerPage}
+                                    rowsPerPageOptions={[]}
+                                    onChangePage={handleChangePage}
+                                />
+                            </TableFooter>
+                        </Table>
+                    </Paper>
+                </div>
+                <div style={classes.mapContainer}>
+                    Map {mapId}
+                </div>
             </div>
         </section>
     );

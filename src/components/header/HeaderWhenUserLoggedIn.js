@@ -51,7 +51,7 @@ function HeaderWhenUserLoggedIn(props) {
                         className={classes.profile}
                     >My Profile</Button>
                 </RouterLink>
-                <RouterLink to="/">
+                <RouterLink to="/" className={classes.signButton}>
                     <Button
                         variant='contained'
                         className={classes.sign}
