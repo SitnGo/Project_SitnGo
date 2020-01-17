@@ -83,7 +83,6 @@ function App() {
                     <>
                         <Route exact path="/profile" component={PersonalInfo}/>
                         <Route exact path ="/offerRoute" >
-                            <HeaderImage/>
                             <OfferRoute/>
                         </Route>
                         <Route path="/getRout">

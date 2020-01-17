@@ -17,8 +17,8 @@ const OfferRout = () => {
     let date = `${year}-${month}-${day}T23:59`;
 
     return(
-        <section style={classes.section}>
-            <div style={classes.routeList}>
+        <section style={classes.section }>
+            <div style={classes.routeList }>
                 <TextField
                     margin='dense'
                     variant='outlined'
