@@ -10,7 +10,7 @@ class Routing extends MapLayer {
     let leafletElement = L.Routing.control({
       waypoints: [L.latLng(40.392899, 44.698891), L.latLng(40.179188, 44.499104)],
       routeWhileDragging: true,
-      autoRoute: false,
+      autoRoute: true,
       reverseWaypoints: true,
       showAlternatives: true,
       addWaypints: false,
