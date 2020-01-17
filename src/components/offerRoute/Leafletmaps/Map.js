@@ -10,7 +10,7 @@ export default class LeafletMap extends Component {
   state = {
     lat: 40.793411,
     lng: 43.839279,
-    zoom: 23,
+    zoom: 16,
     isMapInit: false
   };
   saveMap = map => {
