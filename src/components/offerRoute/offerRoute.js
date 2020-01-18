@@ -1,7 +1,6 @@
 import React from 'react';
 import {classes} from "./style";
-import {TextField, Table, TableRow, TableHead, TableBody, TableCell, TableFooter, TablePagination} from '@material-ui/core';
-// import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
+import {Button, TextField} from '@material-ui/core';
 import MLeafletApp from './Leafletmaps/final'
 
 const OfferRout = () => {
@@ -17,48 +16,63 @@ const OfferRout = () => {
     let date = `${year}-${month}-${day}T23:59`;
 
     return(
-        <section style={classes.section }>
-            <div style={classes.routeList }>
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='From'
-                    style={classes.routeListItem}
-                />
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='To'
-                    style={classes.routeListItem}
-                />
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='Date'
-                    type='datetime-local'
-                    defaultValue={`${date}`}
-                    style={classes.routeListItem}
-                />
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='Persons'
-                    style={classes.routeListItem}
-                />
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='Car Model'
-                    style={classes.routeListItem}
-                />
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='Car plate'
-                    style={classes.routeListItem}
-                />
+        <section style={classes.section}>
+            <div style={classes.offer}>
+                <div style={classes.rideList}>
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='From'
+                        style={classes.rideListItem}
+                    />
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='To'
+                        style={classes.rideListItem}
+                    />
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='Date'
+                        type='datetime-local'
+                        defaultValue={`${date}`}
+                        style={classes.rideListItem}
+                    />
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='Persons'
+                        style={classes.rideListItem}
+                    />
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='Car Model'
+                        style={classes.rideListItem}
+                    />
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='Car plate'
+                        style={classes.rideListItem}
+                    />
+                    <Button
+                        style={classes.rideListItem}
+                        variant='outlined'
+                        fullWidth
+                    >Submit</Button>
+                </div>
+                <div style={classes.mapContainer}>
+                    <MLeafletApp />
+                </div>
             </div>
-            <MLeafletApp/>
         </section>
     );
 }

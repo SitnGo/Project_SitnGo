@@ -16,6 +16,7 @@ export const classes = {
     },
     offersContainer: {
         width: '90%',
+        height: '100%',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -37,7 +38,4 @@ export const classes = {
         width: '45%',
         margin: '10px auto',
     },
-    hidden: {
-        display: 'none',
-    }
 }

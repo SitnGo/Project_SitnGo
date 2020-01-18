@@ -14,12 +14,10 @@ import {
 } from '@material-ui/core';
 
 const GetRout = () => {
-
     let [mapId, setMapId] = useState(1);
     const handleClick = (id) => {
         setMapId(id);
     }
-    console.log(mapId);
 
     let d = new Date();
     let day = d.getDate();
@@ -31,43 +29,38 @@ const GetRout = () => {
     }
     let year = d.getFullYear();
     let date = `${year}-${month}-${day}T23:59`;
-    ////////////
     const [page, setPage] = React.useState(0);
 
     const [info, setInfo] = useState(
         {
-            '1': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '2': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '3': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '1': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 1},
+            '2': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 2},
+            '3': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 3},
             '4': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '5': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '6': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '7': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '5': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 1},
+            '6': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 2},
+            '7': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 3},
             '8': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '9': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '10': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '11': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '9': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 1},
+            '10': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 2},
+            '11': {name: 'Name Surname', car: 'Toyota Camry', plate: '777OO77', count: 3},
             '12': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '13': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '14': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '15': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '13': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 1},
+            '14': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 2},
+            '15': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 3},
             '16': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '17': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '18': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '19': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
+            '17': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 1},
+            '18': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 2},
+            '19': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 3},
             '20': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '21': {name: 'Name Surname', car: 'Nissan', plate: '777OO77', count: 4},
         }
     )
 
     const rows = Object.values(info);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
-
+    const rowsPerPage = 6;
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-
-    ///////
 
     return(
         <section style={classes.section}>
@@ -115,14 +108,18 @@ const GetRout = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.map(row => {
+                                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                                    //edit i to id from firebase
+                                    let i=0;
+                                    i++;
                                     let tableRow = Object.values(row);
+                                    console.log(tableRow);
                                     return (
-                                        <TableRow hover role="checkbox" key={row.count}>
+                                        <TableRow hover role="checkbox" key={row.i} onClick={() => handleClick(row.count)}>
                                             {
                                                 tableRow.map(column => {
                                                     return (
-                                                        <TableCell key={column.count}  align='center'>
+                                                        <TableCell key={column.i}  align='center'>
                                                             {column}
                                                         </TableCell>
                                                     );
@@ -135,9 +132,9 @@ const GetRout = () => {
                             <TableFooter>
                                 <TablePagination
                                     count={rows.length}
-                                    page={page}
-                                    rowsPerPage={rowsPerPage}
                                     rowsPerPageOptions={[]}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
                                     onChangePage={handleChangePage}
                                 />
                             </TableFooter>
