@@ -12,7 +12,7 @@ function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-      <div style={{height:"300px",overflowY:"scroll"}}>
+      <div style={{height:"80vh"}}>
     <Typography
       component="div"
       role="tabpanel"
@@ -93,7 +93,52 @@ const useStyles = makeStyles(theme => ({
           <p>sad22asdasd</p>
           <p>sad22asdasd</p>
           <p>sad22asdasd</p>
-          
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p><p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p><p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p><p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p><p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p><p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p><p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p><p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p><p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
+          <p>sad22asdasd</p>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
         <p>sadas111dasasd</p>

@@ -1,36 +1,26 @@
 import React,{useState, useEffect} from 'react';
 import useStyles from './style';
 import {Grid, TextField, Button} from '@material-ui/core';
-import { Visibility, VisibilityOff, Phone, Email} from "@material-ui/icons"
+import { Phone, Email} from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import fire from '../../../ConfigFirebase/Fire';
 import {confirmUpdate} from '../../sign_in/actions/index';
 import { useDispatch, connect } from 'react-redux';
 import ForgotPassword from '../Forgotpassword/forgotPassword';
-let PasswordValidator = require('password-validator');
 
 function UpdateForm (props) {
     
     const classes = useStyles();
     const dispatch = useDispatch();
-    const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState(props.data[0]);
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [hasConfirmPasswordError, setHasConfirmPasswordError] = useState("false");
     const [phone, setPhone] = useState(props.data[1]);
-    const [errors, setErrors] = useState({
-        passwordError: { bool: false, errText: "" },
+    const [errors, setErrors] = useState({ 
         emailError: { bool: false, errText: "" },
         nameError: { bool: false, errText: "" },
         surnameError: { bool: false, errText: "" },
         genderError: false,
         phoneError: false,
     });
-    useEffect(() => {
-        confirmPassword === password ? setHasConfirmPasswordError(false) : setHasConfirmPasswordError(true)
-    }, [confirmPassword])
-
 //////////////////////get all errors in array/////////////////////////////////////
 useEffect((() => {  
 let arrFromErrorsValues = Object.values(errors)
@@ -43,83 +33,43 @@ let arrFromErrorsValues = Object.values(errors)
     })
 
      //////////////////check errors/////////////////////
-     if ((arrFromErrorsValues.every(item => item === false) && !hasConfirmPasswordError && email !== props.data[0] && phone !==  props.data[1])) {
-        // console.log(fire.auth().currentUser);
-     fire.firestore().collection("users").doc(props.userId).get().then((doc)=>{
-         
-    fire.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            alert(user);
-            user.updateEmail(email).then(()=>{
-            // fire.auth().signInWithEmailAndPassword(email, "asddsaA1")
-            console.log(user.email);
-            })
-            // user.updatePassword(password).then(()=> {
-            //     console.log("AWD");
-            // })
-        } else {
-            // alert(null);
-            console.log(null);
-          // No user is signed in.
-        }
-    });
-        fire.firestore().collection("users").doc(props.userId).update({
-            userInfo: {
-                name:doc.data().userInfo.name,
-                surname: doc.data().userInfo.surname,
-                email: email,
-                gender: doc.data().userInfo.gender,
-                phone: phone,
+     if(email !== props.data[0] || phone !==  props.data[1]) {
+            if ((arrFromErrorsValues.every(item => item === false))) {
+                // console.log(fire.auth().currentUser);
+                
+                fire.firestore().collection("users").doc(props.userId).get().then((doc)=>{
+                    if(email !== props.data[0]) {
+                fire.auth().onAuthStateChanged(function(user) {
+                    if (user) {
+                        
+                        user.updateEmail(email).then(()=>{
+                            alert(user.email);
+                        })
+                    } else {
+                        console.log("error");
+                    // No user is signed in.
+                    }
+                });
             }
-        
-        });
-    });
-     }
+                    fire.firestore().collection("users").doc(props.userId).update({
+                        userInfo: {
+                            name:doc.data().userInfo.name,
+                            surname: doc.data().userInfo.surname,
+                            email: email.toLowerCase(),
+                            gender: doc.data().userInfo.gender,
+                            phone: phone,
+                        }
+                    
+                    }).then(()=>{alert("Update confirm!");dispatch(confirmUpdate())})
+                
+                });
+                
+            }
+            
+        }
     }), [errors])
     function checkErrorsHandler() {
-        let text = null;
         let err = Object.assign({}, errors);
-
-
-//////////////////////password/////////////////////////////////////////
-
-        let passwordValidator = new PasswordValidator();
-        passwordValidator
-            .is().min(8)                                       // Minimum length 8
-            .is().max(100)                                  // Maximum length 100
-            .has().uppercase()                           // Must have uppercase letters
-            .has().lowercase()                            // Must have lowercase letters
-            .has().digits()                                    // Must have digits
-            .has().not().spaces()
-        if (password.trim() !== "" && !passwordValidator.validate(password)) {
-            let failedList = passwordValidator.validate(password, { list: true });
-           
-
-           
-            for (let i = 0; i < failedList.length; i++) {
-                switch (failedList[i]) {
-                    case "min":
-                        text = ["Min length is 8"];
-                        break;
-                    case "digits":
-                        text = ["Need at least 1 digit"];
-                        break;
-                    case "uppercase":
-                        text = ["Need at least 1 Uppercase letter"];
-                        break;
-                    case "lowercase":
-                        text = ["Need at least 1 Lowercase letter"];
-                        break;
-                }
-            }
-            
-            setErrors(Object.assign(err, { passwordError: { bool: true, errText: text } }))
-            
-            
-        } else {
-            setErrors(Object.assign(err, { passwordError: { bool: false, errText: null } }))
-        }
-
 /////////////////////////////////////////////////email/////////////////////////////////
         let validator = require("email-validator");
         if (!validator.validate(email)) {
@@ -128,7 +78,7 @@ let arrFromErrorsValues = Object.values(errors)
             setErrors(Object.assign(err, { emailError: false }))
         }
 
-        ////////phone///////////////////////////////////
+/////////////////////////////////////////////////phone////////////////////////////////
         switch (phone.length) {
             case 9:
                 if (
@@ -195,55 +145,7 @@ let arrFromErrorsValues = Object.values(errors)
             }}
             
             />
-            {/* <TextField  className={classes.textfield}
-            type={showPassword ? "text" : "password"}
-            label="password" 
-            variant="filled" 
-            onChange={(e) => {setPassword(e.target.value)}} 
-            error={errors.passwordError.bool}
-            helperText={errors.passwordError.bool ? errors.passwordError.errText.map((element, i) => {
-                    return (<p key={i}> {element}</p>)
-                }) : null}         
-            InputProps={{
-                endAdornment: (
-                    <InputAdornment position="end">
-                        <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={() => { showPassword ? setShowPassword(false) : setShowPassword(true) }}
-                            edge="end"
-                        >
-                         
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                    </InputAdornment>
-                )
-            }}
             
-            />
-            <TextField  className={classes.textfield}
-            type={showPassword ? "text" : "password"}
-            label="confirm password" 
-            variant="filled" 
-            onChange={(e) => {setConfirmPassword(e.target.value)}}
-            error={hasConfirmPasswordError}
-            helperText={hasConfirmPasswordError ? "Confirm password do not match" : null}
-            InputProps={{
-                endAdornment: (
-                    <InputAdornment position="end">
-                        <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={() => { showPassword ? setShowPassword(false) : setShowPassword(true) }}
-                            edge="end"
-                        >
-                           
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                    </InputAdornment>
-                )
-            }}
-            
-            
-            /> */}
             <TextField  className={classes.textfield}
             label="phone"
             variant="filled"
@@ -261,9 +163,7 @@ let arrFromErrorsValues = Object.values(errors)
             
             />
             <ForgotPassword/>
-            <Button className={classes.confirmButton} variant="contained" color="primary" onClick={checkErrorsHandler}>Update</Button>
-            {/* <Button className={classes.confirmButton}  color="primary" >Forgot password</Button> */}
-           
+            <Button className={classes.confirmButton} color="primary" onClick={checkErrorsHandler}>Update</Button>
         </Grid>
         
     );

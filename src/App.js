@@ -31,7 +31,6 @@ function App() {
     let isLogged = useSelector((state)=> state.isLoggedInUser);
     useEffect(()=>{
         console.log(cookies.loginPassword)
-
         let isLogged = JSON.parse(localStorage.getItem("isLogged"));
         if(isLogged) {
             fire.auth().signInWithEmailAndPassword(cookies.loginPassword.email, cookies.loginPassword.password)

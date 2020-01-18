@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     bigAvatar: {
         position:"relative",
         top:"2%",
-        left:"36%",   
+        left:"41%",   
         width:120,
         height:120,
         zIndex:222,

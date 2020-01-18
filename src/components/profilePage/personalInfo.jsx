@@ -4,34 +4,23 @@ import EditIcon from '@material-ui/icons/Edit';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Tab from './tabInformation';
 import UpdateForm from './userUpdateForm/userUpdateForm1';
+import ConfirmPassword from './ConfirmPassword/confirmPassword';
+import {isEdit1} from '../sign_in/actions/index';
 import useStyles from './style';
 import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
-import { useDispatch, useSelector, connect} from 'react-redux';
-import {confirmUpdate} from '../sign_in/actions/index';
-function usePersonalInfo(props) {
-    // fire.auth().currentUser.updateEmail("asd10@gmail.com").then(()=>{
-    //     console.log(fire.auth().currentUser.email);
-    // })
-    // fire.auth().onAuthStateChanged(function(user) {
-    //     if (user) {
-    //     //   user.updateEmail("asd11@gmail.com").then(()=>{
-    //             console.log(user.email);
-    //             console.log("AW");
-    //         // })
-    //     } else {
-    //     //   No user is signed in.
-    //       alert("null");
-    //     }
-    //   });
-    const dispatch = useDispatch();
-    const [isEdit, setEditValue] = useState(true);
+import {useDispatch, useSelector, connect} from 'react-redux';
+function usePersonalInfo() {
+
+    // const [isEdit, setEditValue] = useState(true);
     const [bool, changeBool] = useState(false);
     const [user, setUser] = useState({});
-    const classes = useStyles();
     
+    const classes = useStyles();
+    const dispatch = useDispatch();
     let update = useSelector(state => state.confirmUpdate);
+    let isEdit = useSelector(state => state.isEdit1);
     useEffect(()=>{
         async function getMarker(user={}) {
             let userId;
@@ -46,17 +35,21 @@ function usePersonalInfo(props) {
         }
         getMarker().then(result => {
             setUser(result);
-            changeBool(true);
+            changeBool(true); 
         });
-    },[]);
+    },[update]);
+    
     function isEditBtnClick() {
-        setEditValue(false);
-        // dispatch(confirmUpdate())
+        // setEditValue(false);
+        dispatch(isEdit1());
     }
 
     function isConfirmBtnClick() {
-        setEditValue(true);
+        // setEditValue(true);
+        dispatch(isEdit1());
     }
+
+    
     return(
 <Grid container sm={12}  className={classes.profileContainer}>
             <Grid item sm={4} xs={12}>
@@ -79,11 +72,19 @@ function usePersonalInfo(props) {
                         </>
                         ) : (
                             <>
+                            
+                                <ConfirmPassword email={bool ? user.userInfo.email : user.userInfo.email}/>
+                              
                             <FadeIn>
                                 <UpdateForm data={bool ? [user.userInfo.email, user.userInfo.phone] : [user.userInfo.email, user.userInfo.phone]} userId={localStorage.getItem("userId")}/>
+
+                               
+
                                 <Button className={classes.confirmButton} 
-                        variant="contained" color="secondary"
-                        onClick={isConfirmBtnClick}>cancle</Button>
+                                // variant="contained"
+                                color="secondary"
+                                onClick={isConfirmBtnClick}
+                                >cancle</Button>
                             </FadeIn>
                         </>
                     )}
@@ -109,6 +110,7 @@ function mapStateToProps(state) {
     return {
         user: state.user,
         isLoggedInUser: state.isLoggedInUser,
+        isEdit1:state.isEdit1
     };
 }
 export default connect(mapStateToProps)(usePersonalInfo)

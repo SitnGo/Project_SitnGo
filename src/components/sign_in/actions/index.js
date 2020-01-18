@@ -24,8 +24,13 @@ export const openSignUPAction = () =>{
     };
 };
 
-export const confirmUpdate = () => {
+export const confirmUpdate = () =>{
     return { 
         type:'CONFIRM_DATA_UPDATE'
+    }
+}
+export const isEdit1 = () =>{
+    return {
+        type:'IS_EDIT'
     }
 }
