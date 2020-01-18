@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import fire from '../../ConfigFirebase/Fire';
-import { Button, Fab } from '@material-ui/core/';
-import { TextField, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff, Email, Close } from "@material-ui/icons";
-import { Checkbox } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Fab, Checkbox, TextField, InputAdornment, IconButton } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 import { SignInAction } from './actions';
 import FormDialog from './forgot';
 import {Link as RouterLink} from 'react-router-dom';
 import { openSignInAction } from "./actions"
-
 
 export function Login(props) {
   const [email, setEmail] = useState("");
@@ -21,14 +18,6 @@ export function Login(props) {
 
   const dispatch = useDispatch();
   const setIsErsed = props.setIsErsed;
-
-  // useEffect( ()=>{
-  //     if (ersed){
-  //     setEmail("444");
-  //     setPassword("");
-  //     setErrorMessage("");
-  //         }
-  // });
 
   const handleClose = () => {
     dispatch(openSignInAction())
@@ -155,15 +144,15 @@ function login() {
           }}
         />
         <div>
-          <Checkbox
-            checked={checked}
-            onChange={handleChange(checked)}
-            value="checked"
-            color="primary"
-            inputProps={{
-              'aria-label': 'secondary checkbox',
-            }}
-          />
+            <Checkbox
+                checked={checked}
+                onChange={handleChange(checked)}
+                value="checked"
+                color="primary"
+                inputProps={{
+                'aria-label': 'secondary checkbox',
+                }}
+            />
         </div>
             <RouterLink to="profile">
              <Button type="submit" onClick={login}> Login </Button>

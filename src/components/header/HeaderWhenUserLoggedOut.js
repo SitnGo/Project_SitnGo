@@ -5,8 +5,6 @@ import { Link as RouterLink } from 'react-router-dom'
 import { useDispatch, useSelector, connect } from 'react-redux';
 import {openSignInAction, openSignUPAction} from '../sign_in/actions';
 
-
-
  function HeaderWhenUserLoggedOut(props) {
 
     const classes = styles();
