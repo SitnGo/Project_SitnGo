@@ -1,11 +1,9 @@
 import React from 'react';
-import {classes} from "./style";
+import {classes} from './style';
 import RoomIcon from '@material-ui/icons/Room';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MailIcon from '@material-ui/icons/Mail';
 import AppMap from '../AppMap/AppMap';
-// import MapParams from '../AppMap/setMap';
-// import FillContainer from '../AppMap/resize';
 
 const Contact = () => {
     return(
