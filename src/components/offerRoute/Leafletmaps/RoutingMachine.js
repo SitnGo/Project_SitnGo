@@ -3,8 +3,18 @@ import L from "leaflet";
 import "leaflet-routing-machine";
 import { withLeaflet } from "react-leaflet";
 import Geocoder from 'leaflet-control-geocoder';
+import fire from '../../../ConfigFirebase/Fire';
+
+
+
 
 class Routing extends MapLayer {
+  constructor(props){
+    super(props)
+    this.state={
+      route: null
+    }
+  }
   createLeafletElement() {
     const { map } = this.props;
     let leafletElement = L.Routing.control({
@@ -27,9 +37,36 @@ class Routing extends MapLayer {
           geocoder: Geocoder.nominatim()
     })
     .on('routesfound', function(e) {
-      var routes = e.routes;
-      alert('Found ' + routes.length + ' route(s).');
-  })
+      let routes = e.routes;
+      let waypoints = e.waypoints;
+      let route = {waypoints: waypoints}
+
+      async function getMarker(user={}) {
+        let userId;
+        if (localStorage.getItem("userId")){
+            userId = localStorage.getItem("userId")                
+        }else{
+            userId = fire.auth().currentUser.uid;
+        }
+        user = await fire.firestore().collection("users").doc(userId).get()
+            user = user.data();
+        return user;
+    }
+    getMarker().then(result => {
+      if(!result.hasOwnProperty("userRoutes")){
+        result.userRoutes = {}
+      }
+      result.userRoutes = JSON.parse(JSON.stringify(route));
+      // fire.firestore().collection("users").doc(result.userId).set(JSON.parse(JSON.stringify(result)))
+      localStorage.setItem("route",JSON.stringify(route))
+    });
+    getMarker().then(result => {
+      console.log(result)
+    });
+
+
+
+    })
     .addTo(map.leafletElement);
     return leafletElement.getPlan();
   }

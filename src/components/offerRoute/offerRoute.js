@@ -1,7 +1,6 @@
 import React, {useState}from 'react';
 import {classes} from "./style";
-import {TextField, Table, TableRow, TableHead, TableBody, TableCell, TableFooter, TablePagination, Button} from '@material-ui/core';
-// import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
+import {Button, TextField} from '@material-ui/core';
 import MLeafletApp from './Leafletmaps/final'
 
 const OfferRout = () => {
@@ -27,6 +26,7 @@ const OfferRout = () => {
         carModel: "",
         carPlate: "",
     })
+    const [route, setRoute] = useState(null);
 
    function onSubmitClick(){
         let keys=Object.entries(state);
@@ -61,55 +61,63 @@ const OfferRout = () => {
 
     return(
         <section style={classes.section}>
-            <div style={classes.routeList}>
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='From'
-                    onChange={(e)=>{setState({from: e.target.value})}}
-                    error = {errors.from}
-                    style={classes.routeListItem}
-                />
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='To'
-                    onChange={(e)=>{setState({to: e.target.value})}}
-                    style={classes.routeListItem}
-                />
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='Date'
-                    type='datetime-local'
-                    onChange={(e)=>{setState({startDate: e.target.value})}}
-                    defaultValue={`${date}`}
-                    style={classes.routeListItem}
-                />
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='Persons'
-                    onChange={(e)=>{setState({maxPersons: e.target.value})}}
-                    style={classes.routeListItem}
-                />
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='Car Model'
-                    onChange={(e)=>{setState({carModel: e.target.value})}}
-                    style={classes.routeListItem}
-                />
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='Car plate'
-                    onChange={(e)=>{setState({carPlate: e.target.value})}}
-                    style={classes.routeListItem}
-                />
-                <Button onClick={onSubmitClick}>Submit</Button>
+            <div style={classes.offer}>
+                <div style={classes.rideList}>
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='From'
+                        style={classes.rideListItem}
+                    />
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='To'
+                        style={classes.rideListItem}
+                    />
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='Date'
+                        type='datetime-local'
+                        defaultValue={`${date}`}
+                        style={classes.rideListItem}
+                    />
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='Persons'
+                        style={classes.rideListItem}
+                    />
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='Car Model'
+                        style={classes.rideListItem}
+                    />
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='Car plate'
+                        style={classes.rideListItem}
+                    />
+                    <Button
+                        style={classes.rideListItem}
+                        variant='outlined'
+                        fullWidth
+                        onClick={onSubmitClick}
+                    >Submit</Button>
+                </div>
+                <div style={classes.mapContainer}>
+                    <MLeafletApp route={route} setRoute={setRoute} />
+                </div>
             </div>
-            <MLeafletApp/>
         </section>
     );
 }

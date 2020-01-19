@@ -6,17 +6,30 @@ import GeoSearch from './GeoSearch'
 import L from "leaflet"
 
 
-export default class LeafletMap extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      lat: 40.793411,
-      lng: 43.839279,
-      zoom: 13,
-      open: false,
-      isMapInit: false,
-    };
-     this.locateOptions = {
+const center = [40.179188, 44.499104]
+
+export default class LeafletMap extends Component {
+  state = {
+    lat: 40.793411,
+    lng: 43.839279,
+    zoom: 16,
+    isMapInit: false
+  };
+  saveMap = map => {
+    this.map = map;
+    this.setState({
+      isMapInit: true
+    });
+  };
+  
+  handleClick = (e) => {
+    const { lat, lng } = e.latlng;
+    console.log(lat, lng);
+  };
+
+  render() {
+    const position = [this.state.lat, this.state.lng];
+    const locateOptions = {
         position: 'topright',
         strings: {
             title: 'Show me where I am!'
@@ -24,13 +37,6 @@ export default class LeafletMap extends React.Component {
         onActivate: () => {} 
     }
   }
-
-    saveMap = map => {
-     this.map = map;
-     this.setState({
-      isMapInit: true
-    });
-  };
 
 	getStyle(feature, layer) {
     return {
@@ -54,7 +60,7 @@ export default class LeafletMap extends React.Component {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />
-        {this.state.isMapInit && <Routing map={this.map} />}
+        {this.state.isMapInit && <Routing map={this.map} route={this.props.route} setRoute={this.props.setRoute} />}
        <LocateControl options={this.locateOptions} startDirectly/>
         <GeoJSON data={this.getGeoJson(geoJSON1)} style={this.getStyle} />
       </Map>
