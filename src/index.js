@@ -4,8 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {createStore} from 'redux';
-import allReducer from './components/sign_in/reducers';
-import reducers from "./components/sign_in/reducers/reducers"
+import reducers from './components/sign_in/reducers/reducers';
 import { CookiesProvider } from 'react-cookie';
 
 import {Provider} from 'react-redux';
