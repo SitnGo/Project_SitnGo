@@ -1,5 +1,5 @@
 import React from 'react';
-import {Typography, Button, Avatar, Paper, Grid} from '@material-ui/core';
+import {Typography, Grid} from '@material-ui/core';
 import useStyles from './style';
 function NotFound () {
     const classes = useStyles();

@@ -3,8 +3,6 @@ import {Button, Fab} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import {Close } from "@material-ui/icons";
-import { useDispatch } from 'react-redux';
-import { openSignInAction } from "./actions"
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';

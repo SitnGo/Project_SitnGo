@@ -36,7 +36,6 @@ export function SignIn(props) {
 
     function login() {
         let loginPassword = {email: email, password: password}
-        console.log(loginPassword)
         fire.auth().signInWithEmailAndPassword(email, password)
         .then(a => {
             async function getMarker(user={}) {

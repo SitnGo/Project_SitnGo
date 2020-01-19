@@ -1,5 +1,5 @@
 import React from 'react';
-import { YMaps, Map, Placemark, GeoObject, Clusterer } from 'react-yandex-maps';
+import { YMaps, Map, Placemark } from 'react-yandex-maps';
 import styles from './style';
 
 const mapState = {
