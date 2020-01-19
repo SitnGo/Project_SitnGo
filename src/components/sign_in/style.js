@@ -19,7 +19,7 @@ export const styles = {
     },
     error: { 
         fontSize: 10, 
-        color: "red" 
+        color: 'red'
     },
     signContainer:{
         width: '100%',

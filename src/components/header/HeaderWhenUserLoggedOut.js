@@ -1,11 +1,11 @@
 import React from 'react';
-import { styles } from "./style";
-import { Link, Button } from "@material-ui/core";
+import { styles } from './style';
+import { Link, Button } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom'
 import { useDispatch, useSelector, connect } from 'react-redux';
 import {openSignInAction, openSignUPAction} from '../sign_in/actions';
 
- function HeaderWhenUserLoggedOut(props) {
+function HeaderWhenUserLoggedOut(props) {
 
     const classes = styles();
     const dispatch =useDispatch();
@@ -31,14 +31,14 @@ import {openSignInAction, openSignUPAction} from '../sign_in/actions';
                     <Link
                         underline='hover'
                         className={classes.menuLink}
-                        href="#about"
+                        href='#about'
                     >About</Link>
                 </li>
                 <li className='menu-list__item'>
                     <Link
                         underline='hover'
                         className={classes.menuLink}
-                        href="#contact"
+                        href='#contact'
                     >Contacts</Link>
                 </li>
             </ul>
@@ -53,7 +53,7 @@ import {openSignInAction, openSignUPAction} from '../sign_in/actions';
                     <Button
                         variant='contained'
                         className={classes.sign}
-                    onClick={handleSigninClick}
+                        onClick={handleSigninClick}
                     >Sign in</Button>
                 </RouterLink>
             </div>
