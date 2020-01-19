@@ -25,7 +25,12 @@ class Routing extends MapLayer {
               {color: 'blue', opacity: 0.5, weight: 2}
           ]},
           geocoder: Geocoder.nominatim()
-    }).addTo(map.leafletElement);
+    })
+    .on('routesfound', function(e) {
+      var routes = e.routes;
+      alert('Found ' + routes.length + ' route(s).');
+  })
+    .addTo(map.leafletElement);
     return leafletElement.getPlan();
   }
 }
