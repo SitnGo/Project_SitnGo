@@ -24,12 +24,12 @@ function usePersonalInfo() {
     useEffect(()=>{
         async function getMarker(user={}) {
             let userId;
-            if (localStorage.getItem("userId")){
-                userId = localStorage.getItem("userId")                
+            if (localStorage.getItem('userId')){
+                userId = localStorage.getItem('userId')                
             }else{
                 userId = fire.auth().currentUser.uid;
             }
-            user = await fire.firestore().collection("users").doc(userId).get()
+            user = await fire.firestore().collection('users').doc(userId).get()
                 user = user.data();
             return user;
         }
@@ -56,7 +56,7 @@ function usePersonalInfo() {
                 <Paper elevation={3} className={classes.personalInfoBlock1}>
             
                 <div className={classes.header2}>
-                {   isEdit ? (<Avatar className={classes.bigAvatar} src=""></Avatar>)
+                {   isEdit ? (<Avatar className={classes.bigAvatar} src=''></Avatar>)
                  :
                     <DropzoneDialog/>
                 }
@@ -65,24 +65,24 @@ function usePersonalInfo() {
                   <hr/>
                     {isEdit ? (
                             <>  
-                    {bool ? <Typography className={classes.typography}>Name  -  {user.userInfo.name} </Typography>:<Skeleton height={60} component="p"/>}
-                    {bool ? <Typography className={classes.typography}>Surname  -  {user.userInfo.surname}</Typography>:<Skeleton height={60} component="p"/> }
-                    {bool ? <Typography className={classes.typography}>Phone  -  {user.userInfo.phone}</Typography>:<Skeleton height={60} component="p"/> } 
-                    {bool ? <Typography className={classes.typography}>Email  -  {user.userInfo.email}</Typography>:<Skeleton height={60} component="p"/>}
+                    {bool ? <Typography className={classes.typography}>Name  -  {user.userInfo.name} </Typography>:<Skeleton height={60} component='p'/>}
+                    {bool ? <Typography className={classes.typography}>Surname  -  {user.userInfo.surname}</Typography>:<Skeleton height={60} component='p'/> }
+                    {bool ? <Typography className={classes.typography}>Phone  -  {user.userInfo.phone}</Typography>:<Skeleton height={60} component='p'/> } 
+                    {bool ? <Typography className={classes.typography}>Email  -  {user.userInfo.email}</Typography>:<Skeleton height={60} component='p'/>}
                         </>
                         ) : (
                             <>
                             
-                                <ConfirmPassword email={bool ? user.userInfo.email : user.userInfo.email}/>
+                                <ConfirmPassword />
                               
                             <FadeIn>
-                                <UpdateForm data={bool ? [user.userInfo.email, user.userInfo.phone] : [user.userInfo.email, user.userInfo.phone]} userId={localStorage.getItem("userId")}/>
+                                <UpdateForm  userId={localStorage.getItem('userId')}/>
 
                                
 
                                 <Button className={classes.confirmButton} 
                                 // variant="contained"
-                                color="secondary"
+                                color='secondary'
                                 onClick={isConfirmBtnClick}
                                 >cancle</Button>
                             </FadeIn>
@@ -90,7 +90,7 @@ function usePersonalInfo() {
                     )}
                 
                     <Button className={isEdit ? classes.editButton : classes.hideEditButton} 
-                        variant="contained" color="secondary"
+                        variant='contained' color='secondary'
                         onClick={isEditBtnClick}>
                             <EditIcon/>Edit
                     </Button>

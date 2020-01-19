@@ -168,9 +168,9 @@ export function SignIn(props) {
                     }}/>
                 </div>
                 <div style={styles.signContainer}>
-                    {/* <RouterLink to="profile"> */}
+                    
                      <Button type="submit"  style={styles.signButton} onClick={login}> Sign In </Button>
-                    {/* </RouterLink> */}
+                   
                     <Button onClick={signup} style={styles.signButton}>Sign up</Button>
                 </div>
                 <Fab onClick={handleClose}

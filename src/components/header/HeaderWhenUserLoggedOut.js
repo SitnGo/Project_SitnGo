@@ -6,7 +6,7 @@ import { useDispatch, useSelector, connect } from 'react-redux';
 import {openSignInAction, openSignUPAction} from '../sign_in/actions';
 
  function HeaderWhenUserLoggedOut(props) {
-
+    
     const classes = styles();
     const dispatch =useDispatch();
     const StoreopenSignIn = useSelector(state => state.openSignIn);
@@ -16,6 +16,7 @@ import {openSignInAction, openSignUPAction} from '../sign_in/actions';
     function handleSignUPClick(){
         dispatch(openSignUPAction())
     }
+   
     return (
         <>
             <ul className={classes.menu} >

@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './style';
-import {Avatar} from '@material-ui/core';
+import {Avatar, Tooltip} from '@material-ui/core';
 import {DropzoneDialog} from 'material-ui-dropzone'
 import storage from '../../../ConfigFirebase/storage';
 import fire from '../../../ConfigFirebase/Fire';
@@ -12,7 +12,7 @@ class DropzoneDialogModeal extends React.Component {
         this.state = {
             open: false,
             bool:false,
-            // url:"",
+            url:"",
             files: []
 
         };
@@ -23,7 +23,7 @@ class DropzoneDialogModeal extends React.Component {
             open: false
         });
     }
-   
+    
     handleSave = (files) => {
         this.setState({
             files, 
@@ -42,9 +42,9 @@ class DropzoneDialogModeal extends React.Component {
             ()=> {
 
                 storage.ref(`images/${fire.auth().currentUser.uid}`).child(files[0].name).getDownloadURL().then(url=>{
-                    // localStorage.setItem("url", url);
+                    localStorage.setItem("url", url);
                     this.setState(()=>({url,}));
-                    
+                    console.log("A2");
                     // console.log(fire.auth().currentUser.uid);
                     // this.setState({bool: !this.state.bool});
                 })
@@ -60,8 +60,9 @@ class DropzoneDialogModeal extends React.Component {
     render() {
         return (
             <div>
-                <Avatar     
-                 onClick={this.handleOpen} style={style} src={this.state.url}></Avatar> 
+                <Tooltip title="Change photo" placement="top">
+                    <Avatar onClick={this.handleOpen} style={style} src={localStorage.getItem("url")}/>
+                </Tooltip> 
                 <DropzoneDialog
                     open={this.state.open}
                     onSave={this.handleSave}

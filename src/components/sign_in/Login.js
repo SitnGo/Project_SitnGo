@@ -92,9 +92,8 @@ function login() {
     }}>
       <div>
         <TextField
-        autoFocus
-          style={{ width: "100%" }}
           autoFocus
+          style={{ width: "100%" }}
           required
           name="email"
           value={email}

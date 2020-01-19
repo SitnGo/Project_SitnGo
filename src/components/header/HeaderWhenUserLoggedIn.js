@@ -2,14 +2,15 @@ import React from 'react';
 import { styles } from "./style";
 import { Link, Button } from "@material-ui/core";
 import { Link as RouterLink } from 'react-router-dom'
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { signOutAction } from '../sign_in/actions';
+import {isEdit1} from '../sign_in/actions/index';
 import fire from '../../ConfigFirebase/Fire';
 
 
 function HeaderWhenUserLoggedIn(props) {
+    let isEditChecked = useSelector(state => state.isEdit1);
     const dispatch = useDispatch();
-
     const classes = styles();
     function handleSignOut(){
         fire.auth().signOut().then(function() {
@@ -23,6 +24,11 @@ function HeaderWhenUserLoggedIn(props) {
         .catch(function(error) {
             alert(error);
           });
+    }
+    function handleMyProfile () {
+        if (isEditChecked === false) {
+            dispatch(isEdit1());
+        }
     }
     return (
         <>
@@ -47,6 +53,7 @@ function HeaderWhenUserLoggedIn(props) {
             <div className={classes.signButtonsContainer}>
                 <RouterLink to='profile' className={classes.signButton}>
                     <Button
+                        onClick={handleMyProfile}
                         variant='text'
                         className={classes.profile}
                     >My Profile</Button>

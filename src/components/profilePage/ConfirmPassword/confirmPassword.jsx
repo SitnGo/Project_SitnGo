@@ -1,11 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import fire from '../../../ConfigFirebase/Fire'
 import {isEdit1} from '../../sign_in/actions/index';
 import {Visibility, VisibilityOff} from "@material-ui/icons"
 import {InputAdornment, IconButton } from '@material-ui/core';
-// import useStyles from './style';
-import {useDispatch, useSelector} from 'react-redux';
-import {useCookies} from 'react-cookie';
+import {useDispatch, useSelector} from 'react-redux'
 import {
         Button, 
         TextField, 
@@ -17,22 +15,24 @@ import {
 
 function ConfirmPassword(props) {
     let openDialog = useSelector(state => !state.isEdit1);
-    const [cookies, setCookie] = useCookies(['loginPassword']);
     const dispatch = useDispatch();
     const [open, setOpen] = useState(true);
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
     const handleClickPasswordSuccessfully = () => {
-        
-        if (password === cookies.loginPassword.password) {
-            let updateLoginPassword = {email:props.email, password:password}
-            setCookie('loginPassword', updateLoginPassword);
-            setOpen(false);
-        } else {
-            setPasswordError(true);
-        }
+        fire.auth().signInWithEmailAndPassword(fire.auth().currentUser.email, password)
+        .then(() => {
+          setPassword('');
+          setOpen(false);
+        //   dispatch(SignInAction(result, JSON.parse(localStorage.getItem("isLogged"))));
+          })
+        .catch(error => {
+          console.log(error);
+          setPasswordError(true);
+          
+        });
         
     };
     
@@ -40,10 +40,15 @@ function ConfirmPassword(props) {
         dispatch(isEdit1());
     };
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        
+    }
     return (
         <div>
             <Dialog open={openDialog && open} onClose={false} aria-labelledby="form-dialog-title" fullWidth={true}>
             <DialogTitle id="form-dialog-title">Enter password</DialogTitle>
+            <form onSubmit={handleSubmit}>
             <DialogContent>
                 <TextField
                 autoFocus
@@ -77,10 +82,11 @@ function ConfirmPassword(props) {
                 <Button onClick={handleClose} color="secondary">
                 Cancel
                 </Button>
-                <Button onClick={handleClickPasswordSuccessfully} color="primary">
-                Send
+                <Button type="submit" onClick={handleClickPasswordSuccessfully} color="primary">
+                Submit
                 </Button>
             </DialogActions>
+            </form>
             </Dialog>
         </div>
     );

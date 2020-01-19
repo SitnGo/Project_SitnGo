@@ -5,19 +5,19 @@ import { Phone, Email} from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import fire from '../../../ConfigFirebase/Fire';
 import {confirmUpdate} from '../../sign_in/actions/index';
-import { useDispatch, connect } from 'react-redux';
+import {useSelector, useDispatch, connect } from 'react-redux';
 import ForgotPassword from '../Forgotpassword/forgotPassword';
-
 function UpdateForm (props) {
-    
+    let PhoneEmail = useSelector(state => state.user.userInfo);
+//    console.log(PhoneEmail);
     const classes = useStyles();
     const dispatch = useDispatch();
-    const [email, setEmail] = useState(props.data[0]);
-    const [phone, setPhone] = useState(props.data[1]);
+    const [email, setEmail] = useState(PhoneEmail.email);
+    const [phone, setPhone] = useState(PhoneEmail.phone);
     const [errors, setErrors] = useState({ 
-        emailError: { bool: false, errText: "" },
-        nameError: { bool: false, errText: "" },
-        surnameError: { bool: false, errText: "" },
+        emailError: { bool: false, errText: '' },
+        nameError: { bool: false, errText: '' },
+        surnameError: { bool: false, errText: '' },
         genderError: false,
         phoneError: false,
     });
@@ -33,12 +33,10 @@ let arrFromErrorsValues = Object.values(errors)
     })
 
      //////////////////check errors/////////////////////
-     if(email !== props.data[0] || phone !==  props.data[1]) {
+     if(email !== PhoneEmail.email || phone !== PhoneEmail.phone) {
             if ((arrFromErrorsValues.every(item => item === false))) {
-                // console.log(fire.auth().currentUser);
-                
                 fire.firestore().collection("users").doc(props.userId).get().then((doc)=>{
-                    if(email !== props.data[0]) {
+                    if(email !== PhoneEmail.email) {
                 fire.auth().onAuthStateChanged(function(user) {
                     if (user) {
                         
