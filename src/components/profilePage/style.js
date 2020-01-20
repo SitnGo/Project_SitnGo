@@ -53,19 +53,27 @@ const useStyles = makeStyles(theme => ({
 
     personalInfoBlock2 : {
         overflowY: "auto",
-        display:"flex",
-        flexWrap:"wrap",
-        justifyContent:"space-evenly",
-        alignItems:"center",
+        // display:"flex",
+        // flexWrap:"wrap",
+        // justifyContent:"space-evenly",
+        // alignItems:"center",
         width:"100%",
         // float:"right",
         height:"100%",
-        backgroundColor:"red",
+        backgroundColor:"rgba(148, 148, 148, 0.45)",
         [theme.breakpoints.down('xs')]: {
             width: "100%",
         },
     },
-
+    cards: {
+        // width:"100%",
+        // overflowY: "auto",
+        display:"flex",
+        flexWrap:"wrap",
+        justifyContent:"space-evenly",
+        alignItems:"center",
+        
+    },
     confirmButton : {
         width: "50%",
         margin:"1% 0 0 25%",
