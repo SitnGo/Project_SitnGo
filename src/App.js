@@ -8,7 +8,7 @@ import About from './components/about/about';
 import Contact from './components/contact/contact';
 import ToTop from './components/totop/toTop';
 import reducers from './components/sign_in/reducers/reducers'
-import NotFound from './components/404notFound/404notFoundScript';
+import NotFound from './components/404notFound/404notFoundScript.js';
 import {useCookies} from 'react-cookie';
 import { signOutAction, SignInAction } from './components/sign_in/actions/index';
 import OfferRoute from './components/offerRoute/offerRoute'
@@ -20,7 +20,7 @@ import { createStore } from 'redux';
 import { useSelector } from 'react-redux';
 import AlertDialogSlide from './components/sign_in/dialogSignIn';
 import AlertDialogSlideSignUp from './components/signUp/dialogSignUp'
-import PersonalInfo from './components/profilePage/personalInfo';
+import PersonalInfo from './components/profilePage/personalInfo.js';
 
 const store = createStore(reducers);
 

@@ -53,6 +53,6 @@ export const classes = {
         margin: '10px',
     },
     icon: {
-        marginRight: '30px'
+        marginRight: '30px' 
     }
 };
