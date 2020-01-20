@@ -32,6 +32,7 @@ const GetRout = () => {
     }
 
     function onSubmit(){
+        setPage(0);
         async function getMarker(user={}) {
             let userId;
             if (localStorage.getItem("userId")){
@@ -87,7 +88,7 @@ const GetRout = () => {
     // for(let i=0; i<info.length; i++){
         // rows.push(info[i])
     // }
-    const rowsPerPage = 6;
+    const rowsPerPage = 5;
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -138,8 +139,11 @@ const GetRout = () => {
                                 <TableRow>
                                     <TableCell align='center'>Car Model</TableCell>
                                     <TableCell align='center'>Total Sits</TableCell>
+                                    <TableCell align='center'>Distance</TableCell>
                                     <TableCell align='center'>Driver</TableCell>
                                     <TableCell align='center'>Car plate</TableCell>
+                                    <TableCell align='center'>Duration</TableCell>
+                                    <TableCell align='center'>Price</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -158,7 +162,9 @@ const GetRout = () => {
                                                         </TableCell>
                                                     );
                                                 })
+                                                
                                             }
+                                          
                                         </TableRow>
                                     );
                                 })}
@@ -176,7 +182,19 @@ const GetRout = () => {
                     </Paper>
                 </div>
                 <div style={classes.mapContainer}>
-                    {route ? <Map route = {route} /> : null}
+                    {route ?
+                    <React.Fragment style={classes.mapView}>
+                         <Map route = {route} />
+                        <Button
+                            fullWidth
+                            variant='outlined'
+                            style={classes.accept}
+                        >
+                            Accept
+                        </Button>
+                    </React.Fragment>
+                     : null
+                     }
                 </div>
             </div>
         </section>

@@ -3,6 +3,8 @@ import {classes} from './style';
 import {Button, TextField} from '@material-ui/core';
 import MLeafletApp from './Leafletmaps/final'
 import fire from '../../ConfigFirebase/Fire';
+import Routing from "./Leafletmaps/RoutingMachine";
+
 
 
 const OfferRout = () => {
@@ -11,7 +13,9 @@ const OfferRout = () => {
     const [startDate,setStartDate] = useState("");
     const [car, setCar] = useState("");
     const [plate, setPlate] = useState("");
-    const [count, setCount] = useState("")
+    const [count, setCount] = useState("");
+    const [maps, setMap] = useState();
+    const [isMapInit, setIsMapInit] =useState(false);
     const [errors, setErrors] = useState({
         from: false,
         to: false,
@@ -53,6 +57,7 @@ const OfferRout = () => {
         let currentRoute = JSON.parse(localStorage.getItem("route"))
         currentRoute.waypoints[0].name += from;
         currentRoute.waypoints[1].name += to;
+        // console.log(currentRoute.route)
         let route={
             route: currentRoute,
             parameters:  {
@@ -60,6 +65,8 @@ const OfferRout = () => {
                 car: car, 
                 plate: plate, 
                 count: count,
+                distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
+                time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
             }
         }
         result.userRoutesInfo.routes.push(route)
@@ -85,6 +92,8 @@ const OfferRout = () => {
 
     return(
         <section style={classes.section}>
+            {console.log(maps)}
+
             <div style={classes.offer}>
                 <div style={classes.rideList}>
                     <TextField
@@ -137,6 +146,14 @@ const OfferRout = () => {
                         onChange={(e)=>setPlate(e.target.value)}
                         style={classes.rideListItem}
                     />
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='Price'
+                        onChange={(e)=>setPlate(e.target.value)}
+                        style={classes.rideListItem}
+                    />
                     <Button
                         style={classes.rideListItem}
                         variant='outlined'
@@ -145,7 +162,8 @@ const OfferRout = () => {
                     >Submit</Button>
                 </div>
                 <div style={classes.mapContainer}>
-                    <MLeafletApp  />
+                    <MLeafletApp  setMap = {setMap} />
+                    {/* {isMapInit && <Routing map={maps}/>} */}
                 </div>
             </div>
         </section>

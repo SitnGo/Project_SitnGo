@@ -15,15 +15,16 @@ export const classes = {
         margin: '0 10px'
     },
     offersContainer: {
-        width: '90%',
+        width: '95%',
         height: '100%',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        margin: '0 auto'
     },
     offers:{
-        width: '45%',
-        margin: '10px auto',
+        width: '50%',
+        margin: '20px auto',
     },
     offerList: {
         listStyleType: 'none',
@@ -35,8 +36,15 @@ export const classes = {
         margin: '10px 0'
     },
     mapContainer: {
-        width: '45%',
-        height: '60vh',
-        margin: '0 auto',
+        width: '50%',
+        height: '50vh',
+        padding: '0 0 0 40px'
     },
+    mapView:{
+        width: '90%',
+        margin: ' 0 auto',
+    }, 
+    accept :{
+        margin: '40px 0 0 0'
+    }
 }

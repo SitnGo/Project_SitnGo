@@ -16,6 +16,7 @@ class Routing extends MapLayer {
   }
   createLeafletElement() {
     const { map } = this.props;
+    console.log(this.props.map)
     let leafletElement = L.Routing.control({
       waypoints: [L.latLng(40.392899, 44.698891), L.latLng(40.179188, 44.499104)],
       routeWhileDragging: true,
@@ -44,7 +45,7 @@ class Routing extends MapLayer {
       localStorage.setItem("selectedRoute1", JSON.stringify(routes))
       localStorage.setItem("route",JSON.stringify(route))
     })
-    .addTo(map.leafletElement);
+    .addTo(this.props.map.leafletElement);
     return leafletElement.getPlan();
   }
 }

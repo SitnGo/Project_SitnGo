@@ -4,7 +4,7 @@ import './style.css';
 
 const MLeafletApp = props => {
     return (
-      <Map  />
+      <Map setMap = {props.setMap} />
     );
 }
 export default MLeafletApp;
