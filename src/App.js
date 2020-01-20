@@ -91,7 +91,7 @@ function App() {
                                 <Route path='/getRout'>
                                     <GetRout/>
                                 </Route>
-                                {/* <Route path='*' component={NotFound}/> */}
+                            
                             </>
                             : <Route path='*' component={NotFound}/>
                     }

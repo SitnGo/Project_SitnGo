@@ -36,6 +36,7 @@ export const classes = {
     },
     mapContainer: {
         width: '45%',
-        margin: '10px auto',
+        height: '60vh',
+        margin: '0 auto',
     },
 }
