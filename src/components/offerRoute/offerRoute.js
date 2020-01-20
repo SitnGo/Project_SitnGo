@@ -3,6 +3,8 @@ import {classes} from './style';
 import {Button, TextField, MenuItem} from '@material-ui/core';
 import MLeafletApp from './Leafletmaps/final'
 import fire from '../../ConfigFirebase/Fire';
+import Routing from "./Leafletmaps/RoutingMachine";
+
 
 
 const numberPersons = [
@@ -41,12 +43,24 @@ const OfferRout = () => {
     const [to, setTo] = useState("");
     const [car, setCar] = useState("");
     const [plate, setPlate] = useState("");
-    const [count, setCount] =useState('');
+    const [count, setCount] = useState("");
+    const [maps, setMap] = useState();
+    const [price, setPrice] = useState();
+    const [isMapInit, setIsMapInit] =useState(false);
+    const [errors, setErrors] = useState({
+        from: false,
+        to: false,
+        startDate: false,
+        maxPersons: false,
+        carModel: false,
+        carPlate: false,
+    })
     const [startDate, setStartDate] = useState("");
     const [fromError, setFromError] = useState(false);
     const [toError, setToError] = useState(false);
     const [carError, setCarError] = useState(false);
     const [plateError, setPlateError] = useState(false);
+    const [priceError, setPriceError] = useState(false);
     
 
     // const [state,setState] = useState({
@@ -60,6 +74,8 @@ const OfferRout = () => {
     const [route, setRoute] = useState(null);
  let i=0;
    function onSubmitClick(){
+    if(isEmpty()){ return}
+
     async function getMarker(user={}) {
         let userId;
         if (localStorage.getItem("userId")){
@@ -80,8 +96,11 @@ const OfferRout = () => {
             result.userRoutesInfo.routes = []
         }
         let currentRoute = JSON.parse(localStorage.getItem("route"))
+        setRoute(currentRoute)
+        setPrice(Math.ceil(currentRoute.route.summary.totalDistance/1000))
         currentRoute.waypoints[0].name += from;
         currentRoute.waypoints[1].name += to;
+        // console.log(currentRoute.route)
         let route={
             route: currentRoute,
             parameters:  {
@@ -89,6 +108,8 @@ const OfferRout = () => {
                 car: car, 
                 plate: plate, 
                 count: count,
+                distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
+                time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
             }
         }
         result.userRoutesInfo.routes.push(route)
@@ -113,7 +134,7 @@ const OfferRout = () => {
     let date = `${year}-${month}-${day}T23:59`;
 
    function isEmpty () {
-       if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== '') {
+       if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& price.trim() !== '' ) {
     //        alert("confirm");
 
            setFromError(false);
@@ -124,7 +145,7 @@ const OfferRout = () => {
            setTo('');
            setCar('');
            setPlate('');
-
+        return false
            // firebase
        } else {
                 
@@ -132,24 +153,34 @@ const OfferRout = () => {
             setFromError(false);
         } else {
             setFromError(true);
+            return true
         }
 
         if (to.trim() !== '') {
             setToError(false);
         } else {
             setToError(true);
+            return true
         }
 
         if (car.trim() !== '') {
             setCarError(false);
         } else  { 
             setCarError(true);
+            return true
         }
 
         if (plate.trim() !== '') {
             setPlateError(false);
         } else {
             setPlateError(true);
+            return true
+        }
+        if (price.trim() !== '') {
+            setPriceError(false);
+        } else {
+            setPriceError(true);
+            return true
         }
 
     }
@@ -159,6 +190,8 @@ const OfferRout = () => {
    }
     return(
         <section style={classes.section}>
+            {console.log(maps)}
+
             <div style={classes.offer}>
                 <div style={classes.rideList}>
                     <TextField
@@ -230,6 +263,17 @@ const OfferRout = () => {
                         helperText={plateError ? <p>You  must fill blank areas</p> : null}
                         style={classes.rideListItem}
                     />
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
+                        label='Price'
+                        value={price}
+                        error={priceError}
+                        helperText={priceError ? <p>You  must fill blank areas</p> : null}
+                        onChange={(e)=>setPrice(e.target.value)}
+                        style={classes.rideListItem}
+                    />
                     <Button
                         onClick={isEmpty}
                         style={classes.rideListItem}
@@ -239,7 +283,8 @@ const OfferRout = () => {
                     >Submit</Button>
                 </div>
                 <div style={classes.mapContainer}>
-                    <MLeafletApp  />
+                    <MLeafletApp  setMap = {setMap} />
+                    {/* {isMapInit && <Routing map={maps}/>} */}
                 </div>
             </div>
         </section>

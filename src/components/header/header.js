@@ -20,7 +20,7 @@ const Header = (props) => {
     return(
     <header className={classes.navbar}>
             <div className={classes.logoContainer}>
-                <RouterLink to='/'><img className={classes.logo} src='images/Logo.png' alt='Logo'/></RouterLink>
+                <RouterLink to= {JSON.parse(localStorage.getItem('isLogged')) ? '/profile' : "/"}><img className={classes.logo} src='images/Logo.png' alt='Logo'/></RouterLink>
             </div>
                 {JSON.parse(localStorage.getItem('isLogged')) ? <HeaderWhenUserLoggedIn /> : <HeaderWhenUserLoggedOut /> }
         </header>
