@@ -1,68 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react';
 import style from './style';
-import {Avatar, Tooltip} from '@material-ui/core';
+import {Avatar} from '@material-ui/core';
 import {DropzoneDialog} from 'material-ui-dropzone'
 import storage from '../../../ConfigFirebase/storage';
 import fire from '../../../ConfigFirebase/Fire';
-
-class DropzoneDialogModeal extends React.Component {
-    
+import {confirmUpdate} from '../../sign_in/actions/index';
+class DropzoneDialogModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             open: false,
             bool:false,
-            url:"",
+            
             files: []
 
         };
     }
- 
     handleClose = () => {
         this.setState({
             open: false
         });
     }
-    
+
     handleSave = (files) => {
         this.setState({
-            files, 
+            files,
             open: false
         });
-  
-        
         const uploadFile = storage.ref(`images/${fire.auth().currentUser.uid}/${files[0].name}`).put(...files);
-        uploadFile.on("state_changed", 
+        uploadFile.on('state_changed',
             (snapshot)=> {
 
-            },  
+            },
             (error)=> {
                 console.log(error);
             },
             ()=> {
-
-                storage.ref(`images/${fire.auth().currentUser.uid}`).child(files[0].name).getDownloadURL().then(url=>{
-                    localStorage.setItem("url", url);
-                    this.setState(()=>({url,}));
-                    console.log("A2");
-                    // console.log(fire.auth().currentUser.uid);
-                    // this.setState({bool: !this.state.bool});
+                storage.ref(`images/${fire.auth().currentUser.uid}`).child(files[0].name).getDownloadURL()
+                .then(url=>{
+                    fire.firestore().collection('users').doc(fire.auth().currentUser.uid).set({url}, { merge: true })
+                    .then(()=> {
+                        alert("upload complete");
+                        this.setState({
+                            bool: true
+                        });
+                        this.props.setUrl(url)
+                    });
                 })
-            });
+        });
+        
     }
-    
+
     handleOpen = () => {
         this.setState({
             open: true,
         });
     }
- 
+
     render() {
+        console.log(this.props.url);
         return (
             <div>
-                <Tooltip title="Change photo" placement="top">
-                    <Avatar onClick={this.handleOpen} style={style} src={localStorage.getItem("url")}/>
-                </Tooltip> 
+              
+                <Avatar onClick={this.handleOpen} style={style} src={this.props.url} />
+                {/* <updateImage/> */}
                 <DropzoneDialog
                     open={this.state.open}
                     onSave={this.handleSave}
@@ -73,10 +74,9 @@ class DropzoneDialogModeal extends React.Component {
                     maxFileSize={5000000}
                     onClose={this.handleClose}
                 />
-                
             </div>
         );
     }
 }
 
-export default DropzoneDialogModeal;
+export default DropzoneDialogModal;

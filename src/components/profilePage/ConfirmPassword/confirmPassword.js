@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import fire from '../../../ConfigFirebase/Fire'
-import {isEdit1} from '../../sign_in/actions/index';
+import {isEdit1, openUpdateForm} from '../../sign_in/actions/index';
 import {Visibility, VisibilityOff} from "@material-ui/icons"
 import {InputAdornment, IconButton } from '@material-ui/core';
 import {useDispatch, useSelector} from 'react-redux'
@@ -13,7 +13,7 @@ import {
         DialogTitle
     } from '@material-ui/core'; 
 
-function ConfirmPassword(props) {
+function ConfirmPassword() {
     let openDialog = useSelector(state => !state.isEdit1);
     const dispatch = useDispatch();
     const [open, setOpen] = useState(true);
@@ -24,9 +24,9 @@ function ConfirmPassword(props) {
     const handleClickPasswordSuccessfully = () => {
         fire.auth().signInWithEmailAndPassword(fire.auth().currentUser.email, password)
         .then(() => {
+            dispatch(openUpdateForm());
           setPassword('');
           setOpen(false);
-        //   dispatch(SignInAction(result, JSON.parse(localStorage.getItem("isLogged"))));
           })
         .catch(error => {
           console.log(error);

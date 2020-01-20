@@ -34,3 +34,9 @@ export const isEdit1 = () =>{
         type:'IS_EDIT'
     }
 }
+
+export const openUpdateForm = () =>{
+    return {
+        type:'OPEN_UPDATE_FORM'
+    }
+}

@@ -3,12 +3,12 @@ export default function reducers(state = {
     isLoggedInUser: false,
     willOpenSignIN: false,
     willOpenSignUP: false,
+    opneUpdateForm: false,
     isEdit1       : true,
     confirmUpdate : true
 }, action) {
 
     switch (action.type) {
-        
         case 'SIGN_IN':
             return Object.assign({},state,{
                 isLoggedInUser: action.payload.bool,
@@ -30,6 +30,8 @@ export default function reducers(state = {
             return Object.assign({},state,{ confirmUpdate: !state.confirmUpdate });
         case 'IS_EDIT':
             return Object.assign({},state,{ isEdit1: !state.isEdit1 });
+        case 'OPEN_UPDATE_FORM':
+            return Object.assign({},state,{ opneUpdateForm : !state.opneUpdateForm });
         default:
             return state;
     }

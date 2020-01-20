@@ -1,10 +1,10 @@
 import React from 'react';
-import { styles } from "./style";
-import { Link, Button } from "@material-ui/core";
+import { styles } from './style';
+import { Link, Button } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom'
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { signOutAction } from '../sign_in/actions';
-import {isEdit1} from '../sign_in/actions/index';
+import {isEdit1, openUpdateForm} from '../sign_in/actions/index';
 import fire from '../../ConfigFirebase/Fire';
 
 
@@ -15,8 +15,8 @@ function HeaderWhenUserLoggedIn(props) {
     function handleSignOut(){
         fire.auth().signOut().then(function() {
                     localStorage.setItem('isLogged','false');
-                    localStorage.removeItem("userId")
-                    return JSON.parse(localStorage.getItem("isLogged"))      
+                    localStorage.removeItem('userId')
+                    return JSON.parse(localStorage.getItem('isLogged'))
         })
         .then((result)=>{
             dispatch(signOutAction(result))
@@ -27,7 +27,9 @@ function HeaderWhenUserLoggedIn(props) {
     }
     function handleMyProfile () {
         if (isEditChecked === false) {
+            dispatch(openUpdateForm());
             dispatch(isEdit1());
+
         }
     }
     return (
@@ -58,7 +60,7 @@ function HeaderWhenUserLoggedIn(props) {
                         className={classes.profile}
                     >My Profile</Button>
                 </RouterLink>
-                <RouterLink to="/" className={classes.signButton}>
+                <RouterLink to='/' className={classes.signButton}>
                     <Button
                         variant='contained'
                         className={classes.sign}

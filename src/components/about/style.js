@@ -9,7 +9,7 @@ export const classes = {
         backgroundImage: 'url("./images/about.jpg")',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-        position: "relative",
+        position: 'relative',
     },
     aboutId: {
         position: 'absolute',
