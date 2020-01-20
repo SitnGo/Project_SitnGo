@@ -145,7 +145,7 @@ const OfferRout = () => {
                     >Submit</Button>
                 </div>
                 <div style={classes.mapContainer}>
-                    <MLeafletApp route={route} setRoute={setRoute} />
+                    <MLeafletApp  />
                 </div>
             </div>
         </section>

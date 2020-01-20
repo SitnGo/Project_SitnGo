@@ -35,17 +35,14 @@ class Routing extends MapLayer {
           ]},
           geocoder: Geocoder.nominatim()
     })
-    .on('routesfound', function(e) {
-      let routes = e.routes;
-      let waypoints = e.waypoints;
-      let route = {waypoints: waypoints}
-
-      
+    .on('routeselected', function(e) {
+      let routes = e.route;
+      let waypoints =e.waypoints;
+      let route = {route:routes, waypoints: routes.waypoints}
+      console.log(route.waypoints)
+      console.log(routes)
+      localStorage.setItem("selectedRoute1", JSON.stringify(routes))
       localStorage.setItem("route",JSON.stringify(route))
-
-
-
-
     })
     .addTo(map.leafletElement);
     return leafletElement.getPlan();

@@ -10,16 +10,21 @@ import {
     TableFooter,
     TablePagination,
     Paper,
-    Button
+    Button,
 } from '@material-ui/core';
 import fire from '../../ConfigFirebase/Fire';
+// import MLeafletApp from '../offerRoute/Leafletmaps/final'
+import Map from './map/MapForGetRoute'
+
+
 
 const GetRout = () => {
-    let [mapId, setMapId] = useState(1);
+    const [mapId, setMapId] = useState(1);
     const [from,setFrom] = useState("");
     const [to,setTo] = useState("");
     const [startDate,setStartDate] = useState("");
     const [count, setCount] = useState("")
+    const [route,setRoute] = useState("");
 
 
     const handleClick = (id) => {
@@ -40,27 +45,27 @@ const GetRout = () => {
                     if(item.data().hasOwnProperty("userRoutesInfo")){
 
                         if(item.data().userRoutesInfo.hasOwnProperty("routes")){
-                            // console.log(item.data().userRoutesInfo.routes)
                             item.data().userRoutesInfo.routes.forEach((item)=>{
-                                // if(item.hasOwnProperty("parameters")){
                                     if((item.route.waypoints[0].name.toUpperCase().includes(from.toUpperCase())) && (item.route.waypoints[1].name.toUpperCase().includes(to.toUpperCase()))){
-                                        matchedRouts.push(item.parameters)
+                                        matchedRouts.push(item)
                                     }
-                                // }
                             })
-
                         }
                     }
                 }))
                 setInfo(matchedRouts)
 
             })
-                // user = user.data();
             return user;
         }
         getMarker().then(result => {
-            // console.log(result)
         })    
+    }
+
+    function onTableRowClick(e){
+
+        setRoute(e);
+        console.log(route)
     }
 
 
@@ -79,6 +84,9 @@ const GetRout = () => {
     const [info, setInfo] = useState([]);
 
     const rows = Object.values(info);
+    // for(let i=0; i<info.length; i++){
+        // rows.push(info[i])
+    // }
     const rowsPerPage = 6;
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -139,13 +147,13 @@ const GetRout = () => {
                                     //edit i to id from firebase
                                     let i=0;
                                     i++;
-                                    let tableRow = Object.values(row);
+                                    let tableRow = Object.values(row.parameters);
                                     return (
-                                        <TableRow hover role='checkbox' key={row.i} onClick={() => handleClick(row.count)}>
+                                        <TableRow hover role='checkbox' key={row.i} onClick={() => onTableRowClick(row)} >
                                             {
                                                 tableRow.map(column => {
                                                     return (
-                                                        <TableCell key={column.i}  align='center'>
+                                                        <TableCell key={column.i}  align='center' >
                                                             {column}
                                                         </TableCell>
                                                     );
@@ -168,7 +176,7 @@ const GetRout = () => {
                     </Paper>
                 </div>
                 <div style={classes.mapContainer}>
-                    Map {mapId}
+                    {route ? <Map route = {route} /> : null}
                 </div>
             </div>
         </section>
