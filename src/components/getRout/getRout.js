@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {classes} from './style';
 import {
     TextField,
@@ -25,11 +25,16 @@ const GetRout = () => {
     const [startDate,setStartDate] = useState("");
     const [count, setCount] = useState("")
     const [route,setRoute] = useState("");
+    const [load, setLoad] = useState(false);
 
 
     const handleClick = (id) => {
         setMapId(id);
     }
+
+    useEffect((()=>{
+        onSubmit();
+    }),[])
 
     function onSubmit(){
         setPage(0);
@@ -55,6 +60,7 @@ const GetRout = () => {
                     }
                 }))
                 setInfo(matchedRouts)
+
 
             })
             return user;
@@ -82,7 +88,7 @@ const GetRout = () => {
     let date = `${year}-${month}-${day}T23:59`;
     const [page, setPage] = React.useState(0);
 
-    const [info, setInfo] = useState([]);
+    const [info, setInfo] = useState(false);
 
     const rows = Object.values(info);
     // for(let i=0; i<info.length; i++){
@@ -95,6 +101,7 @@ const GetRout = () => {
 
     return(
         <section style={classes.section}>
+            
             <div style={classes.routeList}>
                 <TextField
                     margin='dense'
@@ -132,7 +139,7 @@ const GetRout = () => {
                 >Search</Button>
             </div>
             <div style={classes.offersContainer}>
-                <div style={classes.offers}>
+                {info ? <div style={classes.offers}>
                     <Paper>
                         <Table stickyHeader>
                             <TableHead>
@@ -180,7 +187,7 @@ const GetRout = () => {
                             </TableFooter>
                         </Table>
                     </Paper>
-                </div>
+                </div> : null}
                 <div style={classes.mapContainer}>
                     {route ?
                     <React.Fragment style={classes.mapView}>

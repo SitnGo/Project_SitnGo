@@ -66,7 +66,7 @@ export default class LeafletMap extends Component {
         />
         {this.state.isMapInit && <Routing map={this.map}/>}
        <LocateControl options={this.locateOptions} startDirectly/>
-        <GeoJSON data={this.getGeoJson(geoJSON1)} style={this.getStyle} />
+        {/* <GeoJSON data={this.getGeoJson(geoJSON1)} style={this.getStyle} /> */}
       </Map>
     );
   }

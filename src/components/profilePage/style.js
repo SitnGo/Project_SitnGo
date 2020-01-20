@@ -10,10 +10,13 @@ const useStyles = makeStyles(theme => ({
         backgroundPositionY: '63%',
         backgroundAttachment: 'fixed',
     },
+    leftSide: {
+        // position: "fixed",
+    },
     personalInfoBlock1: {
         float:"left",
         position:"relative",
-        backgroundColor:"rgba(255, 255, 255, 0.68)",
+        backgroundColor:"rgba(255, 252, 252, 0.88)",
         width:"100%",
         height:"100%",
         [theme.breakpoints.down('xs')]: {
@@ -23,7 +26,7 @@ const useStyles = makeStyles(theme => ({
     bigAvatar: {
         position:"relative",
         top:"2%",
-        left:"36%",   
+        left:"41%",   
         width:120,
         height:120,
         zIndex:222,
@@ -49,9 +52,15 @@ const useStyles = makeStyles(theme => ({
     },
 
     personalInfoBlock2 : {
-        width:"40%",
-        float:"right",
+        overflowY: "auto",
+        display:"flex",
+        flexWrap:"wrap",
+        justifyContent:"space-evenly",
+        alignItems:"center",
+        width:"100%",
+        // float:"right",
         height:"100%",
+        backgroundColor:"red",
         [theme.breakpoints.down('xs')]: {
             width: "100%",
         },
