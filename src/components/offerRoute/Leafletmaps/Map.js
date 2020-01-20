@@ -18,10 +18,13 @@ export default class LeafletMap extends Component {
   saveMap = map => {
     this.map = map;
     this.setState({
-      isMapInit: true
+      isMapInit: true,
     });
+    
+    
   };
   
+
   handleClick = (e) => {
     const { lat, lng } = e.latlng;
     //let a = LocateControl.getPosition();
@@ -29,34 +32,16 @@ export default class LeafletMap extends Component {
     //console.log(a)
   };
 
-  addMarker = event => {
-      const {markerData} = this.state;
-      const coords = event.latlng;
-      this.setState({
-                       markerData: [...this.state.markerData, coords]
-      })
-  };
-
-  updateMarker = event => {
-      console.log(this.state.markerData);
-      const latLng = event.target.getLatLng();
-      const markerIndex = event.target.options.marker_index;
-      this.setState(prevState =>{
-          const markerData = [...prevState.markerData];
-          markerData[markerIndex] = latLng;
-          return {markerData:markerData};
-      });
-  };
-  render() {
-    const position = [this.state.lat, this.state.lng];
-    const locateOptions = {
-        position: 'topright',
-        strings: {
-            title: 'Show me where I am!'
-        },
-        onActivate: () => {} 
-    }
-  }
+  // render() {
+  //   const position = [this.state.lat, this.state.lng];
+  //   const locateOptions = {
+  //       position: 'topright',
+  //       strings: {
+  //           title: 'Show me where I am!'
+  //       },
+  //       onActivate: () => {} 
+  //   }
+  // }
 
 	getStyle(feature, layer) {
     return {
@@ -69,6 +54,7 @@ export default class LeafletMap extends Component {
     return data;
     }
   render() {
+
     let position1 = new L.Marker([40.793411, 43.839279])
     let geoJSON1 = position1.toGeoJSON();
     console.log(geoJSON1)
@@ -80,9 +66,9 @@ export default class LeafletMap extends Component {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />
-        {this.state.isMapInit && <Routing map={this.map} route={this.props.route} setRoute={this.props.setRoute} />}
+        {this.state.isMapInit && <Routing map={this.map}/>}
        <LocateControl options={this.locateOptions} startDirectly/>
-        <GeoJSON data={this.getGeoJson(geoJSON1)} style={this.getStyle} />
+        {/* <GeoJSON data={this.getGeoJson(geoJSON1)} style={this.getStyle} /> */}
       </Map>
     );
   }

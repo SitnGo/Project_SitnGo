@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {classes} from './style';
 import {
     TextField,
@@ -25,13 +25,19 @@ const GetRout = () => {
     const [startDate,setStartDate] = useState("");
     const [count, setCount] = useState("")
     const [route,setRoute] = useState("");
+    const [load, setLoad] = useState(false);
 
 
     const handleClick = (id) => {
         setMapId(id);
     }
 
+    useEffect((()=>{
+        onSubmit();
+    }),[])
+
     function onSubmit(){
+        setPage(0);
         async function getMarker(user={}) {
             let userId;
             if (localStorage.getItem("userId")){
@@ -54,6 +60,7 @@ const GetRout = () => {
                     }
                 }))
                 setInfo(matchedRouts)
+
 
             })
             return user;
@@ -81,19 +88,20 @@ const GetRout = () => {
     let date = `${year}-${month}-${day}T23:59`;
     const [page, setPage] = React.useState(0);
 
-    const [info, setInfo] = useState([]);
+    const [info, setInfo] = useState(false);
 
     const rows = Object.values(info);
     // for(let i=0; i<info.length; i++){
         // rows.push(info[i])
     // }
-    const rowsPerPage = 6;
+    const rowsPerPage = 5;
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
 
     return(
         <section style={classes.section}>
+            
             <div style={classes.routeList}>
                 <TextField
                     margin='dense'
@@ -131,15 +139,18 @@ const GetRout = () => {
                 >Search</Button>
             </div>
             <div style={classes.offersContainer}>
-                <div style={classes.offers}>
+                {info ? <div style={classes.offers}>
                     <Paper>
                         <Table stickyHeader>
                             <TableHead>
                                 <TableRow>
                                     <TableCell align='center'>Car Model</TableCell>
                                     <TableCell align='center'>Total Sits</TableCell>
+                                    <TableCell align='center'>Distance</TableCell>
                                     <TableCell align='center'>Driver</TableCell>
                                     <TableCell align='center'>Car plate</TableCell>
+                                    <TableCell align='center'>Duration</TableCell>
+                                    <TableCell align='center'>Price</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -158,7 +169,9 @@ const GetRout = () => {
                                                         </TableCell>
                                                     );
                                                 })
+                                                
                                             }
+                                          
                                         </TableRow>
                                     );
                                 })}
@@ -174,9 +187,21 @@ const GetRout = () => {
                             </TableFooter>
                         </Table>
                     </Paper>
-                </div>
+                </div> : null}
                 <div style={classes.mapContainer}>
-                    {route ? <Map route = {route} /> : null}
+                    {route ?
+                    <React.Fragment style={classes.mapView}>
+                         <Map route = {route} />
+                        <Button
+                            fullWidth
+                            variant='outlined'
+                            style={classes.accept}
+                        >
+                            Accept
+                        </Button>
+                    </React.Fragment>
+                     : null
+                     }
                 </div>
             </div>
         </section>
