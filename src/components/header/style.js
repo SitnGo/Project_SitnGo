@@ -54,5 +54,40 @@ export const styles = makeStyles(() => ({
         '&:hover': {
             textDecoration: 'underline'
         }
+    },
+    '@media (max-width: 1024px)': {
+        sign: {
+            fontSize: '70%',
+        },
+        logoContainer: {
+            width: '10%'
+        },
+        signButtonsContainer: {
+            width: '30%'
+        }, 
+        menuContainer: {
+            width: '60%'
+        },
+        profile: {
+            fontSize: '70%',
+        }
+    },
+    '@media (max-width: 600px)': {
+        menu: {
+            fontSize: '70%'
+        },
+        menuContainer: {
+            width: '50%'
+        },
+        signButtonsContainer: {
+            width: '40%'
+        },
+        sign: {
+            fontSize: '50%',
+        },
+        profile: {
+            fontSize: '50%',
+        }
     }
+
 }));

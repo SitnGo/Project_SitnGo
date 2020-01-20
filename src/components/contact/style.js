@@ -44,7 +44,6 @@ export const classes = {
         width: '30%',
         zIndex: 100,
         color: '#000',
-        fontSize: '20px',
         marginTop: '50px'
     },
     contacts: {
@@ -52,7 +51,15 @@ export const classes = {
         alignItems: 'center',
         margin: '10px',
     },
+    contactsText: {
+        fontSize: '20px',
+    },
     icon: {
         marginRight: '30px'
+    },
+    '@media screen and (max-width: 600px)': {
+        contactsText: {
+            fontSize: '15px',
+        }
     }
 };

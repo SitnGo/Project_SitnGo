@@ -21,7 +21,10 @@ export const classes = {
     },
     mapContainer: {
         width: '45%',
-        height: '60vh',
+        height: '50vh',
         margin: '0 auto',
+    },
+    '@media (max-width: 600px)': {
+        
     }
 }

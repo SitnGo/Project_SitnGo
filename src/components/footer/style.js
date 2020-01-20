@@ -31,7 +31,22 @@ export const useStyles = makeStyles(theme =>({
     },
     copyrightContainer: {
         width: '30%',
-        fontSize: '20px',
+        fontSize: '18px',
         color: '#ddd'
+    },
+    '@media (max-width: 1024px)': {
+        socialContainer: {
+            width: '40%',
+        },
+        copyrightContainer: {
+            fontSize: '90%',
+        }
+    },
+    '@media (max-width: 600px)': {
+        copyrightContainer: {
+            fontSize: '80%',
+            marginRight: '30px',
+            width: '40%',
+        }
     }
 }));

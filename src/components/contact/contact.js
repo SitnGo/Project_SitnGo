@@ -11,22 +11,22 @@ const Contact = () => {
             <span style={classes.contactId} id='contact'></span>
             <div style={classes.textContainer}>
                 <h1 style={classes.contactHeader}>Contact Us</h1>
-                <div>
-                <AppMap/>
+                <div style={classes.mapContainer}>
+                    <AppMap/>
                 </div>
             </div>
             <div style={classes.contactsContainer}>
                 <div style={classes.contacts}>
                     <RoomIcon fontSize='large' style={classes.icon}/>
-                    <p className={classes.leftSideP}>Hakob Hakobyan 3</p>
+                    <p style={classes.contactsText}>Hakob Hakobyan 3</p>
                 </div>
                 <div style={classes.contacts}>
                     <PhoneIcon fontSize='large' style={classes.icon}/>
-                    <p className={classes.leftSideP}>(012) 48-16-32</p>
+                    <p style={classes.contactsText}>(012) 48-16-32</p>
                 </div>
                 <div style={classes.contacts}>
                     <MailIcon fontSize='large' style={classes.icon}/>
-                    <p className={classes.leftSideP}>info@aca.am</p>
+                    <p style={classes.contactsText}>info@aca.am</p>
                 </div>
             </div>
             <div style={classes.imageCover}></div>

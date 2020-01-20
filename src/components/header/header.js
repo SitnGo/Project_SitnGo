@@ -10,6 +10,14 @@ import {useCookies} from 'react-cookie';
 import { connect } from 'react-redux';
 import { SignInAction } from '../sign_in/actions';
 
+
+function mapStateToProps(state) {
+    return {
+        isLoggedInUser: state.isLoggedInUser,
+        user: state.user,
+    };
+}
+
 const Header = (props) => {
     const [isLogged, setIsLogged] = useState('');
     const [cookies, setCookie, removeCookie] = useCookies(['loginPassword']);
@@ -25,12 +33,6 @@ const Header = (props) => {
                 {JSON.parse(localStorage.getItem('isLogged')) ? <HeaderWhenUserLoggedIn /> : <HeaderWhenUserLoggedOut /> }
         </header>
     );
-}
-function mapStateToProps(state) {
-    return {
-        isLoggedInUser: state.isLoggedInUser,
-        user: state.user,
-    };
 }
 
 export default connect(mapStateToProps)(Header);
