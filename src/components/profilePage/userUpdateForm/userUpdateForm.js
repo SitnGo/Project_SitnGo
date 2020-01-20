@@ -8,12 +8,12 @@ import {confirmUpdate} from '../../sign_in/actions/index';
 import {useSelector, useDispatch, connect } from 'react-redux';
 import ForgotPassword from '../Forgotpassword/forgotPassword';
 function UpdateForm (props) {
-    let PhoneEmail = useSelector(state => state.user.userInfo);
-//    console.log(PhoneEmail);
+
+
     const classes = useStyles();
     const dispatch = useDispatch();
-    const [email, setEmail] = useState(PhoneEmail.email);
-    const [phone, setPhone] = useState(PhoneEmail.phone);
+    const [email, setEmail] = useState(props.data[0]);
+    const [phone, setPhone] = useState(props.data[1]);
     const [errors, setErrors] = useState({ 
         emailError: { bool: false, errText: '' },
         nameError: { bool: false, errText: '' },
@@ -33,19 +33,19 @@ let arrFromErrorsValues = Object.values(errors)
     })
 
      //////////////////check errors/////////////////////
-     if(email !== PhoneEmail.email || phone !== PhoneEmail.phone) {
+     if(email !== props.data[0] || phone !== props.data[1]) {
             if ((arrFromErrorsValues.every(item => item === false))) {
                 fire.firestore().collection("users").doc(props.userId).get().then((doc)=>{
-                    if(email !== PhoneEmail.email) {
+                    if(email !== props.data[0]) {
                 fire.auth().onAuthStateChanged(function(user) {
                     if (user) {
                         
                         user.updateEmail(email).then(()=>{
                             alert(user.email);
                         })
+                        
                     } else {
                         console.log("error");
-                    // No user is signed in.
                     }
                 });
             }
