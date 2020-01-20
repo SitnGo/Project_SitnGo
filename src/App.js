@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState,useEffect, Fragment} from 'react';
 import './App.css';
 import Header from './components/header/header';
 import HeaderImage from './components/headerImage/headerImage';
@@ -7,7 +7,7 @@ import Footer from './components/footer/footer'
 import About from './components/about/about';
 import Contact from './components/contact/contact';
 import ToTop from './components/totop/toTop';
-import reducers from './components/sign_in/reducers/reducers';
+import reducers from './components/sign_in/reducers/reducers'
 import NotFound from './components/404notFound/404notFoundScript';
 import {useCookies} from 'react-cookie';
 import { signOutAction, SignInAction } from './components/sign_in/actions/index';
@@ -19,8 +19,9 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { createStore } from 'redux';
 import { useSelector } from 'react-redux';
 import AlertDialogSlide from './components/sign_in/dialogSignIn';
-import AlertDialogSlideSignUp from './components/signUp/dialogSignUp';
+import AlertDialogSlideSignUp from './components/signUp/dialogSignUp'
 import PersonalInfo from './components/profilePage/personalInfo';
+
 const store = createStore(reducers);
 
 function App() {
@@ -90,7 +91,7 @@ function App() {
                                 <Route path='/getRout'>
                                     <GetRout/>
                                 </Route>
-                                {/* <Route path='*' component={NotFound}/> */}
+                            
                             </>
                             : <Route path='*' component={NotFound}/>
                     }

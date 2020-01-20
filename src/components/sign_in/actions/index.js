@@ -21,10 +21,9 @@ export const openSignInAction = () =>{
 export const openSignUPAction = () =>{
     return {
         type:'OPEN_OR_CLOSE_SIGN_UP'
-    };
+    }
 };
-
-export const confirmUpdate = () =>{
+export const confirmUpdate = () => {
     return { 
         type:'CONFIRM_DATA_UPDATE'
     }
@@ -38,5 +37,10 @@ export const isEdit1 = () =>{
 export const openUpdateForm = () =>{
     return {
         type:'OPEN_UPDATE_FORM'
+    }
+}
+export const route = () => {
+    return { 
+        type:'STORE_ROUTES'
     }
 }

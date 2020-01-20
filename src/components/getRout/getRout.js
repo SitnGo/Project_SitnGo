@@ -10,14 +10,64 @@ import {
     TableFooter,
     TablePagination,
     Paper,
-    Button
+    Button,
 } from '@material-ui/core';
+import fire from '../../ConfigFirebase/Fire';
+// import MLeafletApp from '../offerRoute/Leafletmaps/final'
+import Map from './map/MapForGetRoute'
+
+
 
 const GetRout = () => {
-    let [mapId, setMapId] = useState(1);
+    const [mapId, setMapId] = useState(1);
+    const [from,setFrom] = useState("");
+    const [to,setTo] = useState("");
+    const [startDate,setStartDate] = useState("");
+    const [count, setCount] = useState("")
+    const [route,setRoute] = useState("");
+
+
     const handleClick = (id) => {
         setMapId(id);
     }
+
+    function onSubmit(){
+        async function getMarker(user={}) {
+            let userId;
+            if (localStorage.getItem("userId")){
+                userId = localStorage.getItem("userId")                
+            }else{
+                userId = fire.auth().currentUser.uid;
+            }
+            user = await fire.firestore().collection("users").get().then((result)=>{
+                let matchedRouts=[];
+                result.forEach((item=>{
+                    if(item.data().hasOwnProperty("userRoutesInfo")){
+
+                        if(item.data().userRoutesInfo.hasOwnProperty("routes")){
+                            item.data().userRoutesInfo.routes.forEach((item)=>{
+                                    if((item.route.waypoints[0].name.toUpperCase().includes(from.toUpperCase())) && (item.route.waypoints[1].name.toUpperCase().includes(to.toUpperCase()))){
+                                        matchedRouts.push(item)
+                                    }
+                            })
+                        }
+                    }
+                }))
+                setInfo(matchedRouts)
+
+            })
+            return user;
+        }
+        getMarker().then(result => {
+        })    
+    }
+
+    function onTableRowClick(e){
+
+        setRoute(e);
+        console.log(route)
+    }
+
 
     let d = new Date();
     let day = d.getDate();
@@ -31,32 +81,12 @@ const GetRout = () => {
     let date = `${year}-${month}-${day}T23:59`;
     const [page, setPage] = React.useState(0);
 
-    const [info, setInfo] = useState(
-        {
-            '1': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 1},
-            '2': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 2},
-            '3': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 3},
-            '4': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '5': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 1},
-            '6': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 2},
-            '7': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 3},
-            '8': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '9': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 1},
-            '10': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 2},
-            '11': {name: 'Name Surname', car: 'Toyota Camry', plate: '777OO77', count: 3},
-            '12': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '13': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 1},
-            '14': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 2},
-            '15': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 3},
-            '16': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-            '17': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 1},
-            '18': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 2},
-            '19': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 3},
-            '20': {name: 'Name Surname', car: 'BMW', plate: '777OO77', count: 4},
-        }
-    )
+    const [info, setInfo] = useState([]);
 
     const rows = Object.values(info);
+    // for(let i=0; i<info.length; i++){
+        // rows.push(info[i])
+    // }
     const rowsPerPage = 6;
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -69,12 +99,14 @@ const GetRout = () => {
                     margin='dense'
                     variant='outlined'
                     label='From'
+                    onChange={(e)=>{setFrom(e.target.value)}}
                     style={classes.routeListItem}
                 />
                 <TextField
                     margin='dense'
                     variant='outlined'
                     label='To'
+                    onChange={(e)=>{setTo(e.target.value)}}
                     style={classes.routeListItem}
                 />
                 <TextField
@@ -83,16 +115,19 @@ const GetRout = () => {
                     label='Date'
                     type='datetime-local'
                     defaultValue={`${date}`}
+                    onChange={(e)=>setStartDate(e.target.value)}
                     style={classes.routeListItem}
                 />
                 <TextField
                     margin='dense'
                     variant='outlined'
                     label='Persons'
+                    onChange={(e)=>setCount(e.target.value)}
                     style={classes.routeListItem}
                 />
                 <Button
                     variant='outlined'
+                    onClick={onSubmit}
                 >Search</Button>
             </div>
             <div style={classes.offersContainer}>
@@ -101,10 +136,10 @@ const GetRout = () => {
                         <Table stickyHeader>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align='center'>Driver</TableCell>
                                     <TableCell align='center'>Car Model</TableCell>
-                                    <TableCell align='center'>Car plate</TableCell>
                                     <TableCell align='center'>Total Sits</TableCell>
+                                    <TableCell align='center'>Driver</TableCell>
+                                    <TableCell align='center'>Car plate</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -112,14 +147,13 @@ const GetRout = () => {
                                     //edit i to id from firebase
                                     let i=0;
                                     i++;
-                                    let tableRow = Object.values(row);
-                                    console.log(tableRow);
+                                    let tableRow = Object.values(row.parameters);
                                     return (
-                                        <TableRow hover role='checkbox' key={row.i} onClick={() => handleClick(row.count)}>
+                                        <TableRow hover role='checkbox' key={row.i} onClick={() => onTableRowClick(row)} >
                                             {
                                                 tableRow.map(column => {
                                                     return (
-                                                        <TableCell key={column.i}  align='center'>
+                                                        <TableCell key={column.i}  align='center' >
                                                             {column}
                                                         </TableCell>
                                                     );
@@ -142,7 +176,7 @@ const GetRout = () => {
                     </Paper>
                 </div>
                 <div style={classes.mapContainer}>
-                    Map {mapId}
+                    {route ? <Map route = {route} /> : null}
                 </div>
             </div>
         </section>

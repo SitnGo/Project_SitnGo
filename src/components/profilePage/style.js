@@ -10,6 +10,9 @@ const useStyles = makeStyles(theme => ({
         backgroundPositionY: '63%',
         backgroundAttachment: 'fixed',
     },
+    leftSide: {
+        // position: "fixed",
+    },
     personalInfoBlock1: {
         float:"left",
         position:"relative",
@@ -49,9 +52,15 @@ const useStyles = makeStyles(theme => ({
     },
 
     personalInfoBlock2 : {
-        width:"40%",
-        float:"right",
+        overflowY: "auto",
+        display:"flex",
+        flexWrap:"wrap",
+        justifyContent:"space-evenly",
+        alignItems:"center",
+        width:"100%",
+        // float:"right",
         height:"100%",
+        backgroundColor:"red",
         [theme.breakpoints.down('xs')]: {
             width: "100%",
         },

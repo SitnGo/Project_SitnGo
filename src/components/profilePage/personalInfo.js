@@ -2,7 +2,6 @@ import React,{useState, useEffect} from 'react';
 import {Typography, Button, Avatar, Paper, Grid} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import Skeleton from '@material-ui/lab/Skeleton';
-import Tab from './tabInformation';
 import UpdateForm from './userUpdateForm/userUpdateForm';
 import ConfirmPassword from './ConfirmPassword/confirmPassword';
 import {isEdit1, openUpdateForm } from '../sign_in/actions/index';
@@ -10,6 +9,7 @@ import useStyles from './style';
 import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
+import Passager from './passager/Passager';
 import {useDispatch, useSelector, connect} from 'react-redux';
 function usePersonalInfo() {
     // const [isEdit, setEditValue] = useState(true);
@@ -54,7 +54,7 @@ function usePersonalInfo() {
     return(
 <Grid container sm={12}  className={classes.profileContainer}>
             
-            <Grid item sm={4} xs={12}>
+            <Grid item sm={4} xs={12} className={classes.leftSide}>
                 <Paper elevation={3} className={classes.personalInfoBlock1}>
             
                 <div className={classes.header2}>
@@ -107,10 +107,11 @@ function usePersonalInfo() {
                
              </Paper>
             </Grid>
-             <Grid item sm={8} xs={12}>
-                <Paper elevation={4} className={classes.personalInfoBlock2}>
-                <Tab/>
-                </Paper>
+             <Grid item sm={8} xs={12} className={classes.personalInfoBlock2}>
+                {/* <Paper elevation={4} className={classes.personalInfoBlock2}> */}
+                <Passager/>
+                
+                {/* </Paper> */}
             </Grid>
 </Grid>
     );
