@@ -45,7 +45,7 @@ const OfferRout = () => {
     const [plate, setPlate] = useState("");
     const [count, setCount] = useState("");
     const [maps, setMap] = useState();
-    const [price, setPrice] = useState();
+    const [price, setPrice] = useState(1000);
     const [isMapInit, setIsMapInit] =useState(false);
     const [errors, setErrors] = useState({
         from: false,
@@ -97,11 +97,12 @@ const OfferRout = () => {
         }
         let currentRoute = JSON.parse(localStorage.getItem("route"))
         setRoute(currentRoute)
-        setPrice(Math.ceil(currentRoute.route.summary.totalDistance/1000))
+        setPrice(`${Math.ceil(currentRoute.route.summary.totalDistance/1000)}`)
         currentRoute.waypoints[0].name += from;
         currentRoute.waypoints[1].name += to;
         // console.log(currentRoute.route)
         let route={
+            userId: localStorage.getItem("userId"),
             route: currentRoute,
             parameters:  {
                 name: `${result.userInfo.name} ${result.userInfo.surname}`, 
@@ -110,6 +111,7 @@ const OfferRout = () => {
                 count: count,
                 distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
                 time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
+                price: `${price}AMD`,
             }
         }
         result.userRoutesInfo.routes.push(route)
@@ -134,7 +136,7 @@ const OfferRout = () => {
     let date = `${year}-${month}-${day}T23:59`;
 
    function isEmpty () {
-       if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& price.trim() !== '' ) {
+       if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& price !== '' ) {
     //        alert("confirm");
 
            setFromError(false);
@@ -176,7 +178,7 @@ const OfferRout = () => {
             setPlateError(true);
             return true
         }
-        if (price.trim() !== '') {
+        if (price !== '') {
             setPriceError(false);
         } else {
             setPriceError(true);

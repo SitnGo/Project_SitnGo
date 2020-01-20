@@ -69,6 +69,15 @@ const GetRout = () => {
         })    
     }
 
+    function onAcceptClick(){
+        console.log(route)
+        
+        // fire.firestore().collection("users").doc(route.userId).get().then(result=>{
+        //     console.log(result.data())
+        // })
+    }
+
+
     function onTableRowClick(e){
 
         setRoute(e);
@@ -158,6 +167,8 @@ const GetRout = () => {
                                     //edit i to id from firebase
                                     let i=0;
                                     i++;
+                                    console.log(row)
+                                    // delete row.parameters.userId
                                     let tableRow = Object.values(row.parameters);
                                     return (
                                         <TableRow hover role='checkbox' key={row.i} onClick={() => onTableRowClick(row)} >
@@ -196,6 +207,7 @@ const GetRout = () => {
                             fullWidth
                             variant='outlined'
                             style={classes.accept}
+                            onClick={onAcceptClick}
                         >
                             Accept
                         </Button>
