@@ -148,11 +148,6 @@ const OfferRout = () => {
                     <MLeafletApp  />
                 </div>
             </div>
-<<<<<<< HEAD
-            <MLeafletApp/>
-            {/* <Routing/> */}
-=======
->>>>>>> c461e333623c88a0f658fa821663c307510261c9
         </section>
     );
 }
