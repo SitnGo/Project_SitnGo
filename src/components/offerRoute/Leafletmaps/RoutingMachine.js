@@ -21,7 +21,7 @@ class Routing extends MapLayer {
       altLineOptions: {
           styles: [
               {color: 'black', opacity: 0.15, weight: 9},
-              {color: 'white', opacity: 0.8, weight: 6},
+              {color: 'red', opacity: 0.8, weight: 6},
               {color: 'blue', opacity: 0.5, weight: 2}
           ]},
           geocoder: Geocoder.nominatim()

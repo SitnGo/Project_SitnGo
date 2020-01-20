@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import fire from '../../ConfigFirebase/Fire';
 import { Button, Fab } from '@material-ui/core/';
-import { Typography,TextField, InputAdornment, IconButton } from '@material-ui/core';
+import { Typography,TextField, InputAdornment, IconButton, FormControlLabel,FormControl, FormLabel, FormGroup } from '@material-ui/core';
 import { Visibility, VisibilityOff, Email, Close } from "@material-ui/icons";
 import { Checkbox } from '@material-ui/core';
 import { useDispatch, useSelector, connect} from 'react-redux';
@@ -21,6 +21,7 @@ export function SignIn(props) {
     const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
     const [cookies, setCookie, removeCookie] = useCookies(['loginPassword']);
+    const[check, setCheck, removeCheck] = useCookies(["RememberMe"])
     const setIsErsed = props.setIsErsed;
     const handleClose = () => {
         dispatch(openSignInAction())
@@ -28,13 +29,12 @@ export function SignIn(props) {
         setPassword("");
         setErrorMessage("")
     };
+   
 
-    const handleChange = name => event => {
-        setChecked(event.target.checked);
-    };
     let Id = useSelector(state=>state.userId)
 
     function login() {
+        let rememberMe = {checked: checked}
         let loginPassword = {email: email, password: password}
         console.log(loginPassword)
         fire.auth().signInWithEmailAndPassword(email, password)
@@ -44,7 +44,10 @@ export function SignIn(props) {
                 user = await fire.firestore().collection("users").doc(userId).get()
                 user = user.data();
                 localStorage.setItem("isLogged","true");
-                setCookie('loginPassword', loginPassword, { path: '/' });
+                setCheck('RememberMe', rememberMe, {path: '/' } );
+                console.log(rememberMe);
+                rememberMe === true ? setCookie('loginPassword', loginPassword, { path: '/' }) : setCookie ('loginPassword', "", {path: '/' });
+                console.log(rememberMe)
                 localStorage.setItem("userId",userId);    
                 return user;
             }
@@ -158,14 +161,22 @@ export function SignIn(props) {
                     }}
                 />
                 <div>
-                    <Checkbox
-                        checked={checked}
-                        onChange={handleChange(checked)}
-                        value="checked"
-                        style={styles.checkbox}
-                        inputProps={{
-                        'aria-label': 'secondary checkbox',
-                    }}/>
+    <FormControl component="fieldset">
+    <FormControlLabel
+          value="top"
+          control={<Checkbox    checked={checked}
+                                label = "remember"
+                                onChange = {e => setChecked(e.target.checked)}
+                                //onChange={handleChange(checked)}
+                                value="checked"
+                                style={styles.checkbox}
+                                inputProps={{'aria-label': 'secondary checkbox',
+                                            }} />}
+          label="Remember"
+          labelPlacement="Remember"
+        />
+        {/* </FormGroup> */}
+    </FormControl>
                 </div>
                 <div style={styles.signContainer}>
                     {/* <RouterLink to="profile"> */}
