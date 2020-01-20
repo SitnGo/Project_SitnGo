@@ -141,7 +141,7 @@ const GetRout = () => {
             <div style={classes.offersContainer}>
                 {info ? <div style={classes.offers}>
                     <Paper>
-                        <Table stickyHeader>
+                        <Table size='small' stickyHeader>
                             <TableHead>
                                 <TableRow>
                                     <TableCell align='center'>Car Model</TableCell>

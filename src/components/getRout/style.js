@@ -19,12 +19,14 @@ export const classes = {
         height: '100%',
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        margin: '0 auto'
+        alignItems: 'flex-start',
+        margin: '0 auto',
+        paddingTop: '40px'
     },
     offers:{
         width: '50%',
-        margin: '20px auto',
+        margin: '0 auto',
+        overflow: 'auto'
     },
     offerList: {
         listStyleType: 'none',
@@ -44,7 +46,7 @@ export const classes = {
         width: '90%',
         margin: ' 0 auto',
     }, 
-    accept :{
-        margin: '40px 0 0 0'
-    }
+    accept: {
+        margin: '0'
+    },
 }
