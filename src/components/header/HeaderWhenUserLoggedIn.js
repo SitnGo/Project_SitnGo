@@ -1,6 +1,6 @@
 import React from 'react';
-import { styles } from "./style";
-import { Link, Button } from "@material-ui/core";
+import { styles } from './style';
+import { Link, Button } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom'
 import { connect, useDispatch } from 'react-redux';
 import { signOutAction } from '../sign_in/actions';
@@ -13,9 +13,11 @@ function HeaderWhenUserLoggedIn(props) {
     const classes = styles();
     function handleSignOut(){
         fire.auth().signOut().then(function() {
+                    localStorage.clear()
                     localStorage.setItem('isLogged','false');
-                    localStorage.removeItem("userId")
-                    return JSON.parse(localStorage.getItem("isLogged"))      
+                    // localStorage.removeItem('userId')
+                    return JSON.parse(localStorage.getItem('isLogged'))
+
         })
         .then((result)=>{
             dispatch(signOutAction(result))
@@ -51,7 +53,7 @@ function HeaderWhenUserLoggedIn(props) {
                         className={classes.profile}
                     >My Profile</Button>
                 </RouterLink>
-                <RouterLink to="/">
+                <RouterLink to='/' className={classes.signButton}>
                     <Button
                         variant='contained'
                         className={classes.sign}

@@ -4,7 +4,16 @@ import "leaflet-routing-machine";
 import { withLeaflet } from "react-leaflet";
 import Geocoder from 'leaflet-control-geocoder';
 
+
+
+
 class Routing extends MapLayer {
+  constructor(props){
+    super(props)
+    this.state={
+      route: null
+    }
+  }
   createLeafletElement() {
     const { map } = this.props;
     let leafletElement = L.Routing.control({
@@ -25,7 +34,17 @@ class Routing extends MapLayer {
               {color: 'blue', opacity: 0.5, weight: 2}
           ]},
           geocoder: Geocoder.nominatim()
-    }).addTo(map.leafletElement);
+    })
+    .on('routeselected', function(e) {
+      let routes = e.route;
+      let waypoints =e.waypoints;
+      let route = {route:routes, waypoints: routes.waypoints}
+      console.log(route.waypoints)
+      console.log(routes)
+      localStorage.setItem("selectedRoute1", JSON.stringify(routes))
+      localStorage.setItem("route",JSON.stringify(route))
+    })
+    .addTo(map.leafletElement);
     return leafletElement.getPlan();
   }
 }

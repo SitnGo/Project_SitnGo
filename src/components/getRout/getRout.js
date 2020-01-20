@@ -1,9 +1,74 @@
-import React from 'react';
-import {classes} from "./style";
-import {TextField, Table, TableRow, TableHead, TableBody, TableCell, TableFooter, TablePagination} from '@material-ui/core';
-// import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
+import React, {useState} from 'react';
+import {classes} from './style';
+import {
+    TextField,
+    Table,
+    TableRow,
+    TableHead,
+    TableBody,
+    TableCell,
+    TableFooter,
+    TablePagination,
+    Paper,
+    Button,
+} from '@material-ui/core';
+import fire from '../../ConfigFirebase/Fire';
+// import MLeafletApp from '../offerRoute/Leafletmaps/final'
+import Map from './map/MapForGetRoute'
+
+
 
 const GetRout = () => {
+    const [mapId, setMapId] = useState(1);
+    const [from,setFrom] = useState("");
+    const [to,setTo] = useState("");
+    const [startDate,setStartDate] = useState("");
+    const [count, setCount] = useState("")
+    const [route,setRoute] = useState("");
+
+
+    const handleClick = (id) => {
+        setMapId(id);
+    }
+
+    function onSubmit(){
+        async function getMarker(user={}) {
+            let userId;
+            if (localStorage.getItem("userId")){
+                userId = localStorage.getItem("userId")                
+            }else{
+                userId = fire.auth().currentUser.uid;
+            }
+            user = await fire.firestore().collection("users").get().then((result)=>{
+                let matchedRouts=[];
+                result.forEach((item=>{
+                    if(item.data().hasOwnProperty("userRoutesInfo")){
+
+                        if(item.data().userRoutesInfo.hasOwnProperty("routes")){
+                            item.data().userRoutesInfo.routes.forEach((item)=>{
+                                    if((item.route.waypoints[0].name.toUpperCase().includes(from.toUpperCase())) && (item.route.waypoints[1].name.toUpperCase().includes(to.toUpperCase()))){
+                                        matchedRouts.push(item)
+                                    }
+                            })
+                        }
+                    }
+                }))
+                setInfo(matchedRouts)
+
+            })
+            return user;
+        }
+        getMarker().then(result => {
+        })    
+    }
+
+    function onTableRowClick(e){
+
+        setRoute(e);
+        console.log(route)
+    }
+
+
     let d = new Date();
     let day = d.getDate();
     let month;
@@ -14,7 +79,18 @@ const GetRout = () => {
     }
     let year = d.getFullYear();
     let date = `${year}-${month}-${day}T23:59`;
+    const [page, setPage] = React.useState(0);
 
+    const [info, setInfo] = useState([]);
+
+    const rows = Object.values(info);
+    // for(let i=0; i<info.length; i++){
+        // rows.push(info[i])
+    // }
+    const rowsPerPage = 6;
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
 
     return(
         <section style={classes.section}>
@@ -23,12 +99,14 @@ const GetRout = () => {
                     margin='dense'
                     variant='outlined'
                     label='From'
+                    onChange={(e)=>{setFrom(e.target.value)}}
                     style={classes.routeListItem}
                 />
                 <TextField
                     margin='dense'
                     variant='outlined'
                     label='To'
+                    onChange={(e)=>{setTo(e.target.value)}}
                     style={classes.routeListItem}
                 />
                 <TextField
@@ -37,163 +115,69 @@ const GetRout = () => {
                     label='Date'
                     type='datetime-local'
                     defaultValue={`${date}`}
+                    onChange={(e)=>setStartDate(e.target.value)}
                     style={classes.routeListItem}
                 />
                 <TextField
                     margin='dense'
                     variant='outlined'
                     label='Persons'
+                    onChange={(e)=>setCount(e.target.value)}
                     style={classes.routeListItem}
                 />
+                <Button
+                    variant='outlined'
+                    onClick={onSubmit}
+                >Search</Button>
             </div>
-            <div style={classes.offers}>
-                <Table stickyHeader>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Driver</TableCell>
-                            <TableCell>Car Model</TableCell>
-                            <TableCell>Car plate</TableCell>
-                            <TableCell>Total Sits</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                            <TableCell>Name Surname</TableCell>
-                            <TableCell>BMW</TableCell>
-                            <TableCell>777OO77</TableCell>
-                            <TableCell>4</TableCell>
-                        </TableRow>
-                    </TableBody>
-                    <TableFooter>
-                        {/*Take from firebase the count of suggested rides*/}
-                        <TablePagination
-                            count={100}
-                            onChangePage={1 + 1}
-                            page={1}
-                            rowsPerPage={6}
-                        />
-                    </TableFooter>
-                </Table>
+            <div style={classes.offersContainer}>
+                <div style={classes.offers}>
+                    <Paper>
+                        <Table stickyHeader>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align='center'>Car Model</TableCell>
+                                    <TableCell align='center'>Total Sits</TableCell>
+                                    <TableCell align='center'>Driver</TableCell>
+                                    <TableCell align='center'>Car plate</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                                    //edit i to id from firebase
+                                    let i=0;
+                                    i++;
+                                    let tableRow = Object.values(row.parameters);
+                                    return (
+                                        <TableRow hover role='checkbox' key={row.i} onClick={() => onTableRowClick(row)} >
+                                            {
+                                                tableRow.map(column => {
+                                                    return (
+                                                        <TableCell key={column.i}  align='center' >
+                                                            {column}
+                                                        </TableCell>
+                                                    );
+                                                })
+                                            }
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                            <TableFooter>
+                                <TablePagination
+                                    count={rows.length}
+                                    rowsPerPageOptions={[]}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    onChangePage={handleChangePage}
+                                />
+                            </TableFooter>
+                        </Table>
+                    </Paper>
+                </div>
+                <div style={classes.mapContainer}>
+                    {route ? <Map route = {route} /> : null}
+                </div>
             </div>
         </section>
     );

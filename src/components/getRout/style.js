@@ -14,8 +14,15 @@ export const classes = {
     routeListItem: {
         margin: '0 10px'
     },
-    offers:{
+    offersContainer: {
         width: '90%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    offers:{
+        width: '45%',
         margin: '10px auto',
     },
     offerList: {
@@ -26,5 +33,10 @@ export const classes = {
     },
     offerListItem: {
         margin: '10px 0'
+    },
+    mapContainer: {
+        width: '45%',
+        height: '60vh',
+        margin: '0 auto',
     },
 }

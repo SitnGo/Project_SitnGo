@@ -7,7 +7,6 @@ export default function reducers(state = {
 }, action) {
 
     switch (action.type) {
-        
         case 'SIGN_IN':
             return Object.assign({},state,{
                 isLoggedInUser: action.payload.bool,
