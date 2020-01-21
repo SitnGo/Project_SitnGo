@@ -37,7 +37,13 @@ const useStyles = makeStyles(theme => ({
     },
  
     typography: {
+       wordBreak:'break-all',
+        fontSize:21,
+    },
+    paper: {
+        
         margin: theme.spacing(4),
+        padding:10,
     },
     editButton: {
         position:"absolute",

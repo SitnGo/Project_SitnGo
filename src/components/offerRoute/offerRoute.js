@@ -135,8 +135,6 @@ const OfferRout = () => {
 
    function isEmpty () {
        if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& price.trim() !== '' ) {
-    //        alert("confirm");
-
            setFromError(false);
            setToError(false);
            setCarError(false);

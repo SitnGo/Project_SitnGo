@@ -10,6 +10,7 @@ import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
 import Passager from './passager/Passager';
+import Driver from './Driver/driver'
 import CenteredTabs from './TabPanels/tabPanels';
 import {useDispatch, useSelector, connect} from 'react-redux';
 // let PassagerList = ['1','2','3','4','5','6','7','8','9', '10', '11', '12', '13', '14', '15'];
@@ -121,12 +122,21 @@ function usePersonalInfo() {
             </div>
                   <hr/>
                     {isEdit ? (
-                        <FadeIn>      
-                    {bool ? <Typography className={classes.typography}>Name  -  {user.userInfo.name} </Typography>:<Skeleton height={60} component='p'/>}
-                    {bool ? <Typography className={classes.typography}>Surname  -  {user.userInfo.surname}</Typography>:<Skeleton height={60} component='p'/> }
-                    {bool ? <Typography className={classes.typography}>Phone  -  {user.userInfo.phone}</Typography>:<Skeleton height={60} component='p'/> } 
-                    {bool ? <Typography className={classes.typography}>Email  -  {user.userInfo.email}</Typography>:<Skeleton height={60} component='p'/>}
+                        <FadeIn>   
+                        <Paper className={classes.paper} elevation={3}>         
+                            {bool ? <Typography className={classes.typography}>Name  -  {user.userInfo.name} </Typography>:<Skeleton height={60} component='p'/>}
+                        </Paper>
+                        <Paper className={classes.paper} elevation={3}>
+                            {bool ? <Typography className={classes.typography}>Surname  -  {user.userInfo.surname}</Typography>:<Skeleton height={60} component='p'/> }
+                        </Paper>
+                        <Paper className={classes.paper} elevation={3}>
+                            {bool ? <Typography className={classes.typography}>Phone  -  {user.userInfo.phone}</Typography>:<Skeleton height={60} component='p'/> } 
+                        </Paper>
+                        <Paper className={classes.paper} elevation={3}>    
+                            {bool ? <Typography className={classes.typography}>Email  -  {user.userInfo.email}</Typography>:<Skeleton height={60} component='p'/>}
+                        </Paper>   
                             </FadeIn>
+
                         ) : (
                             <>
                                 {opneUpdateFormBool ? (
@@ -161,15 +171,7 @@ function usePersonalInfo() {
                 
                  {tabChange ?  
                 
-                    <div>
-                    <p>awd</p>
-                    <p>awd</p>
-                    <p>awd</p>
-                    <p>awd</p>
-                    <p>awd</p>
-                    <p>awd</p>
-                    </div>
-
+                   <Driver/>
                  : 
                  
                  <FadeIn>
