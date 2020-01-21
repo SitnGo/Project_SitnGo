@@ -4,6 +4,8 @@ import {Button, TextField, MenuItem} from '@material-ui/core';
 import MLeafletApp from './Leafletmaps/final'
 import fire from '../../ConfigFirebase/Fire';
 import Routing from "./Leafletmaps/RoutingMachine";
+import {Redirect} from 'react-router-dom';
+
 
 
 
@@ -61,6 +63,7 @@ const OfferRout = () => {
     const [carError, setCarError] = useState(false);
     const [plateError, setPlateError] = useState(false);
     const [priceError, setPriceError] = useState(false);
+    const [redirect, setRedirect] = useState(false);
     
 
     // const [state,setState] = useState({
@@ -104,6 +107,9 @@ const OfferRout = () => {
         let route={
             userId: localStorage.getItem("userId"),
             route: currentRoute,
+            astartEnd: `${from}-${to}`,
+            startDate: startDate,
+            DriverPhone: result.userInfo.phone,
             parameters:  {
                 name: `${result.userInfo.name} ${result.userInfo.surname}`, 
                 car: car, 
@@ -116,6 +122,7 @@ const OfferRout = () => {
         }
         result.userRoutesInfo.routes.push(route)
       fire.firestore().collection("users").doc(result.userId).set(JSON.parse(JSON.stringify(result)))
+      setRedirect(true);
 
     });
  
@@ -132,8 +139,10 @@ const OfferRout = () => {
     }else{
         month = d.getMonth()+1;
     }
+    let hours= d.getHours();
+    let minutes = d.getMinutes();
     let year = d.getFullYear();
-    let date = `${year}-${month}-${day}T23:59`;
+    let date =`${year}-${month}-${day}T${hours}:${minutes}:00`;
 
    function isEmpty () {
        if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& price !== '' ) {
@@ -192,8 +201,7 @@ const OfferRout = () => {
    }
     return(
         <section style={classes.section}>
-            {console.log(maps)}
-
+            {redirect ? <Redirect to="/profile" push /> : null }
             <div style={classes.offer}>
                 <div style={classes.rideList}>
                     <TextField
@@ -225,7 +233,7 @@ const OfferRout = () => {
                         label='Date'
                         type='datetime-local'
                         defaultValue={`${date}`}
-                        onChange={(e)=>setStartDate(e.target.value)}
+                        onChange={(e)=>{let date = e.target.value+":00"; setStartDate(date)}}
                         style={classes.rideListItem}
                     />
                     <TextField
