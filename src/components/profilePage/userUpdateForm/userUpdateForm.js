@@ -9,7 +9,6 @@ import {useSelector, useDispatch, connect } from 'react-redux';
 import ForgotPassword from '../Forgotpassword/forgotPassword';
 function UpdateForm (props) {
 
-
     const classes = useStyles();
     const dispatch = useDispatch();
     const [email, setEmail] = useState(props.data[0]);
@@ -30,7 +29,7 @@ let arrFromErrorsValues = Object.values(errors)
         } else {
             return item;
         }
-    })
+    });
 
      //////////////////check errors/////////////////////
      if(email !== props.data[0] || phone !== props.data[1]) {

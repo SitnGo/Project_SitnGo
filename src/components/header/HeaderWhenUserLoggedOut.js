@@ -1,9 +1,9 @@
 import React from 'react';
-import { styles } from './style';
 import { Link, Button } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom'
 import { useDispatch, useSelector, connect } from 'react-redux';
 import {openSignInAction, openSignUPAction} from '../sign_in/actions';
+import styles from './style';
 
 function HeaderWhenUserLoggedOut(props) {
 
