@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {classes} from './style';
 import {Button, TextField, MenuItem} from '@material-ui/core';
+// import Alert from '@material-ui/lab/Alert';
+import SimpleSnackbar from "./snackbar/snackbar"
 import MLeafletApp from './Leafletmaps/final'
 import fire from '../../ConfigFirebase/Fire';
 import Routing from "./Leafletmaps/RoutingMachine";
@@ -58,12 +60,14 @@ const OfferRout = () => {
         carPlate: false,
     })
     const [startDate, setStartDate] = useState("");
+    const [startDateError, setStartDateError] = useState(null);
     const [fromError, setFromError] = useState(false);
     const [toError, setToError] = useState(false);
     const [carError, setCarError] = useState(false);
     const [plateError, setPlateError] = useState(false);
     const [priceError, setPriceError] = useState(false);
     const [redirect, setRedirect] = useState(false);
+    const [isRouteError,setIsRouteError] = useState(false);
     
 
     // const [state,setState] = useState({
@@ -142,14 +146,27 @@ const OfferRout = () => {
     let hours= d.getHours();
     let minutes = d.getMinutes();
     let year = d.getFullYear();
-    let date =`${year}-${month}-${day}T${hours}:${minutes}:00`;
+    let date =`${year}-${month}-${day}T${hours}:${minutes}`;
 
    function isEmpty () {
-       if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& price !== '' ) {
+    let d = new Date();
+    let day = d.getDate();
+    let month;
+    if (d.getMonth()<9){
+        month = `0${d.getMonth()+1}`;
+    }else{
+        month = d.getMonth()+1;
+    }
+    let hours= d.getHours();
+    let minutes = d.getMinutes();
+    let year = d.getFullYear();
+    let date =`${year}-${month}-${day}T${hours}:${minutes}`;
+       if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& price !== '' && startDate !==null && startDate !==date && !isRouteError) {
     //        alert("confirm");
 
            setFromError(false);
            setToError(false);
+           setStartDateError(false);
            setCarError(false);
            setPlateError(false);
            setFrom('');
@@ -165,6 +182,11 @@ const OfferRout = () => {
         } else {
             setFromError(true);
             return true
+        }
+        if(startDate !==null && startDate !== date){
+            setStartDateError(false);
+        }else{
+            setStartDateError(true);
         }
 
         if (to.trim() !== '') {
@@ -231,6 +253,8 @@ const OfferRout = () => {
                         fullWidth
                         variant='outlined'
                         label='Date'
+                        error={startDateError}
+                        helperText={startDateError ? <p>You must set correct Date</p> : null}
                         type='datetime-local'
                         defaultValue={`${date}`}
                         onChange={(e)=>{let date = e.target.value+":00"; setStartDate(date)}}
@@ -293,7 +317,9 @@ const OfferRout = () => {
                     >Submit</Button>
                 </div>
                 <div style={classes.mapContainer}>
-                    <MLeafletApp  setMap = {setMap} />
+                    {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} />  : null}
+                    {/* <SimpleSnackbar /> */}
+                    <MLeafletApp  setMap = {setMap} setIsRouteError={setIsRouteError} />
                     {/* {isMapInit && <Routing map={maps}/>} */}
                 </div>
             </div>

@@ -15,9 +15,9 @@ function HeaderWhenUserLoggedIn(props) {
     function handleSignOut(){
         fire.auth().signOut().then(function() {
                     localStorage.clear()
-                    localStorage.setItem('isLogged','false');
-                    // localStorage.removeItem('userId')
-                    return JSON.parse(localStorage.getItem('isLogged'))
+                    // localStorage.setItem('isLogged','false');
+                    // // localStorage.removeItem('userId')
+                    // return JSON.parse(localStorage.getItem('isLogged'))
 
         })
         .then((result)=>{

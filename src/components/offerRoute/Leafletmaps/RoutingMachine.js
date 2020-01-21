@@ -36,7 +36,8 @@ class Routing extends MapLayer {
           ]},
           geocoder: Geocoder.nominatim()
     })
-    .on('routeselected', function(e) {
+    .on('routeselected', (e)=> {
+      this.props.setIsRouteError(false);
       let routes = e.route;
       let waypoints =e.waypoints;
       let route = {route:routes, waypoints: routes.waypoints}
@@ -44,6 +45,9 @@ class Routing extends MapLayer {
       console.log(routes)
       localStorage.setItem("selectedRoute1", JSON.stringify(routes))
       localStorage.setItem("route",JSON.stringify(route))
+    })
+    .on("routingerror",()=>{
+      this.props.setIsRouteError(true);
     })
     .addTo(this.props.map.leafletElement);
     return leafletElement.getPlan();

@@ -45,7 +45,7 @@ function usePersonalInfo() {
                if(user && user.acceptedRoutes && user.acceptedRoutes.length){
                     setPassagerList(user.acceptedRoutes);
                }
-                // console.log(PassagerList);
+                console.log(PassagerList);
             return user;
         }
         getMarker().then(result => {
