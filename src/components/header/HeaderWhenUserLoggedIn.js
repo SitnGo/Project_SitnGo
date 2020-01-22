@@ -1,12 +1,11 @@
 import React from 'react';
-import { styles } from './style';
 import { Link, Button } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom'
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { signOutAction } from '../sign_in/actions';
 import {isEdit1, openUpdateForm} from '../sign_in/actions/index';
 import fire from '../../ConfigFirebase/Fire';
-
+import styles from './style';
 
 function HeaderWhenUserLoggedIn(props) {
     let isEditChecked = useSelector(state => state.isEdit1);
@@ -15,9 +14,9 @@ function HeaderWhenUserLoggedIn(props) {
     function handleSignOut(){
         fire.auth().signOut().then(function() {
                     localStorage.clear()
-                    localStorage.setItem('isLogged','false');
-                    // localStorage.removeItem('userId')
-                    return JSON.parse(localStorage.getItem('isLogged'))
+                    // localStorage.setItem('isLogged','false');
+                    // // localStorage.removeItem('userId')
+                    // return JSON.parse(localStorage.getItem('isLogged'))
 
         })
         .then((result)=>{

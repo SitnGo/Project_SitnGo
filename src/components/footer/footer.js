@@ -1,12 +1,12 @@
 import React from 'react';
-import {useStyles} from './style'
+import styles from './style'
 import { Fab } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
 function Footer() {
-    const classes = useStyles();
+    const classes = styles();
     return (
         <footer className={classes.footer}>
             <div className={classes.socialContainer}>

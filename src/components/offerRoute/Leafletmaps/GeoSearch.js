@@ -20,6 +20,6 @@ class GeoSearch extends MapControl {
         const { map } = this.props.leaflet;
         map.addControl(this.leafletElement);
     }
-}
+};
 
 export default withLeaflet(GeoSearch);

@@ -1,4 +1,6 @@
-export const classes = {
+import {makeStyles} from '@material-ui/core/styles';
+
+const styles = makeStyles(theme => ({
     section:{
         width: '100%',
         height: '80vh',
@@ -49,4 +51,6 @@ export const classes = {
     accept: {
         margin: '0'
     },
-}
+}));
+
+export default styles;

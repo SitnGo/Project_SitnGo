@@ -68,9 +68,9 @@ const SignUp = (props) => {
                             phone: phone,
                         }}
                     fire.firestore().collection('users').doc(userId).set(user);
-                    localStorage.setItem('isLogged','true');
-                    setCookie('loginPassword', loginPassword, { path: '/' });
-                    localStorage.setItem('userId',userId);
+                    // localStorage.setItem('isLogged','true');
+                    // setCookie('loginPassword', loginPassword, { path: '/' });
+                    // localStorage.setItem('userId',userId);
                     return {user: user, id:userId};
                 }).then((result) => {
                 dispatch(SignInAction(result.user));

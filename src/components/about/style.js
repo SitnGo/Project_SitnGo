@@ -1,4 +1,6 @@
-export const classes = {
+import  {makeStyles} from '@material-ui/core/styles';
+
+const styles = makeStyles(theme => ({
     section: {
         height: '100vh',
         display: 'flex',
@@ -38,4 +40,6 @@ export const classes = {
         fontSize: '20px',
         letterSpacing: '2px'
     }
-};
+}));
+
+export default styles;

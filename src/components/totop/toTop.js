@@ -1,11 +1,12 @@
 import React from 'react';
-import {classes} from './style';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import {Fab} from '@material-ui/core';
+import styles from "./style";
 
 const ToTop = () => {
+    const classes = styles();
     return(
-        <Fab href='#' style={classes.toTop} size='medium'>
+        <Fab href='#' className={classes.toTop} size='medium'>
             <KeyboardArrowUpIcon/>
         </Fab>
     );

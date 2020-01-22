@@ -1,5 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles';
-export const useStyles = makeStyles(theme =>({
+import  {makeStyles} from '@material-ui/core/styles';
+
+const styles = makeStyles(theme => ({
     footer: {
         backgroundColor:'#424242',
         display:'flex',
@@ -50,3 +51,5 @@ export const useStyles = makeStyles(theme =>({
         }
     }
 }));
+
+export default styles;

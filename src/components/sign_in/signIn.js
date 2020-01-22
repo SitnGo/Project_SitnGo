@@ -35,21 +35,21 @@ export function SignIn(props) {
     let Id = useSelector(state=>state.userId)
 
     function login() {
-        let loginPassword = {email: email, password: password}
-        console.log(loginPassword)
+        // let loginPassword = {email: email, password: password}
+        // console.log(loginPassword)
         fire.auth().signInWithEmailAndPassword(email, password)
             .then(a => {
                 async function getMarker(user={}) {
                     const userId = fire.auth().currentUser.uid;
                     user = await fire.firestore().collection('users').doc(userId).get()
                     user = user.data();
-                    localStorage.setItem('isLogged','true');
-                    setCookie('loginPassword', loginPassword, { path: '/' });
-                    localStorage.setItem('userId',userId);
+                    // localStorage.setItem('isLogged','true');
+                    // setCookie('loginPassword', loginPassword, { path: '/' });
+                    // localStorage.setItem('userId',userId);
                     return user;
                 }
                 getMarker().then(result => {
-                    dispatch(SignInAction(result, JSON.parse(localStorage.getItem('isLogged'))));
+                    dispatch(SignInAction(result));
                     dispatch(openSignInAction());
                 });
                 props.history.push('/profile');
