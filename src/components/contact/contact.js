@@ -3,20 +3,44 @@ import styles from './style';
 import RoomIcon from '@material-ui/icons/Room';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MailIcon from '@material-ui/icons/Mail';
-import AppMap from '../AppMap/AppMap';
-
+import {Grid} from '@material-ui/core';
+import LeafletMap from "../offerRoute/Leafletmaps/Map"
 const Contact = () => {
     const classes = styles();
     return(
-        <section className={classes.section}>
+        <Grid
+            container
+            xs='12'
+            alignItems='center'
+            alignContent='center'
+            justify='space-evenly'
+            className={classes.section}
+        >
             <span className={classes.contactId} id='contact'></span>
-            <div className={classes.textContainer}>
+            <Grid
+                xl={8}
+                lg={8}
+                md={8}
+                sm={6}
+                xs={6}
+                className={classes.textContainer}
+            >
                 <h1 className={classes.contactHeader}>Contact Us</h1>
-                <div className={classes.mapContainer}>
-                    <AppMap/>
-                </div>
-            </div>
-            <div className={classes.contactsContainer}>
+                <Grid
+                    xs={12}
+                    className={classes.mapContainer}
+                >
+                    <LeafletMap />
+                </Grid>
+            </Grid>
+            <Grid
+                xl={3}
+                lg={3}
+                md={3}
+                sm={5}
+                xs={5}
+                className={classes.contactsContainer}
+            >
                 <div className={classes.contacts}>
                     <RoomIcon fontSize='large' className={classes.icon}/>
                     <p className={classes.contactsText}>Hakob Hakobyan 3</p>
@@ -29,9 +53,9 @@ const Contact = () => {
                     <MailIcon fontSize='large' className={classes.icon}/>
                     <p className={classes.contactsText}>info@aca.am</p>
                 </div>
-            </div>
+            </Grid>
             <div className={classes.imageCover}></div>
-        </section>
+        </Grid>
     );
 };
 

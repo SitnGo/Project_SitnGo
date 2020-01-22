@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Button } from '@material-ui/core';
+import { Link, Button, Grid } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom'
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { signOutAction } from '../sign_in/actions';
@@ -34,26 +34,53 @@ function HeaderWhenUserLoggedIn(props) {
         }
     }
     return (
-        <>
-            <ul className={classes.menu} >
-                <li className={classes.menuItem}>
-                    <RouterLink to='/GetRout'>
-                        <Link
-                            underline='hover'
-                            className={classes.menuLink}
-                        >Get Route</Link>
-                    </RouterLink>
-                </li>
-                <li className={classes.menuItem}>
-                    <RouterLink to='/offerRoute'>
-                        <Link
-                            underline='hover'
-                            className={classes.menuLink}
-                        >Offer Route</Link>
-                    </RouterLink>
-                </li>
-            </ul>
-            <div className={classes.signButtonsContainer}>
+        <Grid
+            container
+            xl={11}
+            lg={11}
+            md={11}
+            sm={10}
+            xs={10}
+            alignItems='center'
+            alignContent='center'
+            justify='space-evenly'
+        >
+            <Grid
+                container
+                xs={6}
+                alignItems='center'
+                alignContent='center'
+                justify='center'
+            >
+                <ul className={classes.menu} >
+                    <li className={classes.menuItem}>
+                        <RouterLink to='/GetRout'>
+                            <Link
+                                underline='hover'
+                                className={classes.menuLink}
+                            >Get Route</Link>
+                        </RouterLink>
+                    </li>
+                    <li className={classes.menuItem}>
+                        <RouterLink to='/offerRoute'>
+                            <Link
+                                underline='hover'
+                                className={classes.menuLink}
+                            >Offer Route</Link>
+                        </RouterLink>
+                    </li>
+                </ul>
+            </Grid>
+            <Grid
+                container
+                xl={3}
+                lg={3}
+                md={3}
+                sm={6}
+                xs={6}
+                justify='flex-end'
+                className={classes.signButtonsContainer}
+            >
                 <RouterLink to='profile' className={classes.signButton}>
                     <Button
                         onClick={handleMyProfile}
@@ -68,8 +95,8 @@ function HeaderWhenUserLoggedIn(props) {
                         onClick={handleSignOut}
                     >Sign Out</Button>
                 </RouterLink>
-            </div>
-        </>
+            </Grid>
+        </Grid>
     )
 }
 function mapStateToProps(state) {
