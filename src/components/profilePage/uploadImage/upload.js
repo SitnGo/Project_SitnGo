@@ -14,6 +14,9 @@ class DropzoneDialogModal extends React.Component {
             files: [],
         };
     }
+
+    
+
     handleClose = () => {
         this.setState({
             open: false
@@ -57,7 +60,8 @@ class DropzoneDialogModal extends React.Component {
     render() {
         return (
             <div>
-                <Avatar onClick={this.handleOpen} style={style} src={this.props.url} />
+                {console.log(style)}
+                <Avatar onClick={this.handleOpen} src={this.props.url} />
                 {/* <updateImage/> */}
                 <DropzoneDialog
                     open={this.state.open}
