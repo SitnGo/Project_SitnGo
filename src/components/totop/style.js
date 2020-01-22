@@ -1,4 +1,6 @@
-export const classes = {
+import {makeStyles} from '@material-ui/core/styles';
+
+const styles = makeStyles(theme => ({
     toTop: {
         position: 'fixed',
         zIndex: 1000000,
@@ -6,4 +8,6 @@ export const classes = {
         backgroundColor: '#fb9403',
         bottom: '5%',
     }
-};
+}));
+
+export default styles;

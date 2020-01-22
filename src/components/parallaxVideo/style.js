@@ -1,4 +1,6 @@
-export const classes = {
+import {makeStyles} from '@material-ui/core/styles';
+
+const styles = makeStyles(theme => ({
     section: {
         height: '50vh',
     },
@@ -11,4 +13,6 @@ export const classes = {
     video: {
         width: '100%'
     }
-}
+}));
+
+export default styles;

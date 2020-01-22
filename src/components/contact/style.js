@@ -1,6 +1,7 @@
 import { auth } from "firebase";
+import  {makeStyles} from '@material-ui/core/styles';
 
-export const classes = {
+const styles = makeStyles(theme => ({
     section: {
         height: '100vh',
         display: 'flex',
@@ -62,4 +63,6 @@ export const classes = {
             fontSize: '15px',
         }
     }
-};
+}));
+
+export default styles;

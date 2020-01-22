@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function CustomizedSnackbars(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(props.isRouteError);
+  const [open, setOpen] = React.useState(props.isRouteSuccess);
 
   const handleClick = () => {
     setOpen(true);
@@ -33,17 +33,15 @@ export default function CustomizedSnackbars(props) {
     setOpen(false);
   };
 
-
-
   return (
     <div className={classes.root}>
       {/* <Button variant="outlined" onClick={handleClick}>
         Open success snackbar
       </Button> */}
 
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
-                  NO Routes Found. Drag Markers to get route
+      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+                 SUCCESS Routes Found.
         </Alert>
       </Snackbar>
       {/* <Alert severity="error">This is an error message!</Alert>

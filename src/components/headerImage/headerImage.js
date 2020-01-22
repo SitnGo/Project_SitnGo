@@ -1,10 +1,10 @@
 import React from 'react';
-import {classes} from './style';
+import styles from './style';
 
 const HeaderImage = () => {
+    const classes = styles();
     return(
-        <section style={classes.section}>
-        </section>
+        <section className={classes.section}></section>
     );
 };
 

@@ -2,8 +2,8 @@
     height: 100%;
     width: 100%;
 
-  }
-  .leaflet-routing-container, .leaflet-routing-error {
+}
+.leaflet-routing-container, .leaflet-routing-error {
     width: 50%;
     background-color: white;
     padding-top: 4px;
@@ -164,12 +164,12 @@
 }
 
 .leaflet-routing-geocoder-result {
-    font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font: 12px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif;
     position: absolute;
     max-height: 0;
     overflow: hidden;
     transition: all 0.5s ease;
-    z-index: 1000; /* Arbitrary, but try to be above "most" things. */
+    z-index: 1000; /* Arbitrary, but try to be above 'most' things. */
 }
 
 .leaflet-routing-geocoder-result table {
@@ -213,7 +213,7 @@
     padding: 2px;
     font-size: 18px;
     font-weight: bold;
-    content: "\00d7";
+    content: '\00d7';
     text-align: center;
     cursor: pointer;
     color: #ccc;

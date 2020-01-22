@@ -1,6 +1,6 @@
-import {makeStyles} from '@material-ui/core';
+import  {makeStyles} from '@material-ui/core/styles';
 
-export const styles = makeStyles(() => ({
+const styles = makeStyles(theme => ({
     navbar: {
         width: '100%',
         height: '10vh',
@@ -89,5 +89,6 @@ export const styles = makeStyles(() => ({
             fontSize: '50%',
         }
     }
-
 }));
+
+export default styles;

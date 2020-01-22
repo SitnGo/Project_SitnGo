@@ -1,6 +1,6 @@
-import  {makeStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const styles = makeStyles(theme => ({
     root: {
         background: 'url(./images/404.jpg)',
         backgroundRepeat: 'no-repeat',
@@ -25,4 +25,4 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default useStyles;
+export default styles;

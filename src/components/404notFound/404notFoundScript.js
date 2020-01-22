@@ -1,9 +1,9 @@
 import React from 'react';
 import {Typography, Grid} from '@material-ui/core';
-import useStyles from './style';
+import styles from './style';
 
 function NotFound () {
-    const classes = useStyles();
+    const classes = styles();
     return (
         <Grid container sm={12} className={classes.root}
               direction='row'

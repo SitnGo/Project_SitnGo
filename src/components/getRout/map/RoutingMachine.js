@@ -1,11 +1,8 @@
-import { MapLayer } from "react-leaflet";
-import L, { control } from "leaflet";
-import "leaflet-routing-machine";
-import { withLeaflet } from "react-leaflet";
+import { MapLayer } from 'react-leaflet';
+import L, { control } from 'leaflet';
+import 'leaflet-routing-machine';
+import { withLeaflet } from 'react-leaflet';
 import Geocoder from 'leaflet-control-geocoder';
-
-
-
 
 class Routing extends MapLayer {
   constructor(props){
@@ -18,12 +15,12 @@ class Routing extends MapLayer {
       waypoints: [
         L.latLng(this.props.start.lat, this.props.start.lng),
         L.latLng(this.props.finish.lat, this.props.finish.lng)
-    ],
-    routeWhileDragging: true,
+      ],
+      routeWhileDragging: true,
 
     })
-    // let leafletElement = control.setAlternatives([JSON.parse(localStorage.getItem("selectedRoute"))])
-    .addTo(map.leafletElement);
+        // let leafletElement = control.setAlternatives([JSON.parse(localStorage.getItem('selectedRoute'))])
+        .addTo(map.leafletElement);
     return leafletElement.getPlan();
   }
 }
