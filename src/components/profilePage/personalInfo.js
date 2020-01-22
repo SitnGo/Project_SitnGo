@@ -12,9 +12,10 @@ import PassagerDriver from './passagerDriver/PassagerDriver';
 // import Driver from './Driver/driver'
 import CenteredTabs from './TabPanels/tabPanels';
 import {useDispatch, useSelector, connect} from 'react-redux';
-import styles from './style';
+import useStyles from './style';
 
 function usePersonalInfo() {
+   
     const [PassagerList, setPassagerList ] = useState(null);
     const [DriverList, setDriverList] = useState(null);
     // const [isEdit, setEditValue] = useState(true);
@@ -22,11 +23,12 @@ function usePersonalInfo() {
     const [tabChange, setTabChange] = useState(false);
     const [user, setUser] = useState({});
     const [url, setUrl] = useState('');
-    const classes = styles();
+    const classes = useStyles();
     const dispatch = useDispatch();
     let update = useSelector(state => state.confirmUpdate);
     let isEdit = useSelector(state => state.isEdit1);
-    // let openUpdateFormBool = useSelector(state => state.openUpdateForm);
+    let openUpdateFormBool = useSelector(state => state.opneUpdateForm);
+
     useEffect(()=>{
         async function getMarker(user={}) {
             let userId;
@@ -49,7 +51,6 @@ function usePersonalInfo() {
         }
         getMarker().then(result => {
             setUser(result);
-            // setUrl(result.url)
             changeBool(true);
         });
     },[update]);
@@ -121,7 +122,8 @@ function usePersonalInfo() {
 
                         ) : (
                             <>
-                                {/* {opneUpdateFormBool ? ( */}
+                                
+                                {openUpdateFormBool ? (
                                     <>
                                         <UpdateForm  data={[user.userInfo.email, user.userInfo.phone]} userId={localStorage.getItem('userId')}/>                          
                                         <Button 
@@ -130,7 +132,7 @@ function usePersonalInfo() {
                                         onClick={isConfirmBtnClick}
                                     >cancle</Button>
                                 </>
-                            {/* ) : <ConfirmPassword />} */}
+                             ) : <ConfirmPassword />} 
                         </>
                     )}
 
@@ -147,12 +149,8 @@ function usePersonalInfo() {
             </Grid>
             {/* <Paper><p>awdawd</p></Paper> */}
             <Grid item sm={8} xs={12} className={classes.personalInfoBlock2}>
-                {/* Switch */}
-
                 <CenteredTabs tabChange={tabChange} setTabChange={setTabChange}/>
-
                 {tabChange ?
-
                     <FadeIn>
                         <div className={classes.cards}>
                             {DriverList && DriverList.map((el,i)=>{

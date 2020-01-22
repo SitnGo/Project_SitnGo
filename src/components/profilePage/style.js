@@ -1,6 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles';
 
-const styles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
     profileContainer: {
         height: '80vh',
         flexGrow:1,
@@ -89,4 +89,4 @@ const styles = makeStyles(theme => ({
     },
 }));
 
-export default styles;
+export default useStyles;
