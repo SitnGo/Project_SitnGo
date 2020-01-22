@@ -33,8 +33,12 @@ function App() {
     useEffect(()=>{
         // console.log(cookies.loginPassword)
         fire.auth().onAuthStateChanged((e)=>{
+            if(e){
             dispatch(SignInAction(e));
             console.log(e)
+            }else {
+                alert(null);
+            }
         })
     },[])
         // if(isLogged) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Card, CardHeader, CardContent, Avatar, Typography} from '@material-ui/core';
-function Passager (props) {
+function PassagerDriver (props) {
     let {data} = props;
     let startEnd = data.astartEnd.split('-');
     return (
@@ -19,4 +19,4 @@ function Passager (props) {
     );
 }
 
-export default Passager
+export default PassagerDriver;
