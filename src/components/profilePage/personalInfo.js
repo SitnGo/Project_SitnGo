@@ -8,12 +8,14 @@ import {isEdit1, openUpdateForm } from '../sign_in/actions/index';
 import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
-import Passager from './passager/Passager';
+import PassagerDriver from './passagerDriver/PassagerDriver';
+// import Driver from './Driver/driver'
 import CenteredTabs from './TabPanels/tabPanels';
 import {useDispatch, useSelector, connect} from 'react-redux';
-import styles from './style';
+import useStyles from './style';
 
 function usePersonalInfo() {
+   
     const [PassagerList, setPassagerList ] = useState(null);
     const [DriverList, setDriverList] = useState(null);
     // const [isEdit, setEditValue] = useState(true);
@@ -21,12 +23,12 @@ function usePersonalInfo() {
     const [tabChange, setTabChange] = useState(false);
     const [user, setUser] = useState({});
     const [url, setUrl] = useState('');
-    const classes = styles();
+    const classes = useStyles();
     const dispatch = useDispatch();
-    let arr = [];
     let update = useSelector(state => state.confirmUpdate);
     let isEdit = useSelector(state => state.isEdit1);
-    let openUpdateFormBool = useSelector(state => state.openUpdateForm);
+    let openUpdateFormBool = useSelector(state => state.opneUpdateForm);
+
     useEffect(()=>{
         async function getMarker(user={}) {
             let userId;
@@ -49,7 +51,6 @@ function usePersonalInfo() {
         }
         getMarker().then(result => {
             setUser(result);
-            // setUrl(result.url)
             changeBool(true);
         });
     },[update]);
@@ -104,24 +105,34 @@ function usePersonalInfo() {
                     </div>
                     <hr/>
                     {isEdit ? (
-                        <FadeIn>
-                            {bool ? <Typography className={classes.typography}>Name  -  {user && user.userInfo.name} </Typography>:<Skeleton height={60} component='p'/>}
-                            {bool ? <Typography className={classes.typography}>Surname  -  {user && user.userInfo.surname}</Typography>:<Skeleton height={60} component='p'/> }
-                            {bool ? <Typography className={classes.typography}>Phone  -  {user && user.userInfo.phone}</Typography>:<Skeleton height={60} component='p'/> }
-                            {bool ? <Typography className={classes.typography}>Email  -  {user && user.userInfo.email}</Typography>:<Skeleton height={60} component='p'/>}
-                        </FadeIn>
-                    ) : (
-                        <>
-                            {openUpdateFormBool ? (
-                                <>
-                                    <UpdateForm  data={[user.userInfo.email, user.userInfo.phone]} userId={localStorage.getItem('userId')}/>
-                                    <Button
-                                        className={classes.confirmButton}
+                        <FadeIn>   
+                        <Paper className={classes.paper} elevation={3}>         
+                            {bool ? <Typography className={classes.typography}>Name  -  {user.userInfo.name} </Typography>:<Skeleton height={60} component='p'/>}
+                        </Paper>
+                        <Paper className={classes.paper} elevation={3}>
+                            {bool ? <Typography className={classes.typography}>Surname  -  {user.userInfo.surname}</Typography>:<Skeleton height={60} component='p'/> }
+                        </Paper>
+                        <Paper className={classes.paper} elevation={3}>
+                            {bool ? <Typography className={classes.typography}>Phone  -  {user.userInfo.phone}</Typography>:<Skeleton height={60} component='p'/> } 
+                        </Paper>
+                        <Paper className={classes.paper} elevation={3}>    
+                            {bool ? <Typography className={classes.typography}>Email  -  {user.userInfo.email}</Typography>:<Skeleton height={60} component='p'/>}
+                        </Paper>   
+                            </FadeIn>
+
+                        ) : (
+                            <>
+                                
+                                {openUpdateFormBool ? (
+                                    <>
+                                        <UpdateForm  data={[user.userInfo.email, user.userInfo.phone]} userId={localStorage.getItem('userId')}/>                          
+                                        <Button 
+                                        className={classes.confirmButton} 
                                         color='secondary'
                                         onClick={isConfirmBtnClick}
                                     >cancle</Button>
                                 </>
-                            ) : <ConfirmPassword />}
+                             ) : <ConfirmPassword />} 
                         </>
                     )}
 
@@ -138,16 +149,12 @@ function usePersonalInfo() {
             </Grid>
             {/* <Paper><p>awdawd</p></Paper> */}
             <Grid item sm={8} xs={12} className={classes.personalInfoBlock2}>
-                {/* Switch */}
-
                 <CenteredTabs tabChange={tabChange} setTabChange={setTabChange}/>
-
                 {tabChange ?
-
                     <FadeIn>
                         <div className={classes.cards}>
-                            {DriverList && DriverList.map(el=>{
-                                return <Passager key={el} data={el}/>
+                            {DriverList && DriverList.map((el,i)=>{
+                                return <PassagerDriver key={i} data={el}/>
                             })}
                         </div>
                     </FadeIn>
@@ -156,9 +163,8 @@ function usePersonalInfo() {
 
                     <FadeIn>
                         <div className={classes.cards}>
-                            {console.log(DriverList)}
-                            {PassagerList && PassagerList.map(el=>{
-                                return <Passager key={el} data={el}/>
+                            {PassagerList && PassagerList.map((el,i)=>{
+                                return <PassagerDriver key={i} data={el}/>
                             })}
                         </div>
                     </FadeIn>

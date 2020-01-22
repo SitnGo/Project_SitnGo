@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import style from './style';
 import {Avatar} from '@material-ui/core';
 import {DropzoneDialog} from 'material-ui-dropzone'
 import storage from '../../../ConfigFirebase/storage';
 import fire from '../../../ConfigFirebase/Fire';
-import {confirmUpdate} from '../../sign_in/actions/index';
 class DropzoneDialogModal extends React.Component {
     constructor(props) {
         super(props);
@@ -25,7 +24,7 @@ class DropzoneDialogModal extends React.Component {
             files,
             open: false
         });
-        const uploadFile = storage.ref(`images/${fire.auth().currentUser.uid}/${files[0].name}`).put(...files);
+        const uploadFile = storage.ref(`images/${fire.auth().currentUser.uid}/${fire.auth().currentUser.uid+files[0].name.slice(files[0].name.lastIndexOf('.'))}`).put(...files);
         uploadFile.on('state_changed',
             (snapshot)=> {
 
@@ -34,7 +33,7 @@ class DropzoneDialogModal extends React.Component {
                 console.log(error);
             },
             ()=> {
-                storage.ref(`images/${fire.auth().currentUser.uid}`).child(files[0].name).getDownloadURL()
+                storage.ref(`images/${fire.auth().currentUser.uid}`).child(fire.auth().currentUser.uid+files[0].name.slice(files[0].name.lastIndexOf('.'))).getDownloadURL()
                 .then(url=>{
                     fire.firestore().collection('users').doc(fire.auth().currentUser.uid).set({url}, { merge: true })
                     .then(()=> {

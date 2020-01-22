@@ -2,7 +2,7 @@ import React, {useEffect,useState} from 'react';
 import {Link as RouterLink} from 'react-router-dom'
 import HeaderWhenUserLoggedIn from './HeaderWhenUserLoggedIn'
 import HeaderWhenUserLoggedOut from './HeaderWhenUserLoggedOut'
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import fire from '../../ConfigFirebase/Fire';
 import { signOutAction } from '../sign_in/actions';
 import {useCookies} from 'react-cookie';
@@ -25,6 +25,7 @@ const Header = (props) => {
 
     const classes = styles();
     const dispatch = useDispatch();
+    let user = useSelector((state)=> state.user);
 
     return(
     <Grid

@@ -46,7 +46,8 @@ function ConfirmPassword() {
     }
     return (
         <div>
-            <Dialog open={openDialog && open} onClose={false} aria-labelledby='form-dialog-title' fullWidth={true}>
+            {/*  */}
+            <Dialog open={openDialog && open}  aria-labelledby='form-dialog-title' fullWidth={true}>
                 <DialogTitle id='form-dialog-title'>Enter password</DialogTitle>
                 <form onSubmit={handleSubmit}>
                     <DialogContent>
@@ -56,7 +57,7 @@ function ConfirmPassword() {
                             value={password}
                             margin='dense'
                             id='name'
-                            maxWidth={300}
+                            maxwidth={300}
                             label='Enter password'
                             type={showPassword ? 'text' : 'password'}
                             error={passwordError}

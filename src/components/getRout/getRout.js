@@ -29,6 +29,7 @@ const GetRout = (props) => {
     const [load, setLoad] = useState(false);
     const [countError, setCountError] = useState(false);
     const [redirect, setRedirect] = useState(false);
+    const [isDisable, setIsDisable] =useState(false);
 
 
     const handleClick = (id) => {
@@ -36,7 +37,9 @@ const GetRout = (props) => {
     }
     useEffect((() => {
         onSubmit();
-    }), []);
+        setIsDisable(false)
+    }), [])
+    
     // function compareDates(string, d=new Date()){
     //     let day = d.getDate();
     // let month;
@@ -93,6 +96,7 @@ const GetRout = (props) => {
     };
 
     function onAcceptClick() {
+        setIsDisable(true);
         fire.firestore().collection('users').doc(route.userId).get().then(result => {
             return result.data()
         }).then((result) => {
@@ -106,7 +110,7 @@ const GetRout = (props) => {
                         item.parameters.count = +item.parameters.count;
                     }
                     item.parameters.count -= 1;
-                    fire.firestore().collection('users').doc(localStorage.getItem('userId')).get().then((result)=>{
+                    fire.firestore().collection('users').doc(fire.auth().currentUser.uid).get().then((result)=>{
                         let currentUser = result.data()
                         if(!currentUser.hasOwnProperty('acceptedRoutes')){
                             currentUser.acceptedRoutes = [];
@@ -114,7 +118,7 @@ const GetRout = (props) => {
                         currentUser.acceptedRoutes.push(item);
                         return currentUser
                     }).then((updatedUser)=>{
-                        fire.firestore().collection('users').doc(localStorage.getItem('userId')).set(updatedUser)
+                        fire.firestore().collection('users').doc(fire.auth().currentUser.uid).set(updatedUser)
                     })
                 } else {
                     setCountError(true);
@@ -262,6 +266,7 @@ const GetRout = (props) => {
                             <Map route={route} />
                             <Button
                                 fullWidth
+                                disabled = {isDisable}
                                 variant='outlined'
                                 className={classes.accept}
                                 onClick={onAcceptClick}
