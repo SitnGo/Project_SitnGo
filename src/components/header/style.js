@@ -2,18 +2,11 @@ import  {makeStyles} from '@material-ui/core/styles';
 
 const styles = makeStyles(theme => ({
     navbar: {
-        width: '100%',
         height: '10vh',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
         padding: '10px 20px',
         backgroundColor: '#282e34',
         position: 'relative',
         zIndex: 1000,
-    },
-    logoContainer: {
-        width: '8%'
     },
     logo: {
         width: '100%'
@@ -32,7 +25,7 @@ const styles = makeStyles(theme => ({
         justifyContent: 'space-evenly',
         alignItems: 'center',
         listStyleType: 'none',
-        width: '60%',
+        width: '100%',
     },
     menuLink: {
         color: '#ddd'
@@ -42,7 +35,7 @@ const styles = makeStyles(theme => ({
     },
     sign: {
         background: '#fb9403',
-        fontSize: '80%',
+        fontSize: '0.8em',
         color: '#282e34',
         '&:hover': {
             background: '#fb9403',
@@ -55,38 +48,20 @@ const styles = makeStyles(theme => ({
             textDecoration: 'underline'
         }
     },
-    '@media (max-width: 1024px)': {
-        sign: {
-            fontSize: '70%',
-        },
-        logoContainer: {
-            width: '10%'
-        },
-        signButtonsContainer: {
-            width: '30%'
-        }, 
-        menuContainer: {
-            width: '60%'
-        },
-        profile: {
-            fontSize: '70%',
+    '@media (min-width: 600px) and (max-width: 960px)': {
+        logo: {
+            width: '70%'
         }
     },
-    '@media (max-width: 600px)': {
-        menu: {
-            fontSize: '70%'
-        },
-        menuContainer: {
-            width: '50%'
-        },
-        signButtonsContainer: {
-            width: '40%'
-        },
+    '@media (max-width: 599px)': {
         sign: {
-            fontSize: '50%',
+            fontSize: '0.6em'
         },
         profile: {
-            fontSize: '50%',
+            fontSize: '0.6em'
+        },
+        menu: {
+            fontSize: '0.8em'
         }
     }
 }));

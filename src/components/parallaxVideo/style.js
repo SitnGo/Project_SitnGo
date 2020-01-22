@@ -7,7 +7,7 @@ const styles = makeStyles(theme => ({
     container: {
         width: '100%',
         position: 'fixed',
-        top: 0,
+        top: '0%',
         zIndex: -1000
     },
     video: {
