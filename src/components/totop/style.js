@@ -6,7 +6,11 @@ const styles = makeStyles(theme => ({
         zIndex: 1000000,
         right: '2%',
         backgroundColor: '#fb9403',
-        bottom: '5%',
+        bottom: '6.2%',
+        '&:hover': {
+            background: '#fb9403',
+            opacity: 0.95,
+        }
     }
 }));
 

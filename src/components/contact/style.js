@@ -4,11 +4,8 @@ import  {makeStyles} from '@material-ui/core/styles';
 const styles = makeStyles(theme => ({
     section: {
         height: '100vh',
-        display: 'flex',
-        justifyContent: 'space-around',
-        alignItems: 'center',
         color: '#282e34',
-        padding: '40px',
+        padding: '8%',
         backgroundImage: 'url("./images/contact.jpg")',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
@@ -29,12 +26,11 @@ const styles = makeStyles(theme => ({
     },
     contactHeader:{
         marginBottom: '50px',
-        fontSize: '42px'
+        fontSize: '2em'
     },
     textContainer: {
         position: 'relative',
         zIndex: 2,
-        width: '70%',
         margin: '0 auto',
         lineHeight: '23px',
         textAlign: 'justify',
@@ -42,10 +38,8 @@ const styles = makeStyles(theme => ({
         letterSpacing: '2px'
     },
     contactsContainer: {
-        width: '30%',
         zIndex: 100,
         color: '#000',
-        marginTop: '50px'
     },
     contacts: {
         display: 'flex',
@@ -53,14 +47,20 @@ const styles = makeStyles(theme => ({
         margin: '10px',
     },
     contactsText: {
-        fontSize: '20px',
+        fontSize: '1.2em',
     },
     icon: {
-        marginRight: '30px'
+        marginRight: '5%'
     },
-    '@media screen and (max-width: 600px)': {
+    mapContainer: {
+        height: '50vh',
+    },
+    '@media (max-width: 599px)': {
+        contactHeader: {
+            fontSize: '1.8em'
+        },
         contactsText: {
-            fontSize: '15px',
+            fontSize: '1em'
         }
     }
 }));

@@ -1,10 +1,18 @@
 import React from 'react';
+import {Grid} from '@material-ui/core';
 import styles from './style';
 
 const About = () => {
     const classes = styles();
     return(
-        <section className={classes.section}>
+        <Grid
+            container
+            xs='12'
+            alignItems='center'
+            alignContent='center'
+            justify='space-around'
+            className={classes.section}
+        >
             <span className={classes.aboutId} id='about'></span>
             <div className={classes.textContainer}>
                 <h1 className={classes.aboutHeader}>About Us</h1>
@@ -18,7 +26,7 @@ const About = () => {
                 </p>
             </div>
             <div className={classes.imageCover}></div>
-        </section>
+        </Grid>
     );
 };
 

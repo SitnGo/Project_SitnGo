@@ -3,11 +3,8 @@ import  {makeStyles} from '@material-ui/core/styles';
 const styles = makeStyles(theme => ({
     section: {
         height: '100vh',
-        display: 'flex',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
         color: '#282e34',
-        padding: '20px',
+        padding: '8%',
         backgroundImage: 'url("./images/about.jpg")',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
@@ -27,8 +24,8 @@ const styles = makeStyles(theme => ({
         opacity: 0.5
     },
     aboutHeader:{
-        marginBottom: '50px',
-        fontSize: '42px'
+        marginBottom: '5%',
+        fontSize: '2em'
     },
     textContainer: {
         position: 'relative',
@@ -37,8 +34,16 @@ const styles = makeStyles(theme => ({
         margin: '0 auto',
         lineHeight: '23px',
         textAlign: 'justify',
-        fontSize: '20px',
+        fontSize: '1.2em',
         letterSpacing: '2px'
+    },
+    '@media (max-width: 599px)': {
+        aboutHeader: {
+            fontSize: '1.8em'
+        },
+        textContainer: {
+            fontSize: '1em'
+        },
     }
 }));
 
