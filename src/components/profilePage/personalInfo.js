@@ -4,12 +4,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import Skeleton from '@material-ui/lab/Skeleton';
 import UpdateForm from './userUpdateForm/userUpdateForm';
 import ConfirmPassword from './ConfirmPassword/confirmPassword';
-import {isEdit1, openUpdateForm } from '../sign_in/actions/index';
+import {isEdit1, openUpdateForm} from '../sign_in/actions/index';
 import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
 import PassagerDriver from './passagerDriver/PassagerDriver';
-// import Driver from './Driver/driver'
 import CenteredTabs from './TabPanels/tabPanels';
 import {useDispatch, useSelector, connect} from 'react-redux';
 import useStyles from './style';

@@ -97,12 +97,14 @@ const GetRout = (props) => {
 
     function onAcceptClick() {
         setIsDisable(true);
+
         fire.firestore().collection('users').doc(route.userId).get().then(result => {
             return result.data()
         }).then((result) => {
+            // console.log(result);
             result.userRoutesInfo.routes.forEach((item) => {
                 if (JSON.stringify(item) === JSON.stringify(route)) {
-                    console.log(item)
+                    // console.log(item)
                     if(item.parameters.count == 0){
                         return 0;
                     }
@@ -118,6 +120,7 @@ const GetRout = (props) => {
                         currentUser.acceptedRoutes.push(item);
                         return currentUser
                     }).then((updatedUser)=>{
+                        // console.log(updatedUser);
                         fire.firestore().collection('users').doc(fire.auth().currentUser.uid).set(updatedUser)
                     })
                 } else {

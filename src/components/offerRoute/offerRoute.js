@@ -103,6 +103,7 @@ const OfferRout = () => {
         currentRoute.waypoints[0].name += from;
         currentRoute.waypoints[1].name += to;
         // console.log(currentRoute.route)
+        console.log(result);
         let route={
             userId: fire.auth().currentUser.uid,
             route: currentRoute,
@@ -164,7 +165,6 @@ function getCurrentDate() {
            setCar('');
            setPlate('');
         return false
-           // firebase
        } else {
       if((isRouteError || isRouteError == null)||(!isRouteSuccess)){
             setSubmitDisable(true);
@@ -315,7 +315,7 @@ function getCurrentDate() {
                         className={classes.rideListItem}
                         variant='outlined'
                         fullWidth
-                        onClick={onSubmitClick}
+                        // onClick={onSubmitClick}
                     >Submit</Button>
                 </div>
                 <div className={classes.mapContainer}>
