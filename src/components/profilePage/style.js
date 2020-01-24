@@ -14,7 +14,6 @@ const useStyles = makeStyles(theme => ({
         // position: "fixed",
     },
     personalInfoBlock1: {
-        float:"left",
         position:"relative",
         backgroundColor:"rgba(255, 252, 252, 0.88)",
         width:"100%",

@@ -11,6 +11,7 @@ import {
     Paper,
     Button,
     Typography,
+    Grid,
 } from '@material-ui/core';
 import fire from '../../ConfigFirebase/Fire';
 import Map from './map/MapForGetRoute'
@@ -43,7 +44,7 @@ const GetRout = (props) => {
                     if (item.data().hasOwnProperty('userRoutesInfo')) {
                         if (item.data().userRoutesInfo.hasOwnProperty('routes')) {
                             item.data().userRoutesInfo.routes.forEach((item) => {
-                                if ((item.parameters.count > 0) && (Date.parse(item.startDate) > new Date().getTime()) && (item.userId !== fire.auth().currentUser.uid && item.route.waypoints[0].name.toUpperCase().includes(from.toUpperCase())) && (item.route.waypoints[1].name.toUpperCase().includes(to.toUpperCase()))) {
+                                if ((item.parameters.count > 0) && (Date.parse(item.startDate) > new Date().getTime()) && (item.userId !== fire.auth().currentUser.uid && item.route && item.route.waypoints[0].name.toUpperCase().includes(from.toUpperCase())) && (item.route.waypoints[1].name.toUpperCase().includes(to.toUpperCase()))) {
                                     matchedRouts.push(item)
                                 }
                             })
@@ -57,9 +58,6 @@ const GetRout = (props) => {
         getMarker().then(result => {
         })
     };
-
-
-
 
     function onAcceptClick() {
         console.log(fire.auth().currentUser)
@@ -123,7 +121,7 @@ const GetRout = (props) => {
         month = d.getMonth() + 1;
     }
     let year = d.getFullYear();
-    let date = `${year}-${month}-${day}T23:59`;
+    let date = `${year}-${month}-${day}T23:59:00`;
 
     const [page, setPage] = React.useState(0);
     const [info, setInfo] = useState(false);
@@ -135,13 +133,21 @@ const GetRout = (props) => {
     const classes = styles();
     return (
         <section className={classes.section}>
-            <div className={classes.routeList}>
+            <Grid
+                xs={12}
+                className={classes.routeList}
+            >
                 {redirect ? <Redirect to='/profile' push /> : null}
                 <TextField
                     margin='dense'
                     variant='outlined'
                     label='From'
                     onChange={(e) => { setFrom(e.target.value) }}
+                    InputProps={{
+                        classes: {
+                            input: classes.resize,
+                        },
+                    }}
                     className={classes.routeListItem}
                 />
                 <TextField
@@ -149,6 +155,11 @@ const GetRout = (props) => {
                     variant='outlined'
                     label='To'
                     onChange={(e) => { setTo(e.target.value) }}
+                    InputProps={{
+                        classes: {
+                            input: classes.resize,
+                        },
+                    }}
                     className={classes.routeListItem}
                 />
                 <TextField
@@ -158,6 +169,11 @@ const GetRout = (props) => {
                     type='datetime-local'
                     defaultValue={`${date}`}
                     onChange={(e) => setStartDate(e.target.value + ":00")}
+                    InputProps={{
+                        classes: {
+                            input: classes.resize,
+                        },
+                    }}
                     className={classes.routeListItem}
                 />
                 <TextField
@@ -165,13 +181,19 @@ const GetRout = (props) => {
                     variant='outlined'
                     label='Persons'
                     onChange={(e) => setCount(e.target.value)}
+                    InputProps={{
+                        classes: {
+                            input: classes.resize,
+                        },
+                    }}
                     className={classes.routeListItem}
                 />
                 <Button
                     variant='outlined'
                     onClick={onSubmit}
+                    className={classes.search}
                 >Search</Button>
-            </div>
+            </Grid>
             <div className={classes.offersContainer}>
                 {info ? <div className={classes.offers}>
                     <Paper>

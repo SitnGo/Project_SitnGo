@@ -49,7 +49,7 @@ function usePersonalInfo() {
         }
         getMarker().then(result => {
             setUser(result);
-            if(!result.hasOwnProperty(url)){
+            if(!result.hasOwnProperty('url')){
                 result.url='';
             }
             setUrl(result.url);
