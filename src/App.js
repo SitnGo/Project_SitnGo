@@ -19,12 +19,8 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { createStore } from 'redux';
 import AlertDialogSlide from './components/sign_in/dialogSignIn';
 import AlertDialogSlideSignUp from './components/signUp/dialogSignUp'
-<<<<<<< HEAD
-import PersonalInfo from './components/profilePage/personalInfo.js';
-=======
 import PersonalInfo from './components/profilePage/personalInfo';
 import Test from './Test'
->>>>>>> fee1f58c0895c004092f82324d8d0914b381ec77
 
 const store = createStore(reducers);
 
