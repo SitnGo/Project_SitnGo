@@ -1,12 +1,11 @@
 import React from 'react';
-import { styles } from './style';
-import { Link, Button } from '@material-ui/core';
+import { Link, Button, Grid } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom'
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { signOutAction } from '../sign_in/actions';
 import {isEdit1, openUpdateForm} from '../sign_in/actions/index';
 import fire from '../../ConfigFirebase/Fire';
-
+import styles from './style';
 
 function HeaderWhenUserLoggedIn(props) {
     let isEditChecked = useSelector(state => state.isEdit1);
@@ -15,9 +14,9 @@ function HeaderWhenUserLoggedIn(props) {
     function handleSignOut(){
         fire.auth().signOut().then(function() {
                     localStorage.clear()
-                    localStorage.setItem('isLogged','false');
-                    // localStorage.removeItem('userId')
-                    return JSON.parse(localStorage.getItem('isLogged'))
+                    // localStorage.setItem('isLogged','false');
+                    // // localStorage.removeItem('userId')
+                    // return JSON.parse(localStorage.getItem('isLogged'))
 
         })
         .then((result)=>{
@@ -35,26 +34,53 @@ function HeaderWhenUserLoggedIn(props) {
         }
     }
     return (
-        <>
-            <ul className={classes.menu} >
-                <li className={classes.menuItem}>
-                    <RouterLink to='/GetRout'>
-                        <Link
-                            underline='hover'
-                            className={classes.menuLink}
-                        >Get Route</Link>
-                    </RouterLink>
-                </li>
-                <li className={classes.menuItem}>
-                    <RouterLink to='/offerRoute'>
-                        <Link
-                            underline='hover'
-                            className={classes.menuLink}
-                        >Offer Route</Link>
-                    </RouterLink>
-                </li>
-            </ul>
-            <div className={classes.signButtonsContainer}>
+        <Grid
+            container
+            xl={11}
+            lg={11}
+            md={11}
+            sm={10}
+            xs={10}
+            alignItems='center'
+            alignContent='center'
+            justify='space-evenly'
+        >
+            <Grid
+                container
+                xs={6}
+                alignItems='center'
+                alignContent='center'
+                justify='center'
+            >
+                <ul className={classes.menu} >
+                    <li className={classes.menuItem}>
+                        <RouterLink to='/GetRout'>
+                            <Link
+                                underline='hover'
+                                className={classes.menuLink}
+                            >Get Route</Link>
+                        </RouterLink>
+                    </li>
+                    <li className={classes.menuItem}>
+                        <RouterLink to='/offerRoute'>
+                            <Link
+                                underline='hover'
+                                className={classes.menuLink}
+                            >Offer Route</Link>
+                        </RouterLink>
+                    </li>
+                </ul>
+            </Grid>
+            <Grid
+                container
+                xl={3}
+                lg={3}
+                md={3}
+                sm={6}
+                xs={6}
+                justify='flex-end'
+                className={classes.signButtonsContainer}
+            >
                 <RouterLink to='profile' className={classes.signButton}>
                     <Button
                         onClick={handleMyProfile}
@@ -69,8 +95,8 @@ function HeaderWhenUserLoggedIn(props) {
                         onClick={handleSignOut}
                     >Sign Out</Button>
                 </RouterLink>
-            </div>
-        </>
+            </Grid>
+        </Grid>
     )
 }
 function mapStateToProps(state) {

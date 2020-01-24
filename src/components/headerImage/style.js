@@ -1,4 +1,6 @@
-export const classes = {
+import {makeStyles} from '@material-ui/core/styles';
+
+const styles = makeStyles(theme => ({
     section: {
         height: '100vh',
         background: 'url(./images/share.jpg)',
@@ -7,4 +9,6 @@ export const classes = {
         backgroundPositionY: '63%',
         backgroundAttachment: 'fixed'
     },
-}
+}));
+
+export default styles;

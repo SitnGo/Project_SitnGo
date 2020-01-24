@@ -9,7 +9,6 @@ import {useSelector, useDispatch, connect } from 'react-redux';
 import ForgotPassword from '../Forgotpassword/forgotPassword';
 function UpdateForm (props) {
 
-
     const classes = useStyles();
     const dispatch = useDispatch();
     const [email, setEmail] = useState(props.data[0]);
@@ -30,12 +29,12 @@ let arrFromErrorsValues = Object.values(errors)
         } else {
             return item;
         }
-    })
+    });
 
      //////////////////check errors/////////////////////
      if(email !== props.data[0] || phone !== props.data[1]) {
             if ((arrFromErrorsValues.every(item => item === false))) {
-                fire.firestore().collection("users").doc(props.userId).get().then((doc)=>{
+                fire.firestore().collection("users").doc(fire.auth().currentUser.uid).get().then((doc)=>{
                     if(email !== props.data[0]) {
                 fire.auth().onAuthStateChanged(function(user) {
                     if (user) {
@@ -49,7 +48,7 @@ let arrFromErrorsValues = Object.values(errors)
                     }
                 });
             }
-                    fire.firestore().collection("users").doc(props.userId).update({
+                    fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
                         userInfo: {
                             name:doc.data().userInfo.name,
                             surname: doc.data().userInfo.surname,

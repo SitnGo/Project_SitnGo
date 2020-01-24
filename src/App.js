@@ -13,14 +13,18 @@ import {useCookies} from 'react-cookie';
 import { signOutAction, SignInAction } from './components/sign_in/actions/index';
 import OfferRoute from './components/offerRoute/offerRoute'
 import GetRout from './components/getRout/getRout';
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import fire from './ConfigFirebase/Fire';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { createStore } from 'redux';
-import { useSelector } from 'react-redux';
 import AlertDialogSlide from './components/sign_in/dialogSignIn';
 import AlertDialogSlideSignUp from './components/signUp/dialogSignUp'
+<<<<<<< HEAD
 import PersonalInfo from './components/profilePage/personalInfo.js';
+=======
+import PersonalInfo from './components/profilePage/personalInfo';
+import Test from './Test'
+>>>>>>> fee1f58c0895c004092f82324d8d0914b381ec77
 
 const store = createStore(reducers);
 
@@ -29,27 +33,36 @@ function App() {
     const dispatch = useDispatch();
 
     let isLogged = useSelector((state)=> state.isLoggedInUser);
-    useEffect(()=>{
-        console.log(cookies.loginPassword)
+    let user = useSelector((state)=> state.user);
 
-        let isLogged = JSON.parse(localStorage.getItem('isLogged'));
-        if(isLogged) {
-            fire.auth().signInWithEmailAndPassword(cookies.loginPassword.email, cookies.loginPassword.password)
-                .then(a => {
-                    async function getMarker(user={}) {
-                        const userId = fire.auth().currentUser.uid;
-                        user = await fire.firestore().collection('users').doc(userId).get()
-                        user = user.data();
-                        // localStorage.setItem('isLogged','true');
-                        // setCookie('loginPassword', loginPassword, { path: '/', maxAge: 3600 });
-                        await localStorage.setItem('userId',userId);
-                        return user;
-                    }
-                    getMarker().then(result => {
-                        localStorage.setItem('userId',result.userId);
-                        dispatch(SignInAction(result));
-                    });
-                })
+    useEffect(()=>{
+        // console.log(cookies.loginPassword)
+        fire.auth().onAuthStateChanged((e)=>{
+            if(e){
+            dispatch(SignInAction(e));
+            console.log(e)
+            }else {
+                alert(null);
+            }
+        })
+    },[])
+        // if(isLogged) {
+        //     fire.auth().signInWithEmailAndPassword(cookies.loginPassword.email, cookies.loginPassword.password)
+        //         .then(a => {
+        //             async function getMarker(user={}) {
+        //                 const userId = fire.auth().currentUser.uid;
+        //                 user = await fire.firestore().collection('users').doc(userId).get()
+        //                 user = user.data();
+        //                 // localStorage.setItem('isLogged','true');
+        //                 // setCookie('loginPassword', loginPassword, { path: '/', maxAge: 3600 });
+        //                 await localStorage.setItem('userId',userId);
+        //                 return user;
+        //             }
+        //             getMarker().then(result => {
+        //                 localStorage.setItem('userId',result.userId);
+        //                 dispatch(SignInAction(result));
+        //             });
+        //         })
 
 
             //     async function getMarker(user={}) {
@@ -63,10 +76,10 @@ function App() {
             //     getMarker().then(result => {
             //         dispatch(SignInAction(result, JSON.parse(localStorage.getItem('isLogged'))));
             //     });
-        }else{
-            dispatch(signOutAction(JSON.parse(localStorage.getItem('isLogged'))));
-        }
-    },[])
+    //     }else{
+    //         dispatch(signOutAction(JSON.parse(localStorage.getItem('isLogged'))));
+    //     }
+    // },[])
     return (
         <div className='App'>
             <Router>
@@ -82,7 +95,7 @@ function App() {
                         <ToTop/>
                     </Route>
                     {
-                        JSON.parse(localStorage.getItem('isLogged')) ?
+                        user ?
                             <>
                                 <Route exact path='/profile' component={PersonalInfo}/>
                                 <Route exact path ='/offerRoute' >
@@ -91,7 +104,8 @@ function App() {
                                 <Route path='/getRout'>
                                     <GetRout/>
                                 </Route>
-                            
+                                {/*Testtttttttt*/}
+                                <Route path='/test'><Test/></Route>
                             </>
                             : <Route path='*' component={NotFound}/>
                     }

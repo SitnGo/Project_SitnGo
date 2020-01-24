@@ -1,4 +1,4 @@
-import  {makeStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     profileContainer: {
@@ -37,7 +37,13 @@ const useStyles = makeStyles(theme => ({
     },
  
     typography: {
+       wordBreak:'break-all',
+        fontSize:21,
+    },
+    paper: {
+        
         margin: theme.spacing(4),
+        padding:10,
     },
     editButton: {
         position:"absolute",
@@ -82,4 +88,5 @@ const useStyles = makeStyles(theme => ({
         },
     },
 }));
+
 export default useStyles;

@@ -1,8 +1,6 @@
-import React, { Component } from "react";
-import { Map, TileLayer, GeoJSON } from "react-leaflet";
-
-import L from "leaflet"
-
+import React, { Component } from 'react';
+import { Map, TileLayer, GeoJSON } from 'react-leaflet';
+import L from 'leaflet';
 
 (function() {
 	'use strict';

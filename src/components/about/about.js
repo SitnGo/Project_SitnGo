@@ -1,12 +1,21 @@
 import React from 'react';
-import {classes} from './style';
+import {Grid} from '@material-ui/core';
+import styles from './style';
 
 const About = () => {
+    const classes = styles();
     return(
-        <section style={classes.section}>
-            <span style={classes.aboutId} id='about'></span>
-            <div style={classes.textContainer}>
-                <h1 style={classes.aboutHeader}>About Us</h1>
+        <Grid
+            container
+            xs='12'
+            alignItems='center'
+            alignContent='center'
+            justify='space-around'
+            className={classes.section}
+        >
+            <span className={classes.aboutId} id='about'></span>
+            <div className={classes.textContainer}>
+                <h1 className={classes.aboutHeader}>About Us</h1>
                 <p>
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
                     been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
@@ -16,8 +25,8 @@ const About = () => {
                     like Aldus PageMaker including versions of Lorem Ipsum.
                 </p>
             </div>
-            <div style={classes.imageCover}></div>
-        </section>
+            <div className={classes.imageCover}></div>
+        </Grid>
     );
 };
 

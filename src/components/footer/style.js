@@ -1,11 +1,8 @@
-import { makeStyles } from '@material-ui/core/styles';
-export const useStyles = makeStyles(theme =>({
+import  {makeStyles} from '@material-ui/core/styles';
+
+const styles = makeStyles(theme => ({
     footer: {
         backgroundColor:'#424242',
-        display:'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width:'100%',
         height: '10vh',
         padding: '30px',
         position: 'relative',
@@ -22,31 +19,16 @@ export const useStyles = makeStyles(theme =>({
             opacity: 0.95,
         }
     },
-    socialContainer: {
-        width: '20%',
-        textAlign:'center',
-        [theme.breakpoints.down('xs')]: {
-            width: '40%',
-        },
-    },
+
     copyrightContainer: {
-        width: '30%',
-        fontSize: '18px',
+        fontSize: '1em',
         color: '#ddd'
     },
-    '@media (max-width: 1024px)': {
-        socialContainer: {
-            width: '40%',
-        },
+    '@media (max-width: 599px)': {
         copyrightContainer: {
-            fontSize: '90%',
-        }
-    },
-    '@media (max-width: 600px)': {
-        copyrightContainer: {
-            fontSize: '80%',
-            marginRight: '30px',
-            width: '40%',
+            fontSize: '0.9em',
         }
     }
 }));
+
+export default styles;

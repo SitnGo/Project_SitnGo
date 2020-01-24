@@ -1,9 +1,8 @@
-export const SignInAction = (user, bool) =>{
+export const SignInAction = (user) =>{
     return {
         type:'SIGN_IN',
         payload: {
             user: user,
-            bool: bool,
         },
     };
 };

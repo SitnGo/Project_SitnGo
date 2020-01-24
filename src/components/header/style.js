@@ -1,19 +1,12 @@
-import {makeStyles} from '@material-ui/core';
+import  {makeStyles} from '@material-ui/core/styles';
 
-export const styles = makeStyles(() => ({
+const styles = makeStyles(theme => ({
     navbar: {
-        width: '100%',
         height: '10vh',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
         padding: '10px 20px',
         backgroundColor: '#282e34',
         position: 'relative',
         zIndex: 1000,
-    },
-    logoContainer: {
-        width: '8%'
     },
     logo: {
         width: '100%'
@@ -32,7 +25,7 @@ export const styles = makeStyles(() => ({
         justifyContent: 'space-evenly',
         alignItems: 'center',
         listStyleType: 'none',
-        width: '60%',
+        width: '100%',
     },
     menuLink: {
         color: '#ddd'
@@ -42,7 +35,7 @@ export const styles = makeStyles(() => ({
     },
     sign: {
         background: '#fb9403',
-        fontSize: '80%',
+        fontSize: '0.8em',
         color: '#282e34',
         '&:hover': {
             background: '#fb9403',
@@ -55,39 +48,22 @@ export const styles = makeStyles(() => ({
             textDecoration: 'underline'
         }
     },
-    '@media (max-width: 1024px)': {
-        sign: {
-            fontSize: '70%',
-        },
-        logoContainer: {
-            width: '10%'
-        },
-        signButtonsContainer: {
-            width: '30%'
-        }, 
-        menuContainer: {
-            width: '60%'
-        },
-        profile: {
-            fontSize: '70%',
+    '@media (min-width: 600px) and (max-width: 960px)': {
+        logo: {
+            width: '70%'
         }
     },
-    '@media (max-width: 600px)': {
-        menu: {
-            fontSize: '70%'
-        },
-        menuContainer: {
-            width: '50%'
-        },
-        signButtonsContainer: {
-            width: '40%'
-        },
+    '@media (max-width: 599px)': {
         sign: {
-            fontSize: '50%',
+            fontSize: '0.6em'
         },
         profile: {
-            fontSize: '50%',
+            fontSize: '0.6em'
+        },
+        menu: {
+            fontSize: '0.8em'
         }
     }
-
 }));
+
+export default styles;
