@@ -1,13 +1,9 @@
-import React, {useEffect,useState} from 'react';
+import React from 'react';
 import {Link as RouterLink} from 'react-router-dom'
 import HeaderWhenUserLoggedIn from './HeaderWhenUserLoggedIn'
 import HeaderWhenUserLoggedOut from './HeaderWhenUserLoggedOut'
-import { useDispatch, useSelector} from 'react-redux';
-import fire from '../../ConfigFirebase/Fire';
-import { signOutAction } from '../sign_in/actions';
-import {useCookies} from 'react-cookie';
+import { useSelector} from 'react-redux';
 import { connect } from 'react-redux';
-import { SignInAction } from '../sign_in/actions';
 import {Grid} from '@material-ui/core';
 import styles from './style';
 
@@ -20,11 +16,7 @@ function mapStateToProps(state) {
 }
 
 const Header = (props) => {
-    const [isLogged, setIsLogged] = useState('');
-    const [cookies, setCookie, removeCookie] = useCookies(['loginPassword']);
-
     const classes = styles();
-    const dispatch = useDispatch();
     let user = useSelector((state)=> state.user);
 
     return(
@@ -45,9 +37,13 @@ const Header = (props) => {
             xs={2}
             className={classes.logoContainer}
         >
-            <RouterLink to= {JSON.parse(localStorage.getItem('isLogged')) ? '/profile' : '/'}><img className={classes.logo} src='images/Logo.png' alt='Logo'/></RouterLink>
+            <RouterLink to= {user ? '/profile' : '/'}><img className={classes.logo} src='images/Logo.png' alt='Logo'/></RouterLink>
         </Grid>
+<<<<<<< HEAD
             {true ? <HeaderWhenUserLoggedIn /> : <HeaderWhenUserLoggedOut /> }
+=======
+            {user ? <HeaderWhenUserLoggedIn /> : <HeaderWhenUserLoggedOut /> }
+>>>>>>> 05f2f9e4d464e9f6491480cbf7b8e038457cbee1
     </Grid>
     );
 }

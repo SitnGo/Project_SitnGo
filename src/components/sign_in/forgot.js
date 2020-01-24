@@ -31,8 +31,6 @@ export default function FormDialog() {
             .then(function (u) {
                 alert('Please check your email...')
             }).catch(function (e) {
-            console.log(e);
-            console.log(email);
             setIsAnError(true);
             setErrorMessage(e.message)
         })

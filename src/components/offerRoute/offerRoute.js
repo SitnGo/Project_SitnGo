@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
-import styles from './style';
 import {Button, TextField, MenuItem} from '@material-ui/core';
-// import Alert from '@material-ui/lab/Alert';
 import SimpleSnackbar from "./snackbar/snackbar"
 import SimpleSnackbarSuccess from "./snackbar/snackbarSuccess"
 import MLeafletApp from './Leafletmaps/final'
 import fire from '../../ConfigFirebase/Fire';
-import Routing from "./Leafletmaps/RoutingMachine";
 import {Redirect} from 'react-router-dom';
+import styles from './style';
 
 const numberPersons = [
     {
@@ -47,56 +45,33 @@ const OfferRout = () => {
     const [plate, setPlate] = useState("");
     const [count, setCount] = useState("");
     const [maps, setMap] = useState();
-    const [price, setPrice] = useState(1000);
+    const [price, setPrice] = useState(0);
+    const [defaultPrice, setDefaultPrice] = useState(0);
     const [isMapInit, setIsMapInit] =useState(false);
-    const [errors, setErrors] = useState({
-        from: false,
-        to: false,
-        startDate: false,
-        maxPersons: false,
-        carModel: false,
-        carPlate: false,
-    })
     const [startDate, setStartDate] = useState(null);
     const [startDateError, setStartDateError] = useState(false);
     const [fromError, setFromError] = useState(false);
     const [toError, setToError] = useState(false);
     const [carError, setCarError] = useState(false);
     const [plateError, setPlateError] = useState(false);
-    const [priceError, setPriceError] = useState(false);
+    const [priceError, setPriceError] = useState(true);
     const [redirect, setRedirect] = useState(false);
     const [isRouteError,setIsRouteError] = useState(null);
     const [isRouteSuccess, setIsRouteSuccess] = useState(false);
     const [submitDisable,setSubmitDisable] =useState(false);
-    
-
-    // const [state,setState] = useState({
-    //     from: "",
-    //     to: "",
-    //     startDate: "",
-    //     maxPersons: "",
-    //     car: "",
-    //     plate: "",
-    // })
     const [route, setRoute] = useState(null);
- let i=0;
-   function onSubmitClick(){
-    if(isEmpty()){ return}
-    setSubmitDisable(true);
-    async function getMarker(user={}) {
-            let userId = fire.auth().currentUser.uid;
-        user = await fire.firestore().collection("users").doc(userId).get()
-            user = user.data();
-        return user;
-    }
-    getMarker().then(result => {
-        if(!result.hasOwnProperty("userRoutesInfo")){
-            result.userRoutesInfo = {}
-            result.userRoutesInfo.routes = []
+    const [priceHelperText, setPriceHelperText] = useState("You  must fill blank areas")
+    
+    function onSubmitClick(){
+        if(isEmpty()){ return}
+        setSubmitDisable(true);
+        async function getMarker(user={}) {
+                let userId = fire.auth().currentUser.uid;
+            user = await fire.firestore().collection("users").doc(userId).get()
+                user = user.data();
+            return user;
         }
-        if(!result.userRoutesInfo.hasOwnProperty("routes")){
-            result.userRoutesInfo.routes = []
-        }
+<<<<<<< HEAD
         let currentRoute = JSON.parse(localStorage.getItem("route"))
         setRoute(currentRoute)
         setPrice(`${Math.ceil(currentRoute.route.summary.totalDistance/1000)}`)
@@ -118,43 +93,55 @@ const OfferRout = () => {
                 distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
                 time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
                 price: `${price}AMD`,
+=======
+        getMarker().then(result => {
+            if(!result.hasOwnProperty("userRoutesInfo")){
+                result.userRoutesInfo = {}
+                result.userRoutesInfo.routes = []
+>>>>>>> 05f2f9e4d464e9f6491480cbf7b8e038457cbee1
             }
-        }
-        result.userRoutesInfo.routes.push(route)
-      fire.firestore().collection("users").doc(result.userId).set(JSON.parse(JSON.stringify(result)))
-      setRedirect(true);
-
-    });
- 
-
+            if(!result.userRoutesInfo.hasOwnProperty("routes")){
+                result.userRoutesInfo.routes = []
+            }
+            let currentRoute = JSON.parse(localStorage.getItem("route"))
+            setRoute(currentRoute)
+            currentRoute.waypoints[0].name += from;
+            currentRoute.waypoints[1].name += to;
+            let route={
+                userId: fire.auth().currentUser.uid,
+                route: currentRoute,
+                astartEnd: `${from}-${to}`,
+                startDate: startDate,
+                DriverPhone: result.userInfo.phone,
+                parameters:  {
+                    name: `${result.userInfo.name} ${result.userInfo.surname}`,
+                    car: car,
+                    plate: plate,
+                    count: count,
+                    distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
+                    time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
+                    price: `${price}AMD`,
+                }
+            };
+            result.userRoutesInfo.routes.push(route);
+            fire.firestore().collection("users").doc(result.userId).set(JSON.parse(JSON.stringify(result)));
+            setRedirect(true);
+        });
 }
 
-   
-function getCurrentDate() {
     let d = new Date();
     let day = d.getDate();
     let month;
-    if (d.getMonth()<9){
-        month = `0${d.getMonth()+1}`;
-    }else{
-        month = d.getMonth()+1;
+    if (d.getMonth() < 9) {
+        month = `0${d.getMonth() + 1}`;
+    } else {
+        month = d.getMonth() + 1;
     }
-    let ss = d.getSeconds();
-    let hours= d.getHours();
-    let minutes = d.getMinutes();
     let year = d.getFullYear();
-    let date =`${year}-${month}-${day}T${hours}:${minutes}`;
-    return date;
-}
+    let date = `${year}-${month}-${day}T23:59:00`;
 
-
-
-
-   function isEmpty () {
-    let date =`${getCurrentDate()}:00`;
-       if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& price !== '' && startDate !==null && startDate !==date && !isRouteError && isRouteError !== null) {
-    //        alert("confirm");
-
+    function isEmpty () {
+       if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& +price && !priceError && startDate !==null && startDate !==date && !isRouteError && isRouteError !== null) {
            setFromError(false);
            setToError(false);
            setStartDateError(false);
@@ -209,7 +196,7 @@ function getCurrentDate() {
             setPlateError(true);
             return true
         }
-        if (price !== '') {
+        if (+price) {
             setPriceError(false);
         } else {
             setPriceError(true);
@@ -253,11 +240,10 @@ function getCurrentDate() {
                         margin='dense'
                         fullWidth
                         variant='outlined'
-                        // label='Date'
                         error={startDateError}
                         helperText={startDateError ? <p>You must set correct Date. You can set Trip Date starting tomorrow</p> : null}
                         type='datetime-local'
-                        defaultValue={getCurrentDate()}
+                        defaultValue={date}
                         onChange={(e)=>{console.log(e.target.value);let date = e.target.value+":00"; setStartDate(date)}}
                         className={classes.rideListItem}
                     />
@@ -305,12 +291,21 @@ function getCurrentDate() {
                         label='Price'
                         value={price}
                         error={priceError}
-                        helperText={priceError ? <p>You  must fill blank areas</p> : null}
-                        onChange={(e)=>setPrice(e.target.value)}
+                        helperText={priceError ? <p>{priceHelperText}</p> : null}
+                        onChange={(e)=>{
+                            setPrice(e.target.value)
+                            if(+e.target.value > defaultPrice){
+                                setPriceError(true);
+                                setPriceHelperText(`The possible maximum price for this ride is ${defaultPrice}AMD`)
+                            }else if(typeof(+e.target.value)==="number" && e.target.value > 0){
+                                setPriceError(false);
+                                setPriceHelperText("You  must fill blank areas")
+                            }
+                            return;
+                        }}
                         className={classes.rideListItem}
                     />
                     <Button
-                        onClick={isEmpty}
                         disabled={submitDisable}
                         className={classes.rideListItem}
                         variant='outlined'
@@ -319,12 +314,10 @@ function getCurrentDate() {
                     >Submit</Button>
                 </div>
                 <div className={classes.mapContainer}>
-               {/* <SimpleSnackbar isRouteError={isRouteError} /> */}
                 {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} />  : null}
                 {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess = {isRouteSuccess}/> : null}
-                    {/* <SimpleSnackbar /> */}
                     
-                    <MLeafletApp  setMap = {setMap} setIsRouteSuccess={setIsRouteSuccess} setIsRouteError={setIsRouteError} />
+                    <MLeafletApp  setMap = {setMap} setDefaultPrice={setDefaultPrice} setPrice={setPrice} setIsRouteSuccess={setIsRouteSuccess} setIsRouteError={setIsRouteError} />
                     {/* {isMapInit && <Routing map={maps}/>} */}
                 </div>
             </div>

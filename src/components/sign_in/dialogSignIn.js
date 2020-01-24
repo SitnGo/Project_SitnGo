@@ -3,7 +3,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import SignIn from './signIn';
 import { useDispatch, connect } from 'react-redux';
-import { openSignInAction } from './actions'
+import { openSignInAction } from '../../actions'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction='up' ref={ref} {...props} />;

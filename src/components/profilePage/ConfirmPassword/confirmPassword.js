@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import fire from '../../../ConfigFirebase/Fire'
-import {isEdit1, openUpdateForm} from '../../sign_in/actions/index';
+import {isEdit1, openUpdateForm} from '../../../actions/index';
 import {Visibility, VisibilityOff} from '@material-ui/icons'
 import {InputAdornment, IconButton } from '@material-ui/core';
 import {useDispatch, useSelector} from 'react-redux'

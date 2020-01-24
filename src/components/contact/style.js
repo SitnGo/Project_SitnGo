@@ -1,4 +1,3 @@
-import { auth } from "firebase";
 import  {makeStyles} from '@material-ui/core/styles';
 
 const styles = makeStyles(theme => ({

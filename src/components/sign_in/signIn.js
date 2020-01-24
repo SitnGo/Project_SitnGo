@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState} from 'react';
 import fire from '../../ConfigFirebase/Fire';
 import { Button, Fab } from '@material-ui/core/';
 import { Typography,TextField, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff, Email, Close } from '@material-ui/icons';
 import { Checkbox } from '@material-ui/core';
 import { useDispatch, useSelector, connect} from 'react-redux';
-import { SignInAction, openSignUPAction } from './actions';
 import FormDialog from './forgot';
-import { openSignInAction } from './actions'
+import { openSignInAction, SignInAction, openSignUPAction } from '../../actions'
 import { styles } from './style';
-import { Link as RouterLink, withRouter } from 'react-router-dom'
-import { useCookies } from 'react-cookie';
-
+import {withRouter } from 'react-router-dom'
 export function SignIn(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -20,8 +17,6 @@ export function SignIn(props) {
     const [showPassword, setShowPassword] = useState(false);
     const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
-    const [cookies, setCookie, removeCookie] = useCookies(['loginPassword']);
-    const setIsErsed = props.setIsErsed;
     const handleClose = () => {
         dispatch(openSignInAction())
         setEmail('');
@@ -29,23 +24,16 @@ export function SignIn(props) {
         setErrorMessage('')
     };
 
-    const handleChange = name => event => {
+    const handleChange = name => (event) => {
         setChecked(event.target.checked);
     };
-    let Id = useSelector(state=>state.userId)
-
     function login() {
-        // let loginPassword = {email: email, password: password}
-        // console.log(loginPassword)
         fire.auth().signInWithEmailAndPassword(email, password)
             .then(a => {
                 async function getMarker(user={}) {
                     const userId = fire.auth().currentUser.uid;
                     user = await fire.firestore().collection('users').doc(userId).get()
                     user = user.data();
-                    // localStorage.setItem('isLogged','true');
-                    // setCookie('loginPassword', loginPassword, { path: '/' });
-                    // localStorage.setItem('userId',userId);
                     return user;
                 }
                 getMarker().then(result => {
@@ -67,39 +55,6 @@ export function SignIn(props) {
     function signup(e) {
         dispatch(openSignInAction());
         dispatch(openSignUPAction());
-        
-        // e.preventDefault()
-        // fire.auth().createUserWithEmailAndPassword(email, password).then((u) => {
-        // }).then((u) => { console.log(u) })
-        //     .catch(error => {
-        //         switch (error.code) {
-        //             case 'auth/email-already-in-use':
-        //                 console.log(`Email address ${email} already in use.`);
-        //                 setIsAnError(true);
-        //                 setErrorMessage(`Email address ${email} already in use.`);
-        //                 break;
-        //             case 'auth/invalid-email':
-        //                 console.log(`Email address ${email} is invalid.`);
-        //                 setIsAnError(true);
-        //                 setErrorMessage(`Email address ${email} is invalid.`);
-        //                 break;
-        //             case 'auth/operation-not-allowed':
-        //                 console.log(`Enterance is denied.`);
-        //                 setIsAnError(true);
-        //                 setErrorMessage(`Entrance is denied`);
-        //                 break;
-        //             case 'auth/weak-password':
-        //                 console.log('Password is not strong enough. Add additional characters including special characters and numbers.');
-        //                 setIsAnError(true);
-        //                 setErrorMessage(`Password is not strong enough.`)
-        //                 break;
-        //             default:
-        //                 console.log(error.message);
-        //                 setIsAnError(true);
-        //                 break;
-        //         }
-        //    });
-
     }
     return (
         <div>

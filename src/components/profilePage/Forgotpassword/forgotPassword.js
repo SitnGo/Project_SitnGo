@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import fire from '../../../ConfigFirebase/Fire'
 import useStyles from './style';
 import {
@@ -20,15 +20,13 @@ function ForgotPassword() {
     const handleClickOpen = () => {
         setOpen(true);
     };
-    
-    
     const handleUpdate = () => {
         if (email === fire.auth().currentUser.email) {
     
             fire.auth().sendPasswordResetEmail(email).then(function() {
                 alert('Please check your email...');
             }).catch(function(error) {
-                alert('Error');
+                alert('An Error occurred');
             });
     
             setEmailError(false); 
