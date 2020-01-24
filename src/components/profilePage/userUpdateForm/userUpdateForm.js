@@ -4,8 +4,8 @@ import {Grid, TextField, Button} from '@material-ui/core';
 import { Phone, Email} from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import fire from '../../../ConfigFirebase/Fire';
-import {confirmUpdate} from '../../sign_in/actions/index';
-import {useSelector, useDispatch, connect } from 'react-redux';
+import {confirmUpdate} from '../../../actions/index';
+import {useDispatch, connect } from 'react-redux';
 import ForgotPassword from '../Forgotpassword/forgotPassword';
 function UpdateForm (props) {
 

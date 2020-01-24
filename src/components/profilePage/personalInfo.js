@@ -4,12 +4,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import Skeleton from '@material-ui/lab/Skeleton';
 import UpdateForm from './userUpdateForm/userUpdateForm';
 import ConfirmPassword from './ConfirmPassword/confirmPassword';
-import {isEdit1, openUpdateForm } from '../sign_in/actions/index';
+import {isEdit1, openUpdateForm } from '../../actions/index';
 import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
 import PassagerDriver from './passagerDriver/PassagerDriver';
-// import Driver from './Driver/driver'
 import CenteredTabs from './TabPanels/tabPanels';
 import {useDispatch, useSelector, connect} from 'react-redux';
 import useStyles from './style';
@@ -18,51 +17,23 @@ function usePersonalInfo() {
    
     const [PassagerList, setPassagerList ] = useState(null);
     const [DriverList, setDriverList] = useState(null);
-    // const [isEdit, setEditValue] = useState(true);
     const [bool, changeBool] = useState(false);
     const [tabChange, setTabChange] = useState(false);
     const [user, setUser] = useState({});
     const [url, setUrl] = useState('');
+    const [isPassengerDriverListDone, setIsPassengerDriverListDone] = useState(false);
+
     const classes = useStyles();
     const dispatch = useDispatch();
     let update = useSelector(state => state.confirmUpdate);
+    let user1 = useSelector(state => state.user);
     let isEdit = useSelector(state => state.isEdit1);
     let openUpdateFormBool = useSelector(state => state.opneUpdateForm);
 
     useEffect(()=>{
+        console.log(user1)
         async function getMarker(user={}) {
-            let userId;
-            if (localStorage.getItem('userId')){
-                userId = localStorage.getItem('userId')
-            }else{
-                userId = fire.auth().currentUser.uid;
-            }
-            user = await fire.firestore().collection('users').doc(userId).get()
-            user = user.data();
-
-            if(user && user.userRoutesInfo && user.userRoutesInfo.routes){
-
-                setDriverList(user.userRoutesInfo.routes)
-            }
-            if(user && user.acceptedRoutes && user.acceptedRoutes.length){
-                setPassagerList(user.acceptedRoutes);
-            }
-            return user;
-        }
-        getMarker().then(result => {
-            setUser(result);
-            changeBool(true);
-        });
-    },[update]);
-
-    useEffect(()=>{
-        async function getMarker(user={}) {
-            let userId;
-            if (localStorage.getItem('userId')){
-                userId = localStorage.getItem('userId')
-            }else{
-                userId = fire.auth().currentUser.uid;
-            }
+            let userId = fire.auth().currentUser.uid;
             user = await fire.firestore().collection('users').doc(userId).get()
             user = user.data();
 
@@ -81,6 +52,8 @@ function usePersonalInfo() {
         });
     },[]);
 
+
+
     function isEditBtnClick() {
         dispatch(isEdit1());
     }
@@ -92,7 +65,8 @@ function usePersonalInfo() {
 
     return(
         <Grid container sm={12}  className={classes.profileContainer}>
-
+            {console.log("rerendered")}
+            
             <Grid item sm={4} xs={12} className={classes.leftSide}>
                 <Paper elevation={3} className={classes.personalInfoBlock1}>
 
@@ -125,7 +99,7 @@ function usePersonalInfo() {
                                 
                                 {openUpdateFormBool ? (
                                     <>
-                                        <UpdateForm  data={[user.userInfo.email, user.userInfo.phone]} userId={localStorage.getItem('userId')}/>                          
+                                        <UpdateForm  data={[user.userInfo.email, user.userInfo.phone]} userId={fire.auth().currentUser.uid}/>                          
                                         <Button 
                                         className={classes.confirmButton} 
                                         color='secondary'
@@ -147,14 +121,13 @@ function usePersonalInfo() {
 
                 </Paper>
             </Grid>
-            {/* <Paper><p>awdawd</p></Paper> */}
             <Grid item sm={8} xs={12} className={classes.personalInfoBlock2}>
                 <CenteredTabs tabChange={tabChange} setTabChange={setTabChange}/>
                 {tabChange ?
                     <FadeIn>
                         <div className={classes.cards}>
                             {DriverList && DriverList.map((el,i)=>{
-                                return <PassagerDriver key={i} data={el}/>
+                                return <PassagerDriver key={i} data={el} />
                             })}
                         </div>
                     </FadeIn>
@@ -164,7 +137,7 @@ function usePersonalInfo() {
                     <FadeIn>
                         <div className={classes.cards}>
                             {PassagerList && PassagerList.map((el,i)=>{
-                                return <PassagerDriver key={i} data={el}/>
+                                return <PassagerDriver key={i} data={el} setPassagerList={setPassagerList} />
                             })}
                         </div>
                     </FadeIn>

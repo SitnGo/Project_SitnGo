@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
 import styles from './style';
 import {Button, TextField, MenuItem} from '@material-ui/core';
-// import Alert from '@material-ui/lab/Alert';
 import SimpleSnackbar from "./snackbar/snackbar"
 import SimpleSnackbarSuccess from "./snackbar/snackbarSuccess"
 import MLeafletApp from './Leafletmaps/final'
 import fire from '../../ConfigFirebase/Fire';
-import Routing from "./Leafletmaps/RoutingMachine";
 import {Redirect} from 'react-router-dom';
 
 const numberPersons = [
@@ -49,14 +47,6 @@ const OfferRout = () => {
     const [maps, setMap] = useState();
     const [price, setPrice] = useState(1000);
     const [isMapInit, setIsMapInit] =useState(false);
-    const [errors, setErrors] = useState({
-        from: false,
-        to: false,
-        startDate: false,
-        maxPersons: false,
-        carModel: false,
-        carPlate: false,
-    })
     const [startDate, setStartDate] = useState(null);
     const [startDateError, setStartDateError] = useState(false);
     const [fromError, setFromError] = useState(false);
@@ -68,18 +58,7 @@ const OfferRout = () => {
     const [isRouteError,setIsRouteError] = useState(null);
     const [isRouteSuccess, setIsRouteSuccess] = useState(false);
     const [submitDisable,setSubmitDisable] =useState(false);
-    
-
-    // const [state,setState] = useState({
-    //     from: "",
-    //     to: "",
-    //     startDate: "",
-    //     maxPersons: "",
-    //     car: "",
-    //     plate: "",
-    // })
     const [route, setRoute] = useState(null);
- let i=0;
    function onSubmitClick(){
     if(isEmpty()){ return}
     setSubmitDisable(true);
@@ -102,7 +81,6 @@ const OfferRout = () => {
         setPrice(`${Math.ceil(currentRoute.route.summary.totalDistance/1000)}`)
         currentRoute.waypoints[0].name += from;
         currentRoute.waypoints[1].name += to;
-        // console.log(currentRoute.route)
         let route={
             userId: fire.auth().currentUser.uid,
             route: currentRoute,
@@ -122,10 +100,7 @@ const OfferRout = () => {
         result.userRoutesInfo.routes.push(route)
       fire.firestore().collection("users").doc(result.userId).set(JSON.parse(JSON.stringify(result)))
       setRedirect(true);
-
     });
- 
-
 }
 
    
@@ -138,7 +113,6 @@ function getCurrentDate() {
     }else{
         month = d.getMonth()+1;
     }
-    let ss = d.getSeconds();
     let hours= d.getHours();
     let minutes = d.getMinutes();
     let year = d.getFullYear();
@@ -152,8 +126,6 @@ function getCurrentDate() {
    function isEmpty () {
     let date =`${getCurrentDate()}:00`;
        if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& price !== '' && startDate !==null && startDate !==date && !isRouteError && isRouteError !== null) {
-    //        alert("confirm");
-
            setFromError(false);
            setToError(false);
            setStartDateError(false);
@@ -164,7 +136,6 @@ function getCurrentDate() {
            setCar('');
            setPlate('');
         return false
-           // firebase
        } else {
       if((isRouteError || isRouteError == null)||(!isRouteSuccess)){
             setSubmitDisable(true);
@@ -253,7 +224,6 @@ function getCurrentDate() {
                         margin='dense'
                         fullWidth
                         variant='outlined'
-                        // label='Date'
                         error={startDateError}
                         helperText={startDateError ? <p>You must set correct Date. You can set Trip Date starting tomorrow</p> : null}
                         type='datetime-local'
@@ -310,7 +280,6 @@ function getCurrentDate() {
                         className={classes.rideListItem}
                     />
                     <Button
-                        onClick={isEmpty}
                         disabled={submitDisable}
                         className={classes.rideListItem}
                         variant='outlined'
@@ -319,10 +288,8 @@ function getCurrentDate() {
                     >Submit</Button>
                 </div>
                 <div className={classes.mapContainer}>
-               {/* <SimpleSnackbar isRouteError={isRouteError} /> */}
                 {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} />  : null}
                 {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess = {isRouteSuccess}/> : null}
-                    {/* <SimpleSnackbar /> */}
                     
                     <MLeafletApp  setMap = {setMap} setIsRouteSuccess={setIsRouteSuccess} setIsRouteError={setIsRouteError} />
                     {/* {isMapInit && <Routing map={maps}/>} */}

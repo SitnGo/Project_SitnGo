@@ -1,16 +1,9 @@
 import React, { Component } from "react";
-import { Map, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
+import { Map, TileLayer} from "react-leaflet";
 import Routing from "./RoutingMachine";
 import LocateControl from './LocateControl';
-import GeoSearch from './GeoSearch'
-import L from "leaflet"
-
-const center = [40.179188, 44.499104]
 
 export default class LeafletMap extends Component {
-  constructor(props){
-    super(props)
-  }
   state = {
     lat: 40.793411,
     lng: 43.839279,
