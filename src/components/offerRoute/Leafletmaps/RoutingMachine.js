@@ -41,6 +41,8 @@ class Routing extends MapLayer {
       let route = {route:routes, waypoints: routes.waypoints}
       localStorage.setItem("selectedRoute1", JSON.stringify(routes))
       localStorage.setItem("route",JSON.stringify(route))
+      this.props.setPrice((Math.ceil(routes.summary.totalDistance/1000)*100))
+      this.props.setDefaultPrice((Math.ceil(routes.summary.totalDistance/1000)*100))
     }).on("waypointschanged",()=>{
       this.props.setIsRouteError(false);
       this.props.setIsRouteSuccess(false);

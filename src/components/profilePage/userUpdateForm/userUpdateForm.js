@@ -39,7 +39,7 @@ let arrFromErrorsValues = Object.values(errors)
                 fire.auth().onAuthStateChanged(function(user) {
                     if (user) {
                         
-                        user.updateEmail(email).then(()=>{
+                        fire.auth().currentUser.updateEmail(email).then(()=>{
                             alert(user.email);
                         })
                         
@@ -57,7 +57,10 @@ let arrFromErrorsValues = Object.values(errors)
                             phone: phone,
                         }
                     
-                    }).then(()=>{alert("Update confirm!");dispatch(confirmUpdate())})
+                    }).then(()=>{
+                            alert("Update confirm!");
+                            dispatch(confirmUpdate()
+                         )});
                 
                 });
                 

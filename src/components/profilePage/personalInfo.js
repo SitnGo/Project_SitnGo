@@ -8,7 +8,8 @@ import {isEdit1, openUpdateForm } from '../../actions/index';
 import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
-import PassagerDriver from './passagerDriver/PassagerDriver';
+import Passager from './passagerDriver/Passager';
+import Driver from './passagerDriver/Driver';
 import CenteredTabs from './TabPanels/tabPanels';
 import {useDispatch, useSelector, connect} from 'react-redux';
 import useStyles from './style';
@@ -48,9 +49,10 @@ function usePersonalInfo() {
         }
         getMarker().then(result => {
             setUser(result);
+            setUrl(result.url);
             changeBool(true);
         });
-    },[]);
+    },[update]);
 
 
 
@@ -73,7 +75,7 @@ function usePersonalInfo() {
                     <div className={classes.header2}>
                         {   isEdit ? (<Avatar className={classes.bigAvatar} src={bool ? url : ''}></Avatar>)
                             :
-                            <DropzoneDialog url={url} setUrl={setUrl} update={update}/>
+                            <DropzoneDialog url={url} setUrl={setUrl} />
                         }
 
                     </div>
@@ -127,7 +129,7 @@ function usePersonalInfo() {
                     <FadeIn>
                         <div className={classes.cards}>
                             {DriverList && DriverList.map((el,i)=>{
-                                return <PassagerDriver key={i} data={el} />
+                                return <Driver key={i} data={el} />
                             })}
                         </div>
                     </FadeIn>
@@ -137,7 +139,7 @@ function usePersonalInfo() {
                     <FadeIn>
                         <div className={classes.cards}>
                             {PassagerList && PassagerList.map((el,i)=>{
-                                return <PassagerDriver key={i} data={el} setPassagerList={setPassagerList} />
+                                return <Passager key={i} data={el} setPassagerList={setPassagerList} />
                             })}
                         </div>
                     </FadeIn>

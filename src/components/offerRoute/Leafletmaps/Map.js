@@ -34,7 +34,7 @@ export default class LeafletMap extends Component {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />
-        {this.state.isMapInit && <Routing setIsRouteSuccess={this.props.setIsRouteSuccess} setIsRouteError={this.props.setIsRouteError} map={this.map}/>}
+        {this.state.isMapInit && <Routing setDefaultPrice={this.props.setDefaultPrice} setIsRouteSuccess={this.props.setIsRouteSuccess} setPrice = {this.props.setPrice} setIsRouteError={this.props.setIsRouteError} map={this.map}/>}
        <LocateControl options={this.locateOptions} startDirectly/>
       </Map>
     );

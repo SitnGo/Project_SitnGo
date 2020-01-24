@@ -45,7 +45,8 @@ const OfferRout = () => {
     const [plate, setPlate] = useState("");
     const [count, setCount] = useState("");
     const [maps, setMap] = useState();
-    const [price, setPrice] = useState(1000);
+    const [price, setPrice] = useState(0);
+    const [defaultPrice, setDefaultPrice] = useState(0);
     const [isMapInit, setIsMapInit] =useState(false);
     const [startDate, setStartDate] = useState(null);
     const [startDateError, setStartDateError] = useState(false);
@@ -53,12 +54,14 @@ const OfferRout = () => {
     const [toError, setToError] = useState(false);
     const [carError, setCarError] = useState(false);
     const [plateError, setPlateError] = useState(false);
-    const [priceError, setPriceError] = useState(false);
+    const [priceError, setPriceError] = useState(true);
     const [redirect, setRedirect] = useState(false);
     const [isRouteError,setIsRouteError] = useState(null);
     const [isRouteSuccess, setIsRouteSuccess] = useState(false);
     const [submitDisable,setSubmitDisable] =useState(false);
     const [route, setRoute] = useState(null);
+    const [priceHelperText, setPriceHelperText] = useState("You  must fill blank areas")
+    
    function onSubmitClick(){
     if(isEmpty()){ return}
     setSubmitDisable(true);
@@ -78,7 +81,6 @@ const OfferRout = () => {
         }
         let currentRoute = JSON.parse(localStorage.getItem("route"))
         setRoute(currentRoute)
-        setPrice(`${Math.ceil(currentRoute.route.summary.totalDistance/1000)}`)
         currentRoute.waypoints[0].name += from;
         currentRoute.waypoints[1].name += to;
         let route={
@@ -125,7 +127,7 @@ function getCurrentDate() {
 
    function isEmpty () {
     let date =`${getCurrentDate()}:00`;
-       if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& price !== '' && startDate !==null && startDate !==date && !isRouteError && isRouteError !== null) {
+       if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& +price && !priceError && startDate !==null && startDate !==date && !isRouteError && isRouteError !== null) {
            setFromError(false);
            setToError(false);
            setStartDateError(false);
@@ -180,7 +182,7 @@ function getCurrentDate() {
             setPlateError(true);
             return true
         }
-        if (price !== '') {
+        if (+price) {
             setPriceError(false);
         } else {
             setPriceError(true);
@@ -275,8 +277,18 @@ function getCurrentDate() {
                         label='Price'
                         value={price}
                         error={priceError}
-                        helperText={priceError ? <p>You  must fill blank areas</p> : null}
-                        onChange={(e)=>setPrice(e.target.value)}
+                        helperText={priceError ? <p>{priceHelperText}</p> : null}
+                        onChange={(e)=>{
+                            setPrice(e.target.value)
+                            if(+e.target.value > defaultPrice){
+                                setPriceError(true);
+                                setPriceHelperText(`The possible maximum price for this ride is ${defaultPrice}AMD`)
+                            }else if(typeof(+e.target.value)==="number" && e.target.value > 0){
+                                setPriceError(false);
+                                setPriceHelperText("You  must fill blank areas")
+                            }
+                            return;
+                        }}
                         className={classes.rideListItem}
                     />
                     <Button
@@ -291,7 +303,7 @@ function getCurrentDate() {
                 {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} />  : null}
                 {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess = {isRouteSuccess}/> : null}
                     
-                    <MLeafletApp  setMap = {setMap} setIsRouteSuccess={setIsRouteSuccess} setIsRouteError={setIsRouteError} />
+                    <MLeafletApp  setMap = {setMap} setDefaultPrice={setDefaultPrice} setPrice={setPrice} setIsRouteSuccess={setIsRouteSuccess} setIsRouteError={setIsRouteError} />
                     {/* {isMapInit && <Routing map={maps}/>} */}
                 </div>
             </div>

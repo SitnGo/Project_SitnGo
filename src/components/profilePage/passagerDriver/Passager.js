@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Card, CardHeader, CardContent, Avatar, Typography, Button } from '@material-ui/core';
 import fire from '../../../ConfigFirebase/Fire';
 
-function PassagerDriver(props) {
+function Passager(props) {
     let { data } = props;
     let startEnd = data.astartEnd.split('-');
     function deleteAcceptClick() {
@@ -73,4 +73,4 @@ function PassagerDriver(props) {
     );
 }
 
-export default PassagerDriver;
+export default Passager;
