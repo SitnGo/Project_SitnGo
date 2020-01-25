@@ -71,34 +71,10 @@ const OfferRout = () => {
                 user = user.data();
             return user;
         }
-<<<<<<< HEAD
-        let currentRoute = JSON.parse(localStorage.getItem("route"))
-        setRoute(currentRoute)
-        setPrice(`${Math.ceil(currentRoute.route.summary.totalDistance/1000)}`)
-        currentRoute.waypoints[0].name += from;
-        currentRoute.waypoints[1].name += to;
-        // console.log(currentRoute.route)
-        console.log(result);
-        let route={
-            userId: fire.auth().currentUser.uid,
-            route: currentRoute,
-            astartEnd: `${from}-${to}`,
-            startDate: startDate,
-            DriverPhone: result.userInfo.phone,
-            parameters:  {
-                name: `${result.userInfo.name} ${result.userInfo.surname}`, 
-                car: car, 
-                plate: plate, 
-                count: count,
-                distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
-                time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
-                price: `${price}AMD`,
-=======
         getMarker().then(result => {
             if(!result.hasOwnProperty("userRoutesInfo")){
                 result.userRoutesInfo = {}
                 result.userRoutesInfo.routes = []
->>>>>>> 05f2f9e4d464e9f6491480cbf7b8e038457cbee1
             }
             if(!result.userRoutesInfo.hasOwnProperty("routes")){
                 result.userRoutesInfo.routes = []

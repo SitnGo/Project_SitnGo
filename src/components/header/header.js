@@ -39,11 +39,7 @@ const Header = (props) => {
         >
             <RouterLink to= {user ? '/profile' : '/'}><img className={classes.logo} src='images/Logo.png' alt='Logo'/></RouterLink>
         </Grid>
-<<<<<<< HEAD
-            {true ? <HeaderWhenUserLoggedIn /> : <HeaderWhenUserLoggedOut /> }
-=======
             {user ? <HeaderWhenUserLoggedIn /> : <HeaderWhenUserLoggedOut /> }
->>>>>>> 05f2f9e4d464e9f6491480cbf7b8e038457cbee1
     </Grid>
     );
 }
