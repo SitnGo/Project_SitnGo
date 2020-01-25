@@ -5,11 +5,13 @@ import { Card, CardHeader, CardContent, Avatar, Typography, Button, Dialog, Dial
 // import Map from './passagerMap/MapForGetRoute';
 import fire from '../../../ConfigFirebase/Fire';
 import Map from '../../getRout/map/MapForGetRoute'
-import styles from '../../getRout/style';
+import stylesMap from '../../getRout/style';
+import styles from  './PassagerStyle';
 
 function Passager(props) {
     const [open, setOpen] = useState(false);
     
+    let classesMap = stylesMap();
     let classes = styles();
     let { data } = props;
     let startEnd = data.astartEnd.split('-');
@@ -67,8 +69,8 @@ function Passager(props) {
     }
     return (
     <>
-        <Card style={{ width: '30%', margin: '5px', cursor:'pointer', boxShadow: '23px 3px 14px -4px rgba(0,0,0,0.75)' }} >
-            <CardHeader avatar={<Avatar src={data.url} />} title={data.parameters.name} subheader={data.startDate} />
+        <Card className={classes.card} >
+            <CardHeader avatar={<Avatar src={data.url} />} title={data.parameters.name} subheader={data.startDate} onClick={openDialog}/>
             <CardContent onClick={openDialog}>
                 <Typography variant='body2' color='textSecondary' component='p'>from - {startEnd[0]}</Typography>
                 <Typography variant='body2' color='textSecondary' component='p'>to - {startEnd[1]}</Typography>
@@ -89,10 +91,10 @@ function Passager(props) {
         </Card>
 
          
-        <Dialog open={open} onClose={closeDialog} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <Dialog open={open} onClose={closeDialog} aria-labelledby="form-dialog-title" fullScreen={true}>
+        <DialogTitle id="form-dialog-title">Map</DialogTitle>
         <DialogContent>
-        <div className={classes.mapContainer}><Map route={data}/></div>
+        <div className={classesMap.mapContainer}><Map route={data}/></div>
           
         </DialogContent>
         <DialogActions>

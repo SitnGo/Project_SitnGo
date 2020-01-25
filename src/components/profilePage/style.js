@@ -10,9 +10,6 @@ const useStyles = makeStyles(theme => ({
         backgroundPositionY: '63%',
         backgroundAttachment: 'fixed',
     },
-    leftSide: {
-        // position: "fixed",
-    },
     personalInfoBlock1: {
         position:"relative",
         backgroundColor:"rgba(255, 252, 252, 0.88)",
@@ -40,7 +37,7 @@ const useStyles = makeStyles(theme => ({
         fontSize:21,
     },
     paper: {
-        
+        display:'flex',
         margin: theme.spacing(4),
         padding:10,
     },
@@ -64,7 +61,7 @@ const useStyles = makeStyles(theme => ({
         // alignItems:"center",
         width:"100%",
         // float:"right",
-        height:"100%",
+        // height:"100%",
         backgroundColor:"rgba(148, 148, 148, 0.45)",
         [theme.breakpoints.down('xs')]: {
             width: "100%",

@@ -4,6 +4,7 @@ import {Grid, TextField, Button} from '@material-ui/core';
 import { Phone, Email} from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import fire from '../../../ConfigFirebase/Fire';
+import storage from '../../../ConfigFirebase/storage';
 import {confirmUpdate} from '../../../actions/index';
 import {useDispatch, connect } from 'react-redux';
 import ForgotPassword from '../Forgotpassword/forgotPassword';
@@ -126,7 +127,26 @@ let arrFromErrorsValues = Object.values(errors)
                 break;
         }
         
-    }    
+    } 
+    
+////////////////////// delete user /////////////////////////////////////
+    function deleteUser () {
+        storage.ref().child(`images/${fire.auth().currentUser.uid}`).listAll().then(function(res) {
+            res.items.forEach(function(itemRef) {
+            
+            let desertRef = storage.ref(`images/${fire.auth().currentUser.uid}`).child(itemRef.name);
+            
+                desertRef.delete().then(()=> {
+                    alert('file deleted!');
+                }).catch((error)=>{
+                    console.log(error);
+                });            
+   
+            });
+          }).catch(function(error) {
+                console.log(error);
+          });
+    }
     return (
         <Grid container direction="column" justify="center" alignItems="center" className={classes.updateBlock}>
             <TextField  className={classes.textfield} 
@@ -164,6 +184,7 @@ let arrFromErrorsValues = Object.values(errors)
             />
             <ForgotPassword/>
             <Button className={classes.confirmButton} color="primary" onClick={checkErrorsHandler}>Update</Button>
+            <Button onClick={deleteUser}>Delete</Button>
         </Grid>
         
     );
