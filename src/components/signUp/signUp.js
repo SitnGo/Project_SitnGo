@@ -53,21 +53,17 @@ const SignUp = (props) => {
                     return userId
                 })
                 .then((userId) => {
-                    let user = {
-                        userId: userId,
-                        userInfo: {
+                    let userInfo = {
                             name: name,
                             surname: surname,
                             email: email,
                             gender: gender,
                             phone: phone,
-                        }}
-                    fire.firestore().collection('users').doc(userId).set(user);
-                    return {user: user, id:userId};
-                }).then((result) => {
-                dispatch(SignInAction(result.user));
-                return result
-
+                            url: "",
+                        }
+                    fire.firestore().collection('users').doc(userId).set(userInfo);
+                    fire.firestore().collection('users').doc(userId).collection("userRoutesInfo").doc(userId)
+                    fire.firestore().collection('users').doc(userId).collection("userAcceptedRoutes").doc(userId)
             }).then((result)=>{
                 dispatch(openSignUPAction());
                 return result

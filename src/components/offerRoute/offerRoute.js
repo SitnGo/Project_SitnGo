@@ -66,20 +66,17 @@ const OfferRout = () => {
     if(isEmpty()){ return}
     setSubmitDisable(true);
     async function getMarker(user={}) {
-            let userId = fire.auth().currentUser.uid;
+        let userId = fire.auth().currentUser.uid;
         user = await fire.firestore().collection("users").doc(userId).get()
             user = user.data();
+            console.log(user)
         return user;
     }
-    getMarker().then(result => {
-        if(!result.hasOwnProperty("userRoutesInfo")){
-            result.userRoutesInfo = {}
-            result.userRoutesInfo.routes = []
-        }
-        if(!result.userRoutesInfo.hasOwnProperty("routes")){
-            result.userRoutesInfo.routes = []
-        }
-        let currentRoute = JSON.parse(localStorage.getItem("route"))
+
+    getMarker().then((result)=>{
+    let userId = fire.auth().currentUser.uid;
+    let routeInfo_REF = fire.firestore().collection("users").doc(userId).collection("userRoutesInfo");
+    let currentRoute = JSON.parse(localStorage.getItem("route"))
         setRoute(currentRoute)
         currentRoute.waypoints[0].name += from;
         currentRoute.waypoints[1].name += to;
@@ -88,9 +85,9 @@ const OfferRout = () => {
             route: currentRoute,
             astartEnd: `${from}-${to}`,
             startDate: startDate,
-            DriverPhone: result.userInfo.phone,
+            DriverPhone: result.phone,
             parameters:  {
-                name: `${result.userInfo.name} ${result.userInfo.surname}`, 
+                name: `${result.name} ${result.surname}`, 
                 car: car, 
                 plate: plate, 
                 count: count,
@@ -99,10 +96,41 @@ const OfferRout = () => {
                 price: `${price}AMD`,
             }
         }
-        result.userRoutesInfo.routes.push(route)
-      fire.firestore().collection("users").doc(result.userId).set(JSON.parse(JSON.stringify(result)))
-      setRedirect(true);
-    });
+        routeInfo_REF.add(route).then(()=>setRedirect(true));
+    })
+
+    // getMarker()
+    // .then(result => {
+    //     if(!result.hasOwnProperty("userRoutesInfo")){
+    //         result.userRoutesInfo = {}
+    //         result.userRoutesInfo.routes = []
+    //     }
+    //     if(!result.userRoutesInfo.hasOwnProperty("routes")){
+    //         result.userRoutesInfo.routes = []
+    //     }
+    //     let currentRoute = JSON.parse(localStorage.getItem("route"))
+    //     setRoute(currentRoute)
+    //     currentRoute.waypoints[0].name += from;
+    //     currentRoute.waypoints[1].name += to;
+    //     let route={
+    //         userId: fire.auth().currentUser.uid,
+    //         route: currentRoute,
+    //         astartEnd: `${from}-${to}`,
+    //         startDate: startDate,
+    //         DriverPhone: result.userInfo.phone,
+    //         parameters:  {
+    //             name: `${result.userInfo.name} ${result.userInfo.surname}`, 
+    //             car: car, 
+    //             plate: plate, 
+    //             count: count,
+    //             distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
+    //             time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
+    //             price: `${price}AMD`,
+    //         }
+    //     }
+    //     result.userRoutesInfo.routes.push(route)
+    //   fire.firestore().collection("users").doc(result.userId).set(JSON.parse(JSON.stringify(result)))
+    // });
 }
 
    
@@ -239,7 +267,7 @@ function getCurrentDate() {
                         fullWidth
                         variant='outlined'
                         label='Persons'
-                        onChange={(e)=>setCount(e.target.value)}
+                        onChange={(e)=>setCount(+e.target.value)}
                         className={classes.rideListItem}
                     >
                         {numberPersons.map(option => (
