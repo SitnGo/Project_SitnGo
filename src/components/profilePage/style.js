@@ -2,7 +2,7 @@ import  {makeStyles} from '@material-ui/core/styles';
 
 const styles = makeStyles(theme => ({
     profileContainer: {
-        height: '80vh',
+        minHeight: '80vh',
         flexGrow:1,
         backgroundImage:"url('./images/share.jpg')",
         backgroundRepeat: 'no-repeat',
@@ -67,13 +67,6 @@ const styles = makeStyles(theme => ({
         justifyContent:"space-evenly",
         alignItems:"center",
         
-    },
-    confirmButton : {
-        width: "50%",
-        margin:"1% 0 0 25%",
-        [theme.breakpoints.down('xs')] : {
-            width:"46%",
-        },
     },
 }));
 

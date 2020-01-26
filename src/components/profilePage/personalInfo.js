@@ -5,7 +5,7 @@ import {Phone, Email, AccountBox } from '@material-ui/icons'
 import Skeleton from '@material-ui/lab/Skeleton';
 import UpdateForm from './userUpdateForm/userUpdateForm';
 import ConfirmPassword from './ConfirmPassword/confirmPassword';
-import {isEdit1, openUpdateForm } from '../../actions/index';
+import {isEdit1} from '../../actions/index';
 import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
@@ -29,8 +29,7 @@ function usePersonalInfo() {
     let update = useSelector(state => state.confirmUpdate);
     let user1 = useSelector(state => state.user);
     let isEdit = useSelector(state => state.isEdit1);
-    let openUpdateFormBool = useSelector(state => state.opneUpdateForm);
-
+    let openUpdateFormBool = useSelector(state => state.openUpdateForm);
     useEffect(()=>{
         console.log(user1)
         async function getMarker(user={}) {
@@ -50,7 +49,9 @@ function usePersonalInfo() {
         getMarker().then(result => {
             setUser(result);
             if(!result.hasOwnProperty('url')){
+                alert("A");
                 result.url='';
+                console.log('url ',result.url);
             }
             setUrl(result.url);
             changeBool(true);
@@ -60,11 +61,6 @@ function usePersonalInfo() {
 
 
     function isEditBtnClick() {
-        dispatch(isEdit1());
-    }
-
-    function isConfirmBtnClick() {
-        dispatch(openUpdateForm());
         dispatch(isEdit1());
     }
 
@@ -106,14 +102,9 @@ function usePersonalInfo() {
                         ) : (
                             <>
                                 
-                                {openUpdateFormBool ? (
+                                {!openUpdateFormBool ? (
                                     <>
                                         <UpdateForm  data={[user.userInfo.email, user.userInfo.phone]} userId={fire.auth().currentUser.uid}/>                          
-                                        <Button 
-                                        className={classes.confirmButton} 
-                                        color='secondary'
-                                        onClick={isConfirmBtnClick}
-                                    >cancle</Button>
                                 </>
                              ) : <ConfirmPassword />} 
                         </>
@@ -161,7 +152,6 @@ function mapStateToProps(state) {
         user: state.user,
         isLoggedInUser: state.isLoggedInUser,
         isEdit1:state.isEdit1,
-        openUpdateForm:state.openUpdateForm,
     };
 }
 export default connect(mapStateToProps)(usePersonalInfo)
