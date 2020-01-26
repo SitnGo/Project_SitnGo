@@ -33,7 +33,7 @@ function ConfirmPassword() {
                 setPasswordError(true);
 
             });
-
+            
     };
 
     const handleClose = () => {
@@ -46,7 +46,6 @@ function ConfirmPassword() {
     }
     return (
         <div>
-            {/*  */}
             <Dialog open={openDialog && open}  aria-labelledby='form-dialog-title' fullWidth={true}>
                 <DialogTitle id='form-dialog-title'>Enter password</DialogTitle>
                 <form onSubmit={handleSubmit}>
@@ -61,7 +60,7 @@ function ConfirmPassword() {
                             label='Enter password'
                             type={showPassword ? 'text' : 'password'}
                             error={passwordError}
-                            helperText={passwordError ? <p>password is incorrect</p> : null}
+                            helperText={passwordError ? 'password is incorrect' : null}
                             fullWidth
 
                             InputProps={{

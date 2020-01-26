@@ -27,7 +27,6 @@ function App() {
         fire.auth().onAuthStateChanged((e)=>{
             if(e){
             dispatch(SignInAction(e));
-            console.log(e)
             }else {
                 dispatch(signOutAction(e));
             }

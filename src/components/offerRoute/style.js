@@ -26,9 +26,6 @@ const styles = makeStyles(theme => ({
         height: '50vh',
         margin: '0 auto',
     },
-    '@media (max-width: 600px)': {
-        
-    }
 }));
 
 export default styles;

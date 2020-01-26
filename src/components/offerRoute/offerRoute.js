@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import styles from './style';
 import {Button, TextField, MenuItem} from '@material-ui/core';
 import SimpleSnackbar from "./snackbar/snackbar"
 import SimpleSnackbarSuccess from "./snackbar/snackbarSuccess"
 import MLeafletApp from './Leafletmaps/final'
 import fire from '../../ConfigFirebase/Fire';
 import {Redirect} from 'react-router-dom';
+import styles from './style';
 
 const numberPersons = [
     {
@@ -133,28 +133,18 @@ const OfferRout = () => {
     // });
 }
 
-   
-function getCurrentDate() {
     let d = new Date();
     let day = d.getDate();
     let month;
-    if (d.getMonth()<9){
-        month = `0${d.getMonth()+1}`;
-    }else{
-        month = d.getMonth()+1;
+    if (d.getMonth() < 9) {
+        month = `0${d.getMonth() + 1}`;
+    } else {
+        month = d.getMonth() + 1;
     }
-    let hours= d.getHours();
-    let minutes = d.getMinutes();
     let year = d.getFullYear();
-    let date =`${year}-${month}-${day}T${hours}:${minutes}`;
-    return date;
-}
+    let date = `${year}-${month}-${day}T23:59:00`;
 
-
-
-
-   function isEmpty () {
-    let date =`${getCurrentDate()}:00`;
+    function isEmpty () {
        if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& +price && !priceError && startDate !==null && startDate !==date && !isRouteError && isRouteError !== null) {
            setFromError(false);
            setToError(false);
@@ -257,7 +247,7 @@ function getCurrentDate() {
                         error={startDateError}
                         helperText={startDateError ? <p>You must set correct Date. You can set Trip Date starting tomorrow</p> : null}
                         type='datetime-local'
-                        defaultValue={getCurrentDate()}
+                        defaultValue={date}
                         onChange={(e)=>{console.log(e.target.value);let date = e.target.value+":00"; setStartDate(date)}}
                         className={classes.rideListItem}
                     />
