@@ -28,7 +28,7 @@ export default function reducers(state = {
         case 'IS_EDIT':
             return Object.assign({},state,{ isEdit1: !state.isEdit1 });
         case 'OPEN_UPDATE_FORM':
-            return Object.assign({},state,{ opneUpdateForm : !state.openUpdateForm });
+            return Object.assign({},state,{ openUpdateForm : !state.openUpdateForm });
         default:
             return state;
     }

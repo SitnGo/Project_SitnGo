@@ -12,5 +12,10 @@ const useStyles = makeStyles(theme => ({
             width:"46%",
         },
     },
+
+    cancelButton: {
+        width: "50%",
+        margin:"1% 0 0 0",
+    }
 }));
 export default useStyles;
