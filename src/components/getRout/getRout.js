@@ -17,6 +17,8 @@ import fire from '../../ConfigFirebase/Fire';
 import Map from './map/MapForGetRoute'
 import { Redirect } from 'react-router-dom';
 import styles from './style';
+import SimpleSnackbar from "./snackbar/snackbar"
+
 
 const GetRout = (props) => {
     const [from, setFrom] = useState('');
@@ -26,10 +28,13 @@ const GetRout = (props) => {
     const [startDate, setStartDate] = useState('');
     const [count, setCount] = useState('')
     const [route, setRoute] = useState('');
+    const [routeRef, setRouteRef] = useState('');
     const [countError, setCountError] = useState(false);
     const [redirect, setRedirect] = useState(false);
     const [isDisable, setIsDisable] = useState(false);
     const [checkIsUserAlreadyHasRoute, setCheckIsUserAlreadyHasRoute] = useState(null)
+    const [matchedRef, setMatchedRef] = useState(null);
+    const [alreadyAcceptedRoute, setAlreadyAcceptedRoute] = useState(null);
 
     useEffect((() => {
         onSubmit();
@@ -38,75 +43,134 @@ const GetRout = (props) => {
     function onSubmit() {
         setPage(0);
         async function getMarker(user = {}) {
-            user = await fire.firestore().collection('users').get().then((result) => {
+            user = await fire.firestore().collectionGroup('userRoutesInfo').get().then((result) => {
                 let matchedRouts = [];
-                result.forEach((item => {
-                    if (item.data().hasOwnProperty('userRoutesInfo')) {
-                        if (item.data().userRoutesInfo.hasOwnProperty('routes')) {
-                            item.data().userRoutesInfo.routes.forEach((item) => {
-                                if ((item.parameters.count > 0) && (Date.parse(item.startDate) > new Date().getTime()) && (item.userId !== fire.auth().currentUser.uid && item.route && item.route.waypoints[0].name.toUpperCase().includes(from.toUpperCase())) && (item.route.waypoints[1].name.toUpperCase().includes(to.toUpperCase()))) {
-                                    matchedRouts.push(item)
-                                }
-                            })
-                        }
+                let matchedRoutsRefs = [];
+                result.forEach(itemRef => {
+                    let item = itemRef.data();
+                    item.ref = itemRef;
+                    if ((item.parameters.count > 0) && (Date.parse(item.startDate) > new Date().getTime()) && (item.userId !== fire.auth().currentUser.uid && item.route && item.route.waypoints[0].name.toUpperCase().includes(from.toUpperCase())) && (item.route.waypoints[1].name.toUpperCase().includes(to.toUpperCase()))) {
+                        matchedRouts.push(item)
+                        matchedRoutsRefs.push(itemRef);
                     }
-                }));
+                })
                 setInfo(matchedRouts);
+                setMatchedRef(matchedRoutsRefs);
             });
             return user;
         }
+
         getMarker().then(result => {
         })
     };
 
     function onAcceptClick() {
-        console.log(fire.auth().currentUser)
+        // console.log(fire.auth().currentUser)
         setIsDisable(true);
-
-        fire.firestore().collection('users').doc(route.userId).get().then(result => {
-            return result.data()
-        }).then((result) => {
-            // console.log(result);
-            result.userRoutesInfo.routes.forEach((item) => {
-                if (JSON.stringify(item) === JSON.stringify(route)) {
-                    if (item.parameters.count === 0) {
-                        return 0;
-                    }
-                    if (typeof (item.parameters.count) !== 'number') {
-                        item.parameters.count = +item.parameters.count;
-                    }
-                    item.parameters.count -= 1;
-                    fire.firestore().collection('users').doc(fire.auth().currentUser.uid).get().then((result) => {
-                        let currentUser = result.data()
-                        if (!currentUser.hasOwnProperty('acceptedRoutes')) {
-                            currentUser.acceptedRoutes = [];
-                        }
-                        currentUser.acceptedRoutes.push(item);
-                        return currentUser
-                    }).then((updatedUser) => {
-                        fire.firestore().collection('users').doc(fire.auth().currentUser.uid).set(updatedUser)
-                    })
-                } else {
-                    setCountError(true);
+        fire.firestore().collection("users").doc(fire.auth().currentUser.uid).collection("acceptedRoutes").get().then((res) => {
+            let bool = false;
+            res.forEach((item) => {
+                if (item.data().ref.isEqual(fire.firestore().doc(routeRef.ref.path))) {
+                    setAlreadyAcceptedRoute(true);
+                    bool = true;
+                    setTimeout(()=>{
+                        setIsDisable(false);
+                        setAlreadyAcceptedRoute(false);
+                    },3000)
                 }
-            });
-            return result;
-        }).then((resultWithUpdatedCount) => {
-            if (resultWithUpdatedCount === 0) {
-                return
-            }
-            // console.log(resultWithUpdatedCount)
-            fire.firestore().collection('users').doc(route.userId).set(resultWithUpdatedCount).then(() => {
-                setRedirect(true);
+                
             })
-            // onSubmit();
-            // props.history.push('/profile')
+            return bool;
+        }).then((res)=>{
+            if(!res){
+                
+                let { parameters } = route;
+                    fire.firestore().doc(routeRef.ref.path)
+                        .set({ parameters: { ...parameters, count: parameters.count - 1 } }, { merge: true }).then(() => {
+                            // console.log(JSON.stringify(routeRef))
+                            fire.firestore().collection("users").doc(fire.auth().currentUser.uid).collection("acceptedRoutes").add({ ref: fire.firestore().doc(routeRef.ref.path) })
+                                .then(() => setRedirect(true))
+                        })
+            }
         })
+
+        // .forEach(item=>{
+        //     console.log(JSON.stringify(item.data()) == JSON.stringify(routeRef.data()))
+        //     if(JSON.stringify(item.data()) == JSON.stringify(routeRef.data())){
+
+        //     }
+
+        // })
+        // })
+
+
+
+        // fire.firestore().collection("users").doc(route.userId).collection
+        // fire.firestore().collection('users').doc(route.userId).get().then(result => {
+        //     return result.data()
+        // })
+        // .then((result) => {
+        //     result.userRoutesInfo.routes.forEach((item, i) => {
+        //         let ref;
+        //         if (JSON.stringify(item) === JSON.stringify(route)) {
+        //             if (item.parameters.count === 0) {
+        //                 return 0;
+        //             } else {
+        //                 fire.firestore().collection("users").doc(`${route.userId}/userInfo/9eyB40tqAQXhmy2Vtpxx`).get().then(res => {
+        //                     console.log(res.data())
+        //                 })
+        // .then((res)=>{
+
+        //         console.log(res.data())
+
+        // }).catch((error)=>{console.log(error)})
+        // ref = ref.collection(`userRoutesInfo`)
+
+        // ref.collection("userRoutesInfo").get().then(result=>{
+        //   result.forEach((res)=>{
+        //     console.log(res.data())
+        // })
+        // })
+
+        //     }
+        //     if (typeof (item.parameters.count) !== 'number') {
+        //         item.parameters.count = +item.parameters.count;
+        //     }
+        //     item.parameters.count -= 1;
+        //     fire.firestore().collection('users').doc(fire.auth().currentUser.uid).get().then((result) => {
+        //         let currentUser = result.data()
+        //         if (!currentUser.hasOwnProperty('acceptedRoutes')) {
+        //             currentUser.acceptedRoutes = [];
+        //         }
+        //         currentUser.acceptedRoutes.push(item);
+        //         return currentUser
+        //     }).then((updatedUser) => {
+        //         fire.firestore().collection('users').doc(fire.auth().currentUser.uid).set(updatedUser)
+        //     })
+        // } else {
+        //     setCountError(true);
+        // }
+        //     });
+        //     return result;
+        // }).then((resultWithUpdatedCount) => {
+        //     if (resultWithUpdatedCount === 0) {
+        //         return
+        //     }
+        //     // console.log(resultWithUpdatedCount)
+        //     fire.firestore().collection('users').doc(route.userId).set(resultWithUpdatedCount).then(() => {
+        //         setRedirect(true);
+        //     })
+        //     // onSubmit();
+        //     // props.history.push('/profile')
+        // })
     }
 
     function onTableRowClick(e) {
+        // console.log(matchedRef[0].data())
+
         setRoute(e);
-        console.log(e)
+        setRouteRef(e.ref)
+        // console.log(e.ref.data())
         if (e.astartEnd) {
             setRouteFromTo(e.astartEnd);
             setRouteDate(e.startDate)
@@ -203,7 +267,7 @@ const GetRout = (props) => {
                             <TableHead>
                                 <TableRow>
                                     <TableCell align='center'>Car Model</TableCell>
-                                    <TableCell align='center'>Total Sits</TableCell>
+                                    <TableCell align='center'>Total Seats</TableCell>
                                     <TableCell align='center'>Distance</TableCell>
                                     <TableCell align='center'>Driver</TableCell>
                                     <TableCell align='center'>Car plate</TableCell>
@@ -265,6 +329,8 @@ const GetRout = (props) => {
                     }
                 </div>
             </div>
+            {alreadyAcceptedRoute ? <SimpleSnackbar alreadyAcceptedRoute={alreadyAcceptedRoute}/> : null}
+
         </section>
     );
 }

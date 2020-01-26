@@ -51,14 +51,11 @@ let arrFromErrorsValues = Object.values(errors)
                 });
             }
                     fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
-                        userInfo: {
-                            name:doc.data().userInfo.name,
-                            surname: doc.data().userInfo.surname,
+                            name: doc.data().name,
+                            surname: doc.data().surname,
                             email: email.toLowerCase(),
-                            gender: doc.data().userInfo.gender,
+                            gender: doc.data().gender,
                             phone: phone,
-                        }
-                    
                     }).then(()=>{
                             alert("Update confirm!");
                             dispatch(confirmUpdate()
