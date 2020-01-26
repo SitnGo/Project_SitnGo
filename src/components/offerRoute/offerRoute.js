@@ -5,6 +5,8 @@ import SimpleSnackbarSuccess from "./snackbar/snackbarSuccess"
 import MLeafletApp from './Leafletmaps/final'
 import fire from '../../ConfigFirebase/Fire';
 import {Redirect} from 'react-router-dom';
+import Routing from './Leafletmaps/RoutingMachine';
+import {test} from "./Leafletmaps/Map";
 import styles from './style';
 
 const numberPersons = [
@@ -190,6 +192,9 @@ const OfferRout = () => {
             {redirect ? <Redirect to="/profile" push /> : null }
             <div className={classes.offer}>
                 <div className={classes.rideList}>
+                    {/*<Routing*/}
+                    {/*    map={test}*/}
+                    {/*/>*/}
                     <TextField
                         margin='dense'
                         fullWidth
@@ -290,11 +295,15 @@ const OfferRout = () => {
                     >Submit</Button>
                 </div>
                 <div className={classes.mapContainer}>
-                {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} />  : null}
-                {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess = {isRouteSuccess}/> : null}
-                    
-                    <MLeafletApp  setMap = {setMap} setDefaultPrice={setDefaultPrice} setPrice={setPrice} setIsRouteSuccess={setIsRouteSuccess} setIsRouteError={setIsRouteError} />
-                    {/* {isMapInit && <Routing map={maps}/>} */}
+                    {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} />  : null}
+                    {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess = {isRouteSuccess}/> : null}
+                    <MLeafletApp
+                        setMap = {setMap}
+                        setDefaultPrice={setDefaultPrice}
+                        setPrice={setPrice}
+                        setIsRouteSuccess={setIsRouteSuccess}
+                        setIsRouteError={setIsRouteError}
+                    />
                 </div>
             </div>
         </section>

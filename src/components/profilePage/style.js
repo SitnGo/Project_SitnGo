@@ -1,6 +1,6 @@
-import {makeStyles} from '@material-ui/core/styles';
+import  {makeStyles} from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const styles = makeStyles(theme => ({
     profileContainer: {
         height: '80vh',
         flexGrow:1,
@@ -55,21 +55,13 @@ const useStyles = makeStyles(theme => ({
 
     personalInfoBlock2 : {
         overflowY: "auto",
-        // display:"flex",
-        // flexWrap:"wrap",
-        // justifyContent:"space-evenly",
-        // alignItems:"center",
         width:"100%",
-        // float:"right",
-        // height:"100%",
         backgroundColor:"rgba(148, 148, 148, 0.45)",
         [theme.breakpoints.down('xs')]: {
             width: "100%",
         },
     },
     cards: {
-        // width:"100%",
-        // overflowY: "auto",
         display:"flex",
         flexWrap:"wrap",
         justifyContent:"space-evenly",
@@ -85,4 +77,4 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default useStyles;
+export default styles;

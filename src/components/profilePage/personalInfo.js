@@ -13,7 +13,7 @@ import Passager from './passagerDriver/Passager';
 import Driver from './passagerDriver/Driver';
 import CenteredTabs from './TabPanels/tabPanels';
 import {useDispatch, useSelector, connect} from 'react-redux';
-import useStyles from './style';
+import styles from './style';
 
 function usePersonalInfo() {
    
@@ -24,7 +24,7 @@ function usePersonalInfo() {
     const [user, setUser] = useState({});
     const [url, setUrl] = useState('');
 
-    const classes = useStyles();
+    const classes = styles();
     const dispatch = useDispatch();
     let update = useSelector(state => state.confirmUpdate);
     let user1 = useSelector(state => state.user);
