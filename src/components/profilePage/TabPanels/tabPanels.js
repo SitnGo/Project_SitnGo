@@ -20,7 +20,6 @@ export default function CenteredTabs(props) {
         <Paper className={classes.root} elevation={2}>
             <Button
                 variant='outlined'
-                color={changeColor1 ? 'secondary' : 'primary'}
                 onClick={handleClick1}
                 className={classes.button}
             >
@@ -28,7 +27,6 @@ export default function CenteredTabs(props) {
             </Button>
             <Button
                 variant='outlined'
-                color={changeColor2 ? 'secondary' : 'primary'}
                 onClick={handleClick2}
                 className={classes.button}
             >

@@ -2,7 +2,7 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     profileContainer: {
-        height: '80vh',
+        minHeight: '80vh',
         flexGrow:1,
         backgroundImage:"url('./images/share.jpg')",
         backgroundRepeat: 'no-repeat',
@@ -55,10 +55,6 @@ const useStyles = makeStyles(theme => ({
 
     personalInfoBlock2 : {
         overflowY: "auto",
-        // display:"flex",
-        // flexWrap:"wrap",
-        // justifyContent:"space-evenly",
-        // alignItems:"center",
         width:"100%",
         // float:"right",
         // height:"100%",
@@ -75,13 +71,6 @@ const useStyles = makeStyles(theme => ({
         justifyContent:"space-evenly",
         alignItems:"center",
         
-    },
-    confirmButton : {
-        width: "50%",
-        margin:"1% 0 0 25%",
-        [theme.breakpoints.down('xs')] : {
-            width:"46%",
-        },
     },
 }));
 
