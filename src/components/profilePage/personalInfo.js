@@ -8,14 +8,21 @@ import { isEdit1, openUpdateForm } from '../../actions/index';
 import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
-import Passager from './passagerDriver/Passager';
-import Driver from './passagerDriver/Driver';
+import Passenger from './passengerDriver/Passenger';
+import Driver from './passengerDriver/Driver';
 import CenteredTabs from './TabPanels/tabPanels';
 import { useDispatch, useSelector, connect } from 'react-redux';
-import useStyles from './style';
+import styles from './style';
+
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+        isLoggedInUser: state.isLoggedInUser,
+        isEdit1:state.isEdit1,
+    };
+}
 
 function usePersonalInfo() {
-
     const [PassagerList, setPassagerList] = useState(null);
     const [DriverList, setDriverList] = useState(null);
     const [bool, changeBool] = useState(false);
@@ -24,8 +31,7 @@ function usePersonalInfo() {
     const [url, setUrl] = useState('');
     const [render, setRender] = useState(false);
     const [renderDriver, setRenderDriver] = useState(false);
-
-    const classes = useStyles();
+    const classes = styles();
     const dispatch = useDispatch();
     let update = useSelector(state => state.confirmUpdate);
     let user1 = useSelector(state => state.user);
@@ -45,13 +51,13 @@ function usePersonalInfo() {
                         PassagerListArr.push(result)
                     })
                 })
-            })
+            });
             await fire.firestore().collection("users").doc(fire.auth().currentUser.uid).collection("userRoutesInfo").get().then((res) => {
                 res.forEach(item => {
                     DriverListArr.push(item)
                 })
-            })
-            setDriverList(DriverListArr)
+            });
+            setDriverList(DriverListArr);
             setPassagerList(PassagerListArr);
             return user;
         }
@@ -79,98 +85,105 @@ function usePersonalInfo() {
         >
             <Grid
                 item
-                sm={4}
+                xl={3}
+                lg={3}
+                md={4}
+                sm={6}
                 xs={12}
+                className={classes.leftSide}
             >
-                <Paper
-                    elevation={3}
-                    className={classes.personalInfoBlock1}
-                >
-                    <div>
-                        {   isEdit ?
-                                <Avatar
-                                    src={bool ? url : ''}
-                                    variant='circle'
-                                    className={classes.bigAvatar}
-                                ></Avatar>
-                            :
-                                <DropzoneDialog url={url} setUrl={setUrl} />
-                        }
-                    </div>
-                    <hr/>
-                    {
-                        isEdit ? (
-                            <FadeIn>
-                                <Paper className={classes.paper} elevation={3}>
-                                    <AccountBox fontSize="large"/>
-                                    {
-                                        bool ?
-                                            <Typography className={classes.typography}>
-                                                {user && user.userInfo.name}
-                                            </Typography>
-                                        :
-                                            <Skeleton height={60} component='p'/>
-                                    }
-                                </Paper>
-                                <Paper className={classes.paper} elevation={3}>
-                                    <AccountBox fontSize="large"/>
-                                    {
-                                        bool ?
-                                            <Typography className={classes.typography}>
-                                                {user && user.userInfo.surname}
-                                            </Typography>
-                                        :
-                                            <Skeleton height={60} component='p'/>
-                                    }
-                                </Paper>
-                                <Paper className={classes.paper} elevation={3}>
-                                    <Phone fontSize="large"/>
-                                    {
-                                        bool ?
-                                            <Typography className={classes.typography}>
-                                                {user && user.userInfo.phone}
-                                            </Typography>
-                                        :
-                                            <Skeleton height={60} component='p'/>
-                                    }
-                                </Paper>
-                                <Paper className={classes.paper} elevation={3}>
-                                    <Email fontSize="large"/>
-                                    {
-                                        bool ?
-                                            <Typography className={classes.typography}>
-                                                {user && user.userInfo.email}
-                                            </Typography>
-                                        :
-                                            <Skeleton height={60} component='p'/>
-                                    }
-                                </Paper>
-                            </FadeIn>
-                        ) : (
-                            <>
-                                {!openUpdateFormBool ? (
-                                    <>
-                                        <UpdateForm
-                                            data={[user.userInfo.email, user.userInfo.phone]}
-                                            userId={fire.auth().currentUser.uid}
-                                        />
-                                    </>
-                                ) : <ConfirmPassword />}
-                            </>
-                        )
+                <div className={classes.avatarContainer}>
+                    { isEdit ?
+                        (<>
+                            <Avatar
+                                src={bool ? url : ''}
+                                variant='circle'
+                                className={classes.bigAvatar}
+                            />
+                            <Button
+                                className={isEdit ? classes.editButton : classes.hidden}
+                                disabled={bool ? false : true}
+                                variant='contained'
+                                color='secondary'
+                                onClick={isEditBtnClick}
+                            >
+                                <Edit/> Edit
+                            </Button>
+                        </>)
+                        :
+                            <DropzoneDialog url={url} setUrl={setUrl} />
                     }
-                    <Button
-                        className={isEdit ? classes.editButton : classes.hideEditButton}
-                        disabled={bool ? false : true}
-                        variant='contained'
-                        color='secondary'
-                        onClick={isEditBtnClick}
-                    >
-                        <Edit/> Edit
-                    </Button>
-                </Paper>
+                </div>
+                <hr/>
+                {
+                    isEdit ? (
+                        <FadeIn>
+                            <Paper className={classes.paper} elevation={3}>
+                                <AccountBox fontSize="large"/>
+                                {
+                                    bool ?
+                                        <Typography className={classes.typography}>
+                                            {user && user.name}
+                                        </Typography>
+                                    :
+                                        <Skeleton height={60} component='p'/>
+                                }
+                            </Paper>
+                            <Paper className={classes.paper} elevation={3}>
+                                <AccountBox fontSize="large"/>
+                                {
+                                    bool ?
+                                        <Typography className={classes.typography}>
+                                            {user && user.surname}
+                                        </Typography>
+                                    :
+                                        <Skeleton height={60} component='p'/>
+                                }
+                            </Paper>
+                            <Paper className={classes.paper} elevation={3}>
+                                <Phone fontSize="large"/>
+                                {
+                                    bool ?
+                                        <Typography className={classes.typography}>
+                                            {user && user.phone}
+                                        </Typography>
+                                    :
+                                        <Skeleton height={60} component='p'/>
+                                }
+                            </Paper>
+                            <Paper className={classes.paper} elevation={3}>
+                                <Email fontSize="large"/>
+                                {
+                                    bool ?
+                                        <Typography className={classes.typography}>
+                                            {user && user.email}
+                                        </Typography>
+                                    :
+                                        <Skeleton height={60} component='p'/>
+                                }
+                            </Paper>
+                        </FadeIn>
+                    ) : (
+                        <>
+                            {!openUpdateFormBool ? (
+                                    <UpdateForm
+                                        data={[user.email, user.phone]}
+                                        userId={fire.auth().currentUser.uid}
+                                    />
+                            ) : <ConfirmPassword />}
+                        </>
+                    )
+                }
             </Grid>
-            <Grid item sm={8} xs={12} className={classes.personalInfoBlock2}>
+            <Grid
+                item
+                xl={9}
+                lg={9}
+                md={8}
+                sm={6}
+                xs={12}
+                className={classes.personalInfoBlock2}
+            >
                 <CenteredTabs tabChange={tabChange} setTabChange={setTabChange} />
                 {tabChange ?
                     <FadeIn>
@@ -184,7 +197,7 @@ function usePersonalInfo() {
                     <FadeIn>
                         <div className={classes.cards}>
                             {PassagerList && PassagerList.map((el, i) => {
-                                return <Passager key={i} dataRef={el} render={render} setRender={setRender} />
+                                return <Passenger key={i} dataRef={el} render={render} setRender={setRender} />
                             })}
                         </div>
                     </FadeIn>

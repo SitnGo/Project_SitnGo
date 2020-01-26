@@ -38,7 +38,7 @@ export default class LeafletMap extends Component {
                     <Marker map={this.map} position={position}/>
                 }
                 {
-                    this.isRout &&
+                    // this.isRout &&
                     this.state.isMapInit &&
                     <Routing
                         setDefaultPrice={this.props.setDefaultPrice}

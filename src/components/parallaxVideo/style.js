@@ -12,6 +12,16 @@ const styles = makeStyles(theme => ({
     },
     video: {
         width: '100%'
+    },
+    '@media (min-width: 600px) and (max-width: 960px)': {
+        container: {
+            width: '150%'
+        }
+    },
+    '@media (max-width: 599px)': {
+        container: {
+            width: '200%'
+        }
     }
 }));
 

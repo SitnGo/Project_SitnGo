@@ -9,8 +9,16 @@ import {confirmUpdate} from '../../../actions/index';
 import {useDispatch, connect } from 'react-redux';
 import ForgotPassword from '../Forgotpassword/forgotPassword';
 import {isEdit1, openUpdateForm } from '../../../actions/index';
-function UpdateForm (props) {
 
+function mapStateToProps(state) {
+    return {
+        confirmUpdate:state.confirmUpdate,
+        isEdit1:state.isEdit1,
+        openUpdateForm:state.openUpdateForm,
+    };
+}
+
+function UpdateForm (props) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [email, setEmail] = useState(props.data[0]);
@@ -22,6 +30,8 @@ function UpdateForm (props) {
         genderError: false,
         phoneError: false,
     });
+    const [open, setOpen] = useState(false);
+
 //////////////////////get all errors in array/////////////////////////////////////
 useEffect((() => {  
 let arrFromErrorsValues = Object.values(errors)
@@ -32,7 +42,6 @@ let arrFromErrorsValues = Object.values(errors)
             return item;
         }
     });
-
      //////////////////check errors/////////////////////
      if(email !== props.data[0] || phone !== props.data[1]) {
             if ((arrFromErrorsValues.every(item => item === false))) {
@@ -40,11 +49,9 @@ let arrFromErrorsValues = Object.values(errors)
                     if(email !== props.data[0]) {
                 fire.auth().onAuthStateChanged(function(user) {
                     if (user) {
-                        
                         fire.auth().currentUser.updateEmail(email).then(()=>{
                             alert(user.email);
                         })
-                        
                     } else {
                         console.log("error");
                     }
@@ -57,14 +64,11 @@ let arrFromErrorsValues = Object.values(errors)
                             gender: doc.data().gender,
                             phone: phone,
                     }).then(()=>{
-                            alert("Update confirm!");
-                            dispatch(confirmUpdate()
-                         )});
-                
+                        alert("Update confirm!");
+                        dispatch(confirmUpdate())
+                    });
                 });
-                
             }
-            
         }
     }), [errors])
     function checkErrorsHandler() {
@@ -119,12 +123,10 @@ let arrFromErrorsValues = Object.values(errors)
                     setErrors(Object.assign(err, { phoneError: true }))
                     break;
                 }
-                
             default:
                 setErrors(Object.assign(err, { phoneError: true }))
                 break;
         }
-        
     } 
          //////////////////cancel///////////
     function isConfirmBtnClick() {
@@ -138,28 +140,22 @@ console.log(fire.auth().currentUser);
     function deleteUser () {
     const user = fire.auth().currentUser;
     user.delete().then(() => {
-        // User deleted.
-
         fire.firestore().collection('users').doc(user.uid).delete().then(()=> {
             alert('Document successfully deleted');
         }).catch((error) => {console.log(error)})
         
         storage.ref().child(`images/${user.uid}`).listAll().then(function(res) {
             res.items.forEach((itemRef) => {
-            
-            let desertRef = storage.ref(`images/${user.uid}`).child(itemRef.name);
-            
-                desertRef.delete().then(()=> {
-                    alert('file deleted!');
-                }).catch((error)=>{
-                    console.log(error);
-                });            
-
+                let desertRef = storage.ref(`images/${user.uid}`).child(itemRef.name);
+                    desertRef.delete().then(()=> {
+                        alert('file deleted!');
+                    }).catch((error)=>{
+                        console.log(error);
+                    });
             });
         }).catch((error) => {
                 console.log('error',error);
         });
-
         
       }).catch(function(error) {
         console.log(error);
@@ -168,68 +164,81 @@ console.log(fire.auth().currentUser);
     
     function CancelBtnClick() {
         dispatch(isEdit1());
-        
     }
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
     return (
-        <Grid container direction="column" justify="center" alignItems="center" className={classes.updateBlock}>
-            <TextField  className={classes.textfield} 
-            label="email" 
-            variant="filled"
-            onChange={(e) => {setEmail(e.target.value)}}
-            value={email}
-            error={errors.emailError.bool}
-            helperText={errors.emailError ? errors.emailError.errText : null}
-            InputProps={{
-                endAdornment: (
-                    <InputAdornment position="end">
-                            <Email/>
-                    </InputAdornment>
-                )
-            }}
-            
+        <Grid
+            container
+            xs={12}
+            justify="center"
+            alignItems="center"
+        >
+            <TextField  className={classes.textField}
+                label="email"
+                variant="filled"
+                onChange={(e) => {setEmail(e.target.value)}}
+                value={email}
+                error={errors.emailError.bool}
+                helperText={errors.emailError ? errors.emailError.errText : null}
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">
+                                <Email/>
+                        </InputAdornment>
+                    )
+                }}
             />
-            
-            <TextField  className={classes.textfield}
-            label="phone"
-            variant="filled"
-            onChange={(e) => {setPhone(e.target.value)}}
-            value={phone}
-            error={errors.phoneError}
-            helperText={errors.phoneError ? "Phone number is not valid" : null}
-            InputProps={{
-                endAdornment: (
-                    <InputAdornment position="end">                    
-                            <Phone />
-                   </InputAdornment>
-                )
-            }}
-            
+            <TextField  className={classes.textField}
+                label="phone"
+                variant="filled"
+                onChange={(e) => {setPhone(e.target.value)}}
+                value={phone}
+                error={errors.phoneError}
+                helperText={errors.phoneError ? "Phone number is not valid" : null}
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">
+                                <Phone />
+                       </InputAdornment>
+                    )
+                }}
             />
-            <ForgotPassword/>
             <Grid
                 container
-                xl={4}
-                lg={4}
-                md={4}
-                sm={6}
-                xs={6}
-                justify='flex-end'
+                xs={12}
+                justify='center'
                 className={classes.updateCancelContainer}
-            >
-                <Button className={classes.confirmButton} color="primary" onClick={checkErrorsHandler}>Update</Button>
-                <Button className={classes.cancelButton} color="secondary" onClick={isConfirmBtnClick}>Cancel</Button>
+                >
+                <Button
+                    variant='contained'
+                    className={classes.confirmButton}
+                    onClick={checkErrorsHandler}
+                >Update</Button>
+                <Button
+                    variant='outlined'
+                    className={classes.cancelButton}
+                    onClick={isConfirmBtnClick}
+                >Cancel</Button>
             </Grid>
-            <Button fullWidth color='secondary' variant='contained' onClick={deleteUser}>Delete</Button>
-            
+            <Button
+                fullWidth
+                className={classes.forgotButton}
+                variant='text'
+                onClick={handleClickOpen}
+            >
+                Forgot password?
+            </Button>
+            <ForgotPassword/>
+            <Button
+                fullWidth
+                color='secondary'
+                variant='contained'
+                onClick={deleteUser}
+            >Delete</Button>
         </Grid>
-        
     );
 }
-function mapStateToProps(state) {
-    return {
-        confirmUpdate:state.confirmUpdate,
-        isEdit1:state.isEdit1,
-        openUpdateForm:state.openUpdateForm,
-    };
-}
+
 export default connect(mapStateToProps)(UpdateForm);

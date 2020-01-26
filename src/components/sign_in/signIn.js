@@ -3,7 +3,6 @@ import fire from '../../ConfigFirebase/Fire';
 import { Button, Fab } from '@material-ui/core/';
 import { Typography,TextField, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff, Email, Close } from '@material-ui/icons';
-import { Checkbox } from '@material-ui/core';
 import { useDispatch, useSelector, connect} from 'react-redux';
 import FormDialog from './forgot';
 import { openSignInAction, SignInAction, openSignUPAction } from '../../actions'
@@ -115,16 +114,6 @@ export function SignIn(props) {
                         )
                     }}
                 />
-                <div>
-                    <Checkbox
-                        checked={checked}
-                        onChange={handleChange(checked)}
-                        value='checked'
-                        style={styles.checkbox}
-                        inputProps={{
-                            'aria-label': 'secondary checkbox',
-                        }}/>
-                </div>
                 <div style={styles.signContainer}>
                     <Button type='submit'  style={styles.signButton} onClick={login}> Sign In </Button>
                     <Button onClick={signup} style={styles.signButton}>Sign up</Button>

@@ -172,7 +172,10 @@ const SignUp = (props) => {
                 if (
                     `${phone[0]}${phone[1]}${phone[2]}` === '010' ||
                     `${phone[0]}${phone[1]}${phone[2]}` === '011' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '012' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '033' ||
                     `${phone[0]}${phone[1]}${phone[2]}` === '041' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '043' ||
                     `${phone[0]}${phone[1]}${phone[2]}` === '055' ||
                     `${phone[0]}${phone[1]}${phone[2]}` === '077' ||
                     `${phone[0]}${phone[1]}${phone[2]}` === '091' ||
@@ -180,7 +183,8 @@ const SignUp = (props) => {
                     `${phone[0]}${phone[1]}${phone[2]}` === '094' ||
                     `${phone[0]}${phone[1]}${phone[2]}` === '095' ||
                     `${phone[0]}${phone[1]}${phone[2]}` === '096' ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === '098'
+                    `${phone[0]}${phone[1]}${phone[2]}` === '098' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '099'
                 ) {
                     setErrors(Object.assign(err, { phoneError: false }))
                     break;
@@ -192,7 +196,10 @@ const SignUp = (props) => {
                 if (
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37410' ||
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37411' ||
+                    `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37412' ||
+                    `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37433' ||
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37441' ||
+                    `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37443' ||
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37455' ||
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37477' ||
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37491' ||
@@ -200,7 +207,8 @@ const SignUp = (props) => {
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37494' ||
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37495' ||
                     `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37496' ||
-                    `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37498'
+                    `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37498' ||
+                    `${phone[0]}${phone[1]}${phone[2]}${phone[3]}${phone[4]}${phone[5]}` === '+37499'
                 ) {
                     setErrors(Object.assign(err, { phoneError: false }))
                     break;
@@ -208,13 +216,11 @@ const SignUp = (props) => {
                     setErrors(Object.assign(err, { phoneError: true }))
                     break;
                 }
-
             default:
                 setErrors(Object.assign(err, { phoneError: true }))
                 break;
         }
     }
-
     return (
         <div>
             <div style={classes.signUpContainer}>

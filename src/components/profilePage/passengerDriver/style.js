@@ -4,9 +4,9 @@ const styles = makeStyles(theme => ({
     card: {
         overflowY:'auto',
         maxHeight:'300px',
-        width: '30%',
+        width: '300px',
         margin: '5px', 
-        ursor:'pointer',
+        cursor:'pointer',
         boxShadow: '23px 3px 14px -4px rgba(0,0,0,0.75)'
     }
 }))

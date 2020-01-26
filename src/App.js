@@ -49,7 +49,9 @@ function App() {
                     {
                         user ?
                             <>
-                                <Route exact path='/profile' component={PersonalInfo}/>
+                                <Route exact path='/profile'>
+                                    <PersonalInfo/>
+                                </Route>
                                 <Route exact path ='/offerRoute' >
                                     <OfferRoute/>
                                 </Route>
