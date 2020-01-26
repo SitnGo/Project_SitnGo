@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from 'react';
 import {Typography, Button, Avatar, Paper, Grid} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
+import {Phone, Email, AccountBox } from '@material-ui/icons'
 import Skeleton from '@material-ui/lab/Skeleton';
 import UpdateForm from './userUpdateForm/userUpdateForm';
 import ConfirmPassword from './ConfirmPassword/confirmPassword';
@@ -22,7 +23,6 @@ function usePersonalInfo() {
     const [tabChange, setTabChange] = useState(false);
     const [user, setUser] = useState({});
     const [url, setUrl] = useState('');
-    const [isPassengerDriverListDone, setIsPassengerDriverListDone] = useState(false);
 
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -55,7 +55,7 @@ function usePersonalInfo() {
             setUrl(result.url);
             changeBool(true);
         });
-    },[update]);
+    },[update, user1]);
 
 
 
@@ -81,16 +81,20 @@ function usePersonalInfo() {
                     {isEdit ? (
                         <FadeIn>   
                         <Paper className={classes.paper} elevation={3}>         
-                            {bool ? <Typography className={classes.typography}>Name  -  {user && user.userInfo.name} </Typography>:<Skeleton height={60} component='p'/>}
+                            <AccountBox fontSize="large"/>
+                            {bool ? <Typography className={classes.typography}>  {user && user.userInfo.name} </Typography>:<Skeleton height={60} component='p'/>}
                         </Paper>
                         <Paper className={classes.paper} elevation={3}>
-                            {bool ? <Typography className={classes.typography}>Surname  -  {user && user.userInfo.surname}</Typography>:<Skeleton height={60} component='p'/> }
+                            <AccountBox fontSize="large"/>
+                            {bool ? <Typography className={classes.typography}>  {user && user.userInfo.surname}</Typography>:<Skeleton height={60} component='p'/> }
                         </Paper>
                         <Paper className={classes.paper} elevation={3}>
-                            {bool ? <Typography className={classes.typography}>Phone  -  {user && user.userInfo.phone}</Typography>:<Skeleton height={60} component='p'/> } 
+                            <Phone fontSize="large"/>
+                            {bool ? <Typography className={classes.typography}>  {user && user.userInfo.phone}</Typography>:<Skeleton height={60} component='p'/> } 
                         </Paper>
                         <Paper className={classes.paper} elevation={3}>    
-                            {bool ? <Typography className={classes.typography}>Email  -  {user && user.userInfo.email}</Typography>:<Skeleton height={60} component='p'/>}
+                            <Email fontSize="large"/>
+                            {bool ? <Typography className={classes.typography}> {user && user.userInfo.email}</Typography>:<Skeleton height={60} component='p'/>}
                         </Paper>   
                             </FadeIn>
 
