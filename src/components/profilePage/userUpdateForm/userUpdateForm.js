@@ -4,7 +4,7 @@ import {Grid, TextField, Button} from '@material-ui/core';
 import { Phone, Email} from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import fire from '../../../ConfigFirebase/Fire';
-import {confirmUpdate} from '../../../actions/index';
+import {confirmUpdate, isEdit1, openUpdateForm} from '../../../actions/index';
 import {useDispatch, connect } from 'react-redux';
 import ForgotPassword from '../Forgotpassword/forgotPassword';
 function UpdateForm (props) {
@@ -20,6 +20,10 @@ function UpdateForm (props) {
         genderError: false,
         phoneError: false,
     });
+    function isConfirmBtnClick() {
+        dispatch(openUpdateForm());
+        dispatch(isEdit1());
+    }
 //////////////////////get all errors in array/////////////////////////////////////
 useEffect((() => {  
 let arrFromErrorsValues = Object.values(errors)
@@ -163,7 +167,12 @@ let arrFromErrorsValues = Object.values(errors)
             
             />
             <ForgotPassword/>
-            <Button className={classes.confirmButton} color="primary" onClick={checkErrorsHandler}>Update</Button>
+            <Button className={classes.confirmButton} color="" onClick={checkErrorsHandler}>Update</Button>
+            <Button
+                className={classes.cancelButton}
+                color='secondary'
+                onClick={isConfirmBtnClick}
+            >cancel</Button>
         </Grid>
         
     );

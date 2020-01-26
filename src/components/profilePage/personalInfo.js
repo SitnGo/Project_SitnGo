@@ -63,11 +63,6 @@ function usePersonalInfo() {
         dispatch(isEdit1());
     }
 
-    function isConfirmBtnClick() {
-        dispatch(openUpdateForm());
-        dispatch(isEdit1());
-    }
-
     return(
         <Grid container sm={12}  className={classes.profileContainer}>
             {console.log("rerendered")}
@@ -105,11 +100,7 @@ function usePersonalInfo() {
                                 {openUpdateFormBool ? (
                                     <>
                                         <UpdateForm  data={[user.userInfo.email, user.userInfo.phone]} userId={fire.auth().currentUser.uid}/>                          
-                                        <Button 
-                                        className={classes.confirmButton} 
-                                        color='secondary'
-                                        onClick={isConfirmBtnClick}
-                                    >cancle</Button>
+
                                 </>
                              ) : <ConfirmPassword />} 
                         </>

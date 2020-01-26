@@ -7,6 +7,13 @@ const styles = makeStyles(theme => ({
     },
     button: {
         margin: theme.spacing(2),
+        background: '#fb9403',
+        fontSize: '0.8em',
+        color: '#282e34',
+        '&:hover': {
+            background: '#fb9403',
+            opacity: 0.95,
+        }
     }
 }));
 

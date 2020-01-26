@@ -2,7 +2,7 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     profileContainer: {
-        height: '80vh',
+        minHeight: '80vh',
         flexGrow:1,
         backgroundImage:"url('./images/share.jpg')",
         backgroundRepeat: 'no-repeat',
@@ -58,12 +58,7 @@ const useStyles = makeStyles(theme => ({
 
     personalInfoBlock2 : {
         overflowY: "auto",
-        // display:"flex",
-        // flexWrap:"wrap",
-        // justifyContent:"space-evenly",
-        // alignItems:"center",
         width:"100%",
-        // float:"right",
         height:"100%",
         backgroundColor:"rgba(148, 148, 148, 0.45)",
         [theme.breakpoints.down('xs')]: {
@@ -79,13 +74,17 @@ const useStyles = makeStyles(theme => ({
         alignItems:"center",
         
     },
-    confirmButton : {
-        width: "50%",
-        margin:"1% 0 0 25%",
-        [theme.breakpoints.down('xs')] : {
-            width:"46%",
-        },
-    },
+    // cancelButton : {
+    //     margin:"1% 0 0 50%",
+    //     // margin:"1% 0 0 0",
+    //     background: '#fb9403',
+    //     fontSize: '0.8em',
+    //     color: '#282e34',
+    //     '&:hover': {
+    //         background: '#fb9403',
+    //         opacity: 0.95,
+    //     }
+    // },
 }));
 
 export default useStyles;

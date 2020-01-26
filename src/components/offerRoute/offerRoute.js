@@ -286,7 +286,7 @@ const OfferRout = () => {
                         className={classes.rideListItem}
                         variant='outlined'
                         fullWidth
-                        // onClick={onSubmitClick}
+                        onClick={onSubmitClick}
                     >Submit</Button>
                 </div>
                 <div className={classes.mapContainer}>
