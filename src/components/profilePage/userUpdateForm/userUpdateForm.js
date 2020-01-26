@@ -129,7 +129,7 @@ let arrFromErrorsValues = Object.values(errors)
         }
         
     } 
-         //////////////////cancel///////////
+///////////////////////////cancel///////////
     function isConfirmBtnClick() {
         dispatch(openUpdateForm());
         dispatch(isEdit1());
