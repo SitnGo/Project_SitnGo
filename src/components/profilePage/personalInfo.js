@@ -5,7 +5,7 @@ import {Phone, Email, AccountBox } from '@material-ui/icons'
 import Skeleton from '@material-ui/lab/Skeleton';
 import UpdateForm from './userUpdateForm/userUpdateForm';
 import ConfirmPassword from './ConfirmPassword/confirmPassword';
-import {isEdit1, openUpdateForm } from '../../actions/index';
+import {isEdit1} from '../../actions/index';
 import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
@@ -152,7 +152,6 @@ function mapStateToProps(state) {
         user: state.user,
         isLoggedInUser: state.isLoggedInUser,
         isEdit1:state.isEdit1,
-        openUpdateForm:state.openUpdateForm,
     };
 }
 export default connect(mapStateToProps)(usePersonalInfo)

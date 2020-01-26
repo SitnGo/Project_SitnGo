@@ -72,17 +72,6 @@ const useStyles = makeStyles(theme => ({
         alignItems:"center",
         
     },
-    // cancelButton : {
-    //     margin:"1% 0 0 50%",
-    //     // margin:"1% 0 0 0",
-    //     background: '#fb9403',
-    //     fontSize: '0.8em',
-    //     color: '#282e34',
-    //     '&:hover': {
-    //         background: '#fb9403',
-    //         opacity: 0.95,
-    //     }
-    // },
 }));
 
 export default useStyles;

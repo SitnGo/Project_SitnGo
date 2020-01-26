@@ -8,6 +8,7 @@ import storage from '../../../ConfigFirebase/storage';
 import {confirmUpdate} from '../../../actions/index';
 import {useDispatch, connect } from 'react-redux';
 import ForgotPassword from '../Forgotpassword/forgotPassword';
+import {isEdit1, openUpdateForm } from '../../../actions/index';
 function UpdateForm (props) {
 
     const classes = useStyles();
@@ -21,10 +22,6 @@ function UpdateForm (props) {
         genderError: false,
         phoneError: false,
     });
-    function isConfirmBtnClick() {
-        dispatch(openUpdateForm());
-        dispatch(isEdit1());
-    }
 //////////////////////get all errors in array/////////////////////////////////////
 useEffect((() => {  
 let arrFromErrorsValues = Object.values(errors)
@@ -132,6 +129,11 @@ let arrFromErrorsValues = Object.values(errors)
         }
         
     } 
+         //////////////////cancel///////////
+    function isConfirmBtnClick() {
+        dispatch(openUpdateForm());
+        dispatch(isEdit1());
+    }   
     
 ////////////////////// delete user /////////////////////////////////////
     function deleteUser () {
@@ -187,8 +189,21 @@ let arrFromErrorsValues = Object.values(errors)
             
             />
             <ForgotPassword/>
-            <Button className={classes.confirmButton} color="primary" onClick={checkErrorsHandler}>Update</Button>
-            <Button onClick={deleteUser}>Delete</Button>
+            <Grid
+                container
+                xl={4}
+                lg={4}
+                md={4}
+                sm={6}
+                xs={6}
+                justify='flex-end'
+                className={classes.updateCancelContainer}
+            >
+                <Button className={classes.confirmButton} color="primary" onClick={checkErrorsHandler}>Update</Button>
+                <Button className={classes.cancelButton} color="secondary" onClick={isConfirmBtnClick}>Cancel</Button>
+            </Grid>
+            <Button fullWidth color='secondary' variant='contained' onClick={deleteUser}>Delete</Button>
+            
         </Grid>
         
     );
@@ -196,6 +211,8 @@ let arrFromErrorsValues = Object.values(errors)
 function mapStateToProps(state) {
     return {
         confirmUpdate:state.confirmUpdate,
+        isEdit1:state.isEdit1,
+        openUpdateForm:state.openUpdateForm,
     };
 }
 export default connect(mapStateToProps)(UpdateForm);
