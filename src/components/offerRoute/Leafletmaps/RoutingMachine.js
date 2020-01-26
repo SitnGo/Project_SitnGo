@@ -4,9 +4,6 @@ import "leaflet-routing-machine";
 import { withLeaflet } from "react-leaflet";
 import Geocoder from 'leaflet-control-geocoder';
 
-
-
-
 class Routing extends MapLayer {
   constructor(props){
     super(props)

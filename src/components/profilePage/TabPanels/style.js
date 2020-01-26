@@ -2,7 +2,7 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const styles = makeStyles(theme => ({
     root: {
-        flexGrow: 1,
+        borderTop: '1px solid #282e34',
         textAlign:'center'
     },
     button: {

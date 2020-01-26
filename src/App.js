@@ -27,7 +27,6 @@ function App() {
         fire.auth().onAuthStateChanged((e)=>{
             if(e){
             dispatch(SignInAction(e));
-            console.log(e)
             }else {
                 dispatch(signOutAction(e));
             }
@@ -50,7 +49,9 @@ function App() {
                     {
                         user ?
                             <>
-                                <Route exact path='/profile' component={PersonalInfo}/>
+                                <Route exact path='/profile'>
+                                    <PersonalInfo/>
+                                </Route>
                                 <Route exact path ='/offerRoute' >
                                     <OfferRoute/>
                                 </Route>
