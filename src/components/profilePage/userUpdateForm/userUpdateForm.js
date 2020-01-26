@@ -136,22 +136,42 @@ let arrFromErrorsValues = Object.values(errors)
     }   
     
 ////////////////////// delete user /////////////////////////////////////
+console.log(fire.auth().currentUser.uid);
+console.log(fire.auth().currentUser);
     function deleteUser () {
-        storage.ref().child(`images/${fire.auth().currentUser.uid}`).listAll().then(function(res) {
-            res.items.forEach(function(itemRef) {
+    const user = fire.auth().currentUser;
+    user.delete().then(() => {
+        // User deleted.
+
+        fire.firestore().collection('users').doc(user.uid).delete().then(()=> {
+            alert('Document successfully deleted');
+        }).catch((error) => {console.log(error)})
+        
+        storage.ref().child(`images/${user.uid}`).listAll().then(function(res) {
+            res.items.forEach((itemRef) => {
             
-            let desertRef = storage.ref(`images/${fire.auth().currentUser.uid}`).child(itemRef.name);
+            let desertRef = storage.ref(`images/${user.uid}`).child(itemRef.name);
             
                 desertRef.delete().then(()=> {
                     alert('file deleted!');
                 }).catch((error)=>{
                     console.log(error);
                 });            
-   
+
             });
-          }).catch(function(error) {
-                console.log(error);
-          });
+        }).catch((error) => {
+                console.log('error',error);
+        });
+
+        
+      }).catch(function(error) {
+        console.log(error);
+      });
+    }
+    
+    function CancelBtnClick() {
+        dispatch(isEdit1());
+        
     }
     return (
         <Grid container direction="column" justify="center" alignItems="center" className={classes.updateBlock}>
