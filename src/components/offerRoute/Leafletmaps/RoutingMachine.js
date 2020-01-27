@@ -15,8 +15,6 @@ class Routing extends MapLayer {
     }
   }
   createLeafletElement() {
-    const { map } = this.props;
-    console.log(this.props.map)
     let leafletElement = L.Routing.control({
       waypoints: [L.latLng(40.392899, 44.698891), L.latLng(40.179188, 44.499104)],
       routeWhileDragging: true,
@@ -37,16 +35,15 @@ class Routing extends MapLayer {
           geocoder: Geocoder.nominatim()
     })
     .on('routeselected', (e)=> {
-
       this.props.setIsRouteError(false);
       this.props.setIsRouteSuccess(true);
       let routes = e.route;
-      let waypoints =e.waypoints;
       let route = {route:routes, waypoints: routes.waypoints}
-      console.log(route.waypoints)
-      console.log(routes)
+      console.log(route)
       localStorage.setItem("selectedRoute1", JSON.stringify(routes))
       localStorage.setItem("route",JSON.stringify(route))
+      this.props.setPrice((Math.ceil(routes.summary.totalDistance/1000)*100))
+      this.props.setDefaultPrice((Math.ceil(routes.summary.totalDistance/1000)*100))
     }).on("waypointschanged",()=>{
       this.props.setIsRouteError(false);
       this.props.setIsRouteSuccess(false);

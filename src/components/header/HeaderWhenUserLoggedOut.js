@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link, Button, Grid } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom'
-import { useDispatch, useSelector, connect } from 'react-redux';
-import {openSignInAction, openSignUPAction} from '../sign_in/actions';
+import { useDispatch, connect } from 'react-redux';
+import {openSignInAction, openSignUPAction} from '../../actions';
 import styles from './style';
 
-function HeaderWhenUserLoggedOut(props) {
+function HeaderWhenUserLoggedOut() {
     const classes = styles();
     const dispatch =useDispatch();
-    const StoreopenSignIn = useSelector(state => state.openSignIn);
     function handleSigninClick(){
         dispatch(openSignInAction())
     }

@@ -3,8 +3,6 @@ import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import L from 'leaflet';
 
 (function() {
-	'use strict';
-
 	var L = require('leaflet');
 
 	L.Routing = L.Routing || {};
@@ -67,8 +65,6 @@ import L from 'leaflet';
 
 })();
 
-const center = [40.179188, 44.499104]
-
 export default class LeafletMap extends Component {
   state = {
     lat: 40.1860413, 
@@ -107,7 +103,7 @@ export default class LeafletMap extends Component {
    
     const position = [this.state.lat, this.state.lng];
     return (
-      <Map route = {this.props.route}center={position} zoom={this.state.zoom} ref={this.saveMap} >
+      <Map route = {this.props.route} center={position} zoom={this.state.zoom} ref={this.saveMap} >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'

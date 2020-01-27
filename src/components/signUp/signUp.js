@@ -5,10 +5,9 @@ import { Visibility, VisibilityOff, Phone, Email, AccountBox } from '@material-u
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import fire from '../../ConfigFirebase/Fire';
-import { openSignUPAction, SignInAction } from '../sign_in/actions'
+import { openSignUPAction, SignInAction } from '../../actions'
 import { useDispatch, connect } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom'
-import {useCookies} from 'react-cookie';
 
 let PasswordValidator = require('password-validator');
 
@@ -31,14 +30,11 @@ const SignUp = (props) => {
         genderError: false,
         phoneError: false,
     });
-    const [cookies, setCookie, removeCookie] = useCookies(['loginPassword']);
-
     useEffect(() => {
         confirmPassword === password ? setHasConfirmPasswordError(false) : setHasConfirmPasswordError(true)
     }, [confirmPassword])
 
     useEffect((() => {
-        console.log(errors)
         let arrFromErrorsValues = Object.values(errors)
         arrFromErrorsValues = arrFromErrorsValues.map(item => {
             if (item.hasOwnProperty('bool')) {
@@ -48,7 +44,6 @@ const SignUp = (props) => {
             }
         })
         if ((arrFromErrorsValues.every(item => item === false) && !hasConfirmPasswordError)) {
-            let loginPassword = {email: email, password: password}
             fire.auth().createUserWithEmailAndPassword(email, password)
                 .then(() => {
                     fire.auth().signInWithEmailAndPassword(email, password)
@@ -68,9 +63,6 @@ const SignUp = (props) => {
                             phone: phone,
                         }}
                     fire.firestore().collection('users').doc(userId).set(user);
-                    // localStorage.setItem('isLogged','true');
-                    // setCookie('loginPassword', loginPassword, { path: '/' });
-                    // localStorage.setItem('userId',userId);
                     return {user: user, id:userId};
                 }).then((result) => {
                 dispatch(SignInAction(result.user));

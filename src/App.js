@@ -1,4 +1,4 @@
-import React, {useState,useEffect, Fragment} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import Header from './components/header/header';
 import HeaderImage from './components/headerImage/headerImage';
@@ -7,75 +7,32 @@ import Footer from './components/footer/footer'
 import About from './components/about/about';
 import Contact from './components/contact/contact';
 import ToTop from './components/totop/toTop';
-import reducers from './components/sign_in/reducers/reducers'
-import NotFound from './components/404notFound/404notFoundScript.js';
-import {useCookies} from 'react-cookie';
-import { signOutAction, SignInAction } from './components/sign_in/actions/index';
+import NotFound from './components/404notFound/404notFoundScript';
+import {SignInAction,signOutAction } from './actions/index';
 import OfferRoute from './components/offerRoute/offerRoute'
 import GetRout from './components/getRout/getRout';
 import { useDispatch, useSelector} from 'react-redux';
 import fire from './ConfigFirebase/Fire';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import { createStore } from 'redux';
 import AlertDialogSlide from './components/sign_in/dialogSignIn';
 import AlertDialogSlideSignUp from './components/signUp/dialogSignUp'
 import PersonalInfo from './components/profilePage/personalInfo';
 import Test from './Test'
 
-const store = createStore(reducers);
 
 function App() {
-    const [cookies, setCookie, removeCookie] = useCookies(['loginPassword']);
     const dispatch = useDispatch();
-
-    let isLogged = useSelector((state)=> state.isLoggedInUser);
     let user = useSelector((state)=> state.user);
-
     useEffect(()=>{
-        // console.log(cookies.loginPassword)
         fire.auth().onAuthStateChanged((e)=>{
             if(e){
             dispatch(SignInAction(e));
             console.log(e)
             }else {
-                alert(null);
+                dispatch(signOutAction(e));
             }
         })
     },[])
-        // if(isLogged) {
-        //     fire.auth().signInWithEmailAndPassword(cookies.loginPassword.email, cookies.loginPassword.password)
-        //         .then(a => {
-        //             async function getMarker(user={}) {
-        //                 const userId = fire.auth().currentUser.uid;
-        //                 user = await fire.firestore().collection('users').doc(userId).get()
-        //                 user = user.data();
-        //                 // localStorage.setItem('isLogged','true');
-        //                 // setCookie('loginPassword', loginPassword, { path: '/', maxAge: 3600 });
-        //                 await localStorage.setItem('userId',userId);
-        //                 return user;
-        //             }
-        //             getMarker().then(result => {
-        //                 localStorage.setItem('userId',result.userId);
-        //                 dispatch(SignInAction(result));
-        //             });
-        //         })
-
-
-            //     async function getMarker(user={}) {
-            //         const userId = JSON.parse(localStorage.getItem('userId'))
-
-            //         user = await fire.firestore().collection('users').doc(userId).get()
-            //         user = user.data();
-            //         localStorage.setItem('isLogged','true');
-            //         return user;
-            //     }
-            //     getMarker().then(result => {
-            //         dispatch(SignInAction(result, JSON.parse(localStorage.getItem('isLogged'))));
-            //     });
-    //     }else{
-    //         dispatch(signOutAction(JSON.parse(localStorage.getItem('isLogged'))));
-    //     }
-    // },[])
     return (
         <div className='App'>
             <Router>

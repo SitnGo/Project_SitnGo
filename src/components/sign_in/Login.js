@@ -16,14 +16,13 @@ export function Login(props) {
     const [showPassword, setShowPassword] = useState(false);
     const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
-    const setIsErsed = props.setIsErsed;
     const handleClose = () => {
         dispatch(openSignInAction())
         setEmail('');
         setPassword('');
         setErrorMessage('');
     };
-    const handleChange = name => event => {
+    const handleChange = (event) => {
         setChecked(event.target.checked);
     };
     function login() {
