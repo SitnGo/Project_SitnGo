@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
-import styles from './style';
 import {Button, TextField, MenuItem} from '@material-ui/core';
 import SimpleSnackbar from "./snackbar/snackbar"
 import SimpleSnackbarSuccess from "./snackbar/snackbarSuccess"
 import MLeafletApp from './Leafletmaps/final'
 import fire from '../../ConfigFirebase/Fire';
 import {Redirect} from 'react-router-dom';
-import Routing from '../offerRoute/Leafletmaps/RoutingMachine';
-//import {test} from './Leafletmaps/Map'
-
+import Routing from './Leafletmaps/RoutingMachine';
+import {test} from "./Leafletmaps/Map";
+import styles from './style';
 
 const numberPersons = [
     {
@@ -70,20 +69,17 @@ const OfferRout = (props) => {
     setSubmitDisable(true);
     
     async function getMarker(user={}) {
-            let userId = fire.auth().currentUser.uid;
+        let userId = fire.auth().currentUser.uid;
         user = await fire.firestore().collection("users").doc(userId).get()
             user = user.data();
+            console.log(user)
         return user;
     }
-    getMarker().then(result => {
-        if(!result.hasOwnProperty("userRoutesInfo")){
-            result.userRoutesInfo = {}
-            result.userRoutesInfo.routes = []
-        }
-        if(!result.userRoutesInfo.hasOwnProperty("routes")){
-            result.userRoutesInfo.routes = []
-        }
-        let currentRoute = JSON.parse(localStorage.getItem("route"))
+
+    getMarker().then((result)=>{
+    let userId = fire.auth().currentUser.uid;
+    let routeInfo_REF = fire.firestore().collection("users").doc(userId).collection("userRoutesInfo");
+    let currentRoute = JSON.parse(localStorage.getItem("route"))
         setRoute(currentRoute)
         currentRoute.waypoints[0].name += from;
         currentRoute.waypoints[1].name += to;
@@ -92,9 +88,9 @@ const OfferRout = (props) => {
             route: currentRoute,
             astartEnd: `${from}-${to}`,
             startDate: startDate,
-            DriverPhone: result.userInfo.phone,
+            DriverPhone: result.phone,
             parameters:  {
-                name: `${result.userInfo.name} ${result.userInfo.surname}`, 
+                name: `${result.name} ${result.surname}`, 
                 car: car, 
                 plate: plate, 
                 count: count,
@@ -103,14 +99,44 @@ const OfferRout = (props) => {
                 price: `${price}AMD`,
             }
         }
-        result.userRoutesInfo.routes.push(route)
-      fire.firestore().collection("users").doc(result.userId).set(JSON.parse(JSON.stringify(result)))
-      setRedirect(true);
-    });
+        routeInfo_REF.add(route).then(()=>setRedirect(true));
+    })
+
+    // getMarker()
+    // .then(result => {
+    //     if(!result.hasOwnProperty("userRoutesInfo")){
+    //         result.userRoutesInfo = {}
+    //         result.userRoutesInfo.routes = []
+    //     }
+    //     if(!result.userRoutesInfo.hasOwnProperty("routes")){
+    //         result.userRoutesInfo.routes = []
+    //     }
+    //     let currentRoute = JSON.parse(localStorage.getItem("route"))
+    //     setRoute(currentRoute)
+    //     currentRoute.waypoints[0].name += from;
+    //     currentRoute.waypoints[1].name += to;
+    //     let route={
+    //         userId: fire.auth().currentUser.uid,
+    //         route: currentRoute,
+    //         astartEnd: `${from}-${to}`,
+    //         startDate: startDate,
+    //         DriverPhone: result.userInfo.phone,
+    //         parameters:  {
+    //             name: `${result.userInfo.name} ${result.userInfo.surname}`, 
+    //             car: car, 
+    //             plate: plate, 
+    //             count: count,
+    //             distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
+    //             time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
+    //             price: `${price}AMD`,
+    //         }
+    //     }
+    //     result.userRoutesInfo.routes.push(route)
+    //   fire.firestore().collection("users").doc(result.userId).set(JSON.parse(JSON.stringify(result)))
+    // });
 }
 
-   
-let d = new Date();
+    let d = new Date();
     let day = d.getDate();
     let month;
     if (d.getMonth() < 9) {
@@ -121,7 +147,7 @@ let d = new Date();
     let year = d.getFullYear();
     let date = `${year}-${month}-${day}T23:59:00`;
 
-   function isEmpty () {
+    function isEmpty () {
        if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& +price && !priceError && startDate !==null && startDate !==date && !isRouteError && isRouteError !== null) {
            setFromError(false);
            setToError(false);
@@ -192,6 +218,9 @@ let d = new Date();
             {redirect ? <Redirect to="/profile" push /> : null }
             <div className={classes.offer}>
                 <div className={classes.rideList}>
+                    {/*<Routing*/}
+                    {/*    map={test}*/}
+                    {/*/>*/}
                     <TextField
                         margin='dense'
                         fullWidth
@@ -232,7 +261,7 @@ let d = new Date();
                         fullWidth
                         variant='outlined'
                         label='Persons'
-                        onChange={(e)=>setCount(e.target.value)}
+                        onChange={(e)=>setCount(+e.target.value)}
                         className={classes.rideListItem}
                     >
                         {numberPersons.map(option => (
@@ -293,11 +322,17 @@ let d = new Date();
                     >Submit</Button>
                 </div>
                 <div className={classes.mapContainer}>
-                {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} />  : null}
-                {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess = {isRouteSuccess}/> : null}
-                    
-                    <MLeafletApp  setMap = {setMap} setDefaultPrice={setDefaultPrice} setPrice={setPrice} setIsRouteSuccess={setIsRouteSuccess} setIsRouteError={setIsRouteError} />
-
+                    {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} />  : null}
+                    {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess = {isRouteSuccess}/> : null}
+                    <MLeafletApp
+                        setMap = {setMap}
+                        setDefaultPrice={setDefaultPrice}
+                        setPrice={setPrice}
+                        setFrom={setFrom}
+                        setTo={setTo}
+                        setIsRouteSuccess={setIsRouteSuccess}
+                        setIsRouteError={setIsRouteError}
+                    />
                 </div>
             </div>
         </section>

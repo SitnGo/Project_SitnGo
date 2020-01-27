@@ -5,9 +5,9 @@ const styles = makeStyles(theme => ({
         backgroundColor:'#424242',
         height: '10vh',
         padding: '30px',
-        position: 'relative',
-        zIndex: 1000,
-        bottom: 0,
+        // position: 'relative',
+        // zIndex: 1000,
+        // bottom: 0,
     },
     socialIcons: {
         backgroundColor: '#fb9403',

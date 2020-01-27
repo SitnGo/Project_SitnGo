@@ -17,18 +17,16 @@ export default function CenteredTabs(props) {
         props.setTabChange(true);
     }
     return (
-        <Paper className={classes.root} elevation={2}>
+        <Paper className={classes.root} elevation={5}>
             <Button
-                variant='outlined'
-                color={changeColor1 ? 'secondary' : 'primary'}
+                variant='contained'
                 onClick={handleClick1}
                 className={classes.button}
             >
-                Passager
+                Passenger
             </Button>
             <Button
-                variant='outlined'
-                color={changeColor2 ? 'secondary' : 'primary'}
+                variant='contained'
                 onClick={handleClick2}
                 className={classes.button}
             >

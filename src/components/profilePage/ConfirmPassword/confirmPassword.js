@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import fire from '../../../ConfigFirebase/Fire'
 import {isEdit1, openUpdateForm} from '../../../actions/index';
-import {Visibility, VisibilityOff} from '@material-ui/icons'
+import {Visibility, VisibilityOff, CodeSharp} from '@material-ui/icons'
 import {InputAdornment, IconButton } from '@material-ui/core';
 import {useDispatch, useSelector} from 'react-redux'
 import {
@@ -33,7 +33,6 @@ function ConfirmPassword() {
                 setPasswordError(true);
 
             });
-
     };
 
     const handleClose = () => {
@@ -46,7 +45,6 @@ function ConfirmPassword() {
     }
     return (
         <div>
-            {/*  */}
             <Dialog open={openDialog && open}  aria-labelledby='form-dialog-title' fullWidth={true}>
                 <DialogTitle id='form-dialog-title'>Enter password</DialogTitle>
                 <form onSubmit={handleSubmit}>
@@ -61,7 +59,7 @@ function ConfirmPassword() {
                             label='Enter password'
                             type={showPassword ? 'text' : 'password'}
                             error={passwordError}
-                            helperText={passwordError ? <p>password is incorrect</p> : null}
+                            helperText={passwordError ? 'password is incorrect' : null}
                             fullWidth
 
                             InputProps={{

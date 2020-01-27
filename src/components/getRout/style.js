@@ -11,7 +11,7 @@ const styles = makeStyles(theme => ({
         margin: '0 auto',
         display: 'flex',
         justifyContent: 'space-evenly',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     routeListItem: {
         margin: '0 10px'
@@ -49,8 +49,24 @@ const styles = makeStyles(theme => ({
         margin: ' 0 auto',
     }, 
     accept: {
-        margin: '0'
+        margin: '0',
     },
+    search: {
+        fontSize: '0.8em'
+    },
+    '@media (min-width: 600px) and (max-width: 960px)': {
+        resize: {
+            fontSize: '0.7em'
+        },
+    },
+    '@media (max-width: 599px)':{
+        search: {
+            fontSize: '0.6em'
+        },
+        resize: {
+            fontSize: '0.6em'
+        },
+    }
 }));
 
 export default styles;

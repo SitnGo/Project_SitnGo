@@ -1,16 +1,31 @@
 import  {makeStyles} from '@material-ui/core/styles';
+
 const useStyles = makeStyles(theme => ({
-    textfield: {
-        margin:theme.spacing(1),
-        width:"50%",              
+    textField: {
+        margin: '10px'
     },
-    
+    updateCancelContainer: {
+        margin: '10px',
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+    },
+    cancelButton : {
+        fontSize: '0.8em',
+        color: '#282e34',
+    },
     confirmButton : {
-        width: "50%",
-        margin:"1% 0 0 0",
-        [theme.breakpoints.down('xs')] : {
-            width:"46%",
-        },
+        background: '#fb9403',
+        fontSize: '0.8em',
+        color: '#282e34',
+        '&:hover': {
+            background: '#fb9403',
+            opacity: 0.95,
+        }
+    },
+    forgotButton: {
+        margin: '5px',
+        color: '#282e34',
     },
 }));
 export default useStyles;
