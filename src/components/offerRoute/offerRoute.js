@@ -329,6 +329,8 @@ const OfferRout = () => {
                         setMap = {setMap}
                         setDefaultPrice={setDefaultPrice}
                         setPrice={setPrice}
+                        setFrom={setFrom}
+                        setTo={setTo}
                         setIsRouteSuccess={setIsRouteSuccess}
                         setIsRouteError={setIsRouteError}
                     />
