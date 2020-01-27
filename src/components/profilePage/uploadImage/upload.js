@@ -14,8 +14,6 @@ class DropzoneDialogModal extends React.Component {
         };
     }
 
-    
-
     handleClose = () => {
         this.setState({
             open: false
