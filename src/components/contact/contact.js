@@ -4,7 +4,8 @@ import RoomIcon from '@material-ui/icons/Room';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MailIcon from '@material-ui/icons/Mail';
 import {Grid} from '@material-ui/core';
-import LeafletMap from '../offerRoute/Leafletmaps/Map';
+// import LeafletMap from '../offerRoute/Leafletmaps/Map';
+import Lapp from '../contact/firstPageMap'
 const Contact = () => {
     const classes = styles();
     return(
@@ -30,7 +31,8 @@ const Contact = () => {
                     xs={12}
                     className={classes.mapContainer}
                 >
-                    <LeafletMap isRout='false' hasMarker='true'/>
+                    {/* <LeafletMap isRout='false' hasMarker='true'/> */}
+                    <Lapp/>
                 </Grid>
             </Grid>
             <Grid

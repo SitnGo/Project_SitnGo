@@ -1,7 +1,6 @@
 .leaflet-container {
     height: 100%;
     width: 100%;
-
 }
 .leaflet-routing-container, .leaflet-routing-error {
     width: 50%;
@@ -128,10 +127,12 @@
 }
 
 .leaflet-routing-geocoders input {
-    width: 303px;
+    width: 400px;
     width: calc(100% - 4px);
     line-height: 1.67;
     border: 1px solid #ccc;
+    background-color: salmon;
+    
 }
 
 .leaflet-routing-geocoders button {
@@ -181,7 +182,7 @@
 }
 
 .leaflet-routing-geocoder-result-open {
-    max-height: 800px;
+    max-height: 900px;
 }
 
 .leaflet-routing-geocoder-selected, .leaflet-routing-geocoder-result tr:hover {
@@ -237,7 +238,7 @@
     top: 0;
     right: 6px;
     font-size: 24px;
-    color: #ccc;
+    color: red;
     font-weight: bold;
 }
 
@@ -271,7 +272,6 @@
 .leaflet-left .leaflet-routing-container.leaflet-routing-container-hide {
     margin-left: 10px !important;
 }
-
 @media only screen and (max-width: 640px) {
     .leaflet-routing-container {
         margin: 0 !important;
