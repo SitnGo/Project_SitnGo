@@ -8,7 +8,7 @@ import storage from '../../../ConfigFirebase/storage';
 import {confirmUpdate} from '../../../actions/index';
 import {useDispatch, connect } from 'react-redux';
 import ForgotPassword from '../Forgotpassword/forgotPassword';
-import {isEdit1} from '../../../actions/index';
+import {isEdit1, openUpdateForm} from '../../../actions/index';
 function UpdateForm (props) {
 
     const classes = useStyles();
@@ -131,42 +131,49 @@ let arrFromErrorsValues = Object.values(errors)
     } 
     
 ////////////////////// delete user /////////////////////////////////////
-console.log(fire.auth().currentUser.uid);
-console.log(fire.auth().currentUser);
-    function deleteUser () {
+function deleteUser () {
     const user = fire.auth().currentUser;
-    user.delete().then(() => {
-        // User deleted.
-
-        fire.firestore().collection('users').doc(user.uid).delete().then(()=> {
-            alert('Document successfully deleted');
-        }).catch((error) => {console.log(error)})
-        
-        storage.ref().child(`images/${user.uid}`).listAll().then(function(res) {
-            res.items.forEach((itemRef) => {
+      fire.firestore().collection('users').doc(user.uid).get().then((doc)=> {
+          console.log(doc.data());
+          if (!!doc.data().url !== false) {
+            alert('storeage delete');
             
-            let desertRef = storage.ref(`images/${user.uid}`).child(itemRef.name);
-            
-                desertRef.delete().then(()=> {
-                    alert('file deleted!');
-                }).catch((error)=>{
-                    console.log(error);
-                });            
+            storage.ref().child(`images/${user.uid}`).listAll().then(function(res) {
+                res.items.forEach((itemRef) => {
+                
+                let desertRef = storage.ref(`images/${user.uid}`).child(itemRef.name);
+                
+                    desertRef.delete().then(()=> {
+                        alert('file deleted!');
+                    }).catch((error)=>{
+                        console.log(error);
+                    });            
 
+                });
+            }).catch((error) => {
+                    console.log('error',error);
             });
-        }).catch((error) => {
-                console.log('error',error);
-        });
+          } 
 
-        
-      }).catch(function(error) {
-        console.log(error);
-      });
+                user.delete().then(() => {
+                    // User deleted.
+                   alert('user deleted');
+                }).catch(function(error) {
+                    console.log(error);
+                });
+
+                fire.firestore().collection('users').doc(user.uid).delete().then(()=> {
+                    alert('Document successfully deleted');
+                }).catch((error) => {console.log(error)})
+                
+      })
     }
     
+    
     function CancelBtnClick() {
+        dispatch(openUpdateForm());
         dispatch(isEdit1());
-        
+
     }
     return (
         <Grid container direction="column" justify="center" alignItems="center" className={classes.updateBlock}>

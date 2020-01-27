@@ -30,6 +30,7 @@ function usePersonalInfo() {
     let user1 = useSelector(state => state.user);
     let isEdit = useSelector(state => state.isEdit1);
     let openUpdateFormBool = useSelector(state => state.openUpdateForm);
+    console.log(openUpdateFormBool);
     useEffect(()=>{
         console.log(user1)
         async function getMarker(user={}) {
@@ -47,11 +48,10 @@ function usePersonalInfo() {
             return user;
         }
         getMarker().then(result => {
+            console.log('result', result);
             setUser(result);
             if(!result.hasOwnProperty('url')){
-                alert("A");
-                result.url='';
-                console.log('url ',result.url);
+                fire.firestore().collection('users').doc(fire.auth().currentUser.uid).set({url:''}, { merge: true}).then(()=> {alert('url ""')})
             }
             setUrl(result.url);
             changeBool(true);
@@ -62,7 +62,7 @@ function usePersonalInfo() {
 
     function isEditBtnClick() {
         dispatch(isEdit1());
-        dispatch(openUpdateForm());
+        // dispatch(openUpdateForm());
     }
 
    
@@ -105,9 +105,9 @@ function usePersonalInfo() {
                         ) : (
                             <>
                                 
-                                {!openUpdateFormBool ? (
-                                    <>
-                                        <UpdateForm  data={[user.userInfo.email, user.userInfo.phone]} userId={fire.auth().currentUser.uid}/>                          
+                                {openUpdateFormBool ? (
+                                <>
+                                    <UpdateForm  data={[user.userInfo.email, user.userInfo.phone]} userId={fire.auth().currentUser.uid}/>                          
                                 </>
                              ) : <ConfirmPassword />} 
                         </>
@@ -121,7 +121,6 @@ function usePersonalInfo() {
                         onClick={isEditBtnClick}>
                         <EditIcon/>Edit
                     </Button>
-
                 </Paper>
             </Grid>
             <Grid item sm={8} xs={12} className={classes.personalInfoBlock2}>
