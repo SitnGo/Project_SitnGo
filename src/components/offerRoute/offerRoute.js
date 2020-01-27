@@ -226,6 +226,7 @@ const OfferRout = () => {
                     <TextField
                         margin='dense'
                         fullWidth
+                        disabled={true}
                         variant='outlined'
                         label='From'
                         onChange={(e)=>{setFrom(e.target.value)}}
@@ -237,6 +238,7 @@ const OfferRout = () => {
                     <TextField
                         margin='dense'
                         fullWidth
+                        disabled={true}
                         variant='outlined'
                         label='To'
                         onChange={(e)=>{setTo(e.target.value)}}
