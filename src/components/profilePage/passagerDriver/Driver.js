@@ -37,6 +37,7 @@ function Driver(props) {
             <CardContent>
                 <Typography variant='body2' color='textSecondary' component='p'>from - {startEnd[0]}</Typography>
                 <Typography variant='body2' color='textSecondary' component='p'>to - {startEnd[1]}</Typography>
+                <Typography variant='body2' color='textSecondary' component='p'>Current Total Free Seats - {data.parameters.count}</Typography>
                 <Typography variant='body2' color='textSecondary' component='p'>distance - {data.parameters.distance}</Typography>
                 <Typography variant='body2' color='textSecondary' component='p'>car model - {data.parameters.car}</Typography>
                 <Typography variant='body2' color='textSecondary' component='p'>car number - {data.parameters.plate}</Typography>
