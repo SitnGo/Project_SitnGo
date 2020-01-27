@@ -26,7 +26,7 @@ class Routing extends MapLayer {
       altLineOptions: {
           styles: [
               {color: 'black', opacity: 0.15, weight: 9},
-              {color: 'white', opacity: 0.8, weight: 6},
+              {color: 'red', opacity: 0.8, weight: 6},
               {color: 'blue', opacity: 0.5, weight: 2}
           ]},
           geocoder: Geocoder.nominatim()
@@ -36,6 +36,7 @@ class Routing extends MapLayer {
       this.props.setIsRouteSuccess(true);
       let routes = e.route;
       let route = {route:routes, waypoints: routes.waypoints}
+      console.log(route)
       localStorage.setItem("selectedRoute1", JSON.stringify(routes))
       localStorage.setItem("route",JSON.stringify(route))
       this.props.setPrice((Math.ceil(routes.summary.totalDistance/1000)*100))

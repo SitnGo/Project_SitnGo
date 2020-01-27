@@ -7,6 +7,7 @@ function Driver(props) {
     let { dataRef } = props;
     let data = dataRef.data()    
     let startEnd = data.astartEnd.split('-');
+    // const [url, setUrl] = useState('');
     let classes = styles();
     function deleteDriveClick() {
   
@@ -22,7 +23,16 @@ function Driver(props) {
     }
     return (
         <Card className={classes.card}>
-            <CardHeader avatar={<Avatar src='' />} title={data.parameters.name} subheader={data.startDate} />
+            <CardHeader 
+            avatar={
+                <Avatar src='' 
+                    // src={bool ? url : ''}
+                    // variant='circle'
+                />
+            } 
+            title={data.parameters.name} 
+            subheader={data.startDate} 
+            />
             <CardContent>
                 <Typography
                     variant='body2'

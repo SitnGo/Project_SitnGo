@@ -40,7 +40,7 @@ const numberPersons = [
     },
   ];
   
-const OfferRout = () => {
+const OfferRout = (props) => {
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
     const [car, setCar] = useState("");
@@ -67,6 +67,7 @@ const OfferRout = () => {
    function onSubmitClick(){
     if(isEmpty()){ return}
     setSubmitDisable(true);
+    
     async function getMarker(user={}) {
         let userId = fire.auth().currentUser.uid;
         user = await fire.firestore().collection("users").doc(userId).get()
@@ -210,9 +211,6 @@ const OfferRout = () => {
         }
 
     }
-
-
-
    }
    const classes = styles();
     return(
@@ -234,6 +232,7 @@ const OfferRout = () => {
                         helperText={fromError ? <p>You  must fill blank areas</p> : null}
                         className={classes.rideListItem}
                     />
+                    {/* <Routing map = {test.addTo(this.props.maps.leafletElement)} /> */}
                     <TextField
                         margin='dense'
                         fullWidth
