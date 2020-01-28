@@ -18,6 +18,11 @@ function HeaderWhenUserLoggedIn(props) {
         })
         .then((result)=>{
             dispatch(signOutAction(result))
+            if (isEditChecked === false) {
+                dispatch(openUpdateForm());
+                dispatch(isEdit1());
+    
+            }
         })
         .catch(function(error) {
             alert(error);

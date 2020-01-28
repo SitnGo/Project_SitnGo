@@ -1,12 +1,14 @@
 import  {makeStyles} from '@material-ui/core/styles';
-const useStyles = makeStyles(theme => ({
-    
-    confirmButton : {
-        // width: "50%",
-        margin:"1% 0 0 0",
-        [theme.breakpoints.down('xs')] : {
-            width:"46%",
-        },
-    },
+
+const styles = makeStyles(theme => ({
+    updateButton: {
+        backgroundColor: '#fb9403',
+        color: '#282e34',
+        '&:hover': {
+            background: '#fb9403',
+            opacity: 0.95,
+        }
+    }
 }));
-export default useStyles;
+
+export default styles;

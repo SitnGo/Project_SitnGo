@@ -9,12 +9,9 @@ class DropzoneDialogModal extends React.Component {
         super(props);
         this.state = {
             open: false,
-            bool:false,
             files: [],
         };
     }
-
-    
 
     handleClose = () => {
         this.setState({
@@ -41,10 +38,7 @@ class DropzoneDialogModal extends React.Component {
                     fire.firestore().collection('users').doc(fire.auth().currentUser.uid).set({url}, { merge: true })
                     .then(()=> {
                         alert("upload complete");
-                        this.setState({
-                            bool: true
-                        });
-                        this.props.setUrl(url)
+                        this.props.setUrl(url);
                     });
                 })
         });
@@ -59,7 +53,6 @@ class DropzoneDialogModal extends React.Component {
     render() {
         return (
             <div>
-                {console.log(style)}
                 <Avatar onClick={this.handleOpen} src={this.props.url} style={style}/>
                 {/* <updateImage/> */}
                 <DropzoneDialog

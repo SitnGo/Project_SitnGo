@@ -36,14 +36,6 @@ const styles = makeStyles(theme => ({
         textAlign: 'justify',
         fontSize: '1.2em',
         letterSpacing: '2px'
-    },
-    '@media (max-width: 599px)': {
-        aboutHeader: {
-            fontSize: '1.8em'
-        },
-        textContainer: {
-            fontSize: '1em'
-        },
     }
 }));
 

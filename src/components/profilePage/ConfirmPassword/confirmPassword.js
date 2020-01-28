@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import fire from '../../../ConfigFirebase/Fire'
 import {isEdit1, openUpdateForm} from '../../../actions/index';
 import {Visibility, VisibilityOff, CodeSharp} from '@material-ui/icons'
-import {InputAdornment, IconButton } from '@material-ui/core';
+import {InputAdornment, IconButton, CircularProgress } from '@material-ui/core';
 import {useDispatch, useSelector} from 'react-redux'
 import {
     Button,
@@ -17,31 +17,33 @@ function ConfirmPassword() {
     let openDialog = useSelector(state => !state.isEdit1);
     const dispatch = useDispatch();
     const [open, setOpen] = useState(true);
+    const [showLoader, setShowLoader] = useState(false);
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
-    const handleClickPasswordSuccessfully = () => {
-        fire.auth().signInWithEmailAndPassword(fire.auth().currentUser.email, password)
-            .then(() => {
-                dispatch(openUpdateForm());
-                setPassword('');
-                setOpen(false);
-            })
-            .catch(error => {
-                console.log(error);
-                setPasswordError(true);
+            const handleClickPasswordSuccessfully = () => {
+                fire.auth().signInWithEmailAndPassword(fire.auth().currentUser.email, password)
+                    .then(() => {
+                        dispatch(openUpdateForm());
+                        setPassword('');
+                        setOpen(false);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        setPasswordError(true);
+                        setShowLoader(false);
+                    });
+            };
 
-            });
-    };
-
+ 
     const handleClose = () => {
         dispatch(isEdit1());
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        setShowLoader(true);
     }
     return (
         <div>
@@ -81,9 +83,9 @@ function ConfirmPassword() {
                         <Button onClick={handleClose} color='secondary'>
                             Cancel
                         </Button>
-                        <Button type='submit' onClick={handleClickPasswordSuccessfully} color='primary'>
+                       { showLoader  ? <CircularProgress />:<Button type='submit' onClick={handleClickPasswordSuccessfully} color='primary'>
                             Submit
-                        </Button>
+                        </Button> }
                     </DialogActions>
                 </form>
             </Dialog>
