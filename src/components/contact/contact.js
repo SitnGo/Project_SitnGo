@@ -4,14 +4,17 @@ import RoomIcon from '@material-ui/icons/Room';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MailIcon from '@material-ui/icons/Mail';
 import {Grid} from '@material-ui/core';
-// import LeafletMap from '../offerRoute/Leafletmaps/Map';
 import Lapp from '../contact/firstPageMap'
 const Contact = () => {
     const classes = styles();
     return(
         <Grid
             container
-            xs='12'
+            xl={12}
+            lg={12}
+            md={12}
+            sm={12}
+            xs={12}
             alignItems='center'
             alignContent='center'
             justify='space-evenly'
@@ -28,6 +31,10 @@ const Contact = () => {
             >
                 <h1 className={classes.contactHeader}>Contact Us</h1>
                 <Grid
+                    xl={12}
+                    lg={12}
+                    md={12}
+                    sm={12}
                     xs={12}
                     className={classes.mapContainer}
                 >
