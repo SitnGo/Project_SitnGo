@@ -25,7 +25,7 @@ const styles = makeStyles(theme => ({
         width: '45%',
         height: '50vh',
         margin: '0 auto',
-    },
+    }
 }));
 
 export default styles;

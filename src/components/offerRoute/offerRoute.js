@@ -5,10 +5,8 @@ import SimpleSnackbarSuccess from "./snackbar/snackbarSuccess"
 import MLeafletApp from './Leafletmaps/final'
 import fire from '../../ConfigFirebase/Fire';
 import {Redirect} from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import {isEdit1, openUpdateForm} from '../../actions/index';
-import Routing from './Leafletmaps/RoutingMachine';
-import {test} from "./Leafletmaps/Map";
+// import Routing from './Leafletmaps/RoutingMachine';
+// import {test} from "./Leafletmaps/Map";
 import styles from './style';
 
 const numberPersons = [
@@ -47,11 +45,10 @@ const OfferRout = (props) => {
     const [to, setTo] = useState("");
     const [car, setCar] = useState("");
     const [plate, setPlate] = useState("");
-    const [count, setCount] = useState("");
+    const [count, setCount] = useState("1");
     const [maps, setMap] = useState();
     const [price, setPrice] = useState(0);
     const [defaultPrice, setDefaultPrice] = useState(0);
-    const [isMapInit, setIsMapInit] =useState(false);
     const [startDate, setStartDate] = useState(null);
     const [startDateError, setStartDateError] = useState(false);
     const [fromError, setFromError] = useState(false);
@@ -101,45 +98,13 @@ const OfferRout = (props) => {
                 count: count,
                 distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
                 time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
-                price: `${price}AMD`,
+                price: `${Math.floor(price/count)}AMD`,
             }
         }
 
         routeInfo_REF.add(route).then(()=>setRedirect(true));
     })
 
-    // getMarker()
-    // .then(result => {
-    //     if(!result.hasOwnProperty("userRoutesInfo")){
-    //         result.userRoutesInfo = {}
-    //         result.userRoutesInfo.routes = []
-    //     }
-    //     if(!result.userRoutesInfo.hasOwnProperty("routes")){
-    //         result.userRoutesInfo.routes = []
-    //     }
-    //     let currentRoute = JSON.parse(localStorage.getItem("route"))
-    //     setRoute(currentRoute)
-    //     currentRoute.waypoints[0].name += from;
-    //     currentRoute.waypoints[1].name += to;
-    //     let route={
-    //         userId: fire.auth().currentUser.uid,
-    //         route: currentRoute,
-    //         astartEnd: `${from}-${to}`,
-    //         startDate: startDate,
-    //         DriverPhone: result.userInfo.phone,
-    //         parameters:  {
-    //             name: `${result.userInfo.name} ${result.userInfo.surname}`, 
-    //             car: car, 
-    //             plate: plate, 
-    //             count: count,
-    //             distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
-    //             time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
-    //             price: `${price}AMD`,
-    //         }
-    //     }
-    //     result.userRoutesInfo.routes.push(route)
-    //   fire.firestore().collection("users").doc(result.userId).set(JSON.parse(JSON.stringify(result)))
-    // });
 }
 
     let d = new Date();
@@ -225,12 +190,10 @@ const OfferRout = (props) => {
             {redirect ? <Redirect to="/profile" push /> : null }
             <div className={classes.offer}>
                 <div className={classes.rideList}>
-                    {/*<Routing*/}
-                    {/*    map={test}*/}
-                    {/*/>*/}
                     <TextField
                         margin='dense'
                         fullWidth
+                        disabled={true}
                         variant='outlined'
                         label='From'
                         onChange={(e)=>{setFrom(e.target.value)}}
@@ -239,10 +202,10 @@ const OfferRout = (props) => {
                         helperText={fromError ? <p>You  must fill blank areas</p> : null}
                         className={classes.rideListItem}
                     />
-                    {/* <Routing map = {test.addTo(this.props.maps.leafletElement)} /> */}
                     <TextField
                         margin='dense'
                         fullWidth
+                        disabled={true}
                         variant='outlined'
                         label='To'
                         onChange={(e)=>{setTo(e.target.value)}}
@@ -263,6 +226,7 @@ const OfferRout = (props) => {
                         className={classes.rideListItem}
                     />
                     <TextField
+                        defaultValue={+'1'}
                         margin='dense'
                         select
                         fullWidth
@@ -272,7 +236,7 @@ const OfferRout = (props) => {
                         className={classes.rideListItem}
                     >
                         {numberPersons.map(option => (
-                             <MenuItem key={option.value} value={option.value}>
+                            <MenuItem key={option.value} value={option.value}>
                                 {option.label}
                             </MenuItem>
                         ))}
@@ -300,11 +264,12 @@ const OfferRout = (props) => {
                         className={classes.rideListItem}
                     />
                     <TextField
+                        defaultValue={200}
                         margin='dense'
                         fullWidth
                         variant='outlined'
-                        label='Price'
-                        value={price}
+                        label='Price Per Person'
+                        value={`${Math.floor(price/count)}`<200 ? 200 : `${Math.floor(price/count)}`}
                         error={priceError}
                         helperText={priceError ? <p>{priceHelperText}</p> : null}
                         onChange={(e)=>{
