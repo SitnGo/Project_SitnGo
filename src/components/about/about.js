@@ -7,7 +7,7 @@ const About = () => {
     return(
         <Grid
             container
-            xs='12'
+            xs={12}
             alignItems='center'
             alignContent='center'
             justify='space-around'
