@@ -13,7 +13,7 @@ import {
 import fire from '../../../ConfigFirebase/Fire';
 import Map from '../../getRout/map/MapForGetRoute'
 import styles from './style';
-import { useDispatch, useSelector, connect } from 'react-redux';
+import { useDispatch, /*useSelector, connect*/ } from 'react-redux';
 
 function Passenger(props) {
     const [open, setOpen] = useState(false);
