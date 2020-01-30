@@ -98,11 +98,11 @@ const GetRout = (props) => {
             }
         })
 
-        if (isEditChecked === false) {
-            dispatch(openUpdateForm());
-            dispatch(isEdit1());
+        // if (isEditChecked === false) {
+        //     dispatch(openUpdateForm());
+        //     dispatch(isEdit1());
 
-        }
+        // }
         // .forEach(item=>{
         //     console.log(JSON.stringify(item.data()) == JSON.stringify(routeRef.data()))
         //     if(JSON.stringify(item.data()) == JSON.stringify(routeRef.data())){

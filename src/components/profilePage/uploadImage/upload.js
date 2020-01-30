@@ -37,7 +37,6 @@ class DropzoneDialogModal extends React.Component {
                 .then(url=>{
                     fire.firestore().collection('users').doc(fire.auth().currentUser.uid).set({url}, { merge: true })
                     .then(()=> {
-                        alert("upload complete");
                         this.props.setUrl(url);
                     });
                 })

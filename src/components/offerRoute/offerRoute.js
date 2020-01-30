@@ -5,6 +5,8 @@ import SimpleSnackbarSuccess from "./snackbar/snackbarSuccess"
 import MLeafletApp from './Leafletmaps/final'
 import fire from '../../ConfigFirebase/Fire';
 import {Redirect} from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {isEdit1, openUpdateForm} from '../../actions/index';
 import Routing from './Leafletmaps/RoutingMachine';
 import {test} from "./Leafletmaps/Map";
 import styles from './style';
@@ -40,7 +42,7 @@ const numberPersons = [
     },
   ];
   
-const OfferRout = () => {
+const OfferRout = (props) => {
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
     const [car, setCar] = useState("");
@@ -63,10 +65,13 @@ const OfferRout = () => {
     const [submitDisable,setSubmitDisable] =useState(false);
     const [route, setRoute] = useState(null);
     const [priceHelperText, setPriceHelperText] = useState("You  must fill blank areas")
+    // const dispatch = useDispatch();
+    // let isEditChecked = useSelector(state => state.isEdit1);
     
    function onSubmitClick(){
     if(isEmpty()){ return}
     setSubmitDisable(true);
+    
     async function getMarker(user={}) {
         let userId = fire.auth().currentUser.uid;
         user = await fire.firestore().collection("users").doc(userId).get()
@@ -99,6 +104,7 @@ const OfferRout = () => {
                 price: `${price}AMD`,
             }
         }
+
         routeInfo_REF.add(route).then(()=>setRedirect(true));
     })
 
@@ -158,6 +164,7 @@ const OfferRout = () => {
            setTo('');
            setCar('');
            setPlate('');
+            
         return false
        } else {
       if((isRouteError || isRouteError == null)||(!isRouteSuccess)){
@@ -211,9 +218,6 @@ const OfferRout = () => {
         }
 
     }
-
-
-
    }
    const classes = styles();
     return(
@@ -235,6 +239,7 @@ const OfferRout = () => {
                         helperText={fromError ? <p>You  must fill blank areas</p> : null}
                         className={classes.rideListItem}
                     />
+                    {/* <Routing map = {test.addTo(this.props.maps.leafletElement)} /> */}
                     <TextField
                         margin='dense'
                         fullWidth
@@ -330,6 +335,8 @@ const OfferRout = () => {
                         setMap = {setMap}
                         setDefaultPrice={setDefaultPrice}
                         setPrice={setPrice}
+                        setFrom={setFrom}
+                        setTo={setTo}
                         setIsRouteSuccess={setIsRouteSuccess}
                         setIsRouteError={setIsRouteError}
                     />

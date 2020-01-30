@@ -8,19 +8,17 @@ import storage from '../../../ConfigFirebase/storage';
 import {confirmUpdate} from '../../../actions/index';
 import {useDispatch, connect } from 'react-redux';
 import ForgotPassword from '../Forgotpassword/forgotPassword';
-import {isEdit1, openUpdateForm } from '../../../actions/index';
 
 function mapStateToProps(state) {
     return {
         confirmUpdate:state.confirmUpdate,
-        isEdit1:state.isEdit1,
-        openUpdateForm:state.openUpdateForm,
     };
 }
 
 function UpdateForm (props) {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const [open, setOpen] = useState(false);
     const [email, setEmail] = useState(props.data[0]);
     const [phone, setPhone] = useState(props.data[1]);
     const [errors, setErrors] = useState({ 
@@ -30,7 +28,7 @@ function UpdateForm (props) {
         genderError: false,
         phoneError: false,
     });
-    const [open, setOpen] = useState(false);
+    
 
  
 //////////////////////get all errors in array/////////////////////////////////////
@@ -48,25 +46,21 @@ let arrFromErrorsValues = Object.values(errors)
             if ((arrFromErrorsValues.every(item => item === false))) {
                 fire.firestore().collection("users").doc(fire.auth().currentUser.uid).get().then((doc)=>{
                     if(email !== props.data[0]) {
-                fire.auth().onAuthStateChanged(function(user) {
-                    if (user) {
-                        fire.auth().currentUser.updateEmail(email).then(()=>{
-                            alert(user.email);
+                         fire.auth().currentUser.updateEmail(email).then(()=>{
+                        
                         })
-                    } else {
-                        console.log("error");
+                    
                     }
-                });
-            }
                     fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
                             name: doc.data().name,
                             surname: doc.data().surname,
-                            email: email.toLowerCase(),
+                            email: email,
                             gender: doc.data().gender,
                             phone: phone,
                     }).then(()=>{
-                        alert("Update confirm!");
-                        dispatch(confirmUpdate())
+                        dispatch(confirmUpdate());
+                        props.setIsEdit(true);
+                        props.setOpenUpdateForm(false);
                     });
                 });
             }
@@ -134,48 +128,113 @@ let arrFromErrorsValues = Object.values(errors)
 ////////////////////// delete user /////////////////////////////////////
 function deleteUser () {
     const user = fire.auth().currentUser;
-      fire.firestore().collection('users').doc(user.uid).get().then((doc)=> {
+    //   fire.firestore().collection('users').doc(user.uid).get().then((doc)=> {
         
-          if (!!doc.data().url !== false) {
-            alert('storeage delete');
+        //   if (!!doc.data().url !== false) {
+        //     alert('storeage delete');
             
-            storage.ref().child(`images/${user.uid}`).listAll().then(function(res) {
-                res.items.forEach((itemRef) => {
+        //     storage.ref().child(`images/${user.uid}`).listAll().then(function(res) {
+        //         res.items.forEach((itemRef) => {
                 
-                let desertRef = storage.ref(`images/${user.uid}`).child(itemRef.name);
+        //         let desertRef = storage.ref(`images/${user.uid}`).child(itemRef.name);
                 
-                    desertRef.delete().then(()=> {
-                        alert('file deleted!');
-                    }).catch((error)=>{
-                        console.log(error);
-                    });            
+        //             desertRef.delete().then(()=> {
+        //                 alert('file deleted!');
+        //             }).catch((error)=>{
+        //                 console.log(error);
+        //             });            
 
-                });
-            }).catch((error) => {
-                    console.log('error',error);
-            });
-          } 
+        //         });
+        //     }).catch((error) => {
+        //             console.log('error',error);
+        //     });
+        //   } 
 
-                user.delete().then(() => {
-                    // User deleted.
-                    alert('user deleted');
-                    dispatch(openUpdateForm());
-                    dispatch(isEdit1());
-                }).catch(function(error) {
-                    console.log(error);
-                });
-                fire.firestore().collection('users').doc(user.uid).delete().then(()=> {
-                    alert('Document successfully deleted');
-                    
-                }).catch((error) => {console.log(error)})
-      })
+
+    //  let subCollectionPath = '/users/kdjR7ArYaiONDqe6jO8qKOC7amE2/acceptedRoutes'            
+    // fire.firestore().collection(subCollectionPath).get().then(val => {
+    //     console.log(val);
+    // })
+    fire.firestore().collection('users').doc(user.uid).get().then((doc)=> {
+        ///storige delete
+        console.log(doc.data());
+        // if (!!doc.data().url !== false) {
+        //     alert('storeage delete');
+            
+        //     storage.ref().child(`images/${user.uid}`).listAll().then(function(res) {
+        //         res.items.forEach((itemRef) => {
+                
+        //         let desertRef = storage.ref(`images/${user.uid}`).child(itemRef.name);
+                
+        //             desertRef.delete().then(()=> {
+        //                 alert('file deleted!');
+        //             }).catch((error)=>{
+        //                 console.log(error);
+        //             });            
+
+        //         });
+        //     }).catch((error) => {
+        //         console.log('error',error);
+        //     });
+        // } 
+        // acceptedRoutes and userRoutesInfo collections delete
+        // fire.firestore().collection(`/users/${user.uid}/acceptedRoutes`).get().then(querySnapshot => {
+        //     querySnapshot.forEach(doc => {
+        //         fire.firestore().collection(`/users/${user.uid}/acceptedRoutes`).doc(doc.id).delete().then(()=>{
+        //             alert('acceptedRoutes deleted');
+        //         });
+        //     })
+        // })
+        // fire.firestore().collection(`/users/${user.uid}/userRoutesInfo`).get().then(querySnapshot => {
+        //     querySnapshot.forEach(doc =>{
+        //         fire.firestore().collection(`/users/${user.uid}/userRoutesInfo`).doc(doc.id).delete().then(()=>{
+        //             alert('userRoutesInfo deleted');
+        //         });
+        //     })
+           
+        });     
+    // document delete
+        
+            // user.delete().then(() => {
+            //     // User deleted.
+            //     alert('user deleted');
+            // }).catch(function(error) {
+            //     console.log(error);
+            // });
+            // fire.firestore().collection('users').doc(user.uid).delete().then(()=> {
+            //     alert('Document successfully deleted');
+                
+            // }).catch((error) => {console.log(error)})
+
+
+    // });
+        // delete subcollections
+        
+        
+    // console.log(fire.firestore().batch());
+        
+
+                // function deleteAtPath(path) {
+                    // var deleteFn = fire.functions().httpsCallable('recursiveDelete');
+                    // deleteFn({ path: '/users/Ww7ADj83LMNdUSZ1VadSZEmaLww1/userRoutesInfo' })
+                        // .then(function(result) {
+                            // alert('delete');
+                            // logMessage('Delete success: ' + JSON.stringify(result));
+                        // })
+                        // .catch(function(err) {
+                            // logMessage('Delete failed, see console,');
+                            // console.log(err);
+                        // });
+                // }
+                
+    //   })
     }
     
  //////////////////cancel///////////
    
     function CancelBtnClick() {
-        dispatch(openUpdateForm());
-        dispatch(isEdit1());
+        props.setOpenUpdateForm(false);
+        props.setIsEdit(true);
     }
     const clickOpenConfirmPassword = () => {
         setOpen(true);

@@ -1,9 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import fire from '../../../ConfigFirebase/Fire'
-import {isEdit1, openUpdateForm} from '../../../actions/index';
-import {Visibility, VisibilityOff, CodeSharp} from '@material-ui/icons'
+import {Visibility, VisibilityOff} from '@material-ui/icons'
 import {InputAdornment, IconButton, CircularProgress } from '@material-ui/core';
-import {useDispatch, useSelector} from 'react-redux'
 import {
     Button,
     TextField,
@@ -13,47 +11,52 @@ import {
     DialogTitle
 } from '@material-ui/core';
 
-function ConfirmPassword() {
-    let openDialog = useSelector(state => !state.isEdit1);
-    const dispatch = useDispatch();
+function ConfirmPassword(props) {
     const [open, setOpen] = useState(true);
     const [showLoader, setShowLoader] = useState(false);
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-
             const handleClickPasswordSuccessfully = () => {
-                fire.auth().signInWithEmailAndPassword(fire.auth().currentUser.email, password)
-                    .then(() => {
-                        dispatch(openUpdateForm());
-                        setPassword('');
-                        setOpen(false);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        setPasswordError(true);
-                        setShowLoader(false);
-                    });
+                if(password.trim() !== '') {
+                        fire.auth().signInWithEmailAndPassword(fire.auth().currentUser.email, password)
+                            .then(() => {
+                                props.setOpenUpdateForm(true);
+                                setPassword('');
+                                setOpen(false);
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                setPasswordError(true);
+                                setShowLoader(false);
+                            });
+                } else {
+                    setPasswordError(true);
+                }
             };
 
  
     const handleClose = () => {
-        dispatch(isEdit1());
+        props.setIsEdit(true);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setShowLoader(true);
+        if(password.trim() === '') {
+            setShowLoader(false);
+        }else {
+            setShowLoader(true);
+        }
     }
     return (
         <div>
-            <Dialog open={openDialog && open}  aria-labelledby='form-dialog-title' fullWidth={true}>
+            <Dialog open={!props.isEdit && open}  aria-labelledby='form-dialog-title' fullWidth={true}>
                 <DialogTitle id='form-dialog-title'>Enter password</DialogTitle>
                 <form onSubmit={handleSubmit}>
                     <DialogContent>
                         <TextField
                             autoFocus
-                            onChange={(e)=>{setPassword(e.target.value.trim())}}
+                            onChange={(e)=>{setPassword(e.target.value)}}
                             value={password}
                             margin='dense'
                             id='name'

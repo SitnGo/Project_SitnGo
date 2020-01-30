@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Card, CardHeader, CardContent, Avatar, Typography, Button } from '@material-ui/core';
 import fire from '../../../ConfigFirebase/Fire';
 import styles from './style';
@@ -22,7 +22,11 @@ function Driver(props) {
     }
     return (
         <Card className={classes.card}>
-            <CardHeader avatar={<Avatar src='' />} title={data.parameters.name} subheader={data.startDate} />
+            <CardHeader 
+            avatar={<Avatar src={data.url} />} 
+            title={data.parameters.name} 
+            subheader={data.startDate} 
+            />
             <CardContent>
                 <Typography
                     variant='body2'

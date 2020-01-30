@@ -1,17 +1,16 @@
 import React,{useState, useEffect} from 'react';
 import {Typography, Button, Avatar, Paper, Grid} from '@material-ui/core';
-import {Phone, Email, AccountBox, Edit} from '@material-ui/icons'
+import {Phone, Email, AccountBox, Edit, FastForward} from '@material-ui/icons'
 import Skeleton from '@material-ui/lab/Skeleton';
 import UpdateForm from './userUpdateForm/userUpdateForm';
 import ConfirmPassword from './ConfirmPassword/confirmPassword';
-import { isEdit1 } from '../../actions/index';
 import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
 import Passenger from './passengerDriver/Passenger';
 import Driver from './passengerDriver/Driver';
 import CenteredTabs from './TabPanels/tabPanels';
-import { useDispatch, useSelector, connect } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import styles from './style';
 
 function mapStateToProps(state) {
@@ -19,6 +18,7 @@ function mapStateToProps(state) {
         user: state.user,
         isLoggedInUser: state.isLoggedInUser,
         isEdit1:state.isEdit1,
+        openUpdateForm:state.openUpdateForm,
     };
 }
 
@@ -31,12 +31,11 @@ function usePersonalInfo() {
     const [url, setUrl] = useState('');
     const [render, setRender] = useState(false);
     const [renderDriver, setRenderDriver] = useState(false);
+    const [isEdit, setIsEdit] = useState(true);
+    const [openUpdateForm, setOpenUpdateForm] = useState(false);
     const classes = styles();
-    const dispatch = useDispatch();
     let update = useSelector(state => state.confirmUpdate);
     let user1 = useSelector(state => state.user);
-    let isEdit = useSelector(state => state.isEdit1);
-    let openUpdateFormBool = useSelector(state => state.openUpdateForm);
     useEffect(()=>{
         async function getMarker(user={}) {
             let userId = fire.auth().currentUser.uid;
@@ -66,13 +65,18 @@ function usePersonalInfo() {
         }
         getMarker().then(result => {
             setUser(result);
+            // if(!result.hasOwnProperty('url')) {
+            //     result.url = '';
+            // }
+            
             setUrl(result.url);
             changeBool(true);
         });
     },[update, user1, render, renderDriver]);
 
+  
     function isEditBtnClick() {
-        dispatch(isEdit1());
+        setIsEdit(false);
     }
 
     return(
@@ -109,7 +113,7 @@ function usePersonalInfo() {
                             </Button>
                         </>)
                         :
-                            <DropzoneDialog url={url} setUrl={setUrl}/>
+                            <DropzoneDialog url={url} setUrl={setUrl} />
                     }
                 </div>
                 <hr/>
@@ -163,9 +167,20 @@ function usePersonalInfo() {
                         </FadeIn>
                     ) : (
                         <>
-                            {openUpdateFormBool ? (
-                                    <UpdateForm  data={[user.email, user.phone]} userId={fire.auth().currentUser.uid}/>                          
-                             ) : <ConfirmPassword />} 
+                            {openUpdateForm ? (
+                                <UpdateForm  
+                                    data={[user.email, user.phone]} 
+                                    isEdit={isEdit} 
+                                    setIsEdit={setIsEdit}
+                                    openUpdateForm={openUpdateForm}
+                                    setOpenUpdateForm={setOpenUpdateForm}
+
+                                />                          
+                             ) : <ConfirmPassword 
+                                    isEdit={isEdit} 
+                                   setIsEdit={setIsEdit}
+                                   setOpenUpdateForm={setOpenUpdateForm}
+                             />} 
                         </>
                     )
                 }

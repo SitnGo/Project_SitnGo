@@ -7,6 +7,10 @@ const styles = makeStyles(theme => ({
         width: '300px',
         margin: '5px', 
         cursor:'pointer',
+    },
+    map: {
+        width: '500px',
+        height: '250px',
     }
 }))
     

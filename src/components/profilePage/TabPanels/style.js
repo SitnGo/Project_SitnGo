@@ -14,6 +14,14 @@ const styles = makeStyles(theme => ({
             background: '#fb9403',
             opacity: 0.95,
         }
+    },
+
+    buttonChangeColor: {
+        margin: theme.spacing(2),
+        '&:hover': {
+            background: '#ccc',
+            opacity: 0.95,
+        }
     }
 }));
 

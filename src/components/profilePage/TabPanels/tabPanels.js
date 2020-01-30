@@ -4,16 +4,13 @@ import styles from './style';
 
 export default function CenteredTabs(props) {
     const classes = styles();
-    const [changeColor1, setChangeColor1] = useState(true);
-    const [changeColor2, setChangeColor2] = useState(false);
+    const [changeColor, setChangeColor] = useState(true);
     function handleClick1 () {
-        setChangeColor1(true);
-        setChangeColor2(false);
+        setChangeColor(true);
         props.setTabChange(false);
     }
     function handleClick2 () {
-        setChangeColor1(false);
-        setChangeColor2(true);
+        setChangeColor(false);
         props.setTabChange(true);
     }
     return (
@@ -21,14 +18,14 @@ export default function CenteredTabs(props) {
             <Button
                 variant='contained'
                 onClick={handleClick1}
-                className={classes.button}
+                className={changeColor ?  classes.buttonChangeColor : classes.button}
             >
                 Passenger
             </Button>
             <Button
                 variant='contained'
                 onClick={handleClick2}
-                className={classes.button}
+                className={!changeColor ? classes.buttonChangeColor : classes.button }
             >
                 Driver
             </Button>
