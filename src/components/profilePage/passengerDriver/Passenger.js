@@ -25,6 +25,7 @@ function Passenger(props) {
     let data = dataRef.data()
     let startEnd = data && data.astartEnd.split('-');
 
+    console.log(data)
     function deleteAcceptClick() {
         if(dataRef.exists){
             fire.firestore().doc(dataRef.ref.path).set({parameters: {...data.parameters, count: data.parameters.count+1}},{merge: true})
@@ -49,7 +50,7 @@ function Passenger(props) {
             { data ?
                 <Card className={classes.card}>
                     <CardHeader
-                        avatar={<Avatar src='' />}
+                        avatar={<Avatar src="" />}
                         title={data.parameters.name}
                         subheader={data.startDate}
                         onClick={openDialog}
@@ -114,7 +115,7 @@ function Passenger(props) {
                 </Card>
                 :
                 <Card style={{ width: '30%', margin: '5px' }}>
-                    <CardHeader avatar={<Avatar src='' />} title="DELETED" />
+                    <CardHeader avatar={<Avatar src="" />} title="DELETED" />
                     <CardContent>
                         <Typography variant='h6' color='textSecondary' component='p'>This Route Deleted by Driver</Typography>
                     </CardContent>
@@ -128,7 +129,7 @@ function Passenger(props) {
                     </Button>
                 </Card>
             }
-            <Dialog open={open} onClose={closeDialog} aria-labelledby="form-dialog-title" fullScreen={true}>
+            <Dialog open={open} onClose={closeDialog} aria-labelledby="form-dialog-title" fullScreen={false}>
                 <DialogTitle id="form-dialog-title">Map</DialogTitle>
                 <DialogContent>
                     <div className={classesMap.mapContainer}>

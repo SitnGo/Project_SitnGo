@@ -69,7 +69,7 @@ export default class LeafletMap extends Component {
   state = {
     lat: 40.1860413, 
     lng: 44.51837,
-    zoom: 10,
+    zoom: 9,
     isMapInit: false
   };
   saveMap = map => {
@@ -99,9 +99,10 @@ export default class LeafletMap extends Component {
     // }
   render() {
     
-    let Routegeojson = L.Routing.routeToGeoJson(this.props.route.route.route)
+	let Routegeojson = L.Routing.routeToGeoJson(this.props.route.route.route)
+	console.log(this.props.route.route.waypoints[0].latLng.lat, this.props.route.route.waypoints[0].latLng.lng)
    
-    const position = [this.state.lat, this.state.lng];
+    const position = [this.props.route.route.waypoints[0].latLng.lat, this.props.route.route.waypoints[0].latLng.lng];
     return (
       <Map route = {this.props.route} center={position} zoom={this.state.zoom} ref={this.saveMap} >
         <TileLayer

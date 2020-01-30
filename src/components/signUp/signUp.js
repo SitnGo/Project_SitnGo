@@ -17,7 +17,7 @@ const SignUp = (props) => {
     const [surname, setSurname] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [hasConfirmPasswordError, setHasConfirmPasswordError] = useState('false');
+    const [hasConfirmPasswordError, setHasConfirmPasswordError] = useState(false);
     const [email, setEmail] = useState('');
     const [gender, setGender] = useState('');
     const [phone, setPhone] = useState('');
@@ -34,16 +34,8 @@ const SignUp = (props) => {
         confirmPassword === password ? setHasConfirmPasswordError(false) : setHasConfirmPasswordError(true)
     }, [confirmPassword])
 
-    useEffect((() => {
-        let arrFromErrorsValues = Object.values(errors)
-        arrFromErrorsValues = arrFromErrorsValues.map(item => {
-            if (item.hasOwnProperty('bool')) {
-                return item.bool;
-            } else {
-                return item;
-            }
-        })
-        if ((arrFromErrorsValues.every(item => item === false) && !hasConfirmPasswordError)) {
+    // useEffect((
+        function ifNoErrorsRegisterUser(){
             fire.auth().createUserWithEmailAndPassword(email, password)
                 .then(() => {
                     fire.auth().signInWithEmailAndPassword(email, password)
@@ -74,8 +66,7 @@ const SignUp = (props) => {
                     setErrors(Object.assign(err, { emailError: {bool: true, errText: 'Email is not valid'} }))
 
                 });
-        }
-    }), [errors])
+    }
 
     function checkErrorsHandler() {
         let text = null;
@@ -104,6 +95,7 @@ const SignUp = (props) => {
                 }
             }
             setErrors(Object.assign(err, { nameError: { bool: true, errText: textInputName } }))
+            return
         } else {
             setErrors(Object.assign(err, { nameError: { bool: false, errText: textInputName } }))
         }
@@ -123,6 +115,7 @@ const SignUp = (props) => {
                 }
             }
             setErrors(Object.assign(err, { surnameError: { bool: true, errText: textInputSurname } }))
+            return
         } else {
             setErrors(Object.assign(err, { surnameError: { bool: false, errText: null } }))
         }
@@ -130,6 +123,7 @@ const SignUp = (props) => {
             setErrors(Object.assign(err, { genderError: false }))
         } else {
             setErrors(Object.assign(err, { genderError: true }))
+            return
         }
         let passwordValidator = new PasswordValidator();
         passwordValidator
@@ -158,14 +152,18 @@ const SignUp = (props) => {
                 }
             }
             setErrors(Object.assign(err, { passwordError: { bool: true, errText: text } }))
+            return
+
         } else {
             setErrors(Object.assign(err, { passwordError: { bool: false, errText: null } }))
         }
         let validator = require('email-validator');
         if (!validator.validate(email)) {
             setErrors(Object.assign(err, { emailError: {bool: true, errText: 'Email is not valid or already in use'} }))
+            return
+
         } else {
-            setErrors(Object.assign(err, { emailError: false }))
+            setErrors(Object.assign(err, { emailError: {bool: false, errText: 'Email is not valid or already in use'} }))
         }
         switch (phone.length) {
             case 9:
@@ -190,7 +188,7 @@ const SignUp = (props) => {
                     break;
                 }else{
                     setErrors(Object.assign(err, { phoneError: true }))
-                    break;
+                    return;
                 }
             case 12:
                 if (
@@ -214,12 +212,21 @@ const SignUp = (props) => {
                     break;
                 }else{
                     setErrors(Object.assign(err, { phoneError: true }))
-                    break;
+                    return;
                 }
             default:
                 setErrors(Object.assign(err, { phoneError: true }))
-                break;
+                return;
         }
+        if(confirmPassword === password){
+            setHasConfirmPasswordError(false)
+        }else{
+            setHasConfirmPasswordError(true)
+            return
+        }
+    
+        ifNoErrorsRegisterUser()
+    
     }
     return (
         <div>
@@ -275,7 +282,7 @@ const SignUp = (props) => {
                 <TextField
                     margin='dense'
                     error={errors.emailError.bool}
-                    helperText={errors.emailError ? errors.emailError.errText : null}
+                    helperText={errors.emailError.bool ? errors.emailError.errText : null}
                     color='primary'
                     variant='outlined'
                     label='Email'
@@ -363,7 +370,7 @@ const SignUp = (props) => {
                     }}
                 />
                 <div style={errors.genderError ? {border: '1px solid red', borderRadius: '5px', marginBottom: 2} : {border: 'none'}}>
-                    <RadioGroup error row aria-label='gender' name='gender1' onChange={(e) => { setGender(e.target.value) }}>
+                    <RadioGroup error="true" row aria-label='gender' name='gender1' onChange={(e) => { setGender(e.target.value) }}>
                         <FormControlLabel value='male' control={<Radio style={classes.radio} />} label='Male' />
                         <FormControlLabel value='female' control={<Radio style={classes.radio} />} label='Female' />
                     </RadioGroup>
@@ -373,7 +380,7 @@ const SignUp = (props) => {
                         fullWidth
                         style={classes.signUpButton}
                         variant='contained'
-                        onClick={checkErrorsHandler}
+                        onClick={()=>{checkErrorsHandler()}}
                     >Submit</Button>
                 </RouterLink>
                 <Button
