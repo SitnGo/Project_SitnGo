@@ -171,6 +171,10 @@ console.log(fire.auth().currentUser);
     return (
         <Grid
             container
+            xl={12}
+            lg={12}
+            md={12}
+            sm={12}
             xs={12}
             justify="center"
             alignItems="center"

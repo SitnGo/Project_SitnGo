@@ -4,9 +4,9 @@ import SimpleSnackbar from "./snackbar/snackbar"
 import SimpleSnackbarSuccess from "./snackbar/snackbarSuccess"
 import MLeafletApp from './Leafletmaps/final'
 import fire from '../../ConfigFirebase/Fire';
-import { Redirect } from 'react-router-dom';
-import Routing from './Leafletmaps/RoutingMachine';
-import { test } from "./Leafletmaps/Map";
+import {Redirect} from 'react-router-dom';
+// import Routing from './Leafletmaps/RoutingMachine';
+// import {test} from "./Leafletmaps/Map";
 import styles from './style';
 
 const numberPersons = [
@@ -45,11 +45,10 @@ const OfferRout = (props) => {
     const [to, setTo] = useState("");
     const [car, setCar] = useState("");
     const [plate, setPlate] = useState("");
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState("1");
     const [maps, setMap] = useState();
     const [price, setPrice] = useState(0);
     const [defaultPrice, setDefaultPrice] = useState(0);
-    const [isMapInit, setIsMapInit] = useState(false);
     const [startDate, setStartDate] = useState(null);
     const [startDateError, setStartDateError] = useState(false);
     const [fromError, setFromError] = useState(false);
@@ -77,65 +76,33 @@ const OfferRout = (props) => {
             return user;
         }
 
-        getMarker().then((result) => {
-            let userId = fire.auth().currentUser.uid;
-            let routeInfo_REF = fire.firestore().collection("users").doc(userId).collection("userRoutesInfo");
-            let currentRoute = JSON.parse(localStorage.getItem("route"))
-            setRoute(currentRoute)
-            currentRoute.waypoints[0].name += from;
-            currentRoute.waypoints[1].name += to;
-            let route = {
-                userId: fire.auth().currentUser.uid,
-                route: currentRoute,
-                astartEnd: `${from}-${to}`,
-                startDate: startDate,
-                DriverPhone: result.phone,
-                parameters: {
-                    name: `${result.name} ${result.surname}`,
-                    car: car,
-                    plate: plate,
-                    count: count,
-                    distance: `${Math.ceil(currentRoute.route.summary.totalDistance / 1000)}km`,
-                    time: `${Math.ceil(currentRoute.route.summary.totalTime / 60)}min`,
-                    price: `${price}AMD`,
-                }
+    getMarker().then((result)=>{
+    let userId = fire.auth().currentUser.uid;
+    let routeInfo_REF = fire.firestore().collection("users").doc(userId).collection("userRoutesInfo");
+    let currentRoute = JSON.parse(localStorage.getItem("route"))
+        setRoute(currentRoute)
+        currentRoute.waypoints[0].name += from;
+        currentRoute.waypoints[1].name += to;
+        let route={
+            userId: fire.auth().currentUser.uid,
+            route: currentRoute,
+            astartEnd: `${from}-${to}`,
+            startDate: startDate,
+            DriverPhone: result.phone,
+            parameters:  {
+                name: `${result.name} ${result.surname}`, 
+                car: car, 
+                plate: plate, 
+                count: count,
+                distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
+                time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
+                price: `${Math.floor(price/count)}AMD`,
             }
+        }
             routeInfo_REF.add(route).then(() => setRedirect(true));
         })
 
-        // getMarker()
-        // .then(result => {
-        //     if(!result.hasOwnProperty("userRoutesInfo")){
-        //         result.userRoutesInfo = {}
-        //         result.userRoutesInfo.routes = []
-        //     }
-        //     if(!result.userRoutesInfo.hasOwnProperty("routes")){
-        //         result.userRoutesInfo.routes = []
-        //     }
-        //     let currentRoute = JSON.parse(localStorage.getItem("route"))
-        //     setRoute(currentRoute)
-        //     currentRoute.waypoints[0].name += from;
-        //     currentRoute.waypoints[1].name += to;
-        //     let route={
-        //         userId: fire.auth().currentUser.uid,
-        //         route: currentRoute,
-        //         astartEnd: `${from}-${to}`,
-        //         startDate: startDate,
-        //         DriverPhone: result.userInfo.phone,
-        //         parameters:  {
-        //             name: `${result.userInfo.name} ${result.userInfo.surname}`, 
-        //             car: car, 
-        //             plate: plate, 
-        //             count: count,
-        //             distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
-        //             time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
-        //             price: `${price}AMD`,
-        //         }
-        //     }
-        //     result.userRoutesInfo.routes.push(route)
-        //   fire.firestore().collection("users").doc(result.userId).set(JSON.parse(JSON.stringify(result)))
-        // });
-    }
+}
 
     let d = new Date();
     let day = d.getDate();
@@ -218,13 +185,11 @@ const OfferRout = (props) => {
         <section className={classes.section}>
             {redirect ? <Redirect to="/profile" push /> : null}
             <div className={classes.offer}>
-                <div className={classes.rideList} id="input11">
-                    {/*<Routing*/}
-                    {/*    map={test}*/}
-                    {/*/>*/}
+                <div className={classes.rideList}>
                     <TextField
                         margin='dense'
                         fullWidth
+                        disabled={true}
                         variant='outlined'
                         label='From'
                         onChange={(e) => {
@@ -241,10 +206,10 @@ const OfferRout = (props) => {
                         helperText={fromError ? <p>You  must fill blank areas</p> : null}
                         className={classes.rideListItem}
                     />
-                    {/* <Routing map = {test.addTo(this.props.maps.leafletElement)} /> */}
                     <TextField
                         margin='dense'
                         fullWidth
+                        disabled={true}
                         variant='outlined'
                         label='To'
                         onChange={(e) => { setTo(e.target.value) }}
@@ -278,6 +243,7 @@ const OfferRout = (props) => {
                         className={classes.rideListItem}
                     />
                     <TextField
+                        defaultValue={+'1'}
                         margin='dense'
                         select
                         fullWidth
@@ -315,6 +281,7 @@ const OfferRout = (props) => {
                         className={classes.rideListItem}
                     />
                     <TextField
+                        defaultValue={200}
                         margin='dense'
                         fullWidth
                         variant='outlined'

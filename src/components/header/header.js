@@ -20,27 +20,31 @@ const Header = (props) => {
     let user = useSelector((state)=> state.user);
 
     return(
-    <Grid
-        container
-        xs={12}
-        alignItems='center'
-        alignContent='center'
-        justify='space-evenly'
-        className={classes.navbar}
-    >
         <Grid
-            item
-            xl={1}
-            lg={1}
-            md={1}
-            sm={2}
-            xs={2}
-            className={classes.logoContainer}
+            container
+            xl={12}
+            lg={12}
+            md={12}
+            sm={12}
+            xs={12}
+            alignItems='center'
+            alignContent='center'
+            justify='space-evenly'
+            className={classes.navbar}
         >
-            <RouterLink to= {user ? '/profile' : '/'}><img className={classes.logo} src='images/Logo.png' alt='Logo'/></RouterLink>
+            <Grid
+                item
+                xl={1}
+                lg={1}
+                md={1}
+                sm={2}
+                xs={2}
+                className={classes.logoContainer}
+            >
+                <RouterLink to= {user ? '/profile' : '/'}><img className={classes.logo} src='images/Logo.png' alt='Logo'/></RouterLink>
+            </Grid>
+                {user ? <HeaderWhenUserLoggedIn /> : <HeaderWhenUserLoggedOut /> }
         </Grid>
-            {user ? <HeaderWhenUserLoggedIn /> : <HeaderWhenUserLoggedOut /> }
-    </Grid>
     );
 }
 

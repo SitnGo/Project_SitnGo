@@ -5,10 +5,17 @@ import styles from './style';
 function NotFound () {
     const classes = styles();
     return (
-        <Grid container sm={12} className={classes.root}
-              direction='row'
-              justify='center'
-              alignItems='center'
+        <Grid 
+            container
+            xl={12}
+            lg={12}
+            md={12}
+            sm={12}
+            xs={12}
+            className={classes.root}
+            direction='row'
+            justify='center'
+            alignItems='center'
         >
             <Typography variant='h2' className={classes.text}>404 <br /> page not found</Typography>
             <div className={classes.imageCover}></div>

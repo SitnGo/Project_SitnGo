@@ -44,6 +44,10 @@ function HeaderWhenUserLoggedIn(props) {
         >
             <Grid
                 container
+                xl={6}
+                lg={6}
+                md={6}
+                sm={6}
                 xs={6}
                 alignItems='center'
                 alignContent='center'

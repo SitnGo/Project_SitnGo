@@ -7,6 +7,10 @@ const About = () => {
     return(
         <Grid
             container
+            xl={12}
+            lg={12}
+            md={12}
+            sm={12}
             xs={12}
             alignItems='center'
             alignContent='center'
