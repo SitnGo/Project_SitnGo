@@ -12,14 +12,12 @@ import {
 } from '@material-ui/core';
 import fire from '../../../ConfigFirebase/Fire';
 import Map from '../../getRout/map/MapForGetRoute'
-import stylesMap from '../../getRout/style';
 import styles from './style';
 import { useDispatch, useSelector, connect } from 'react-redux';
 
 function Passenger(props) {
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
-    let classesMap = stylesMap();
     let classes = styles();
     let { dataRef } = props;
     let data = dataRef.data()
@@ -128,10 +126,10 @@ function Passenger(props) {
                     </Button>
                 </Card>
             }
-            <Dialog open={open} onClose={closeDialog} aria-labelledby="form-dialog-title" fullScreen={true}>
+            <Dialog open={open} onClose={closeDialog} >
                 <DialogTitle id="form-dialog-title">Map</DialogTitle>
                 <DialogContent>
-                    <div className={classesMap.mapContainer}>
+                    <div className={classes.map}>
                         <Map route={data}/>
                     </div>
                 </DialogContent>
