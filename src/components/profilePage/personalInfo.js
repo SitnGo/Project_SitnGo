@@ -43,10 +43,6 @@ function usePersonalInfo() {
             user = user.data();
             let DriverListArr = [];
             let PassagerListArr = [];
-            
-            if(!user.hasOwnProperty('url')){
-               await fire.firestore().collection('users').doc(fire.auth().currentUser.uid).set({url:''}, { merge: true});
-            }
             await fire.firestore().collection("users").doc(fire.auth().currentUser.uid).collection("acceptedRoutes").get().then((res) => {
                 res.forEach((item) => {
                     item.data().ref.get().then(result => {
@@ -65,10 +61,6 @@ function usePersonalInfo() {
         }
         getMarker().then(result => {
             setUser(result);
-            // if(!result.hasOwnProperty('url')) {
-            //     result.url = '';
-            // }
-            
             setUrl(result.url);
             changeBool(true);
         });
