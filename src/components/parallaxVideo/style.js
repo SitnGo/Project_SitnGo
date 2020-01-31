@@ -15,12 +15,12 @@ const styles = makeStyles(theme => ({
     },
     '@media (min-width: 600px) and (max-width: 960px)': {
         container: {
-            width: '150%'
+            width: '200% !important'
         }
     },
     '@media (max-width: 599px)': {
         container: {
-            width: '200%'
+            width: '250% !important'
         }
     }
 }));

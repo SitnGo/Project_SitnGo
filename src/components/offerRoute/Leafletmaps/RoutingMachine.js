@@ -11,6 +11,9 @@ class Routing extends MapLayer {
       route: null
     }
   }
+  componentDidMount(){
+    let routingInput = document.getElementsByClassName("leaflet-routing-geocoder")
+  }
   createLeafletElement() {
     let leafletElement = L.Routing.control({
       waypoints: [L.latLng(40.392899, 44.698891), L.latLng(40.179188, 44.499104)],
@@ -47,6 +50,7 @@ class Routing extends MapLayer {
       if(routes.waypoints[routes.waypoints.length - 1].name.length) {
         this.props.setTo(routes.waypoints[routes.waypoints.length - 1].name)
       }
+      this.props.setboolean(false)
       console.log(routes)
     }).on("waypointschanged",()=>{
       this.props.setIsRouteError(false);
@@ -55,7 +59,6 @@ class Routing extends MapLayer {
     .on("routingerror",()=>{
       this.props.setIsRouteError(true);
       this.props.setIsRouteSuccess(false);
-
     })
     .addTo(this.props.map.leafletElement);
     return leafletElement.getPlan();

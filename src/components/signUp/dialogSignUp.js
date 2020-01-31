@@ -19,7 +19,7 @@ const AlertDialogSlideSignUp = (props) => {
     return (
         <div>
             <Dialog
-                ignoreEscapeKeyUp
+                ignoreescapekeyup="true"
                 title='Dialog'
                 open={props.willOpenSignUP}
                 TransitionComponent={Transition}

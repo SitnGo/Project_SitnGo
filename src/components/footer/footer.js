@@ -10,6 +10,10 @@ function Footer() {
     return (
         <Grid
             container
+            xl={12}
+            lg={12}
+            md={12}
+            sm={12}
             xs={12}
             alignItems='center'
             alignContent='center'
@@ -17,6 +21,10 @@ function Footer() {
             className={classes.footer}
         >
             <Grid
+                xl={5}
+                lg={5}
+                md={5}
+                sm={5}
                 xs={5}
                 className={classes.socialContainer}
             >
