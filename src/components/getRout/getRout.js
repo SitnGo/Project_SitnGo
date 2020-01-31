@@ -18,12 +18,10 @@ import Map from './map/MapForGetRoute'
 import { Redirect } from 'react-router-dom';
 import styles from './style';
 import SimpleSnackbar from "./snackbar/snackbar"
-import {isEdit1, openUpdateForm} from '../../actions/index';
-import { useDispatch, useSelector } from 'react-redux';
+// import {isEdit1, openUpdateForm} from '../../actions/index';
+// import { useDispatch, useSelector } from 'react-redux';
 
 const GetRout = (props) => {
-    let isEditChecked = useSelector(state => state.isEdit1);
-    const dispatch = useDispatch();
 
     const [from, setFrom] = useState('');
     const [to, setTo] = useState('');
@@ -39,6 +37,8 @@ const GetRout = (props) => {
     const [checkIsUserAlreadyHasRoute, setCheckIsUserAlreadyHasRoute] = useState(null)
     const [matchedRef, setMatchedRef] = useState(null);
     const [alreadyAcceptedRoute, setAlreadyAcceptedRoute] = useState(null);
+    let i = 0;
+    let j = 0;
 
     useEffect((() => {
         onSubmit();
@@ -69,7 +69,6 @@ const GetRout = (props) => {
     };
 
     function onAcceptClick() {
-        // console.log(fire.auth().currentUser)
         setIsDisable(true);
         fire.firestore().collection("users").doc(fire.auth().currentUser.uid).collection("acceptedRoutes").get().then((res) => {
             let bool = false;
@@ -97,93 +96,14 @@ const GetRout = (props) => {
                         })
             }
         })
-
-        // if (isEditChecked === false) {
-        //     dispatch(openUpdateForm());
-        //     dispatch(isEdit1());
-
-        // }
-        // .forEach(item=>{
-        //     console.log(JSON.stringify(item.data()) == JSON.stringify(routeRef.data()))
-        //     if(JSON.stringify(item.data()) == JSON.stringify(routeRef.data())){
-
-        //     }
-
-        // })
-        // })
-
-
-
-        // fire.firestore().collection("users").doc(route.userId).collection
-        // fire.firestore().collection('users').doc(route.userId).get().then(result => {
-        //     return result.data()
-        // })
-        // .then((result) => {
-        //     result.userRoutesInfo.routes.forEach((item, i) => {
-        //         let ref;
-        //         if (JSON.stringify(item) === JSON.stringify(route)) {
-        //             if (item.parameters.count === 0) {
-        //                 return 0;
-        //             } else {
-        //                 fire.firestore().collection("users").doc(`${route.userId}/userInfo/9eyB40tqAQXhmy2Vtpxx`).get().then(res => {
-        //                     console.log(res.data())
-        //                 })
-        // .then((res)=>{
-
-        //         console.log(res.data())
-
-        // }).catch((error)=>{console.log(error)})
-        // ref = ref.collection(`userRoutesInfo`)
-
-        // ref.collection("userRoutesInfo").get().then(result=>{
-        //   result.forEach((res)=>{
-        //     console.log(res.data())
-        // })
-        // })
-
-        //     }
-        //     if (typeof (item.parameters.count) !== 'number') {
-        //         item.parameters.count = +item.parameters.count;
-        //     }
-        //     item.parameters.count -= 1;
-        //     fire.firestore().collection('users').doc(fire.auth().currentUser.uid).get().then((result) => {
-        //         let currentUser = result.data()
-        //         if (!currentUser.hasOwnProperty('acceptedRoutes')) {
-        //             currentUser.acceptedRoutes = [];
-        //         }
-        //         currentUser.acceptedRoutes.push(item);
-        //         return currentUser
-        //     }).then((updatedUser) => {
-        //         fire.firestore().collection('users').doc(fire.auth().currentUser.uid).set(updatedUser)
-        //     })
-        // } else {
-        //     setCountError(true);
-        // }
-        //     });
-        //     return result;
-        // }).then((resultWithUpdatedCount) => {
-        //     if (resultWithUpdatedCount === 0) {
-        //         return
-        //     }
-        //     // console.log(resultWithUpdatedCount)
-        //     fire.firestore().collection('users').doc(route.userId).set(resultWithUpdatedCount).then(() => {
-        //         setRedirect(true);
-        //     })
-        //     // onSubmit();
-        //     // props.history.push('/profile')
-        // })
     }
 
     function onTableRowClick(e) {
-        // console.log(matchedRef[0].data())
-
         setRoute(e);
         setRouteRef(e.ref)
-        // console.log(e.ref.data())
         if (e.astartEnd) {
             setRouteFromTo(e.astartEnd);
             setRouteDate(e.startDate)
-            // setDriverPhone(e.DriverPhone)
         }
     }
 
@@ -290,15 +210,15 @@ const GetRout = (props) => {
                             </TableHead>
                             <TableBody>
                                 {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-                                    let i = 0;
                                     i++;
                                     let tableRow = Object.values(row.parameters);
                                     return (
-                                        <TableRow hover role='checkbox' key={row.i} onClick={() => onTableRowClick(row)} >
+                                        <TableRow hover role='checkbox' key={i} onClick={() => onTableRowClick(row)} >
                                             {
                                                 tableRow.map(column => {
+                                                    j++;
                                                     return (
-                                                        <TableCell key={column.i} align='center' >
+                                                        <TableCell key={j} align='center' >
                                                             {column}
                                                         </TableCell>
                                                     );
@@ -343,7 +263,6 @@ const GetRout = (props) => {
                 </div>
             </div>
             {alreadyAcceptedRoute ? <SimpleSnackbar alreadyAcceptedRoute={alreadyAcceptedRoute}/> : null}
-
         </section>
     );
 }

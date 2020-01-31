@@ -131,8 +131,6 @@
     width: calc(100% - 4px);
     line-height: 1.67;
     border: 1px solid #ccc;
-    background-color: salmon;
-    
 }
 
 .leaflet-routing-geocoders button {
