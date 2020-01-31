@@ -25,7 +25,7 @@ function Driver(props) {
         <Card className={classes.card}>
             <CardHeader 
             avatar={
-                <Avatar src='' 
+                <Avatar src={data.url} 
                     // src={bool ? url : ''}
                     // variant='circle'
                 />

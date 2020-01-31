@@ -64,9 +64,7 @@ function usePersonalInfo() {
         getMarker().then(result => {
             setUser(result);
             if(!result.hasOwnProperty('url')){
-                alert("A");
                 result.url='';
-                console.log('url ',result.url);
             }
             setUrl(result.url);
             changeBool(true);

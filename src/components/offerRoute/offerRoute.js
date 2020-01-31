@@ -84,6 +84,7 @@ const OfferRout = (props) => {
         currentRoute.waypoints[1].name += to;
         let route={
             userId: fire.auth().currentUser.uid,
+            url: result.url,
             route: currentRoute,
             astartEnd: `${from}-${to}`,
             startDate: startDate,

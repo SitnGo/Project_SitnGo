@@ -21,15 +21,15 @@ const Header = (props) => {
 
     return(
         <Grid
-            container
-            xs='12'
+            container = {true}
+            xs={12}
             alignItems='center'
             alignContent='center'
             justify='space-evenly'
             className={classes.navbar}
         >
             <Grid
-                item
+                item = {true}
                 xl={1}
                 lg={1}
                 md={1}

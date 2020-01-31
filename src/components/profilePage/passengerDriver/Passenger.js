@@ -47,7 +47,7 @@ function Passenger(props) {
             { data ?
                 <Card className={classes.card}>
                     <CardHeader
-                        avatar={<Avatar src='' />}
+                        avatar={<Avatar src={data.url} />}
                         title={data.parameters.name}
                         subheader={data.startDate}
                         onClick={openDialog}
