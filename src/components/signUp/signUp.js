@@ -63,7 +63,7 @@ const SignUp = (props) => {
                 .catch(function (error) {
                     let err = Object.assign({}, errors);
                     console.log(error)
-                    setErrors(Object.assign(err, { emailError: {bool: true, errText: 'Email is not valid'} }))
+                    setErrors(Object.assign(err, { emailError: {bool: true, errText: 'Email is not valid or already in use'} }))
 
                 });
     }
@@ -78,7 +78,7 @@ const SignUp = (props) => {
             .has().not().spaces()
             .has().not().digits()
             .is().min(2)
-            .is().max(10)
+            .is().max(50)
         if (!inputValidator.validate(name)) {
             let failedListName = inputValidator.validate(name, { list: true });
             for (let i = 0; i < failedListName.length; i++) {

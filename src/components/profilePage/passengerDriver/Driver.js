@@ -27,40 +27,45 @@ function Driver(props) {
             title={data.parameters.name} 
             subheader={data.startDate} 
             />
-            <CardContent>
+            <CardContent className={classes.info}>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >from - {startEnd[0]}</Typography>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >to - {startEnd[1]}</Typography>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
+                    component='p'
+                >Current Free Seats - {data.parameters.count}</Typography>
+                <Typography
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >distance - {data.parameters.distance}</Typography>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >car model - {data.parameters.car}</Typography>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >car number - {data.parameters.plate}</Typography>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >price - {data.parameters.price}</Typography>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >Driver Phone - {data.DriverPhone}</Typography>
             </CardContent>

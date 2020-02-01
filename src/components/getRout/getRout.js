@@ -18,8 +18,6 @@ import Map from './map/MapForGetRoute'
 import { Redirect } from 'react-router-dom';
 import styles from './style';
 import SimpleSnackbar from "./snackbar/snackbar"
-// import {isEdit1, openUpdateForm} from '../../actions/index';
-// import { useDispatch, useSelector } from 'react-redux';
 
 const GetRout = (props) => {
 
@@ -245,8 +243,16 @@ const GetRout = (props) => {
                 <div className={classes.mapContainer}>
                     {route ?
                         <React.Fragment >
-                            <Typography align='center' >{routeFromTo} </Typography>
-                            <Typography align='center'>{routeDate} </Typography>
+                            <Typography 
+                                align ='justify'
+                                variant='overline'
+                                component='p' 
+                            >{routeFromTo} </Typography>
+                            <Typography
+                                align ='justify'
+                                variant='overline'
+                                component='p'
+                            >{routeDate} </Typography>
                             <Map route={route} />
                             <Button
                                 fullWidth

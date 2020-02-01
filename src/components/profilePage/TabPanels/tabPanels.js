@@ -18,14 +18,14 @@ export default function CenteredTabs(props) {
             <Button
                 variant='contained'
                 onClick={handleClick1}
-                className={changeColor ?  classes.buttonChangeColor : classes.button}
+                className={changeColor ? classes.buttonChangeColor : classes.button}
             >
                 Passenger
             </Button>
             <Button
                 variant='contained'
                 onClick={handleClick2}
-                className={!changeColor ? classes.buttonChangeColor : classes.button }
+                className={!changeColor ? classes.buttonChangeColor : classes.button}
             >
                 Driver
             </Button>

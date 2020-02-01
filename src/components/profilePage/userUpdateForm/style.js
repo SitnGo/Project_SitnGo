@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
             opacity: 0.95,
         }
     },
-    forgotButton: {
+    changeButton: {
         margin: '5px',
         color: '#282e34',
     },

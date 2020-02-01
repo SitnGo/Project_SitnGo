@@ -7,8 +7,8 @@ import fire from '../../../ConfigFirebase/Fire';
 import storage from '../../../ConfigFirebase/storage';
 import {confirmUpdate} from '../../../actions/index';
 import {useDispatch, connect } from 'react-redux';
-import ForgotPassword from '../Forgotpassword/forgotPassword';
-
+import ChangePassword from '../Changepassword/changePassword';
+import {Redirect} from 'react-router-dom';
 function mapStateToProps(state) {
     return {
         confirmUpdate:state.confirmUpdate,
@@ -21,6 +21,7 @@ function UpdateForm (props) {
     const [open, setOpen] = useState(false);
     const [email, setEmail] = useState(props.data[0]);
     const [phone, setPhone] = useState(props.data[1]);
+    const [bool, setBool] = useState(false);
     const [errors, setErrors] = useState({ 
         emailError: { bool: false, errText: '' },
         nameError: { bool: false, errText: '' },
@@ -126,108 +127,63 @@ let arrFromErrorsValues = Object.values(errors)
       
     
 ////////////////////// delete user /////////////////////////////////////
-function deleteUser () {
+  function  deleteUser () {
     const user = fire.auth().currentUser;
-    //   fire.firestore().collection('users').doc(user.uid).get().then((doc)=> {
-        
-        //   if (!!doc.data().url !== false) {
-        //     alert('storeage delete');
-            
-        //     storage.ref().child(`images/${user.uid}`).listAll().then(function(res) {
-        //         res.items.forEach((itemRef) => {
-                
-        //         let desertRef = storage.ref(`images/${user.uid}`).child(itemRef.name);
-                
-        //             desertRef.delete().then(()=> {
-        //                 alert('file deleted!');
-        //             }).catch((error)=>{
-        //                 console.log(error);
-        //             });            
-
-        //         });
-        //     }).catch((error) => {
-        //             console.log('error',error);
-        //     });
-        //   } 
-
-
-    //  let subCollectionPath = '/users/kdjR7ArYaiONDqe6jO8qKOC7amE2/acceptedRoutes'            
-    // fire.firestore().collection(subCollectionPath).get().then(val => {
-    //     console.log(val);
-    // })
     fire.firestore().collection('users').doc(user.uid).get().then((doc)=> {
-        ///storige delete
-        console.log(doc.data());
-        // if (!!doc.data().url !== false) {
-        //     alert('storeage delete');
+        //storige delete
+        if (!!doc.data().url !== false) {
+            alert('storeage delete');
             
-        //     storage.ref().child(`images/${user.uid}`).listAll().then(function(res) {
-        //         res.items.forEach((itemRef) => {
+            storage.ref().child(`images/${user.uid}`).listAll().then(function(res) {
+                res.items.forEach((itemRef) => {
                 
-        //         let desertRef = storage.ref(`images/${user.uid}`).child(itemRef.name);
+                let desertRef = storage.ref(`images/${user.uid}`).child(itemRef.name);
                 
-        //             desertRef.delete().then(()=> {
-        //                 alert('file deleted!');
-        //             }).catch((error)=>{
-        //                 console.log(error);
-        //             });            
+                    desertRef.delete().then(()=> {
+                        alert('file deleted!');
+                    }).catch((error)=>{
+                        console.log(error);
+                    });            
 
-        //         });
-        //     }).catch((error) => {
-        //         console.log('error',error);
-        //     });
-        // } 
+                });
+            }).catch((error) => {
+                console.log('error',error);
+            });
+        } 
         // acceptedRoutes and userRoutesInfo collections delete
-        // fire.firestore().collection(`/users/${user.uid}/acceptedRoutes`).get().then(querySnapshot => {
-        //     querySnapshot.forEach(doc => {
-        //         fire.firestore().collection(`/users/${user.uid}/acceptedRoutes`).doc(doc.id).delete().then(()=>{
-        //             alert('acceptedRoutes deleted');
-        //         });
-        //     })
-        // })
-        // fire.firestore().collection(`/users/${user.uid}/userRoutesInfo`).get().then(querySnapshot => {
-        //     querySnapshot.forEach(doc =>{
-        //         fire.firestore().collection(`/users/${user.uid}/userRoutesInfo`).doc(doc.id).delete().then(()=>{
-        //             alert('userRoutesInfo deleted');
-        //         });
-        //     })
+        fire.firestore().collection(`/users/${user.uid}/acceptedRoutes`).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                fire.firestore().collection(`/users/${user.uid}/acceptedRoutes`).doc(doc.id).delete().then(()=>{
+                    alert('acceptedRoutes deleted');
+                });
+            })
+        }).catch((error) => {console.log(error)})
+        fire.firestore().collection(`/users/${user.uid}/userRoutesInfo`).get().then(querySnapshot => {
+            querySnapshot.forEach(doc =>{
+                fire.firestore().collection(`/users/${user.uid}/userRoutesInfo`).doc(doc.id).delete().then(()=>{
+                    alert('userRoutesInfo deleted');
+                });
+            })
            
-        });     
+        }).catch((error) => {console.log(error)})  
     // document delete
         
-            // user.delete().then(() => {
-            //     // User deleted.
-            //     alert('user deleted');
-            // }).catch(function(error) {
-            //     console.log(error);
-            // });
-            // fire.firestore().collection('users').doc(user.uid).delete().then(()=> {
-            //     alert('Document successfully deleted');
+            fire.firestore().collection('users').doc(user.uid).delete().then(()=> {
+                alert('Document successfully deleted');
                 
-            // }).catch((error) => {console.log(error)})
+                user.delete().then(() => {
+                    // User deleted
+                }).catch(function(error) {
+                    console.log(error);
+                });
 
-
-    // });
-        // delete subcollections
-        
-        
-    // console.log(fire.firestore().batch());
-        
-
-                // function deleteAtPath(path) {
-                    // var deleteFn = fire.functions().httpsCallable('recursiveDelete');
-                    // deleteFn({ path: '/users/Ww7ADj83LMNdUSZ1VadSZEmaLww1/userRoutesInfo' })
-                        // .then(function(result) {
-                            // alert('delete');
-                            // logMessage('Delete success: ' + JSON.stringify(result));
-                        // })
-                        // .catch(function(err) {
-                            // logMessage('Delete failed, see console,');
-                            // console.log(err);
-                        // });
-                // }
                 
-    //   })
+            }).catch((error) => {console.log(error)})
+
+
+    });
+    setBool(true);
+                    
     }
     
  //////////////////cancel///////////
@@ -236,7 +192,7 @@ function deleteUser () {
         props.setOpenUpdateForm(false);
         props.setIsEdit(true);
     }
-    const clickOpenConfirmPassword = () => {
+    const clickOpenChangePassword = () => {
         setOpen(true);
     };
     return (
@@ -250,6 +206,7 @@ function deleteUser () {
             justify="center"
             alignItems="center"
         >
+            { bool ? <Redirect to='/'/> : null}
             <TextField  className={classes.textField}
                 label="email"
                 variant="filled"
@@ -299,13 +256,13 @@ function deleteUser () {
             </Grid>
             <Button
                 fullWidth
-                className={classes.forgotButton}
+                className={classes.changeButton}
                 variant='text'
-                onClick={clickOpenConfirmPassword}
+                onClick={clickOpenChangePassword}
             >
-                Forgot password?
+                Change password?
             </Button>
-            <ForgotPassword open={open} setOpen={setOpen}/>
+            <ChangePassword open={open} setOpen={setOpen}/>
             <Button
                 fullWidth
                 color='secondary'

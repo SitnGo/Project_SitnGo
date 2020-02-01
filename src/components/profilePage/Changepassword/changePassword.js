@@ -11,7 +11,7 @@ import {
         DialogTitle
 } from '@material-ui/core';
 
-function ForgotPassword(props) {
+function ChangePassword(props) {
     const classes = styles();
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState(false);
@@ -82,4 +82,4 @@ function ForgotPassword(props) {
     );
 }
 
-export default ForgotPassword;
+export default ChangePassword;
