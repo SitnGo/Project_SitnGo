@@ -63,10 +63,7 @@ function usePersonalInfo() {
         }
         getMarker().then(result => {
             setUser(result);
-            if(!result.hasOwnProperty('url')){
-                result.url='';
-            }
-            setUrl(result.url);
+            // setUrl(result.url);
             changeBool(true);
         });
     },[update, user1, render, renderDriver]);

@@ -22,7 +22,7 @@ function Footer() {
             >
                 <Fab size='small' target='_blank' href='https://github.com/SitnGo' className={classes.socialIcons}><GitHubIcon/></Fab >
                 <Fab size='small' target='_blank' href='https://www.facebook.com/armcodeacademy/' className={classes.socialIcons}><FacebookIcon/></Fab >
-                <Fab size='small' href='#' className={classes.socialIcons}><TwitterIcon/></Fab >
+                <Fab size='small' href='#!' className={classes.socialIcons}><TwitterIcon/></Fab >
             </Grid>
             <Grid
                 xl={2}

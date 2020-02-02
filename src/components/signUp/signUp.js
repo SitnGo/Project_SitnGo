@@ -71,7 +71,7 @@ const SignUp = (props) => {
                 .catch(function (error) {
                     let err = Object.assign({}, errors);
                     console.log(error)
-                    setErrors(Object.assign(err, { emailError: {bool: true, errText: 'Email is not valid'} }))
+                    setErrors(Object.assign(err, { emailError: {bool: true, errText: 'Email is not valid or already in use'} }))
 
                 });
         }
