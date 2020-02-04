@@ -25,7 +25,6 @@ const GetRout = (props) => {
     const [to, setTo] = useState('');
     const [routeFromTo, setRouteFromTo] = useState('');
     const [routeDate, setRouteDate] = useState('');
-    const [startDate, setStartDate] = useState('');
     const [count, setCount] = useState('')
     const [route, setRoute] = useState('');
     const [routeRef, setRouteRef] = useState('');
@@ -108,6 +107,11 @@ const GetRout = (props) => {
     let d = new Date();
     let day = d.getDate();
     let month;
+    if (d.getDate() < 9) {
+        day = `0${d.getDate() }`;
+    } else {
+        day = d.getDate();
+    }
     if (d.getMonth() < 9) {
         month = `0${d.getMonth() + 1}`;
     } else {
@@ -115,6 +119,8 @@ const GetRout = (props) => {
     }
     let year = d.getFullYear();
     let date = `${year}-${month}-${day}T23:59:00`;
+    const [startDate, setStartDate] = useState(date);
+
 
     const [page, setPage] = React.useState(0);
     const [info, setInfo] = useState(false);
@@ -164,8 +170,8 @@ const GetRout = (props) => {
                     variant='outlined'
                     label='Date'
                     type='datetime-local'
-                    defaultValue={`${date}`}
-                    onChange={(e) => setStartDate(e.target.value + ":00")}
+                    defaultValue={`${startDate}`}
+                    onChange={(e) => {setStartDate(e.target.value)}}
                     InputProps={{
                         classes: {
                             input: classes.resize,

@@ -109,9 +109,9 @@ const OfferRout = (props) => {
     let day = d.getDate();
     let month;
     if (d.getDate() < 9) {
-        day = `0${d.getMonth() }`;
+        day = `0${d.getDate() }`;
     } else {
-        day = d.getMonth();
+        day = d.getDate();
     }
     if (d.getMonth() < 9) {
         month = `0${d.getMonth() + 1}`;
@@ -246,7 +246,7 @@ const OfferRout = (props) => {
                         helperText={startDateError ? <p>You must set correct Date. You can set Trip Date starting tomorrow</p> : null}
                         type='datetime-local'
                         defaultValue={startDate}
-                        onChange={(e) => { date = e.target.value; setStartDate(date)}}
+                        onChange={(e) => {setStartDate(e.target.value)}}
                         className={classes.rideListItem}
                     />
                     <TextField
