@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import fire from '../../../ConfigFirebase/Fire'
+import styles from './style';
 import {Visibility, VisibilityOff} from '@material-ui/icons'
 import {InputAdornment, IconButton, CircularProgress } from '@material-ui/core';
 import {
@@ -17,37 +18,29 @@ function ConfirmPassword(props) {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-            const handleClickPasswordSuccessfully = () => {
-                if(password.trim() !== '') {
-                        fire.auth().signInWithEmailAndPassword(fire.auth().currentUser.email, password)
-                            .then(() => {
-                                props.setOpenUpdateForm(true);
-                                setPassword('');
-                                setOpen(false);
-                            })
-                            .catch(error => {
-                                console.log(error);
-                                setPasswordError(true);
-                                setShowLoader(false);
-                            });
-                } else {
-                    setPasswordError(true);
-                }
-            };
-
+    const classes = styles();
  
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setShowLoader(true);
+
+        fire.auth().signInWithEmailAndPassword(fire.auth().currentUser.email, password)
+            .then(() => {
+                props.setOpenUpdateForm(true);
+                setPassword('');
+                setOpen(false);
+            })
+            .catch(error => {
+                console.log(error);
+                setPasswordError(true);
+                setShowLoader(false);
+            });
+    }
+
     const handleClose = () => {
         props.setIsEdit(true);
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if(password.trim() === '') {
-            setShowLoader(false);
-        }else {
-            setShowLoader(true);
-        }
-    }
     return (
         <div>
             <Dialog open={!props.isEdit && open}  aria-labelledby='form-dialog-title' fullWidth={true}>
@@ -83,12 +76,25 @@ function ConfirmPassword(props) {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} color='secondary'>
+                       { 
+                        showLoader  ? 
+                            <CircularProgress />
+                       :
+                            <Button 
+                                type='submit' 
+                                className={classes.submit}
+                                variant='contained' 
+                            >
+                                Submit
+                            </Button> 
+                        }
+                        <Button 
+                            variant='outlined' 
+                            onClick={handleClose}
+                            disabled={showLoader ? true : false}
+                            >
                             Cancel
                         </Button>
-                       { showLoader  ? <CircularProgress />:<Button type='submit' onClick={handleClickPasswordSuccessfully} color='primary'>
-                            Submit
-                        </Button> }
                     </DialogActions>
                 </form>
             </Dialog>
