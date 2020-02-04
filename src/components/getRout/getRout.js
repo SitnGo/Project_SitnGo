@@ -261,7 +261,7 @@ const GetRout = (props) => {
                                 className={classes.accept}
                                 onClick={onAcceptClick}
                             >
-                                Accept
+                                subscribe
                             </Button>
                         </React.Fragment>
                         : null

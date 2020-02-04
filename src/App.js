@@ -17,7 +17,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import AlertDialogSlide from './components/sign_in/dialogSignIn';
 import AlertDialogSlideSignUp from './components/signUp/dialogSignUp'
 import PersonalInfo from './components/profilePage/personalInfo';
-
+import { Offline, Online } from "react-detect-offline";
 function App() {
     const dispatch = useDispatch();
     let user = useSelector((state)=> state.user);
@@ -32,36 +32,39 @@ function App() {
     },[])
     return (
         <div className='App'>
-            <Router>
-                <Header />
-                <AlertDialogSlide />
-                <AlertDialogSlideSignUp />
-                <Switch>
-                    <Route exact path='/'>
-                        <HeaderImage/>
-                        <About/>
-                        <ParallaxVideo/>
-                        <Contact/>
-                        <ToTop/>
-                    </Route>
-                    {
-                        user ?
-                            <>
-                                <Route exact path='/profile'>
-                                    <PersonalInfo/>
-                                </Route>
-                                <Route exact path ='/offerRoute' >
-                                    <OfferRoute/>
-                                </Route>
-                                <Route path='/getRout'>
-                                    <GetRout/>
-                                </Route>
-                            </>
-                            : <Route path='*' component={NotFound}/>
-                    }
-                </Switch>
-                <Footer/>
-            </Router>
+            <Online>
+                <Router>
+                    <Header />
+                    <AlertDialogSlide />
+                    <AlertDialogSlideSignUp />
+                    <Switch>
+                        <Route exact path='/'>
+                            <HeaderImage/>
+                            <About/>
+                            <ParallaxVideo/>
+                            <Contact/>
+                            <ToTop/>
+                        </Route>
+                        {
+                            user ?
+                                <>
+                                    <Route exact path='/profile'>
+                                        <PersonalInfo/>
+                                    </Route>
+                                    <Route exact path ='/offerRoute' >
+                                        <OfferRoute/>
+                                    </Route>
+                                    <Route path='/getRout'>
+                                        <GetRout/>
+                                    </Route>
+                                </>
+                                : <Route path='*' component={NotFound}/>
+                        }
+                    </Switch>
+                    <Footer/>
+                </Router>
+            </Online>
+            <Offline>no internet connection please check your internet/wi-fi connection and restart the app</Offline> 
         </div>
     );
 }
