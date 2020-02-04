@@ -293,7 +293,7 @@ const OfferRout = (props) => {
                         onChange={(e) => {
                             setboolean(true)
                             setPrice(e.target.value)
-                            if (+e.target.value > defaultPrice) {
+                            if (+e.target.value > defaultPrice/count) {
                                 setPriceError(true);
                                 setPriceHelperText(`The possible maximum price per person for this ride is ${Math.ceil(defaultPrice/count)}AMD`)
                             } else if (typeof (+e.target.value) === "number" && e.target.value > 0) {
