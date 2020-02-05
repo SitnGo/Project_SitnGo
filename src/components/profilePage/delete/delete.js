@@ -17,9 +17,6 @@ function DeleteAccount(props) {
     const [bool, setBool] = useState(false);
     const handleDelete = () => {
         const user = fire.auth().currentUser;
-        // fire.firestore().collection('users').doc(user.uid).get().then((doc)=> {
-            //storige delete
-            // if (!!doc.data().url !== false) {
                 storage.ref().child(`images/${user.uid}`).listAll().then((res) => {
                     res.items.forEach((itemRef) => {
                     
@@ -33,7 +30,6 @@ function DeleteAccount(props) {
                 }).catch((error) => {
                     console.log('error',error);
                 });
-            // } 
             // acceptedRoutes and userRoutesInfo collections delete
             fire.firestore().collection(`/users/${user.uid}/acceptedRoutes`).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
@@ -56,8 +52,6 @@ function DeleteAccount(props) {
                     
                 }).catch((error) => {console.log(error)})
     
-    
-        // });
         props.setOpen(false);
         setBool(true);
         
