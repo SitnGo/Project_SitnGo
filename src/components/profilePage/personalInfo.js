@@ -61,7 +61,7 @@ function PersonalInfo() {
         }
         getMarker().then(result => {
             setUser(result);
-            setUrl(result.url);
+            setUrl(result && result.url);
             changeBool(true);
         });
     },[update, user1, render, renderDriver]);
