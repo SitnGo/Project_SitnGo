@@ -32,36 +32,37 @@ function App() {
     },[])
     return (
         <div className='App'>
-            <Router>
-                <Header />
-                <AlertDialogSlide />
-                <AlertDialogSlideSignUp />
-                <Switch>
-                    <Route exact path='/'>
-                        <HeaderImage/>
-                        <About/>
-                        <ParallaxVideo/>
-                        <Contact/>
-                        <ToTop/>
-                    </Route>
-                    {
-                        user ?
-                            <>
-                                <Route exact path='/profile'>
-                                    <PersonalInfo/>
-                                </Route>
-                                <Route exact path ='/offerRoute' >
-                                    <OfferRoute/>
-                                </Route>
-                                <Route path='/getRout'>
-                                    <GetRout/>
-                                </Route>
-                            </>
-                            : <Route path='*' component={NotFound}/>
-                    }
-                </Switch>
-                <Footer/>
-            </Router>
+            
+                <Router>
+                    <Header />
+                    <AlertDialogSlide />
+                    <AlertDialogSlideSignUp />
+                    <Switch>
+                        <Route exact path='/'>
+                            <HeaderImage/>
+                            <About/>
+                            <ParallaxVideo/>
+                            <Contact/>
+                            <ToTop/>
+                        </Route>
+                        {
+                            user ?
+                                <>
+                                    <Route exact path='/profile'>
+                                        <PersonalInfo/>
+                                    </Route>
+                                    <Route exact path ='/offerRoute' >
+                                        <OfferRoute/>
+                                    </Route>
+                                    <Route path='/getRout'>
+                                        <GetRout/>
+                                    </Route>
+                                </>
+                                : <Route path='*' component={NotFound}/>
+                        }
+                    </Switch>
+                    <Footer/>
+                </Router>
         </div>
     );
 }

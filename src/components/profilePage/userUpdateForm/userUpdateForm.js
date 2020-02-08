@@ -4,11 +4,11 @@ import {Grid, TextField, Button} from '@material-ui/core';
 import { Phone, Email} from "@material-ui/icons"
 import InputAdornment from '@material-ui/core/InputAdornment';
 import fire from '../../../ConfigFirebase/Fire';
-import storage from '../../../ConfigFirebase/storage';
 import {confirmUpdate} from '../../../actions/index';
 import {useDispatch, connect } from 'react-redux';
-import ChangePassword from '../Changepassword/changePassword';
-import {Redirect} from 'react-router-dom';
+import ChangePassword from '../changePassword/changePassword';
+import DeleteAccount from '../delete/delete'; 
+
 function mapStateToProps(state) {
     return {
         confirmUpdate:state.confirmUpdate,
@@ -18,15 +18,12 @@ function mapStateToProps(state) {
 function UpdateForm (props) {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const [open, setOpen] = useState(false);
+    const [openChangePassword, setOpenChangePassword] = useState(false);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [email, setEmail] = useState(props.data[0]);
     const [phone, setPhone] = useState(props.data[1]);
-    const [bool, setBool] = useState(false);
     const [errors, setErrors] = useState({ 
         emailError: { bool: false, errText: '' },
-        nameError: { bool: false, errText: '' },
-        surnameError: { bool: false, errText: '' },
-        genderError: false,
         phoneError: false,
     });
     
@@ -48,22 +45,33 @@ let arrFromErrorsValues = Object.values(errors)
                 fire.firestore().collection("users").doc(fire.auth().currentUser.uid).get().then((doc)=>{
                     if(email !== props.data[0]) {
                          fire.auth().currentUser.updateEmail(email).then(()=>{
-                        
-                        })
-                    
+                             fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
+                                email,
+                            }).then(()=> {
+                                dispatch(confirmUpdate());
+                                props.setIsEdit(true);
+                                props.setOpenUpdateForm(false);
+                            });
+
+                         }).catch(() => {
+                                let err = Object.assign({}, errors);
+                                setErrors(Object.assign(err, { emailError: {bool: true, errText: 'Email is not valid or already in use'} }))
+                            });
                     }
-                    fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
-                            name: doc.data().name,
-                            surname: doc.data().surname,
-                            email: email,
-                            gender: doc.data().gender,
-                            phone: phone,
-                    }).then(()=>{
-                        dispatch(confirmUpdate());
-                        props.setIsEdit(true);
-                        props.setOpenUpdateForm(false);
-                    });
+
+                    if(phone !== props.data[1]) {
+                        fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
+                            phone,
+                        }).then(()=> { 
+                            dispatch(confirmUpdate());
+                            props.setIsEdit(true);
+                            props.setOpenUpdateForm(false);
+                        });
+                    }
+               
+
                 });
+                
             }
         }
     }), [errors])
@@ -73,6 +81,7 @@ let arrFromErrorsValues = Object.values(errors)
         let validator = require("email-validator");
         if (!validator.validate(email)) {
             setErrors(Object.assign(err, { emailError: {bool: true, errText: "Email is not valid or already in use"} }))
+            return;
         } else {
             setErrors(Object.assign(err, { emailError: false }))
         }
@@ -126,66 +135,7 @@ let arrFromErrorsValues = Object.values(errors)
     } 
       
     
-////////////////////// delete user /////////////////////////////////////
-  function  deleteUser () {
-    const user = fire.auth().currentUser;
-    fire.firestore().collection('users').doc(user.uid).get().then((doc)=> {
-        //storige delete
-        if (!!doc.data().url !== false) {
-            alert('storeage delete');
-            
-            storage.ref().child(`images/${user.uid}`).listAll().then(function(res) {
-                res.items.forEach((itemRef) => {
-                
-                let desertRef = storage.ref(`images/${user.uid}`).child(itemRef.name);
-                
-                    desertRef.delete().then(()=> {
-                        alert('file deleted!');
-                    }).catch((error)=>{
-                        console.log(error);
-                    });            
 
-                });
-            }).catch((error) => {
-                console.log('error',error);
-            });
-        } 
-        // acceptedRoutes and userRoutesInfo collections delete
-        fire.firestore().collection(`/users/${user.uid}/acceptedRoutes`).get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-                fire.firestore().collection(`/users/${user.uid}/acceptedRoutes`).doc(doc.id).delete().then(()=>{
-                    alert('acceptedRoutes deleted');
-                });
-            })
-        }).catch((error) => {console.log(error)})
-        fire.firestore().collection(`/users/${user.uid}/userRoutesInfo`).get().then(querySnapshot => {
-            querySnapshot.forEach(doc =>{
-                fire.firestore().collection(`/users/${user.uid}/userRoutesInfo`).doc(doc.id).delete().then(()=>{
-                    alert('userRoutesInfo deleted');
-                });
-            })
-           
-        }).catch((error) => {console.log(error)})  
-    // document delete
-        
-            fire.firestore().collection('users').doc(user.uid).delete().then(()=> {
-                alert('Document successfully deleted');
-                
-                user.delete().then(() => {
-                    // User deleted
-                }).catch(function(error) {
-                    console.log(error);
-                });
-
-                
-            }).catch((error) => {console.log(error)})
-
-
-    });
-    setBool(true);
-                    
-    }
-    
  //////////////////cancel///////////
    
     function CancelBtnClick() {
@@ -193,7 +143,10 @@ let arrFromErrorsValues = Object.values(errors)
         props.setIsEdit(true);
     }
     const clickOpenChangePassword = () => {
-        setOpen(true);
+        setOpenChangePassword(true);
+    };
+    const clickOpenDeleteAccount = () => {
+        setOpenDeleteDialog(true);
     };
     return (
         <Grid
@@ -206,7 +159,7 @@ let arrFromErrorsValues = Object.values(errors)
             justify="center"
             alignItems="center"
         >
-            { bool ? <Redirect to='/'/> : null}
+            
             <TextField  className={classes.textField}
                 label="email"
                 variant="filled"
@@ -262,13 +215,14 @@ let arrFromErrorsValues = Object.values(errors)
             >
                 Change password?
             </Button>
-            <ChangePassword open={open} setOpen={setOpen}/>
+            <ChangePassword open={openChangePassword} setOpen={setOpenChangePassword}/>
             <Button
                 fullWidth
                 color='secondary'
                 variant='contained'
-                onClick={deleteUser}
+                onClick={clickOpenDeleteAccount}
             >Delete</Button>
+            <DeleteAccount  open={openDeleteDialog} setOpen={setOpenDeleteDialog}/>
         </Grid>
     );
 }

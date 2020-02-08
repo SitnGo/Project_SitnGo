@@ -49,7 +49,7 @@ const OfferRout = (props) => {
     const [maps, setMap] = useState();
     const [price, setPrice] = useState(0);
     const [defaultPrice, setDefaultPrice] = useState(0);
-    const [startDate, setStartDate] = useState(null);
+    
     const [startDateError, setStartDateError] = useState(false);
     const [fromError, setFromError] = useState(false);
     const [toError, setToError] = useState(false);
@@ -108,6 +108,11 @@ const OfferRout = (props) => {
     let d = new Date();
     let day = d.getDate();
     let month;
+    if (d.getDate() < 9) {
+        day = `0${d.getDate() }`;
+    } else {
+        day = d.getDate();
+    }
     if (d.getMonth() < 9) {
         month = `0${d.getMonth() + 1}`;
     } else {
@@ -115,6 +120,7 @@ const OfferRout = (props) => {
     }
     let year = d.getFullYear();
     let date = `${year}-${month}-${day}T23:59:00`;
+    const [startDate, setStartDate] = useState(date);
 
     function isEmpty() {
         if (from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== '' && +price && !priceError && startDate !== null && startDate !== date && !isRouteError && isRouteError !== null) {
@@ -239,8 +245,8 @@ const OfferRout = (props) => {
                         error={startDateError}
                         helperText={startDateError ? <p>You must set correct Date. You can set Trip Date starting tomorrow</p> : null}
                         type='datetime-local'
-                        defaultValue={date}
-                        onChange={(e) => { console.log(e.target.value); let date = e.target.value + ":00"; setStartDate(date) }}
+                        defaultValue={startDate}
+                        onChange={(e) => {setStartDate(e.target.value)}}
                         className={classes.rideListItem}
                     />
                     <TextField
@@ -293,7 +299,7 @@ const OfferRout = (props) => {
                         onChange={(e) => {
                             setboolean(true)
                             setPrice(e.target.value)
-                            if (+e.target.value > defaultPrice) {
+                            if (+e.target.value > defaultPrice/count) {
                                 setPriceError(true);
                                 setPriceHelperText(`The possible maximum price per person for this ride is ${Math.ceil(defaultPrice/count)}AMD`)
                             } else if (typeof (+e.target.value) === "number" && e.target.value > 0) {

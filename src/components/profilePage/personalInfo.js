@@ -1,9 +1,9 @@
 import React,{useState, useEffect} from 'react';
 import {Typography, Button, Avatar, Paper, Grid} from '@material-ui/core';
-import {Phone, Email, AccountBox, Edit, FastForward} from '@material-ui/icons'
+import {Phone, Email, AccountBox, Edit} from '@material-ui/icons'
 import Skeleton from '@material-ui/lab/Skeleton';
 import UpdateForm from './userUpdateForm/userUpdateForm';
-import ConfirmPassword from './ConfirmPassword/confirmPassword';
+import ConfirmPassword from './confirmPassword/confirmPassword';
 import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
@@ -22,7 +22,7 @@ function mapStateToProps(state) {
     };
 }
 
-function usePersonalInfo() {
+function PersonalInfo() {
     const [PassagerList, setPassagerList] = useState(null);
     const [DriverList, setDriverList] = useState(null);
     const [bool, changeBool] = useState(false);
@@ -209,4 +209,4 @@ function usePersonalInfo() {
     );
 }
 
-export default connect(mapStateToProps)(usePersonalInfo)
+export default connect(mapStateToProps)(PersonalInfo)

@@ -3,7 +3,7 @@ export default function reducers(state = {
     isLoggedInUser: false,
     willOpenSignIN: false,
     willOpenSignUP: false,
-    confirmUpdate : true
+    confirmUpdate : false
 }, action) {
 
     switch (action.type) {

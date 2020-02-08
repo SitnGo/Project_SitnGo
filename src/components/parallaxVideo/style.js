@@ -11,7 +11,7 @@ const styles = makeStyles(theme => ({
         zIndex: -1000
     },
     video: {
-        width: '100%'
+        width: '100% !important'
     },
     '@media (min-width: 600px) and (max-width: 960px)': {
         container: {
