@@ -39,11 +39,8 @@ function HeaderWhenUserLoggedOut() {
             >
                 <ul className={classes.menu} >
                     <li className={classes.menuItem}>
-                        <RouterLink to='/'>
-                            <Link
-                                underline='hover'
-                                className={classes.menuLink}
-                            >Home</Link>
+                        <RouterLink to='/' className={classes.menuLink}>
+                           Home
                         </RouterLink>
                     </li>
                     <li className='menu-list__item'>

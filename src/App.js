@@ -29,7 +29,7 @@ function App() {
                 dispatch(signOutAction(e));
             }
         })
-    },[])
+    },[dispatch])
     return (
         <div className='App'>
             

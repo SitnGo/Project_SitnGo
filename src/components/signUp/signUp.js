@@ -5,7 +5,7 @@ import { Visibility, VisibilityOff, Phone, Email, AccountBox } from '@material-u
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import fire from '../../ConfigFirebase/Fire';
-import { openSignUPAction, SignInAction } from '../../actions'
+import { openSignUPAction } from '../../actions'
 import { useDispatch, connect } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -92,6 +92,7 @@ const SignUp = (props) => {
                     case 'spaces':
                         textInputName = ['Can\'t contain spaces'];
                         break;
+                    default: break;
                 }
             }
             setErrors(Object.assign(err, { nameError: { bool: true, errText: textInputName } }))
@@ -112,6 +113,7 @@ const SignUp = (props) => {
                     case 'spaces':
                         textInputSurname = ['Can\'t contain spaces'];
                         break;
+                    default: break;
                 }
             }
             setErrors(Object.assign(err, { surnameError: { bool: true, errText: textInputSurname } }))
@@ -149,6 +151,7 @@ const SignUp = (props) => {
                     case 'lowercase':
                         text = ['Need at least 1 Lowercase letter'];
                         break;
+                    default: break;
                 }
             }
             setErrors(Object.assign(err, { passwordError: { bool: true, errText: text } }))

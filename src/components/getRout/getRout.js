@@ -28,11 +28,9 @@ const GetRout = (props) => {
     const [count, setCount] = useState('')
     const [route, setRoute] = useState('');
     const [routeRef, setRouteRef] = useState('');
-    const [countError, setCountError] = useState(false);
     const [redirect, setRedirect] = useState(false);
     const [isDisable, setIsDisable] = useState(false);
-    const [checkIsUserAlreadyHasRoute, setCheckIsUserAlreadyHasRoute] = useState(null)
-    const [matchedRef, setMatchedRef] = useState(null);
+    // const [matchedRef, setMatchedRef] = useState(null);
     const [alreadyAcceptedRoute, setAlreadyAcceptedRoute] = useState(null);
     let i = 0;
     let j = 0;
@@ -56,7 +54,7 @@ const GetRout = (props) => {
                     }
                 })
                 setInfo(matchedRouts);
-                setMatchedRef(matchedRoutsRefs);
+                // setMatchedRef(matchedRoutsRefs);
             });
             return user;
         }

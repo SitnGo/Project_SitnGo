@@ -3,7 +3,7 @@ import fire from '../../ConfigFirebase/Fire';
 import { Button, Fab } from '@material-ui/core/';
 import { Typography,TextField, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff, Email, Close } from '@material-ui/icons';
-import { useDispatch, useSelector, connect} from 'react-redux';
+import { useDispatch, connect} from 'react-redux';
 import FormDialog from './forgot';
 import { openSignInAction, SignInAction, openSignUPAction } from '../../actions'
 import { styles } from './style';
@@ -14,7 +14,6 @@ export function SignIn(props) {
     const [isAnError, setIsAnError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
     const handleClose = () => {
         dispatch(openSignInAction())
@@ -23,9 +22,6 @@ export function SignIn(props) {
         setErrorMessage('')
     };
 
-    const handleChange = name => (event) => {
-        setChecked(event.target.checked);
-    };
     function login() {
         fire.auth().signInWithEmailAndPassword(email, password)
             .then(a => {

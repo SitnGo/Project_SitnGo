@@ -5,8 +5,6 @@ import SimpleSnackbarSuccess from "./snackbar/snackbarSuccess"
 import MLeafletApp from './Leafletmaps/final'
 import fire from '../../ConfigFirebase/Fire';
 import {Redirect} from 'react-router-dom';
-// import Routing from './Leafletmaps/RoutingMachine';
-// import {test} from "./Leafletmaps/Map";
 import styles from './style';
 
 const numberPersons = [
@@ -46,7 +44,6 @@ const OfferRout = (props) => {
     const [car, setCar] = useState("");
     const [plate, setPlate] = useState("");
     const [count, setCount] = useState("1");
-    const [maps, setMap] = useState();
     const [price, setPrice] = useState(0);
     const [defaultPrice, setDefaultPrice] = useState(0);
     
@@ -60,7 +57,6 @@ const OfferRout = (props) => {
     const [isRouteError, setIsRouteError] = useState(null);
     const [isRouteSuccess, setIsRouteSuccess] = useState(false);
     const [submitDisable, setSubmitDisable] = useState(false);
-    const [route, setRoute] = useState(null);
     const [priceHelperText, setPriceHelperText] = useState("You  must fill blank areas");
     const [boolean,setboolean] = useState(false);
 
@@ -80,7 +76,6 @@ const OfferRout = (props) => {
     let userId = fire.auth().currentUser.uid;
     let routeInfo_REF = fire.firestore().collection("users").doc(userId).collection("userRoutesInfo");
     let currentRoute = JSON.parse(localStorage.getItem("route"))
-        setRoute(currentRoute)
         currentRoute.waypoints[0].name += from;
         currentRoute.waypoints[1].name += to;
         let route={
@@ -293,9 +288,11 @@ const OfferRout = (props) => {
                         fullWidth
                         variant='outlined'
                         label='Price per Person'
-                        value={boolean ? price : (Math.ceil(defaultPrice/count)==NaN||Math.ceil(defaultPrice/count)==Infinity ? 200 : Math.ceil(defaultPrice/count))}
+                        value={boolean ? price : (Math.ceil(defaultPrice/count)===NaN||Math.ceil(defaultPrice/count)===Infinity ? 200 : Math.ceil(defaultPrice/count))}
                         error={priceError}
                         helperText={priceError ? <p>{priceHelperText}</p> : null}
+
+
                         onChange={(e) => {
                             setboolean(true)
                             setPrice(e.target.value)
@@ -323,7 +320,6 @@ const OfferRout = (props) => {
                     {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess={isRouteSuccess} /> : null}
                     <MLeafletApp
                     setboolean={setboolean}
-                        setMap={setMap}
                         setDefaultPrice={setDefaultPrice}
                         setPrice={setPrice}
                         setFrom={setFrom}

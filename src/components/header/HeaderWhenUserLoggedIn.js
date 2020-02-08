@@ -1,14 +1,12 @@
 import React from 'react';
-import { Link, Button, Grid } from '@material-ui/core';
-import { Link as RouterLink, NavItem } from 'react-router-dom'
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { Button, Grid } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom'
+import { connect, useDispatch } from 'react-redux';
 import { signOutAction } from '../../actions';
-import {isEdit1, openUpdateForm} from '../../actions/index';
 import fire from '../../ConfigFirebase/Fire';
 import styles from './style';
 
 function HeaderWhenUserLoggedIn(props) {
-    let isEditChecked = useSelector(state => state.isEdit1);
     const dispatch = useDispatch();
     const classes = styles();
     
@@ -18,23 +16,11 @@ function HeaderWhenUserLoggedIn(props) {
         })
         .then((result)=>{
             dispatch(signOutAction(result))
-            // if (isEditChecked === false) {
-            //     dispatch(openUpdateForm());
-            //     dispatch(isEdit1());
-    
-            // }
         })
         .catch(function(error) {
             alert(error);
           });
     }
-    // function handleMyProfile () {
-    //     // if (isEditChecked === false) {
-    //     //     dispatch(openUpdateForm());
-    //     //     dispatch(isEdit1());
-
-    //     // }
-    // }
     return (
         <Grid
             container
