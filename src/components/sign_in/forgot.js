@@ -6,9 +6,13 @@ import {Close } from '@material-ui/icons';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import fire from '../../ConfigFirebase/Fire';
 import { styles } from './style';
+
+
 
 export default function FormDialog() {
     const [open, setOpen] = useState(false);
@@ -36,6 +40,12 @@ export default function FormDialog() {
         })
     };
 
+    const handleEnter = (e) => {
+        if(e.key == 'Enter'){
+            forgotPassword();
+        }
+    }
+
     return (
         <div>
             <Button variant='text' color='primary' onClick={handleClickOpen}>
@@ -61,6 +71,7 @@ export default function FormDialog() {
                         variant = 'outlined'
                         label = 'Enter recovery email address'
                         onChange={e => {setEmail(e.target.value)}}
+                        onKeyPress = {e => {handleEnter(e)}}
                     />
                 </DialogContent>
                 <DialogActions>
