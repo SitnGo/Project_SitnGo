@@ -7,7 +7,6 @@ import { createStore } from 'redux';
 import reducers from './reducers/reducers';
 import { Provider } from 'react-redux';
 import { Offline, Online } from "react-detect-offline";
-// import {browserHistory} from 'react-router'
 const store = createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
