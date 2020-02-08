@@ -101,7 +101,6 @@ export function SignIn(props) {
                     margin='dense'
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    // onKeyPress = {e => {if(e.key == 'Enter'){login()}}}
                     onKeyPress = {e => {handleEnter(e)}}
                     type={showPassword ? 'text' : 'password'}
                     color='primary'
