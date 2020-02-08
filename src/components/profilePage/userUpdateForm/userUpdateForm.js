@@ -6,7 +6,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import fire from '../../../ConfigFirebase/Fire';
 import {confirmUpdate} from '../../../actions/index';
 import {useDispatch, connect } from 'react-redux';
-import ChangePassword from '../changePassword/changePassword';
+import ChangePassword from '../Changepassword/changePassword';
 import DeleteAccount from '../delete/delete'; 
 
 function mapStateToProps(state) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Button, Grid } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, NavItem } from 'react-router-dom'
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { signOutAction } from '../../actions';
 import {isEdit1, openUpdateForm} from '../../actions/index';
@@ -60,19 +60,13 @@ function HeaderWhenUserLoggedIn(props) {
             >
                 <ul className={classes.menu} >
                     <li className={classes.menuItem}>
-                        <RouterLink to='/GetRout'>
-                            <Link
-                                underline='hover'
-                                className={classes.menuLink}
-                            >Get Route</Link>
+                        <RouterLink to='/GetRout' className={classes.menuLink}>
+                            Get Route
                         </RouterLink>
                     </li>
                     <li className={classes.menuItem}>
-                        <RouterLink to='/offerRoute'>
-                            <Link
-                                underline='hover'
-                                className={classes.menuLink}
-                            >Offer Route</Link>
+                        <RouterLink to='/offerRoute' className={classes.menuLink}>
+                            Offer Route
                         </RouterLink>
                     </li>
                 </ul>
