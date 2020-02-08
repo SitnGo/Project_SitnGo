@@ -146,7 +146,7 @@ let arrFromErrorsValues = Object.values(errors)
     };
 
     const handleEnter = (e) => {
-        if(e.key == 'Enter'){
+        if(e.key === 'Enter'){
             checkErrorsHandler
             ();
         }

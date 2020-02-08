@@ -66,7 +66,6 @@ function PersonalInfo() {
         });
     },[update, user1, render, renderDriver]);
 
-  
     function isEditBtnClick() {
         setIsEdit(false);
     }
@@ -74,7 +73,7 @@ function PersonalInfo() {
     return(
         <Grid
             container
-            xs={12}
+            justify='space-between'
             className={classes.profileContainer}
         >
             <Grid
@@ -160,19 +159,19 @@ function PersonalInfo() {
                     ) : (
                         <>
                             {openUpdateForm ? (
-                                <UpdateForm  
-                                    data={[user.email, user.phone]} 
-                                    isEdit={isEdit} 
+                                <UpdateForm
+                                    data={[user.email, user.phone]}
+                                    isEdit={isEdit}
                                     setIsEdit={setIsEdit}
                                     openUpdateForm={openUpdateForm}
                                     setOpenUpdateForm={setOpenUpdateForm}
 
-                                />                          
-                             ) : <ConfirmPassword 
-                                    isEdit={isEdit} 
+                                />
+                             ) : <ConfirmPassword
+                                    isEdit={isEdit}
                                    setIsEdit={setIsEdit}
                                    setOpenUpdateForm={setOpenUpdateForm}
-                             />} 
+                             />}
                         </>
                     )
                 }
@@ -186,24 +185,34 @@ function PersonalInfo() {
                 xs={12}
                 className={classes.personalInfoBlock2}
             >
-                <CenteredTabs tabChange={tabChange} setTabChange={setTabChange} />
-                {tabChange ?
-                    <FadeIn>
-                        <div className={classes.cards}>
-                            {DriverList && DriverList.map((el, i) => {
-                                return <Driver key={i} dataRef={el} renderDriver={renderDriver} setRenderDriver={setRenderDriver}/>
-                            })}
-                        </div>
-                    </FadeIn>
-                    :
-                    <FadeIn>
-                        <div className={classes.cards}>
-                            {PassagerList && PassagerList.map((el, i) => {
-                                return <Passenger key={i} dataRef={el} render={render} setRender={setRender} />
-                            })}
-                        </div>
-                    </FadeIn>
-                }
+                <Grid
+                    item
+                    xs={12}
+                >
+                    <CenteredTabs tabChange={tabChange} setTabChange={setTabChange} />
+                </Grid>
+                <Grid
+                    item
+                      xs={12}
+                >
+                    {tabChange ?
+                        <FadeIn>
+                            <div className={classes.cards}>
+                                {DriverList && DriverList.map((el, i) => {
+                                    return <Driver key={i} dataRef={el} renderDriver={renderDriver} setRenderDriver={setRenderDriver}/>
+                                })}
+                            </div>
+                        </FadeIn>
+                        :
+                        <FadeIn>
+                            <div className={classes.cards}>
+                                {PassagerList && PassagerList.map((el, i) => {
+                                    return <Passenger key={i} dataRef={el} render={render} setRender={setRender} />
+                                })}
+                            </div>
+                        </FadeIn>
+                    }
+                </Grid>
             </Grid>
         </Grid>
     );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField, MenuItem } from '@material-ui/core';
+import { Button, TextField, MenuItem, Grid } from '@material-ui/core';
 import SimpleSnackbar from "./snackbar/snackbar";
 import SimpleSnackbarSuccess from "./snackbar/snackbarSuccess";
 import MLeafletApp from './Leafletmaps/final';
@@ -46,7 +46,6 @@ const OfferRout = (props) => {
     const [count, setCount] = useState("1");
     const [price, setPrice] = useState(0);
     const [defaultPrice, setDefaultPrice] = useState(0);
-    
     const [startDateError, setStartDateError] = useState(false);
     const [fromError, setFromError] = useState(false);
     const [toError, setToError] = useState(false);
@@ -72,38 +71,37 @@ const OfferRout = (props) => {
             return user;
         }
 
-    getMarker().then((result)=>{
-    let userId = fire.auth().currentUser.uid;
-    let routeInfo_REF = fire.firestore().collection("users").doc(userId).collection("userRoutesInfo");
-    let currentRoute = JSON.parse(localStorage.getItem("route"))
-        currentRoute.waypoints[0].name += from;
-        currentRoute.waypoints[1].name += to;
-        let route={
-            userId: fire.auth().currentUser.uid,
-            url: result.url,
-            route: currentRoute,
-            astartEnd: `${from}-${to}`,
-            startDate: startDate,
-            DriverPhone: result.phone,
-            parameters:  {
-                name: `${result.name} ${result.surname}`, 
-                car: car, 
-                plate: plate, 
-                count: count,
-                distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
-                time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
-                price: `${Math.floor(price/count)}AMD`,
-            }
-        }
+        getMarker().then((result)=>{
+            let userId = fire.auth().currentUser.uid;
+            let routeInfo_REF = fire.firestore().collection("users").doc(userId).collection("userRoutesInfo");
+            let currentRoute = JSON.parse(localStorage.getItem("route"));
+            currentRoute.waypoints[0].name += from;
+            currentRoute.waypoints[1].name += to;
+            let route={
+                userId: fire.auth().currentUser.uid,
+                url: result.url,
+                route: currentRoute,
+                astartEnd: `${from}-${to}`,
+                startDate: startDate,
+                DriverPhone: result.phone,
+                parameters:  {
+                    name: `${result.name} ${result.surname}`,
+                    car: car,
+                    plate: plate,
+                    count: count,
+                    distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
+                    time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
+                    price: `${Math.floor(price/count)}AMD`,
+                }
+            };
             routeInfo_REF.add(route).then(() => setRedirect(true));
-        })
-
-}
+        });
+    }
 
     let d = new Date();
-    let day = d.getDate();
+    let day;
     let month;
-    if (d.getDate() < 9) {
+    if (d.getDate() < 10) {
         day = `0${d.getDate() }`;
     } else {
         day = d.getDate();
@@ -114,7 +112,7 @@ const OfferRout = (props) => {
         month = d.getMonth() + 1;
     }
     let year = d.getFullYear();
-    let date = `${year}-${month}-${day}T23:59:00`;
+    let date = `${year}-${month}-${day}T23:59`;
     const [startDate, setStartDate] = useState(date);
 
     function isEmpty() {
@@ -152,21 +150,18 @@ const OfferRout = (props) => {
                 setStartDateError(true);
                 return true
             }
-
             if (to.trim() !== '') {
                 setToError(false);
             } else {
                 setToError(true);
                 return true
             }
-
             if (car.trim() !== '') {
                 setCarError(false);
             } else {
                 setCarError(true);
                 return true
             }
-
             if (plate.trim() !== '') {
                 setPlateError(false);
             } else {
@@ -179,15 +174,23 @@ const OfferRout = (props) => {
                 setPriceError(true);
                 return true
             }
-
         }
     }
     const classes = styles();
     return (
         <section className={classes.section}>
             {redirect ? <Redirect to="/profile" push /> : null}
-            <div className={classes.offer}>
-                <div className={classes.rideList}>
+            <Grid
+                container
+                alignItems='center'
+                justify='space-between'
+                className={classes.offer}
+            >
+                <Grid
+                    item
+                    xs={5}
+                    className={classes.rideList}
+                >
                     <TextField
                         margin='dense'
                         fullWidth
@@ -199,9 +202,7 @@ const OfferRout = (props) => {
                             let routingInput = document.getElementsByClassName("leaflet-routing-geocoder")
                             routingInput[0].children[0].value=e.target.value;
                             console.log(routingInput[0].children)
-                            // document.getElementById("input11").appendChild(routingInput[0].children[0])
                             document.getElementById('input12').style.display='block'
-
                         }}
                         value={from}
                         error={fromError}
@@ -225,12 +226,7 @@ const OfferRout = (props) => {
                         fullWidth
                         variant='outlined'
                         label='To'
-                        // onChange={(e) => { setTo(e.target.value) }}
-                        // value={to}
-                        // error={toError}
-                        // helperText={toError ? <p>You  must fill blank areas</p> : null}
-                        // className={classes.rideListItem}
-                        style={{display: 'none'}}    
+                        style={{display: 'none'}}
                         id={'input12'}
                     />
                     <TextField
@@ -291,8 +287,6 @@ const OfferRout = (props) => {
                         value={boolean ? price : (Math.ceil(defaultPrice/count)===NaN||Math.ceil(defaultPrice/count)===Infinity ? 200 : Math.ceil(defaultPrice/count))}
                         error={priceError}
                         helperText={priceError ? <p>{priceHelperText}</p> : null}
-
-
                         onChange={(e) => {
                             setboolean(true)
                             setPrice(e.target.value)
@@ -314,8 +308,12 @@ const OfferRout = (props) => {
                         fullWidth
                         onClick={onSubmitClick}
                     >Submit</Button>
-                </div>
-                <div className={classes.mapContainer}>
+                </Grid>
+                <Grid
+                    item
+                    xs={5}
+                    className={classes.mapContainer}
+                >
                     {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} /> : null}
                     {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess={isRouteSuccess} /> : null}
                     <MLeafletApp
@@ -327,8 +325,8 @@ const OfferRout = (props) => {
                         setIsRouteSuccess={setIsRouteSuccess}
                         setIsRouteError={setIsRouteError}
                     />
-                </div>
-            </div>
+                </Grid>
+            </Grid>
         </section>
     );
 }

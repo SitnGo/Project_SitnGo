@@ -17,25 +17,13 @@ function HeaderWhenUserLoggedOut() {
     return (
         <Grid
             container
-            xl={11}
-            lg={11}
-            md={11}
-            sm={10}
-            xs={10}
             alignItems='center'
             alignContent='center'
             justify='space-evenly'
         >
             <Grid
-                container
-                xl={7}
-                lg={7}
-                md={7}
-                sm={7}
+                item
                 xs={7}
-                alignItems='center'
-                alignContent='center'
-                justify='center'
             >
                 <ul className={classes.menu} >
                     <li className={classes.menuItem}>
@@ -60,27 +48,36 @@ function HeaderWhenUserLoggedOut() {
                 </ul>
             </Grid>
             <Grid
-                container
+                item
                 xl={3}
                 lg={3}
                 md={3}
                 sm={5}
                 xs={5}
-                justify='flex-end'
                 className={classes.signButtonsContainer}
             >
-                <Button
-                    variant='contained'
-                    className={classes.sign}
-                    onClick={handleSignUPClick}
-                >Sign UP</Button>
-                <RouterLink to='#' className={classes.signButton}>
+                <Grid
+                    container
+                    alignItems='center'
+                    justify='space-evenly'
+                >
                     <Button
                         variant='contained'
                         className={classes.sign}
-                        onClick={handleSigninClick}
-                    >Sign in</Button>
-                </RouterLink>
+                        onClick={handleSignUPClick}
+                    >
+                        Sign UP
+                    </Button>
+                    <RouterLink to='#' className={classes.signButton}>
+                        <Button
+                            variant='contained'
+                            className={classes.sign}
+                            onClick={handleSigninClick}
+                        >
+                            Sign in
+                        </Button>
+                    </RouterLink>
+                </Grid>
             </Grid>
         </Grid>
     )

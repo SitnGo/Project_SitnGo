@@ -233,7 +233,7 @@ const SignUp = (props) => {
     }
 
     const handleEnter = (e) => {
-        if(e.key == 'Enter'){
+        if(e.key === 'Enter'){
             checkErrorsHandler();
         }
     }

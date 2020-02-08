@@ -22,18 +22,13 @@ const Header = (props) => {
     return(
         <Grid
             container
-            xl={12}
-            lg={12}
-            md={12}
-            sm={12}
-            xs={12}
             alignItems='center'
             alignContent='center'
             justify='space-evenly'
             className={classes.navbar}
         >
             <Grid
-                item = {true}
+                item
                 xl={1}
                 lg={1}
                 md={1}
@@ -43,7 +38,16 @@ const Header = (props) => {
             >
                 <RouterLink to= {user ? '/profile' : '/'}><img className={classes.logo} src='images/Logo.png' alt='Logo'/></RouterLink>
             </Grid>
+            <Grid
+                item
+                xl={11}
+                lg={11}
+                md={11}
+                sm={10}
+                xs={10}
+            >
                 {user ? <HeaderWhenUserLoggedIn /> : <HeaderWhenUserLoggedOut /> }
+            </Grid>
         </Grid>
     );
 }

@@ -30,7 +30,6 @@ const GetRout = (props) => {
     const [routeRef, setRouteRef] = useState('');
     const [redirect, setRedirect] = useState(false);
     const [isDisable, setIsDisable] = useState(false);
-    // const [matchedRef, setMatchedRef] = useState(null);
     const [alreadyAcceptedRoute, setAlreadyAcceptedRoute] = useState(null);
     let i = 0;
     let j = 0;
@@ -54,11 +53,9 @@ const GetRout = (props) => {
                     }
                 })
                 setInfo(matchedRouts);
-                // setMatchedRef(matchedRoutsRefs);
             });
             return user;
         }
-
         getMarker().then(result => {
         })
     };
@@ -76,19 +73,21 @@ const GetRout = (props) => {
                         setAlreadyAcceptedRoute(false);
                     },3000)
                 }
-                
             })
             return bool;
         }).then((res)=>{
             if(!res){
-                
                 let { parameters } = route;
-                    fire.firestore().doc(routeRef.ref.path)
-                        .set({ parameters: { ...parameters, count: parameters.count - 1 } }, { merge: true }).then(() => {
-                            // console.log(JSON.stringify(routeRef))
-                            fire.firestore().collection("users").doc(fire.auth().currentUser.uid).collection("acceptedRoutes").add({ ref: fire.firestore().doc(routeRef.ref.path) })
-                                .then(() => setRedirect(true))
-                        })
+                fire.firestore().doc(routeRef.ref.path).set(
+                    { parameters: { ...parameters, count: parameters.count - 1 } },
+                    { merge: true }
+                ).then(
+                    () => {
+                        fire.firestore().collection("users").doc(fire.auth().currentUser.uid).collection("acceptedRoutes").add({ ref: fire.firestore().doc(routeRef.ref.path) })
+                        .then(() => setRedirect(true))
+
+                    }
+                )
             }
         })
     }
@@ -105,7 +104,7 @@ const GetRout = (props) => {
     let d = new Date();
     let day = d.getDate();
     let month;
-    if (d.getDate() < 9) {
+    if (d.getDate() < 10) {
         day = `0${d.getDate() }`;
     } else {
         day = d.getDate();
@@ -118,8 +117,6 @@ const GetRout = (props) => {
     let year = d.getFullYear();
     let date = `${year}-${month}-${day}T23:59:00`;
     const [startDate, setStartDate] = useState(date);
-
-
     const [page, setPage] = React.useState(0);
     const [info, setInfo] = useState(false);
     const rows = Object.values(info);
@@ -131,148 +128,149 @@ const GetRout = (props) => {
     return (
         <section className={classes.section}>
             <Grid
-                xl={12}
-                lg={12}
-                md={12}
-                sm={12}
-                xs={12}
-                className={classes.routeList}
+                container
             >
-                {redirect ? <Redirect to='/profile' push /> : null}
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='From'
-                    onChange={(e) => { setFrom(e.target.value) }}
-                    InputProps={{
-                        classes: {
-                            input: classes.resize,
-                        },
-                    }}
-                    className={classes.routeListItem}
-                />
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='To'
-                    onChange={(e) => { setTo(e.target.value) }}
-                    InputProps={{
-                        classes: {
-                            input: classes.resize,
-                        },
-                    }}
-                    className={classes.routeListItem}
-                />
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='Date'
-                    type='datetime-local'
-                    defaultValue={`${startDate}`}
-                    onChange={(e) => {setStartDate(e.target.value)}}
-                    InputProps={{
-                        classes: {
-                            input: classes.resize,
-                        },
-                    }}
-                    className={classes.routeListItem}
-                />
-                <TextField
-                    margin='dense'
-                    variant='outlined'
-                    label='Persons'
-                    onChange={(e) => setCount(e.target.value)}
-                    InputProps={{
-                        classes: {
-                            input: classes.resize,
-                        },
-                    }}
-                    className={classes.routeListItem}
-                />
-                <Button
-                    variant='outlined'
-                    onClick={onSubmit}
-                    className={classes.search}
-                >Search</Button>
-            </Grid>
-            <div className={classes.offersContainer}>
-                {info ? <div className={classes.offers}>
-                    <Paper>
-                        <Table size='small' stickyHeader>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align='center'>Car Model</TableCell>
-                                    <TableCell align='center'>Total Seats</TableCell>
-                                    <TableCell align='center'>Distance</TableCell>
-                                    <TableCell align='center'>Driver</TableCell>
-                                    <TableCell align='center'>Car plate</TableCell>
-                                    <TableCell align='center'>Price</TableCell>
-                                    <TableCell align='center'>Duration</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-                                    i++;
-                                    let tableRow = Object.values(row.parameters);
-                                    return (
-                                        <TableRow hover role='checkbox' key={i} onClick={() => onTableRowClick(row)} >
-                                            {
-                                                tableRow.map(column => {
-                                                    j++;
-                                                    return (
-                                                        <TableCell key={j} align='center' >
-                                                            {column}
-                                                        </TableCell>
-                                                    );
-                                                })
+                <Grid
+                    item
+                    xs={12}
+                    className={classes.routeList}
+                >
+                    {redirect ? <Redirect to='/profile' push /> : null}
+                    <TextField
+                        margin='dense'
+                        variant='outlined'
+                        label='From'
+                        onChange={(e) => { setFrom(e.target.value) }}
+                        InputProps={{
+                            classes: {
+                                input: classes.resize,
+                            },
+                        }}
+                        className={classes.routeListItem}
+                    />
+                    <TextField
+                        margin='dense'
+                        variant='outlined'
+                        label='To'
+                        onChange={(e) => { setTo(e.target.value) }}
+                        InputProps={{
+                            classes: {
+                                input: classes.resize,
+                            },
+                        }}
+                        className={classes.routeListItem}
+                    />
+                    <TextField
+                        margin='dense'
+                        variant='outlined'
+                        label='Date'
+                        type='datetime-local'
+                        defaultValue={`${startDate}`}
+                        onChange={(e) => {setStartDate(e.target.value)}}
+                        InputProps={{
+                            classes: {
+                                input: classes.resize,
+                            },
+                        }}
+                        className={classes.routeListItem}
+                    />
+                    <TextField
+                        margin='dense'
+                        variant='outlined'
+                        label='Persons'
+                        onChange={(e) => setCount(e.target.value)}
+                        InputProps={{
+                            classes: {
+                                input: classes.resize,
+                            },
+                        }}
+                        className={classes.routeListItem}
+                    />
+                    <Button
+                        variant='outlined'
+                        onClick={onSubmit}
+                        className={classes.search}
+                    >Search</Button>
+                </Grid>
+                <div className={classes.offersContainer}>
+                    {info ? <div className={classes.offers}>
+                        <Paper>
+                            <Table size='small' stickyHeader>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell align='center'>Car Model</TableCell>
+                                        <TableCell align='center'>Total Seats</TableCell>
+                                        <TableCell align='center'>Distance</TableCell>
+                                        <TableCell align='center'>Driver</TableCell>
+                                        <TableCell align='center'>Car plate</TableCell>
+                                        <TableCell align='center'>Price</TableCell>
+                                        <TableCell align='center'>Duration</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                                        i++;
+                                        let tableRow = Object.values(row.parameters);
+                                        return (
+                                            <TableRow hover role='checkbox' key={i} onClick={() => onTableRowClick(row)} >
+                                                {
+                                                    tableRow.map(column => {
+                                                        j++;
+                                                        return (
+                                                            <TableCell key={j} align='center' >
+                                                                {column}
+                                                            </TableCell>
+                                                        );
+                                                    })
 
-                                            }
+                                                }
 
-                                        </TableRow>
-                                    );
-                                })}
-                            </TableBody>
-                            <TableFooter>
-                                <TablePagination
-                                    count={rows.length}
-                                    rowsPerPageOptions={[]}
-                                    rowsPerPage={rowsPerPage}
-                                    page={page}
-                                    onChangePage={handleChangePage}
-                                />
-                            </TableFooter>
-                        </Table>
-                    </Paper>
-                </div> : null}
-                <div className={classes.mapContainer}>
-                    {route ?
-                        <React.Fragment >
-                            <Typography 
-                                align ='justify'
-                                variant='overline'
-                                component='p' 
-                            >{routeFromTo} </Typography>
-                            <Typography
-                                align ='justify'
-                                variant='overline'
-                                component='p'
-                            >{routeDate} </Typography>
-                            <Map route={route} />
-                            <Button
-                                fullWidth
-                                disabled={isDisable}
-                                variant='outlined'
-                                className={classes.accept}
-                                onClick={onAcceptClick}
-                            >
-                                subscribe
-                            </Button>
-                        </React.Fragment>
-                        : null
-                    }
+                                            </TableRow>
+                                        );
+                                    })}
+                                </TableBody>
+                                <TableFooter>
+                                    <TablePagination
+                                        count={rows.length}
+                                        rowsPerPageOptions={[]}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        onChangePage={handleChangePage}
+                                    />
+                                </TableFooter>
+                            </Table>
+                        </Paper>
+                    </div> : null}
+                    <div className={classes.mapContainer}>
+                        {route ?
+                            <React.Fragment >
+                                <Typography
+                                    align ='justify'
+                                    variant='overline'
+                                    component='p'
+                                >{routeFromTo} </Typography>
+                                <Typography
+                                    align ='justify'
+                                    variant='overline'
+                                    component='p'
+                                >{routeDate} </Typography>
+                                <Map route={route} />
+                                <Button
+                                    fullWidth
+                                    disabled={isDisable}
+                                    variant='outlined'
+                                    className={classes.accept}
+                                    onClick={onAcceptClick}
+                                >
+                                    subscribe
+                                </Button>
+                            </React.Fragment>
+                            : null
+                        }
+                    </div>
                 </div>
-            </div>
-            {alreadyAcceptedRoute ? <SimpleSnackbar alreadyAcceptedRoute={alreadyAcceptedRoute}/> : null}
+                {alreadyAcceptedRoute ? <SimpleSnackbar alreadyAcceptedRoute={alreadyAcceptedRoute}/> : null}
+            </Grid>
         </section>
     );
 }
