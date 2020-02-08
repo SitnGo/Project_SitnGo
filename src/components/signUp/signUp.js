@@ -231,6 +231,12 @@ const SignUp = (props) => {
         ifNoErrorsRegisterUser()
     
     }
+
+    const handleEnter = (e) => {
+        if(e.key == 'Enter'){
+            checkErrorsHandler();
+        }
+    }
     return (
         <div>
             <div style={classes.signUpContainer}>
@@ -248,6 +254,7 @@ const SignUp = (props) => {
                     variant='outlined'
                     label='Name'
                     onChange={(e) => { setName(e.target.value) }}
+                    onKeyPress = {e => {handleEnter(e)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position='end'>
@@ -269,6 +276,7 @@ const SignUp = (props) => {
                     variant='outlined'
                     label='Surname'
                     onChange={(e) => { setSurname(e.target.value) }}
+                    onKeyPress = {e => {handleEnter(e)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position='end'>
@@ -290,6 +298,7 @@ const SignUp = (props) => {
                     variant='outlined'
                     label='Email'
                     onChange={(e) => { setEmail(e.target.value) }}
+                    onKeyPress = {e => {handleEnter(e)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position='end'>
@@ -314,6 +323,7 @@ const SignUp = (props) => {
                     variant='outlined'
                     label='Password'
                     onChange={(e) => { setPassword(e.target.value) }}
+                    onKeyPress = {e => {handleEnter(e)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position='end'>
@@ -337,6 +347,7 @@ const SignUp = (props) => {
                     variant='outlined'
                     label='Confirm Password'
                     onChange={(e) => { setConfirmPassword(e.target.value) }}
+                    onKeyPress = {e => {handleEnter(e)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position='end'>
@@ -359,6 +370,7 @@ const SignUp = (props) => {
                     variant='outlined'
                     label='Phone'
                     onChange={(e) => { setPhone(e.target.value) }}
+                    onKeyPress = {e => {handleEnter(e)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position='end'>

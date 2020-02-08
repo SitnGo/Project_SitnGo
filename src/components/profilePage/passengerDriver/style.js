@@ -14,8 +14,8 @@ const styles = makeStyles(theme => ({
     },
     info: {
         overflowY:'auto',
-        maxHeight: '190px'
-    }
+        maxHeight: '190px',
+    },
 }))
     
 export default styles;

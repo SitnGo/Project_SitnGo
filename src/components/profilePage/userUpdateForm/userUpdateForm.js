@@ -26,8 +26,6 @@ function UpdateForm (props) {
         emailError: { bool: false, errText: '' },
         phoneError: false,
     });
-    
-
  
 //////////////////////get all errors in array/////////////////////////////////////
 useEffect((() => {  
@@ -133,8 +131,6 @@ let arrFromErrorsValues = Object.values(errors)
                 break;
         }
     } 
-      
-    
 
  //////////////////cancel///////////
    
@@ -148,6 +144,14 @@ let arrFromErrorsValues = Object.values(errors)
     const clickOpenDeleteAccount = () => {
         setOpenDeleteDialog(true);
     };
+
+    const handleEnter = (e) => {
+        if(e.key == 'Enter'){
+            checkErrorsHandler
+            ();
+        }
+    }
+
     return (
         <Grid
             container
@@ -164,6 +168,7 @@ let arrFromErrorsValues = Object.values(errors)
                 label="email"
                 variant="filled"
                 onChange={(e) => {setEmail(e.target.value)}}
+                onKeyPress = {e => {handleEnter(e)}}
                 value={email}
                 error={errors.emailError.bool}
                 helperText={errors.emailError ? errors.emailError.errText : null}
@@ -179,6 +184,7 @@ let arrFromErrorsValues = Object.values(errors)
                 label="phone"
                 variant="filled"
                 onChange={(e) => {setPhone(e.target.value)}}
+                onKeyPress = {e => {handleEnter(e)}}
                 value={phone}
                 error={errors.phoneError}
                 helperText={errors.phoneError ? "Phone number is not valid" : null}

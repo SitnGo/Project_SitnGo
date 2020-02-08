@@ -33,7 +33,7 @@ const Header = (props) => {
             className={classes.navbar}
         >
             <Grid
-                item
+                item = {true}
                 xl={1}
                 lg={1}
                 md={1}

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, TextField, MenuItem } from '@material-ui/core';
-import SimpleSnackbar from "./snackbar/snackbar"
-import SimpleSnackbarSuccess from "./snackbar/snackbarSuccess"
-import MLeafletApp from './Leafletmaps/final'
+import SimpleSnackbar from "./snackbar/snackbar";
+import SimpleSnackbarSuccess from "./snackbar/snackbarSuccess";
+import MLeafletApp from './Leafletmaps/final';
 import fire from '../../ConfigFirebase/Fire';
 import {Redirect} from 'react-router-dom';
 import styles from './style';
