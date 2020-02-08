@@ -18,18 +18,23 @@ function HeaderWhenUserLoggedIn(props) {
         })
         .then((result)=>{
             dispatch(signOutAction(result))
+            // if (isEditChecked === false) {
+            //     dispatch(openUpdateForm());
+            //     dispatch(isEdit1());
+    
+            // }
         })
         .catch(function(error) {
             alert(error);
           });
     }
-    function handleMyProfile () {
-        if (isEditChecked === false) {
-            dispatch(openUpdateForm());
-            dispatch(isEdit1());
+    // function handleMyProfile () {
+    //     // if (isEditChecked === false) {
+    //     //     dispatch(openUpdateForm());
+    //     //     dispatch(isEdit1());
 
-        }
-    }
+    //     // }
+    // }
     return (
         <Grid
             container
@@ -44,6 +49,10 @@ function HeaderWhenUserLoggedIn(props) {
         >
             <Grid
                 container
+                xl={6}
+                lg={6}
+                md={6}
+                sm={6}
                 xs={6}
                 alignItems='center'
                 alignContent='center'
@@ -80,7 +89,7 @@ function HeaderWhenUserLoggedIn(props) {
             >
                 <RouterLink to='profile' className={classes.signButton}>
                     <Button
-                        onClick={handleMyProfile}
+                        // onClick={handleMyProfile}
                         variant='text'
                         className={classes.profile}
                     >My Profile</Button>

@@ -11,9 +11,8 @@ import {
         DialogTitle
 } from '@material-ui/core';
 
-function ForgotPassword() {
+function ChangePassword(props) {
     const classes = styles();
-    const [open, setOpen] = useState(false);
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState(false);
 
@@ -25,14 +24,14 @@ function ForgotPassword() {
                 alert('An Error occurred');
             });
             setEmailError(false); 
-            setOpen(false);
+            props.setOpen(false);
             setEmail('');
         } else {
             setEmailError(true);
         }
     };
     const handleClose = () => {
-        setOpen(false);
+        props.setOpen(false);
         setEmail('');
     };
     const handleSubmit = (event) => {
@@ -41,7 +40,7 @@ function ForgotPassword() {
         
     return (
         <>
-            <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
+            <Dialog open={props.open} onClose={handleClose} aria-labelledby='form-dialog-title'>
                 <DialogTitle id='form-dialog-title'>Reset password</DialogTitle>
                 <form onSubmit={handleSubmit}>
                     <DialogContent>
@@ -83,4 +82,4 @@ function ForgotPassword() {
     );
 }
 
-export default ForgotPassword;
+export default ChangePassword;

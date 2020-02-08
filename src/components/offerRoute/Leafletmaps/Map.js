@@ -41,6 +41,7 @@ export default class LeafletMap extends Component {
                     // this.isRout &&
                     this.state.isMapInit &&
                     <Routing
+                    setboolean={this.props.setboolean}
                         setDefaultPrice={this.props.setDefaultPrice}
                         setFrom={this.props.setFrom}
                         setTo={this.props.setTo}

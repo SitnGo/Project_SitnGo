@@ -17,8 +17,6 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import AlertDialogSlide from './components/sign_in/dialogSignIn';
 import AlertDialogSlideSignUp from './components/signUp/dialogSignUp'
 import PersonalInfo from './components/profilePage/personalInfo';
-import Test from './Test'
-
 
 function App() {
     const dispatch = useDispatch();
@@ -58,7 +56,6 @@ function App() {
                                 <Route path='/getRout'>
                                     <GetRout/>
                                 </Route>
-                                <Route path='/test'><Test/></Route>
                             </>
                             : <Route path='*' component={NotFound}/>
                     }

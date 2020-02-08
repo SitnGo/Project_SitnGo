@@ -7,22 +7,21 @@ import fire from '../../../ConfigFirebase/Fire';
 import storage from '../../../ConfigFirebase/storage';
 import {confirmUpdate} from '../../../actions/index';
 import {useDispatch, connect } from 'react-redux';
-import ForgotPassword from '../Forgotpassword/forgotPassword';
-import {isEdit1, openUpdateForm } from '../../../actions/index';
-
+import ChangePassword from '../Changepassword/changePassword';
+import {Redirect} from 'react-router-dom';
 function mapStateToProps(state) {
     return {
         confirmUpdate:state.confirmUpdate,
-        isEdit1:state.isEdit1,
-        openUpdateForm:state.openUpdateForm,
     };
 }
 
 function UpdateForm (props) {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const [open, setOpen] = useState(false);
     const [email, setEmail] = useState(props.data[0]);
     const [phone, setPhone] = useState(props.data[1]);
+    const [bool, setBool] = useState(false);
     const [errors, setErrors] = useState({ 
         emailError: { bool: false, errText: '' },
         nameError: { bool: false, errText: '' },
@@ -30,8 +29,9 @@ function UpdateForm (props) {
         genderError: false,
         phoneError: false,
     });
-    const [open, setOpen] = useState(false);
+    
 
+ 
 //////////////////////get all errors in array/////////////////////////////////////
 useEffect((() => {  
 let arrFromErrorsValues = Object.values(errors)
@@ -47,25 +47,21 @@ let arrFromErrorsValues = Object.values(errors)
             if ((arrFromErrorsValues.every(item => item === false))) {
                 fire.firestore().collection("users").doc(fire.auth().currentUser.uid).get().then((doc)=>{
                     if(email !== props.data[0]) {
-                fire.auth().onAuthStateChanged(function(user) {
-                    if (user) {
-                        fire.auth().currentUser.updateEmail(email).then(()=>{
-                            alert(user.email);
+                         fire.auth().currentUser.updateEmail(email).then(()=>{
+                        
                         })
-                    } else {
-                        console.log("error");
+                    
                     }
-                });
-            }
                     fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
                             name: doc.data().name,
                             surname: doc.data().surname,
-                            email: email.toLowerCase(),
+                            email: email,
                             gender: doc.data().gender,
                             phone: phone,
                     }).then(()=>{
-                        alert("Update confirm!");
-                        dispatch(confirmUpdate())
+                        dispatch(confirmUpdate());
+                        props.setIsEdit(true);
+                        props.setOpenUpdateForm(false);
                     });
                 });
             }
@@ -128,53 +124,89 @@ let arrFromErrorsValues = Object.values(errors)
                 break;
         }
     } 
-///////////////////////////cancel///////////
-    function isConfirmBtnClick() {
-        dispatch(openUpdateForm());
-        dispatch(isEdit1());
-    }   
+      
     
 ////////////////////// delete user /////////////////////////////////////
-console.log(fire.auth().currentUser.uid);
-console.log(fire.auth().currentUser);
-    function deleteUser () {
+  function  deleteUser () {
     const user = fire.auth().currentUser;
-    user.delete().then(() => {
-        fire.firestore().collection('users').doc(user.uid).delete().then(()=> {
-            alert('Document successfully deleted');
-        }).catch((error) => {console.log(error)})
-        
-        storage.ref().child(`images/${user.uid}`).listAll().then(function(res) {
-            res.items.forEach((itemRef) => {
+    fire.firestore().collection('users').doc(user.uid).get().then((doc)=> {
+        //storige delete
+        if (!!doc.data().url !== false) {
+            alert('storeage delete');
+            
+            storage.ref().child(`images/${user.uid}`).listAll().then(function(res) {
+                res.items.forEach((itemRef) => {
+                
                 let desertRef = storage.ref(`images/${user.uid}`).child(itemRef.name);
+                
                     desertRef.delete().then(()=> {
                         alert('file deleted!');
                     }).catch((error)=>{
                         console.log(error);
-                    });
-            });
-        }).catch((error) => {
+                    });            
+
+                });
+            }).catch((error) => {
                 console.log('error',error);
-        });
+            });
+        } 
+        // acceptedRoutes and userRoutesInfo collections delete
+        fire.firestore().collection(`/users/${user.uid}/acceptedRoutes`).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                fire.firestore().collection(`/users/${user.uid}/acceptedRoutes`).doc(doc.id).delete().then(()=>{
+                    alert('acceptedRoutes deleted');
+                });
+            })
+        }).catch((error) => {console.log(error)})
+        fire.firestore().collection(`/users/${user.uid}/userRoutesInfo`).get().then(querySnapshot => {
+            querySnapshot.forEach(doc =>{
+                fire.firestore().collection(`/users/${user.uid}/userRoutesInfo`).doc(doc.id).delete().then(()=>{
+                    alert('userRoutesInfo deleted');
+                });
+            })
+           
+        }).catch((error) => {console.log(error)})  
+    // document delete
         
-      }).catch(function(error) {
-        console.log(error);
-      });
+            fire.firestore().collection('users').doc(user.uid).delete().then(()=> {
+                alert('Document successfully deleted');
+                
+                user.delete().then(() => {
+                    // User deleted
+                }).catch(function(error) {
+                    console.log(error);
+                });
+
+                
+            }).catch((error) => {console.log(error)})
+
+
+    });
+    setBool(true);
+                    
     }
     
+ //////////////////cancel///////////
+   
     function CancelBtnClick() {
-        dispatch(isEdit1());
+        props.setOpenUpdateForm(false);
+        props.setIsEdit(true);
     }
-    const handleClickOpen = () => {
+    const clickOpenChangePassword = () => {
         setOpen(true);
     };
     return (
         <Grid
             container
+            xl={12}
+            lg={12}
+            md={12}
+            sm={12}
             xs={12}
             justify="center"
             alignItems="center"
         >
+            { bool ? <Redirect to='/'/> : null}
             <TextField  className={classes.textField}
                 label="email"
                 variant="filled"
@@ -219,18 +251,18 @@ console.log(fire.auth().currentUser);
                 <Button
                     variant='outlined'
                     className={classes.cancelButton}
-                    onClick={isConfirmBtnClick}
+                    onClick={CancelBtnClick}
                 >Cancel</Button>
             </Grid>
             <Button
                 fullWidth
-                className={classes.forgotButton}
+                className={classes.changeButton}
                 variant='text'
-                onClick={handleClickOpen}
+                onClick={clickOpenChangePassword}
             >
-                Forgot password?
+                Change password?
             </Button>
-            <ForgotPassword/>
+            <ChangePassword open={open} setOpen={setOpen}/>
             <Button
                 fullWidth
                 color='secondary'

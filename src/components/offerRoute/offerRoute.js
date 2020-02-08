@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Button, TextField, MenuItem} from '@material-ui/core';
+import React, { useState } from 'react';
+import { Button, TextField, MenuItem } from '@material-ui/core';
 import SimpleSnackbar from "./snackbar/snackbar"
 import SimpleSnackbarSuccess from "./snackbar/snackbarSuccess"
 import MLeafletApp from './Leafletmaps/final'
@@ -38,8 +38,8 @@ const numberPersons = [
         value: '7',
         label: '7',
     },
-  ];
-  
+];
+
 const OfferRout = (props) => {
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
@@ -57,23 +57,24 @@ const OfferRout = (props) => {
     const [plateError, setPlateError] = useState(false);
     const [priceError, setPriceError] = useState(true);
     const [redirect, setRedirect] = useState(false);
-    const [isRouteError,setIsRouteError] = useState(null);
+    const [isRouteError, setIsRouteError] = useState(null);
     const [isRouteSuccess, setIsRouteSuccess] = useState(false);
-    const [submitDisable,setSubmitDisable] =useState(false);
+    const [submitDisable, setSubmitDisable] = useState(false);
     const [route, setRoute] = useState(null);
-    const [priceHelperText, setPriceHelperText] = useState("You  must fill blank areas")
-    
-   function onSubmitClick(){
-    if(isEmpty()){ return}
-    setSubmitDisable(true);
-    
-    async function getMarker(user={}) {
-        let userId = fire.auth().currentUser.uid;
-        user = await fire.firestore().collection("users").doc(userId).get()
+    const [priceHelperText, setPriceHelperText] = useState("You  must fill blank areas");
+    const [boolean,setboolean] = useState(false);
+
+    function onSubmitClick() {
+        if (isEmpty()) { return }
+        setSubmitDisable(true);
+
+        async function getMarker(user = {}) {
+            let userId = fire.auth().currentUser.uid;
+            user = await fire.firestore().collection("users").doc(userId).get()
             user = user.data();
             console.log(user)
-        return user;
-    }
+            return user;
+        }
 
     getMarker().then((result)=>{
     let userId = fire.auth().currentUser.uid;
@@ -99,8 +100,8 @@ const OfferRout = (props) => {
                 price: `${Math.floor(price/count)}AMD`,
             }
         }
-        routeInfo_REF.add(route).then(()=>setRedirect(true));
-    })
+            routeInfo_REF.add(route).then(() => setRedirect(true));
+        })
 
 }
 
@@ -115,75 +116,75 @@ const OfferRout = (props) => {
     let year = d.getFullYear();
     let date = `${year}-${month}-${day}T23:59:00`;
 
-    function isEmpty () {
-       if(from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== ''&& +price && !priceError && startDate !==null && startDate !==date && !isRouteError && isRouteError !== null) {
-           setFromError(false);
-           setToError(false);
-           setStartDateError(false);
-           setCarError(false);
-           setPlateError(false);
-           setFrom('');
-           setTo('');
-           setCar('');
-           setPlate('');
-        return false
-       } else {
-      if((isRouteError || isRouteError == null)||(!isRouteSuccess)){
-            setSubmitDisable(true);
-            setTimeout(()=>{
-                setSubmitDisable(false)
-                setIsRouteError(null)
-              },3000)
-              setIsRouteError(true)
-
-            return true
-        }
-        if (from.trim() !== '') {
+    function isEmpty() {
+        if (from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== '' && +price && !priceError && startDate !== null && startDate !== date && !isRouteError && isRouteError !== null) {
             setFromError(false);
-        } else {
-            setFromError(true);
-            return true
-        }
-        if(startDate && Date.parse(startDate) > (Date.parse(date)+86400000)){
-            setStartDateError(false);
-        }else{
-            setStartDateError(true);
-            return true
-        }
-
-        if (to.trim() !== '') {
             setToError(false);
-        } else {
-            setToError(true);
-            return true
-        }
-
-        if (car.trim() !== '') {
+            setStartDateError(false);
             setCarError(false);
-        } else  { 
-            setCarError(true);
-            return true
-        }
-
-        if (plate.trim() !== '') {
             setPlateError(false);
+            setFrom('');
+            setTo('');
+            setCar('');
+            setPlate('');
+            return false
         } else {
-            setPlateError(true);
-            return true
-        }
-        if (+price) {
-            setPriceError(false);
-        } else {
-            setPriceError(true);
-            return true
-        }
+            if ((isRouteError || isRouteError == null) || (!isRouteSuccess)) {
+                setSubmitDisable(true);
+                setTimeout(() => {
+                    setSubmitDisable(false)
+                    setIsRouteError(null)
+                }, 3000)
+                setIsRouteError(true)
 
+                return true
+            }
+            if (from.trim() !== '') {
+                setFromError(false);
+            } else {
+                setFromError(true);
+                return true
+            }
+            if (startDate && Date.parse(startDate) > (Date.parse(date) + 86400000)) {
+                setStartDateError(false);
+            } else {
+                setStartDateError(true);
+                return true
+            }
+
+            if (to.trim() !== '') {
+                setToError(false);
+            } else {
+                setToError(true);
+                return true
+            }
+
+            if (car.trim() !== '') {
+                setCarError(false);
+            } else {
+                setCarError(true);
+                return true
+            }
+
+            if (plate.trim() !== '') {
+                setPlateError(false);
+            } else {
+                setPlateError(true);
+                return true
+            }
+            if (+price) {
+                setPriceError(false);
+            } else {
+                setPriceError(true);
+                return true
+            }
+
+        }
     }
-   }
-   const classes = styles();
-    return(
+    const classes = styles();
+    return (
         <section className={classes.section}>
-            {redirect ? <Redirect to="/profile" push /> : null }
+            {redirect ? <Redirect to="/profile" push /> : null}
             <div className={classes.offer}>
                 <div className={classes.rideList}>
                     <TextField
@@ -192,7 +193,15 @@ const OfferRout = (props) => {
                         disabled={true}
                         variant='outlined'
                         label='From'
-                        onChange={(e)=>{setFrom(e.target.value)}}
+                        onChange={(e) => {
+                            setFrom(e.target.value)
+                            let routingInput = document.getElementsByClassName("leaflet-routing-geocoder")
+                            routingInput[0].children[0].value=e.target.value;
+                            console.log(routingInput[0].children)
+                            // document.getElementById("input11").appendChild(routingInput[0].children[0])
+                            document.getElementById('input12').style.display='block'
+
+                        }}
                         value={from}
                         error={fromError}
                         helperText={fromError ? <p>You  must fill blank areas</p> : null}
@@ -204,7 +213,7 @@ const OfferRout = (props) => {
                         disabled={true}
                         variant='outlined'
                         label='To'
-                        onChange={(e)=>{setTo(e.target.value)}}
+                        onChange={(e) => { setTo(e.target.value) }}
                         value={to}
                         error={toError}
                         helperText={toError ? <p>You  must fill blank areas</p> : null}
@@ -214,11 +223,24 @@ const OfferRout = (props) => {
                         margin='dense'
                         fullWidth
                         variant='outlined'
+                        label='To'
+                        // onChange={(e) => { setTo(e.target.value) }}
+                        // value={to}
+                        // error={toError}
+                        // helperText={toError ? <p>You  must fill blank areas</p> : null}
+                        // className={classes.rideListItem}
+                        style={{display: 'none'}}    
+                        id={'input12'}
+                    />
+                    <TextField
+                        margin='dense'
+                        fullWidth
+                        variant='outlined'
                         error={startDateError}
                         helperText={startDateError ? <p>You must set correct Date. You can set Trip Date starting tomorrow</p> : null}
                         type='datetime-local'
                         defaultValue={date}
-                        onChange={(e)=>{console.log(e.target.value);let date = e.target.value+":00"; setStartDate(date)}}
+                        onChange={(e) => { console.log(e.target.value); let date = e.target.value + ":00"; setStartDate(date) }}
                         className={classes.rideListItem}
                     />
                     <TextField
@@ -228,7 +250,7 @@ const OfferRout = (props) => {
                         fullWidth
                         variant='outlined'
                         label='Persons'
-                        onChange={(e)=>setCount(+e.target.value)}
+                        onChange={(e) => setCount(+e.target.value)}
                         className={classes.rideListItem}
                     >
                         {numberPersons.map(option => (
@@ -242,7 +264,7 @@ const OfferRout = (props) => {
                         fullWidth
                         variant='outlined'
                         label='Car Model'
-                        onChange={(e)=>{setCar(e.target.value)}}
+                        onChange={(e) => { setCar(e.target.value) }}
                         value={car}
                         error={carError}
                         helperText={carError ? <p>You  must fill blank areas</p> : null}
@@ -253,7 +275,7 @@ const OfferRout = (props) => {
                         fullWidth
                         variant='outlined'
                         label='Car plate'
-                        onChange={(e)=>{setPlate(e.target.value)}}
+                        onChange={(e) => { setPlate(e.target.value) }}
                         value={plate}
                         error={plateError}
                         helperText={plateError ? <p>You  must fill blank areas</p> : null}
@@ -264,16 +286,17 @@ const OfferRout = (props) => {
                         margin='dense'
                         fullWidth
                         variant='outlined'
-                        label='Price Per Person'
-                        value={`${Math.floor(price/count)}`<200 ? 200 : `${Math.floor(price/count)}`}
+                        label='Price per Person'
+                        value={boolean ? price : (Math.ceil(defaultPrice/count)==NaN||Math.ceil(defaultPrice/count)==Infinity ? 200 : Math.ceil(defaultPrice/count))}
                         error={priceError}
                         helperText={priceError ? <p>{priceHelperText}</p> : null}
-                        onChange={(e)=>{
+                        onChange={(e) => {
+                            setboolean(true)
                             setPrice(e.target.value)
-                            if(+e.target.value > defaultPrice){
+                            if (+e.target.value > defaultPrice) {
                                 setPriceError(true);
-                                setPriceHelperText(`The possible maximum price for this ride is ${defaultPrice}AMD`)
-                            }else if(typeof(+e.target.value)==="number" && e.target.value > 0){
+                                setPriceHelperText(`The possible maximum price per person for this ride is ${Math.ceil(defaultPrice/count)}AMD`)
+                            } else if (typeof (+e.target.value) === "number" && e.target.value > 0) {
                                 setPriceError(false);
                                 setPriceHelperText("You  must fill blank areas")
                             }
@@ -290,10 +313,11 @@ const OfferRout = (props) => {
                     >Submit</Button>
                 </div>
                 <div className={classes.mapContainer}>
-                    {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} />  : null}
-                    {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess = {isRouteSuccess}/> : null}
+                    {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} /> : null}
+                    {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess={isRouteSuccess} /> : null}
                     <MLeafletApp
-                        setMap = {setMap}
+                    setboolean={setboolean}
+                        setMap={setMap}
                         setDefaultPrice={setDefaultPrice}
                         setPrice={setPrice}
                         setFrom={setFrom}

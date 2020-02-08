@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Card, CardHeader, CardContent, Avatar, Typography, Button } from '@material-ui/core';
 import fire from '../../../ConfigFirebase/Fire';
 import styles from './style';
@@ -7,7 +7,6 @@ function Driver(props) {
     let { dataRef } = props;
     let data = dataRef.data()    
     let startEnd = data.astartEnd.split('-');
-    // const [url, setUrl] = useState('');
     let classes = styles();
     function deleteDriveClick() {
   
@@ -24,49 +23,49 @@ function Driver(props) {
     return (
         <Card className={classes.card}>
             <CardHeader 
-            avatar={
-                <Avatar src={data.url} 
-                    // src={bool ? url : ''}
-                    // variant='circle'
-                />
-            } 
+            avatar={<Avatar src={data.url} />} 
             title={data.parameters.name} 
             subheader={data.startDate} 
             />
-            <CardContent>
+            <CardContent className={classes.info}>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >from - {startEnd[0]}</Typography>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >to - {startEnd[1]}</Typography>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
+                    component='p'
+                >Current Free Seats - {data.parameters.count}</Typography>
+                <Typography
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >distance - {data.parameters.distance}</Typography>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >car model - {data.parameters.car}</Typography>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >car number - {data.parameters.plate}</Typography>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >price - {data.parameters.price}</Typography>
                 <Typography
-                    variant='body2'
-                    color='textSecondary'
+                    align ='justify'
+                    variant='overline'
                     component='p'
                 >Driver Phone - {data.DriverPhone}</Typography>
             </CardContent>

@@ -64,8 +64,8 @@ export function SignIn(props) {
                     margin='normal'
                 >Sign in</Typography>
                 <TextField
-                    fullWidth='true'
-                    size='large'
+                    fullWidth={true}
+                    size='medium'
                     autoFocus
                     required
                     name='email'
@@ -89,7 +89,7 @@ export function SignIn(props) {
                     }}
                 />
                 <TextField
-                    fullWidth='true'
+                    fullWidth={true}
                     required
                     helperText= {(isAnError === true) ? <div style={styles.error}>{errorMessage}</div> : null}
                     name='password'
