@@ -32,7 +32,7 @@ function ChangePassword(props) {
                 
                     <DialogContent>
                         <DialogContentText>
-                            To get a verification code, first confirm the recovery email address
+                            Sent your verification code to Email address?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -41,7 +41,7 @@ function ChangePassword(props) {
                             variant='contained'
                             onClick={handleUpdate}
                         >
-                            Update
+                            Yes
                         </Button>
                         <Button
                             variant='outlined'
