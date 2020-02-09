@@ -36,19 +36,18 @@ class Routing extends MapLayer {
       this.props.setIsRouteSuccess(true);
       let routes = e.route;
       let route = {route:routes, waypoints: routes.waypoints}
-      console.log(route)
       localStorage.setItem("selectedRoute1", JSON.stringify(routes))
       localStorage.setItem("route",JSON.stringify(route))
       this.props.setPrice((Math.ceil(routes.summary.totalDistance/1000)*100))
       this.props.setDefaultPrice((Math.ceil(routes.summary.totalDistance/1000)*100))
-      if(routes.waypoints[0].name.length) {
-        this.props.setFrom(routes.waypoints[0].name)
+      let streetNames = routes.name.split(",") 
+      if(streetNames[0]) {
+        this.props.setFrom(streetNames[0])
       }
-      if(routes.waypoints[routes.waypoints.length - 1].name.length) {
-        this.props.setTo(routes.waypoints[routes.waypoints.length - 1].name)
+      if(streetNames[1]) {
+        this.props.setTo(streetNames[1])
       }
       this.props.setboolean(false)
-      console.log(routes)
     }).on("waypointschanged",()=>{
       this.props.setIsRouteError(false);
       this.props.setIsRouteSuccess(false);
