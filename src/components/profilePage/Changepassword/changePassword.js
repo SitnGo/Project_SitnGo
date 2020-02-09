@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import fire from '../../../ConfigFirebase/Fire'
 import styles from './style';
 import {
@@ -9,16 +9,14 @@ import {
         DialogContentText, 
         DialogTitle
 } from '@material-ui/core';
-
+import SimpleSnackbarSuccess from '../../offerRoute/snackbar/snackbarSuccess';
 function ChangePassword(props) {
     const classes = styles();
-
+    const [isEmailSuccess,setIsEmailSuccess] = useState(false);
     const handleUpdate = () => {
         fire.auth().sendPasswordResetEmail(fire.auth().currentUser.email).then(() => {
-            alert('Please check your email...');
-        }).catch(() => {
-            alert('An Error occurred');
-        })
+            setIsEmailSuccess(true);
+        });
         props.setOpen(false);
     };
     const handleClose = () => {
@@ -51,6 +49,7 @@ function ChangePassword(props) {
                         </Button>
                     </DialogActions>
             </Dialog>
+            {isEmailSuccess ? <SimpleSnackbarSuccess isRouteSuccess={isEmailSuccess} text='Please check your email...'/> : null}
         </>
     );
 }

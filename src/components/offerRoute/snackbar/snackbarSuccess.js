@@ -30,7 +30,7 @@ export default function CustomizedSnackbars(props) {
     <div className={classes.root}>
       <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
-          SUCCESS Routes Found.
+          {props.text}
         </Alert>
       </Snackbar>
     </div>

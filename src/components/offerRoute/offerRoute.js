@@ -320,7 +320,7 @@ const OfferRout = (props) => {
                 </div>
                 <div className={classes.mapContainer}>
                     {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} /> : null}
-                    {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess={isRouteSuccess} /> : null}
+                    {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess={isRouteSuccess} text='SUCCESS Routes Found'/> : null}
                     <MLeafletApp
                     setboolean={setboolean}
                         setMap={setMap}

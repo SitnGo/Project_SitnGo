@@ -15,7 +15,11 @@ const styles = makeStyles(theme => ({
     info: {
         overflowY:'auto',
         maxHeight: '190px'
-    }
+    },
+    cancelButton: {
+        fontSize: '0.8em',
+        color: '#282e34',
+    },
 }))
     
 export default styles;

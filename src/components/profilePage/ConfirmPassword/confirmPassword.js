@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core';
 
 function ConfirmPassword(props) {
-    const [open, setOpen] = useState(true);
     const [showLoader, setShowLoader] = useState(false);
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -23,12 +22,10 @@ function ConfirmPassword(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         setShowLoader(true);
-
+       
         fire.auth().signInWithEmailAndPassword(fire.auth().currentUser.email, password)
             .then(() => {
                 props.setOpenUpdateForm(true);
-                setPassword('');
-                setOpen(false);
             })
             .catch(error => {
                 console.log(error);
@@ -43,7 +40,7 @@ function ConfirmPassword(props) {
 
     return (
         <div>
-            <Dialog open={!props.isEdit && open}  aria-labelledby='form-dialog-title' fullWidth={true}>
+            <Dialog open={!props.isEdit}  aria-labelledby='form-dialog-title' fullWidth={true}>
                 <DialogTitle id='form-dialog-title'>Enter password</DialogTitle>
                 <form onSubmit={handleSubmit}>
                     <DialogContent>

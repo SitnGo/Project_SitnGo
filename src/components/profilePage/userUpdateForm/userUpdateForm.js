@@ -69,7 +69,6 @@ let arrFromErrorsValues = Object.values(errors)
                         });
                     }
                
-
                 });
                 
             }
