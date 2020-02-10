@@ -10,11 +10,6 @@ const Contact = () => {
     return(
         <Grid
             container
-            xl={12}
-            lg={12}
-            md={12}
-            sm={12}
-            xs={12}
             alignItems='center'
             alignContent='center'
             justify='space-evenly'
@@ -22,6 +17,7 @@ const Contact = () => {
         >
             <span className={classes.contactId} id='contact'></span>
             <Grid
+                item
                 xl={8}
                 lg={8}
                 md={8}
@@ -31,18 +27,15 @@ const Contact = () => {
             >
                 <h1 className={classes.contactHeader}>Contact Us</h1>
                 <Grid
-                    xl={12}
-                    lg={12}
-                    md={12}
-                    sm={12}
+                    item
                     xs={12}
                     className={classes.mapContainer}
                 >
-                    {/* <LeafletMap isRout='false' hasMarker='true'/> */}
                     <Lapp/>
                 </Grid>
             </Grid>
             <Grid
+                item
                 xl={3}
                 lg={3}
                 md={3}

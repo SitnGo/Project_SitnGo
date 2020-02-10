@@ -16,7 +16,7 @@ const styles = makeStyles(theme => ({
     },
     imageCover: {
         width: '100%',
-        height: '100vh',
+        height: '90vh',
         position: 'absolute',
         top: 0,
         backgroundColor: '#b7b3b4',

@@ -6,7 +6,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import fire from '../../../ConfigFirebase/Fire';
 import {confirmUpdate} from '../../../actions/index';
 import {useDispatch, connect } from 'react-redux';
-import ChangePassword from '../changePassword/changePassword';
+import ChangePassword from '../Changepassword/changePassword';
 import DeleteAccount from '../delete/delete'; 
 
 function mapStateToProps(state) {
@@ -26,8 +26,6 @@ function UpdateForm (props) {
         emailError: { bool: false, errText: '' },
         phoneError: false,
     });
-    
-
  
 //////////////////////get all errors in array/////////////////////////////////////
 useEffect((() => {  
@@ -40,38 +38,36 @@ let arrFromErrorsValues = Object.values(errors)
         }
     });
      //////////////////check errors/////////////////////
-     if(email !== props.data[0] || phone !== props.data[1]) {
-            if ((arrFromErrorsValues.every(item => item === false))) {
-                fire.firestore().collection("users").doc(fire.auth().currentUser.uid).get().then((doc)=>{
-                    if(email !== props.data[0]) {
-                         fire.auth().currentUser.updateEmail(email).then(()=>{
-                             fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
-                                email,
+        if ((arrFromErrorsValues.every(item => item === false))) {
+            fire.firestore().collection("users").doc(fire.auth().currentUser.uid).get().then((doc)=>{
+                if(email.toLowerCase() !== props.data[0]) {
+                        fire.auth().currentUser.updateEmail(email).then(()=>{
+                            fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
+                            email: email.toLowerCase()
                             }).then(()=> {
                                 dispatch(confirmUpdate());
                                 props.setIsEdit(true);
                                 props.setOpenUpdateForm(false);
                             });
 
-                         }).catch(() => {
-                                let err = Object.assign({}, errors);
-                                setErrors(Object.assign(err, { emailError: {bool: true, errText: 'Email is not valid or already in use'} }))
-                            });
-                    }
-
-                    if(phone !== props.data[1]) {
-                        fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
-                            phone,
-                        }).then(()=> { 
-                            dispatch(confirmUpdate());
-                            props.setIsEdit(true);
-                            props.setOpenUpdateForm(false);
+                        }).catch(() => {
+                            let err = Object.assign({}, errors);
+                            setErrors(Object.assign(err, { emailError: {bool: true, errText: 'Email is not valid or already in use'} }))
                         });
-                    }
-               
-                });
-                
-            }
+                }
+
+                if(phone !== props.data[1]) {
+                    fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
+                        phone,
+                    }).then(()=> { 
+                        dispatch(confirmUpdate());
+                        props.setIsEdit(true);
+                        props.setOpenUpdateForm(false);
+                    });
+                }
+            
+            });
+            
         }
     }), [errors])
     function checkErrorsHandler() {
@@ -132,8 +128,6 @@ let arrFromErrorsValues = Object.values(errors)
                 break;
         }
     } 
-      
-    
 
  //////////////////cancel///////////
    
@@ -147,6 +141,14 @@ let arrFromErrorsValues = Object.values(errors)
     const clickOpenDeleteAccount = () => {
         setOpenDeleteDialog(true);
     };
+
+    const handleEnter = (e) => {
+        if(e.key === 'Enter'){
+            checkErrorsHandler
+            ();
+        }
+    }
+
     return (
         <Grid
             container
@@ -163,6 +165,7 @@ let arrFromErrorsValues = Object.values(errors)
                 label="email"
                 variant="filled"
                 onChange={(e) => {setEmail(e.target.value)}}
+                onKeyPress = {e => {handleEnter(e)}}
                 value={email}
                 error={errors.emailError.bool}
                 helperText={errors.emailError ? errors.emailError.errText : null}
@@ -178,6 +181,7 @@ let arrFromErrorsValues = Object.values(errors)
                 label="phone"
                 variant="filled"
                 onChange={(e) => {setPhone(e.target.value)}}
+                onKeyPress = {e => {handleEnter(e)}}
                 value={phone}
                 error={errors.phoneError}
                 helperText={errors.phoneError ? "Phone number is not valid" : null}

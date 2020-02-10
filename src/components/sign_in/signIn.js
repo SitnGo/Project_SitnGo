@@ -3,7 +3,7 @@ import fire from '../../ConfigFirebase/Fire';
 import { Button, Fab } from '@material-ui/core/';
 import { Typography,TextField, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff, Email, Close } from '@material-ui/icons';
-import { useDispatch, useSelector, connect} from 'react-redux';
+import { useDispatch, connect} from 'react-redux';
 import FormDialog from './forgot';
 import { openSignInAction, SignInAction, openSignUPAction } from '../../actions'
 import { styles } from './style';
@@ -14,7 +14,6 @@ export function SignIn(props) {
     const [isAnError, setIsAnError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
     const handleClose = () => {
         dispatch(openSignInAction())
@@ -23,9 +22,6 @@ export function SignIn(props) {
         setErrorMessage('')
     };
 
-    const handleChange = name => (event) => {
-        setChecked(event.target.checked);
-    };
     function login() {
         fire.auth().signInWithEmailAndPassword(email, password)
             .then(a => {
@@ -55,6 +51,13 @@ export function SignIn(props) {
         dispatch(openSignInAction());
         dispatch(openSignUPAction());
     }
+
+    const handleEnter = (e) => {
+        if(e.key === 'Enter'){
+            login();
+        }
+    }
+
     return (
         <div>
             <div style={styles.signInContainer}>
@@ -75,6 +78,7 @@ export function SignIn(props) {
                     variant='outlined'
                     label='Email'
                     onChange={e => setEmail(e.target.value)}
+                    onKeyPress = {e => {handleEnter(e)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position='end'>
@@ -96,6 +100,7 @@ export function SignIn(props) {
                     margin='dense'
                     value={password}
                     onChange={e => setPassword(e.target.value)}
+                    onKeyPress = {e => {handleEnter(e)}}
                     type={showPassword ? 'text' : 'password'}
                     color='primary'
                     variant='outlined'
@@ -113,7 +118,7 @@ export function SignIn(props) {
                             </InputAdornment>
                         )
                     }}
-                />
+                    />
                 <div style={styles.signContainer}>
                     <Button type='submit'  style={styles.signButton} onClick={login}> Sign In </Button>
                     <Button onClick={signup} style={styles.signButton}>Sign up</Button>

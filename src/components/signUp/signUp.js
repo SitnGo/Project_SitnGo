@@ -5,7 +5,7 @@ import { Visibility, VisibilityOff, Phone, Email, AccountBox } from '@material-u
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import fire from '../../ConfigFirebase/Fire';
-import { openSignUPAction, SignInAction } from '../../actions'
+import { openSignUPAction } from '../../actions'
 import { useDispatch, connect } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -48,7 +48,7 @@ const SignUp = (props) => {
                     let userInfo = {
                             name: name,
                             surname: surname,
-                            email: email,
+                            email: email.toLowerCase(),
                             gender: gender,
                             phone: phone,
                             url: "",
@@ -92,6 +92,7 @@ const SignUp = (props) => {
                     case 'spaces':
                         textInputName = ['Can\'t contain spaces'];
                         break;
+                    default: break;
                 }
             }
             setErrors(Object.assign(err, { nameError: { bool: true, errText: textInputName } }))
@@ -112,6 +113,7 @@ const SignUp = (props) => {
                     case 'spaces':
                         textInputSurname = ['Can\'t contain spaces'];
                         break;
+                    default: break;
                 }
             }
             setErrors(Object.assign(err, { surnameError: { bool: true, errText: textInputSurname } }))
@@ -149,6 +151,7 @@ const SignUp = (props) => {
                     case 'lowercase':
                         text = ['Need at least 1 Lowercase letter'];
                         break;
+                    default: break;
                 }
             }
             setErrors(Object.assign(err, { passwordError: { bool: true, errText: text } }))
@@ -228,6 +231,12 @@ const SignUp = (props) => {
         ifNoErrorsRegisterUser()
     
     }
+
+    const handleEnter = (e) => {
+        if(e.key === 'Enter'){
+            checkErrorsHandler();
+        }
+    }
     return (
         <div>
             <div style={classes.signUpContainer}>
@@ -245,6 +254,7 @@ const SignUp = (props) => {
                     variant='outlined'
                     label='Name'
                     onChange={(e) => { setName(e.target.value) }}
+                    onKeyPress = {e => {handleEnter(e)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position='end'>
@@ -266,6 +276,7 @@ const SignUp = (props) => {
                     variant='outlined'
                     label='Surname'
                     onChange={(e) => { setSurname(e.target.value) }}
+                    onKeyPress = {e => {handleEnter(e)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position='end'>
@@ -287,6 +298,7 @@ const SignUp = (props) => {
                     variant='outlined'
                     label='Email'
                     onChange={(e) => { setEmail(e.target.value) }}
+                    onKeyPress = {e => {handleEnter(e)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position='end'>
@@ -311,6 +323,7 @@ const SignUp = (props) => {
                     variant='outlined'
                     label='Password'
                     onChange={(e) => { setPassword(e.target.value) }}
+                    onKeyPress = {e => {handleEnter(e)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position='end'>
@@ -334,6 +347,7 @@ const SignUp = (props) => {
                     variant='outlined'
                     label='Confirm Password'
                     onChange={(e) => { setConfirmPassword(e.target.value) }}
+                    onKeyPress = {e => {handleEnter(e)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position='end'>
@@ -356,6 +370,7 @@ const SignUp = (props) => {
                     variant='outlined'
                     label='Phone'
                     onChange={(e) => { setPhone(e.target.value) }}
+                    onKeyPress = {e => {handleEnter(e)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position='end'>

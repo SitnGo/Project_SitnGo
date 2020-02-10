@@ -78,12 +78,6 @@ export default class LeafletMap extends Component {
       isMapInit: true
     });
   };
-  
-  handleClick = (e) => {
-    const { lat, lng } = e.latlng;
-    // console.log(lat, lng);
-  };
-
 	getStyle(feature, layer) {
     return {
       color: '#006400',
@@ -94,9 +88,7 @@ export default class LeafletMap extends Component {
   getGeoJson(data) {
     return data;
     }
-    // componentDidUpdate(props){
-    //     console.log(props)
-    // }
+
   render() {
     
 	let Routegeojson = L.Routing.routeToGeoJson(this.props.route.route.route)
