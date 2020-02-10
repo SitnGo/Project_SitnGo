@@ -59,7 +59,7 @@ function ConfirmPassword(props) {
                             error={passwordError}
                             helperText={passwordError ? 'password is incorrect' : null}
                             fullWidth
-
+                            variant='outlined'
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position='end'>

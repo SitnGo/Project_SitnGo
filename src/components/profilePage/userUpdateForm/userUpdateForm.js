@@ -155,80 +155,83 @@ let arrFromErrorsValues = Object.values(errors)
     return (
         <Grid
             container
-            xl={12}
-            lg={12}
-            md={12}
-            sm={12}
-            xs={12}
             justify="center"
             alignItems="center"
         >
-            
-            <TextField  className={classes.textField}
-                label="email"
-                variant="filled"
-                onChange={(e) => {setEmail(e.target.value)}}
-                onKeyPress = {e => {handleEnter(e)}}
-                value={email}
-                error={errors.emailError.bool}
-                helperText={errors.emailError ? errors.emailError.errText : null}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                                <Email/>
-                        </InputAdornment>
-                    )
-                }}
-            />
-            <TextField  className={classes.textField}
-                label="phone"
-                variant="filled"
-                onChange={(e) => {setPhone(e.target.value)}}
-                onKeyPress = {e => {handleEnter(e)}}
-                value={phone}
-                error={errors.phoneError}
-                helperText={errors.phoneError ? "Phone number is not valid" : null}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                                <Phone />
-                       </InputAdornment>
-                    )
-                }}
-            />
             <Grid
-                container
+                item
                 xs={12}
-                justify='center'
-                className={classes.updateCancelContainer}
-                >
-                <Button
-                    variant='contained'
-                    className={classes.confirmButton}
-                    onClick={checkErrorsHandler}
-                >Update</Button>
-                <Button
-                    variant='outlined'
-                    className={classes.cancelButton}
-                    onClick={CancelBtnClick}
-                >Cancel</Button>
-            </Grid>
-            <Button
-                fullWidth
-                className={classes.changeButton}
-                variant='text'
-                onClick={clickOpenChangePassword}
             >
-                Change password?
-            </Button>
-            <ChangePassword open={openChangePassword} setOpen={setOpenChangePassword}/>
-            <Button
-                fullWidth
-                color='secondary'
-                variant='contained'
-                onClick={clickOpenDeleteAccount}
-            >Delete</Button>
-            <DeleteAccount  open={openDeleteDialog} setOpen={setOpenDeleteDialog}/>
+                <Grid
+                    container
+                    alignItems="center"
+                    justify="center"
+                >
+                    <TextField  className={classes.textField}
+                        label="email"
+                        variant="filled"
+                        onChange={(e) => {setEmail(e.target.value)}}
+                        onKeyPress = {e => {handleEnter(e)}}
+                        value={email}
+                        error={errors.emailError.bool}
+                        helperText={errors.emailError ? errors.emailError.errText : null}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <Email/>
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                    <TextField  className={classes.textField}
+                        label="phone"
+                        variant="filled"
+                        onChange={(e) => {setPhone(e.target.value)}}
+                        onKeyPress = {e => {handleEnter(e)}}
+                        value={phone}
+                        error={errors.phoneError}
+                        helperText={errors.phoneError ? "Phone number is not valid" : null}
+                        InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <Phone />
+                            </InputAdornment>
+                            )
+                        }}
+                    />
+                </Grid>
+                <Grid
+                    container
+                    className={classes.updateCancelContainer}
+                >
+                    <Button
+                        variant='contained'
+                        className={classes.confirmButton}
+                        onClick={checkErrorsHandler}
+                    >Update</Button>
+                    <Button
+                        variant='outlined'
+                        className={classes.cancelButton}
+                        onClick={CancelBtnClick}
+                    >Cancel</Button>
+                    <Button
+                        fullWidth
+                        className={classes.changeButton}
+                        variant='text'
+                        onClick={clickOpenChangePassword}
+                    >
+                        Change password?
+                    </Button>
+                    <ChangePassword open={openChangePassword} setOpen={setOpenChangePassword}/>
+                    <Button
+                        fullWidth
+                        color='secondary'
+                        variant='contained'
+                        onClick={clickOpenDeleteAccount}
+                    >Delete</Button>
+                    <DeleteAccount  open={openDeleteDialog} setOpen={setOpenDeleteDialog}/>
+                </Grid>
+            </Grid>
         </Grid>
     );
 }

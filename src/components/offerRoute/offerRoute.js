@@ -260,6 +260,9 @@ const OfferRout = (props) => {
                         error={carError}
                         helperText={carError ? <p>You  must fill blank areas</p> : null}
                         className={classes.rideListItem}
+                        inputProps={{
+                            maxLength: 25,
+                        }}
                     />
                     <TextField
                         margin='dense'
@@ -271,6 +274,9 @@ const OfferRout = (props) => {
                         error={plateError}
                         helperText={plateError ? <p>You  must fill blank areas</p> : null}
                         className={classes.rideListItem}
+                        inputProps={{
+                            maxLength: 7,
+                        }}
                     />
                     <TextField
                         defaultValue={200}
@@ -280,6 +286,9 @@ const OfferRout = (props) => {
                         label='Price per Person'
                         value={boolean ? price : (Math.ceil(defaultPrice/count)===NaN||Math.ceil(defaultPrice/count)===Infinity ? 200 : Math.ceil(defaultPrice/count))}
                         error={priceError}
+                        inputProps={{
+                            maxLength: 5,
+                        }}
                         helperText={priceError ? <p>{priceHelperText}</p> : null}
                         onChange={(e) => {
                             setboolean(true)

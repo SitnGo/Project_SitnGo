@@ -5,7 +5,7 @@ const useStyles = makeStyles(theme => ({
         margin: '10px'
     },
     updateCancelContainer: {
-        margin: '10px',
+        marginTop: '10px',
         display: 'flex',
         justifyContent: 'space-evenly',
         alignItems: 'center',
