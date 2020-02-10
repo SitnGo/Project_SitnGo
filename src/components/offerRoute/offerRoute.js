@@ -117,15 +117,15 @@ const OfferRout = (props) => {
 
     function isEmpty() {
         if (from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== '' && +price && !priceError && startDate !== null && startDate !== date && !isRouteError && isRouteError !== null) {
-            setFromError(false);
-            setToError(false);
-            setStartDateError(false);
-            setCarError(false);
-            setPlateError(false);
-            setFrom('');
-            setTo('');
-            setCar('');
-            setPlate('');
+            // setFromError(false);
+            // setToError(false);
+            // setStartDateError(false);
+            // setCarError(false);
+            // setPlateError(false);
+            // setFrom('');
+            // setTo('');
+            // setCar('');
+            // setPlate('');
             return false
         } else {
             if ((isRouteError || isRouteError == null) || (!isRouteSuccess)) {
@@ -168,7 +168,7 @@ const OfferRout = (props) => {
                 setPlateError(true);
                 return true
             }
-            if (+price) {
+            if (+price <= Math.ceil(defaultPrice/count) && +price > 0) {
                 setPriceError(false);
             } else {
                 setPriceError(true);
@@ -194,16 +194,10 @@ const OfferRout = (props) => {
                     <TextField
                         margin='dense'
                         fullWidth
-                        disabled={true}
+                        disabled
                         variant='outlined'
                         label='From'
-                        onChange={(e) => {
-                            setFrom(e.target.value)
-                            let routingInput = document.getElementsByClassName("leaflet-routing-geocoder")
-                            routingInput[0].children[0].value=e.target.value;
-                            console.log(routingInput[0].children)
-                            document.getElementById('input12').style.display='block'
-                        }}
+                        onChange={(e) => {setFrom(e.target.value)}}
                         value={from}
                         error={fromError}
                         helperText={fromError ? <p>You  must fill blank areas</p> : null}
@@ -212,7 +206,7 @@ const OfferRout = (props) => {
                     <TextField
                         margin='dense'
                         fullWidth
-                        disabled={true}
+                        disabled
                         variant='outlined'
                         label='To'
                         onChange={(e) => { setTo(e.target.value) }}
@@ -295,7 +289,7 @@ const OfferRout = (props) => {
                                 setPriceHelperText(`The possible maximum price per person for this ride is ${Math.ceil(defaultPrice/count)}AMD`)
                             } else if (typeof (+e.target.value) === "number" && e.target.value > 0) {
                                 setPriceError(false);
-                                setPriceHelperText("You  must fill blank areas")
+                                // setPriceHelperText("You must fill blank areas")
                             }
                             return;
                         }}
@@ -317,7 +311,7 @@ const OfferRout = (props) => {
                     {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} /> : null}
                     {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess={isRouteSuccess} text='SUCCESS Routes Found'/> : null}
                     <MLeafletApp
-                    setboolean={setboolean}
+                        setboolean={setboolean}
                         setDefaultPrice={setDefaultPrice}
                         setPrice={setPrice}
                         setFrom={setFrom}
