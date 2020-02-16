@@ -18,7 +18,7 @@ const styles = makeStyles(theme => ({
     },
     offersContainer: {
         width: '95%',
-        height: '100%',
+        height: '60vh',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
@@ -28,7 +28,6 @@ const styles = makeStyles(theme => ({
     offers:{
         width: '50%',
         margin: '0 auto',
-        overflow: 'auto'
     },
     offerList: {
         listStyleType: 'none',
@@ -39,10 +38,20 @@ const styles = makeStyles(theme => ({
     offerListItem: {
         margin: '10px 0'
     },
+    table: {
+        height: '60vh',
+        overflow: 'auto'
+    },
     mapContainer: {
         width: '50%',
-        height: '50vh',
+        height: '60vh',
+        overflowY: 'auto',
         padding: '0 0 0 40px'
+    },
+    map:{
+        width: '100%',
+        height: '40vh',
+        overflowY: 'auto',
     },
     mapView:{
         width: '90%',

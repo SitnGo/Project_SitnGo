@@ -62,6 +62,7 @@ function ConfirmPassword(props) {
                             helperText={passwordError ? 'password is incorrect' : null}
                             fullWidth
                             onKeyPress = {e => {handleEnter(e)}}
+                            variant='outlined'
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position='end'>
