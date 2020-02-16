@@ -177,6 +177,7 @@ const GetRout = (props) => {
                         className={classes.routeListItem}
                     />
                     <TextField
+                        value={count}
                         margin='dense'
                         variant='outlined'
                         label='Persons'

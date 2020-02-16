@@ -1,3 +1,14 @@
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+export const CssPasswordTextField = withStyles({
+    root: {
+        "& .MuiFormHelperText-contained": {
+            color:'red'
+        },
+      },
+  })(TextField);
+
 export const styles = {
     signInContainer : {
         display: 'flex',

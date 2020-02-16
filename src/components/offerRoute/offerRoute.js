@@ -38,7 +38,7 @@ const numberPersons = [
     },
 ];
 
-const OfferRout = (props) => {
+const OfferRout = () => {
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
     const [car, setCar] = useState("");
@@ -117,15 +117,6 @@ const OfferRout = (props) => {
 
     function isEmpty() {
         if (from.trim() !== '' && to.trim() !== '' && car.trim() !== '' && plate.trim() !== '' && +price && !priceError && startDate !== null && startDate !== date && !isRouteError && isRouteError !== null) {
-            // setFromError(false);
-            // setToError(false);
-            // setStartDateError(false);
-            // setCarError(false);
-            // setPlateError(false);
-            // setFrom('');
-            // setTo('');
-            // setCar('');
-            // setPlate('');
             return false
         } else {
             if ((isRouteError || isRouteError == null) || (!isRouteSuccess)) {
@@ -168,7 +159,10 @@ const OfferRout = (props) => {
                 setPlateError(true);
                 return true
             }
-            if (+price <= Math.ceil(defaultPrice/count) && +price > 0) {
+            // debugger;
+            // +price <= Math.ceil(defaultPrice/count)
+            if (+price <= defaultPrice && +price > 0) {
+                console.log('awdawfwf');
                 setPriceError(false);
             } else {
                 setPriceError(true);
@@ -200,7 +194,7 @@ const OfferRout = (props) => {
                         onChange={(e) => {setFrom(e.target.value)}}
                         value={from}
                         error={fromError}
-                        helperText={fromError ? <p>You  must fill blank areas</p> : null}
+                        helperText={fromError ? 'You  must fill blank areas' : null}
                         className={classes.rideListItem}
                     />
                     <TextField
@@ -212,7 +206,7 @@ const OfferRout = (props) => {
                         onChange={(e) => { setTo(e.target.value) }}
                         value={to}
                         error={toError}
-                        helperText={toError ? <p>You  must fill blank areas</p> : null}
+                        helperText={toError ? 'You  must fill blank areas' : null}
                         className={classes.rideListItem}
                     />
                     <TextField
@@ -228,7 +222,7 @@ const OfferRout = (props) => {
                         fullWidth
                         variant='outlined'
                         error={startDateError}
-                        helperText={startDateError ? <p>You must set correct Date. You can set Trip Date starting tomorrow</p> : null}
+                        helperText={startDateError ? 'You must set correct Date. You can set Trip Date starting tomorrow' : null}
                         type='datetime-local'
                         defaultValue={startDate}
                         onChange={(e) => {setStartDate(e.target.value)}}
@@ -258,7 +252,7 @@ const OfferRout = (props) => {
                         onChange={(e) => { setCar(e.target.value) }}
                         value={car}
                         error={carError}
-                        helperText={carError ? <p>You  must fill blank areas</p> : null}
+                        helperText={carError ? 'You  must fill blank areas' : null}
                         className={classes.rideListItem}
                         inputProps={{
                             maxLength: 25,
@@ -272,14 +266,13 @@ const OfferRout = (props) => {
                         onChange={(e) => { setPlate(e.target.value) }}
                         value={plate}
                         error={plateError}
-                        helperText={plateError ? <p>You  must fill blank areas</p> : null}
+                        helperText={plateError ? 'You  must fill blank areas' : null}
                         className={classes.rideListItem}
                         inputProps={{
                             maxLength: 7,
                         }}
                     />
                     <TextField
-                        defaultValue={200}
                         margin='dense'
                         fullWidth
                         variant='outlined'
@@ -289,7 +282,7 @@ const OfferRout = (props) => {
                         inputProps={{
                             maxLength: 5,
                         }}
-                        helperText={priceError ? <p>{priceHelperText}</p> : null}
+                        helperText={priceError ? priceHelperText : null}
                         onChange={(e) => {
                             setboolean(true)
                             setPrice(e.target.value)
@@ -318,7 +311,7 @@ const OfferRout = (props) => {
                     className={classes.mapContainer}
                 >
                     {isRouteError ? <SimpleSnackbar isRouteError={isRouteError} /> : null}
-                    {isRouteSuccess ? <SimpleSnackbarSuccess isRouteSuccess={isRouteSuccess} text='SUCCESS Routes Found'/> : null}
+                    {isRouteSuccess ? <SimpleSnackbarSuccess isSuccess={isRouteSuccess} text='SUCCESS Routes Found'/> : null}
                     <MLeafletApp
                         setboolean={setboolean}
                         setDefaultPrice={setDefaultPrice}

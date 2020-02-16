@@ -95,7 +95,7 @@ export default function FormDialog() {
                     ><Close/></Fab>
                 </DialogActions>
             </Dialog>
-            {isEmailSuccess ? <SimpleSnackbarSuccess isRouteSuccess={isEmailSuccess} text='Please check your email...'/> : null}
+            {isEmailSuccess ? <SimpleSnackbarSuccess isSuccess={isEmailSuccess} text='Please check your email...'/> : null}
         </div>
     );
 }

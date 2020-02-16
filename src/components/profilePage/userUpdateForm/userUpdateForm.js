@@ -84,17 +84,21 @@ let arrFromErrorsValues = Object.values(errors)
         switch (phone.length) {
             case 9:
                 if (
-                    `${phone[0]}${phone[1]}${phone[2]}` === "010" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "011" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "041" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "055" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "077" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "091" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "093" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "094" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "095" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "096" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "098"
+                    `${phone[0]}${phone[1]}${phone[2]}` === '010' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '011' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '012' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '033' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '041' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '043' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '055' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '077' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '091' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '093' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '094' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '095' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '096' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '098' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '099'
                 ) {
                     setErrors(Object.assign(err, { phoneError: false }))
                     break;

@@ -30,7 +30,7 @@ function ChangePassword() {
         
     return (
         <>
-        <Button
+            <Button
                 fullWidth
                 className={classes.changeButton}
                 variant='text'
@@ -62,7 +62,7 @@ function ChangePassword() {
                         </Button>
                     </DialogActions>
             </Dialog>
-            {isEmailSuccess ? <SimpleSnackbarSuccess isRouteSuccess={isEmailSuccess} text='Please check your email...'/> : null}
+            {isEmailSuccess ? <SimpleSnackbarSuccess isSuccess={isEmailSuccess} text='Please check your email...'/> : null}
             
         </>
     );

@@ -7,7 +7,8 @@ import { useDispatch, connect} from 'react-redux';
 import FormDialog from './forgot';
 import { openSignInAction, SignInAction, openSignUPAction } from '../../actions'
 import { styles } from './style';
-import {withRouter } from 'react-router-dom'
+import {withRouter } from 'react-router-dom';
+import {CssPasswordTextField} from './style';
 export function SignIn(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -92,10 +93,10 @@ export function SignIn(props) {
                         )
                     }}
                 />
-                <TextField
+                <CssPasswordTextField
                     fullWidth={true}
                     required
-                    helperText= {(isAnError === true) ? <div style={styles.error}>{errorMessage}</div> : null}
+                    helperText= {(isAnError === true) ? errorMessage : null}
                     name='password'
                     margin='dense'
                     value={password}
