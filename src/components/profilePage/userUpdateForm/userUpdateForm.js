@@ -18,7 +18,6 @@ function mapStateToProps(state) {
 function UpdateForm (props) {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const [openChangePassword, setOpenChangePassword] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [email, setEmail] = useState(props.data[0]);
     const [phone, setPhone] = useState(props.data[1]);
@@ -135,9 +134,7 @@ let arrFromErrorsValues = Object.values(errors)
         props.setOpenUpdateForm(false);
         props.setIsEdit(true);
     }
-    const clickOpenChangePassword = () => {
-        setOpenChangePassword(true);
-    };
+
     const clickOpenDeleteAccount = () => {
         setOpenDeleteDialog(true);
     };
@@ -210,15 +207,7 @@ let arrFromErrorsValues = Object.values(errors)
                     onClick={CancelBtnClick}
                 >Cancel</Button>
             </Grid>
-            <Button
-                fullWidth
-                className={classes.changeButton}
-                variant='text'
-                onClick={clickOpenChangePassword}
-            >
-                Change password?
-            </Button>
-            <ChangePassword open={openChangePassword} setOpen={setOpenChangePassword}/>
+            <ChangePassword/>
             <Button
                 fullWidth
                 color='secondary'

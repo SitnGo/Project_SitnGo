@@ -10,22 +10,35 @@ import {
         DialogTitle
 } from '@material-ui/core';
 import SimpleSnackbarSuccess from '../../offerRoute/snackbar/snackbarSuccess';
-function ChangePassword(props) {
+function ChangePassword() {
     const classes = styles();
-    const [isEmailSuccess,setIsEmailSuccess] = useState(false);
+    const [isEmailSuccess, setIsEmailSuccess] = useState(false);
+    const [open, setOpen] = useState(false);
     const handleUpdate = () => {
         fire.auth().sendPasswordResetEmail(fire.auth().currentUser.email).then(() => {
             setIsEmailSuccess(true);
         });
-        props.setOpen(false);
+        setOpen(false);
+    };
+    const clickOpenChangePassword = () => {
+        setOpen(true);
+        setIsEmailSuccess(false);    
     };
     const handleClose = () => {
-        props.setOpen(false);
+        setOpen(false);
     };
         
     return (
         <>
-            <Dialog open={props.open} onClose={handleClose} aria-labelledby='form-dialog-title'>
+        <Button
+                fullWidth
+                className={classes.changeButton}
+                variant='text'
+                onClick={clickOpenChangePassword}
+            >
+                Change password?
+            </Button>
+            <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
                 <DialogTitle id='form-dialog-title'>Reset password</DialogTitle>
                 
                     <DialogContent>
@@ -35,7 +48,7 @@ function ChangePassword(props) {
                     </DialogContent>
                     <DialogActions>
                         <Button
-                            className={classes.updateButton}
+                            className={classes.button}
                             variant='contained'
                             onClick={handleUpdate}
                         >
@@ -50,6 +63,7 @@ function ChangePassword(props) {
                     </DialogActions>
             </Dialog>
             {isEmailSuccess ? <SimpleSnackbarSuccess isRouteSuccess={isEmailSuccess} text='Please check your email...'/> : null}
+            
         </>
     );
 }

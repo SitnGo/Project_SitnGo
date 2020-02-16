@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import fire from '../../ConfigFirebase/Fire';
+import SimpleSnackbarSuccess from '../offerRoute/snackbar/snackbarSuccess';
 import { styles } from './style';
 
 
@@ -17,21 +18,30 @@ export default function FormDialog() {
     const [email, setEmail] = useState('');
     const [isAnError, setIsAnError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [isEmailSuccess, setIsEmailSuccess] = useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
+        setIsEmailSuccess(false);
     };
 
     const handleClose = () => {
         setOpen(false);
         setEmail('');
         setErrorMessage('');
+        setIsAnError(false);
     };
 
     const forgotPassword = () => {
         fire.auth().sendPasswordResetEmail(email)
             .then(function (u) {
-                alert('Please check your email...')
+                setOpen(false);
+                setEmail('');
+                setErrorMessage('');
+                setIsAnError(false);
+                setIsEmailSuccess(true);
+
+
             }).catch(function (e) {
             setIsAnError(true);
             setErrorMessage(e.message)
@@ -48,7 +58,7 @@ export default function FormDialog() {
         <div>
             <Button variant='text' color='primary' onClick={handleClickOpen}>
                 Forgot your password ?
-            </Button>
+            </Button> 
             <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
                 <DialogTitle id='form-dialog-title'>Password recovery</DialogTitle>
                 <DialogContent>
@@ -59,9 +69,9 @@ export default function FormDialog() {
                     <TextField
                         autoFocus
                         required
-                        fullWidth='true'
-                        helperText ={(isAnError === true) ? <div style={styles.error}>{errorMessage}</div> : null}
-                        autofocus
+                        fullWidth={true}
+                        helperText ={isAnError === true ? errorMessage : null}
+                        error={isAnError}
                         name = 'email'
                         value={email}
                         margin = 'dense'
@@ -85,6 +95,7 @@ export default function FormDialog() {
                     ><Close/></Fab>
                 </DialogActions>
             </Dialog>
+            {isEmailSuccess ? <SimpleSnackbarSuccess isRouteSuccess={isEmailSuccess} text='Please check your email...'/> : null}
         </div>
     );
 }

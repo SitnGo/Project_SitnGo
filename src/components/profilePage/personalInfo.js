@@ -22,7 +22,6 @@ function mapStateToProps(state) {
 }
 
 function PersonalInfo() {
-    console.log('awd');
     const [PassagerList, setPassagerList] = useState(null);
     const [DriverList, setDriverList] = useState(null);
     const [bool, changeBool] = useState(false);
@@ -168,7 +167,7 @@ function PersonalInfo() {
 
                                 />
                              ) : <ConfirmPassword
-                                    isEdit={isEdit}
+                                   isEdit={isEdit}
                                    setIsEdit={setIsEdit}
                                    setOpenUpdateForm={setOpenUpdateForm}
                              />}

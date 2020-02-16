@@ -19,8 +19,7 @@ function ConfirmPassword(props) {
     const [passwordError, setPasswordError] = useState(false);
     const classes = styles();
  
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const changePassword = () => {
         setShowLoader(true);
        
         fire.auth().signInWithEmailAndPassword(fire.auth().currentUser.email, password)
@@ -32,17 +31,23 @@ function ConfirmPassword(props) {
                 setPasswordError(true);
                 setShowLoader(false);
             });
+    
     }
 
     const handleClose = () => {
         props.setIsEdit(true);
     };
 
+
+    const handleEnter = (e) => {
+        if(e.key === 'Enter'){
+            changePassword();
+        }
+    }
     return (
         <div>
             <Dialog open={!props.isEdit}  aria-labelledby='form-dialog-title' fullWidth={true}>
                 <DialogTitle id='form-dialog-title'>Enter password</DialogTitle>
-                <form onSubmit={handleSubmit}>
                     <DialogContent>
                         <TextField
                             autoFocus
@@ -56,7 +61,7 @@ function ConfirmPassword(props) {
                             error={passwordError}
                             helperText={passwordError ? 'password is incorrect' : null}
                             fullWidth
-
+                            onKeyPress = {e => {handleEnter(e)}}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position='end'>
@@ -78,7 +83,7 @@ function ConfirmPassword(props) {
                             <CircularProgress />
                        :
                             <Button 
-                                type='submit' 
+                                onClick={changePassword}
                                 className={classes.submit}
                                 variant='contained' 
                             >
@@ -93,7 +98,6 @@ function ConfirmPassword(props) {
                             Cancel
                         </Button>
                     </DialogActions>
-                </form>
             </Dialog>
         </div>
     );
