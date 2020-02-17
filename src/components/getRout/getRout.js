@@ -47,7 +47,7 @@ const GetRout = (props) => {
                 result.forEach(itemRef => {
                     let item = itemRef.data();
                     item.ref = itemRef;
-                    if ((item.parameters.count > 0) && (Date.parse(item.startDate) > new Date().getTime()) && (item.userId !== fire.auth().currentUser.uid && item.route && item.route.waypoints[0].name.toUpperCase().includes(from.toUpperCase())) && (item.route.waypoints[1].name.toUpperCase().includes(to.toUpperCase()))) {
+                    if ((item.parameters.count > 0) && (Date.parse(item.startDate) > new Date().getTime())&& (Date.parse(item.startDate) > Date.parse(startDate)) && (item.userId !== fire.auth().currentUser.uid && item.route && item.route.waypoints[0].name.toUpperCase().includes(from.toUpperCase())) && (item.route.waypoints[1].name.toUpperCase().includes(to.toUpperCase()))) {
                         matchedRouts.push(item)
                         matchedRoutsRefs.push(itemRef);
                     }
@@ -169,19 +169,6 @@ const GetRout = (props) => {
                         type='datetime-local'
                         defaultValue={`${startDate}`}
                         onChange={(e) => {setStartDate(e.target.value)}}
-                        InputProps={{
-                            classes: {
-                                input: classes.resize,
-                            },
-                        }}
-                        className={classes.routeListItem}
-                    />
-                    <TextField
-                        value={count}
-                        margin='dense'
-                        variant='outlined'
-                        label='Persons'
-                        onChange={(e) => setCount(e.target.value)}
                         InputProps={{
                             classes: {
                                 input: classes.resize,
