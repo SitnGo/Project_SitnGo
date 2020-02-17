@@ -65,6 +65,10 @@ import L from 'leaflet';
 
 })();
 
+
+
+
+
 export default class LeafletMap extends Component {
   state = {
     lat: 40.1860413, 
