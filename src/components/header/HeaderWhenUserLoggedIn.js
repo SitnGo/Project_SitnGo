@@ -60,7 +60,6 @@ function HeaderWhenUserLoggedIn(props) {
                 >
                     <RouterLink to='profile' className={classes.signButton}>
                         <Button
-                            // onClick={handleMyProfile}
                             variant='text'
                             className={classes.profile}
                         >My Profile</Button>

@@ -36,7 +36,7 @@ const Header = (props) => {
                 xs={2}
                 className={classes.logoContainer}
             >
-                <RouterLink to= {user ? '/profile' : '/'}><img className={classes.logo} src='images/Logo.png' alt='Logo'/></RouterLink>
+                <RouterLink to='/'><img className={classes.logo} src='images/Logo.png' alt='Logo'/></RouterLink>
             </Grid>
             <Grid
                 item

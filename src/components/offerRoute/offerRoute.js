@@ -91,7 +91,7 @@ const OfferRout = () => {
                     count: count,
                     distance: `${Math.ceil(currentRoute.route.summary.totalDistance/1000)}km`,
                     time: `${Math.ceil(currentRoute.route.summary.totalTime/60)}min`,
-                    price: `${Math.floor(price/count)}AMD`,
+                    price: `${Math.ceil(price/count)}AMD`,
                 }
             };
             routeInfo_REF.add(route).then(() => setRedirect(true));
