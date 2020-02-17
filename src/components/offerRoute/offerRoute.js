@@ -51,12 +51,12 @@ const OfferRout = () => {
     const [toError, setToError] = useState(false);
     const [carError, setCarError] = useState(false);
     const [plateError, setPlateError] = useState(false);
-    const [priceError, setPriceError] = useState(true);
+    const [priceError, setPriceError] = useState(false);
     const [redirect, setRedirect] = useState(false);
     const [isRouteError, setIsRouteError] = useState(null);
     const [isRouteSuccess, setIsRouteSuccess] = useState(false);
     const [submitDisable, setSubmitDisable] = useState(false);
-    const [priceHelperText, setPriceHelperText] = useState("You  must fill blank areas");
+    const [priceHelperText, setPriceHelperText] = useState('');
     const [boolean,setboolean] = useState(false);
 
     function onSubmitClick() {
@@ -160,6 +160,7 @@ const OfferRout = () => {
                 return true
             }
             if (+price <= defaultPrice && +price > 0) {
+                console.log('AWD');
                 setPriceError(false);
             } else {
                 setPriceError(true);
@@ -286,9 +287,11 @@ const OfferRout = () => {
                             if (+e.target.value > defaultPrice/count) {
                                 setPriceError(true);
                                 setPriceHelperText(`The possible maximum price per person for this ride is ${Math.ceil(defaultPrice/count)}AMD`)
+                            } else if (e.target.value.trim() === '') {
+                                setPriceError(true);
+                                setPriceHelperText("You must fill blank areas");
                             } else if (typeof (+e.target.value) === "number" && e.target.value > 0) {
                                 setPriceError(false);
-                                // setPriceHelperText("You must fill blank areas")
                             }
                             return;
                         }}
