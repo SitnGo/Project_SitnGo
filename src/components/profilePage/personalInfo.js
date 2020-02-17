@@ -3,7 +3,7 @@ import {Typography, Button, Avatar, Paper, Grid} from '@material-ui/core';
 import {Phone, Email, AccountBox, Edit} from '@material-ui/icons'
 import Skeleton from '@material-ui/lab/Skeleton';
 import UpdateForm from './userUpdateForm/userUpdateForm';
-import ConfirmPassword from './ConfirmPassword/ConfirmPassword'
+import ConfirmPassword from './ConfirmPassword/confirmPassword'
 import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
