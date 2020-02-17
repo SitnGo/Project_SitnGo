@@ -159,10 +159,7 @@ const OfferRout = () => {
                 setPlateError(true);
                 return true
             }
-            // debugger;
-            // +price <= Math.ceil(defaultPrice/count)
             if (+price <= defaultPrice && +price > 0) {
-                console.log('awdawfwf');
                 setPriceError(false);
             } else {
                 setPriceError(true);
