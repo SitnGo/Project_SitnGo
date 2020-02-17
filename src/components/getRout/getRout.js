@@ -129,6 +129,8 @@ const GetRout = (props) => {
         <section className={classes.section}>
             <Grid
                 container
+                alignItems='center'
+                justify='space-evenly'
             >
                 <Grid
                     item
@@ -175,6 +177,7 @@ const GetRout = (props) => {
                         className={classes.routeListItem}
                     />
                     <TextField
+                        value={count}
                         margin='dense'
                         variant='outlined'
                         label='Persons'
@@ -192,9 +195,17 @@ const GetRout = (props) => {
                         className={classes.search}
                     >Search</Button>
                 </Grid>
-                <div className={classes.offersContainer}>
-                    {info ? <div className={classes.offers}>
-                        <Paper>
+                <Grid
+                    item
+                    xs={12}
+                    className={classes.offersContainer}
+                >
+                    {info ? <Grid
+                        item
+                        xs={6}
+                        className={classes.offers}
+                    >
+                        <Paper className={classes.table}>
                             <Table size='small' stickyHeader>
                                 <TableHead>
                                     <TableRow>
@@ -222,26 +233,29 @@ const GetRout = (props) => {
                                                             </TableCell>
                                                         );
                                                     })
-
                                                 }
-
                                             </TableRow>
                                         );
                                     })}
                                 </TableBody>
                                 <TableFooter>
-                                    <TablePagination
-                                        count={rows.length}
-                                        rowsPerPageOptions={[]}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        onChangePage={handleChangePage}
-                                    />
+                                    <TableRow>
+                                        <TablePagination
+                                            count={rows.length}
+                                            rowsPerPageOptions={[]}
+                                            rowsPerPage={rowsPerPage}
+                                            page={page}
+                                            onChangePage={handleChangePage}
+                                        />
+                                    </TableRow>
                                 </TableFooter>
                             </Table>
                         </Paper>
-                    </div> : null}
-                    <div className={classes.mapContainer}>
+                    </Grid> : null}
+                    <Grid
+                        item xs={6}
+                        className={classes.mapContainer}
+                    >
                         {route ?
                             <React.Fragment >
                                 <Typography
@@ -254,7 +268,9 @@ const GetRout = (props) => {
                                     variant='overline'
                                     component='p'
                                 >{routeDate} </Typography>
-                                <Map route={route} />
+                                <div className={classes.map}>
+                                    <Map route={route} />
+                                </div>
                                 <Button
                                     fullWidth
                                     disabled={isDisable}
@@ -267,8 +283,8 @@ const GetRout = (props) => {
                             </React.Fragment>
                             : null
                         }
-                    </div>
-                </div>
+                    </Grid>
+                </Grid>
                 {alreadyAcceptedRoute ? <SimpleSnackbar alreadyAcceptedRoute={alreadyAcceptedRoute}/> : null}
             </Grid>
         </section>

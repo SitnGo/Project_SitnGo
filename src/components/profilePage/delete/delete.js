@@ -60,6 +60,7 @@ function DeleteAccount(props) {
         props.setOpen(false);
     };
         
+   
     return (
         <>
             { bool ? <Redirect to='/'/> : null}

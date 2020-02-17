@@ -96,7 +96,7 @@ export default class LeafletMap extends Component {
   render() {
     
 	let Routegeojson = L.Routing.routeToGeoJson(this.props.route.route.route)
-	console.log(this.props.route.route.waypoints[0].latLng.lat, this.props.route.route.waypoints[0].latLng.lng)
+	// console.log(this.props.route.route.waypoints[0].latLng.lat, this.props.route.route.waypoints[0].latLng.lng)
    
     const position = [this.props.route.route.waypoints[0].latLng.lat, this.props.route.route.waypoints[0].latLng.lng];
     return (

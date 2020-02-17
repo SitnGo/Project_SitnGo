@@ -7,6 +7,7 @@ import { createStore } from 'redux';
 import reducers from './reducers/reducers';
 import { Provider } from 'react-redux';
 import { Offline, Online } from "react-detect-offline";
+
 const store = createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
@@ -16,7 +17,7 @@ ReactDOM.render(
             <App />
         </Provider>
     </Online>
-    <Offline>No internet connection</Offline>
+    <Offline>No internet connection </Offline>
     </>,
     document.getElementById('root'));
 

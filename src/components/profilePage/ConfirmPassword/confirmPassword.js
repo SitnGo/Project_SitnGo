@@ -13,39 +13,41 @@ import {
 } from '@material-ui/core';
 
 function ConfirmPassword(props) {
-    const [open, setOpen] = useState(true);
     const [showLoader, setShowLoader] = useState(false);
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const classes = styles();
  
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const changePassword = () => {
         setShowLoader(true);
-
+       
         fire.auth().signInWithEmailAndPassword(fire.auth().currentUser.email, password)
             .then(() => {
                 props.setOpenUpdateForm(true);
-                setPassword('');
-                setOpen(false);
             })
             .catch(error => {
                 console.log(error);
                 setPasswordError(true);
                 setShowLoader(false);
             });
+    
     }
 
     const handleClose = () => {
         props.setIsEdit(true);
     };
 
+
+    const handleEnter = (e) => {
+        if(e.key === 'Enter'){
+            changePassword();
+        }
+    }
     return (
         <div>
-            <Dialog open={!props.isEdit && open}  aria-labelledby='form-dialog-title' fullWidth={true}>
+            <Dialog open={!props.isEdit}  aria-labelledby='form-dialog-title' fullWidth={true}>
                 <DialogTitle id='form-dialog-title'>Enter password</DialogTitle>
-                <form onSubmit={handleSubmit}>
                     <DialogContent>
                         <TextField
                             autoFocus
@@ -59,7 +61,8 @@ function ConfirmPassword(props) {
                             error={passwordError}
                             helperText={passwordError ? 'password is incorrect' : null}
                             fullWidth
-
+                            onKeyPress = {e => {handleEnter(e)}}
+                            variant='outlined'
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position='end'>
@@ -81,7 +84,7 @@ function ConfirmPassword(props) {
                             <CircularProgress />
                        :
                             <Button 
-                                type='submit' 
+                                onClick={changePassword}
                                 className={classes.submit}
                                 variant='contained' 
                             >
@@ -96,7 +99,6 @@ function ConfirmPassword(props) {
                             Cancel
                         </Button>
                     </DialogActions>
-                </form>
             </Dialog>
         </div>
     );

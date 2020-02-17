@@ -106,7 +106,6 @@ function Passenger(props) {
                         <Typography variant='h6' component='p'>This Route Deleted by Driver</Typography>
                     </CardContent>
                     <Button
-                        // className={classes.rideListItem}
                         variant='outlined'
                         fullWidth
                         onClick={deleteAcceptClick}
@@ -123,7 +122,7 @@ function Passenger(props) {
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={closeDialog} color="primary">
+                    <Button onClick={closeDialog} variant='outlined' className={classes.cancelButton}>
                     Cancel
                     </Button>
                 </DialogActions>

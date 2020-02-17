@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function CustomizedSnackbars(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(props.isRouteSuccess);
+  const [open, setOpen] = React.useState(props.isSuccess);
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -30,7 +30,7 @@ export default function CustomizedSnackbars(props) {
     <div className={classes.root}>
       <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
-          SUCCESS Routes Found.
+          {props.text}
         </Alert>
       </Snackbar>
     </div>

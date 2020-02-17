@@ -18,7 +18,6 @@ function mapStateToProps(state) {
 function UpdateForm (props) {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const [openChangePassword, setOpenChangePassword] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [email, setEmail] = useState(props.data[0]);
     const [phone, setPhone] = useState(props.data[1]);
@@ -38,39 +37,36 @@ let arrFromErrorsValues = Object.values(errors)
         }
     });
      //////////////////check errors/////////////////////
-     if(email !== props.data[0] || phone !== props.data[1]) {
-            if ((arrFromErrorsValues.every(item => item === false))) {
-                fire.firestore().collection("users").doc(fire.auth().currentUser.uid).get().then((doc)=>{
-                    if(email !== props.data[0]) {
-                         fire.auth().currentUser.updateEmail(email).then(()=>{
-                             fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
-                                email,
+        if ((arrFromErrorsValues.every(item => item === false))) {
+            fire.firestore().collection("users").doc(fire.auth().currentUser.uid).get().then((doc)=>{
+                if(email.toLowerCase() !== props.data[0]) {
+                        fire.auth().currentUser.updateEmail(email).then(()=>{
+                            fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
+                            email: email.toLowerCase()
                             }).then(()=> {
                                 dispatch(confirmUpdate());
                                 props.setIsEdit(true);
                                 props.setOpenUpdateForm(false);
                             });
 
-                         }).catch(() => {
-                                let err = Object.assign({}, errors);
-                                setErrors(Object.assign(err, { emailError: {bool: true, errText: 'Email is not valid or already in use'} }))
-                            });
-                    }
-
-                    if(phone !== props.data[1]) {
-                        fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
-                            phone,
-                        }).then(()=> { 
-                            dispatch(confirmUpdate());
-                            props.setIsEdit(true);
-                            props.setOpenUpdateForm(false);
+                        }).catch(() => {
+                            let err = Object.assign({}, errors);
+                            setErrors(Object.assign(err, { emailError: {bool: true, errText: 'Email is not valid or already in use'} }))
                         });
-                    }
-               
+                }
 
-                });
-                
-            }
+                if(phone !== props.data[1]) {
+                    fire.firestore().collection("users").doc(fire.auth().currentUser.uid).update({
+                        phone,
+                    }).then(()=> { 
+                        dispatch(confirmUpdate());
+                        props.setIsEdit(true);
+                        props.setOpenUpdateForm(false);
+                    });
+                }
+            
+            });
+            
         }
     }), [errors])
     function checkErrorsHandler() {
@@ -88,17 +84,21 @@ let arrFromErrorsValues = Object.values(errors)
         switch (phone.length) {
             case 9:
                 if (
-                    `${phone[0]}${phone[1]}${phone[2]}` === "010" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "011" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "041" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "055" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "077" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "091" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "093" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "094" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "095" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "096" ||
-                    `${phone[0]}${phone[1]}${phone[2]}` === "098"
+                    `${phone[0]}${phone[1]}${phone[2]}` === '010' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '011' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '012' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '033' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '041' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '043' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '055' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '077' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '091' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '093' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '094' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '095' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '096' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '098' ||
+                    `${phone[0]}${phone[1]}${phone[2]}` === '099'
                 ) {
                     setErrors(Object.assign(err, { phoneError: false }))
                     break;
@@ -138,9 +138,7 @@ let arrFromErrorsValues = Object.values(errors)
         props.setOpenUpdateForm(false);
         props.setIsEdit(true);
     }
-    const clickOpenChangePassword = () => {
-        setOpenChangePassword(true);
-    };
+
     const clickOpenDeleteAccount = () => {
         setOpenDeleteDialog(true);
     };
@@ -155,80 +153,75 @@ let arrFromErrorsValues = Object.values(errors)
     return (
         <Grid
             container
-            xl={12}
-            lg={12}
-            md={12}
-            sm={12}
-            xs={12}
             justify="center"
             alignItems="center"
         >
-            
-            <TextField  className={classes.textField}
-                label="email"
-                variant="filled"
-                onChange={(e) => {setEmail(e.target.value)}}
-                onKeyPress = {e => {handleEnter(e)}}
-                value={email}
-                error={errors.emailError.bool}
-                helperText={errors.emailError ? errors.emailError.errText : null}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                                <Email/>
-                        </InputAdornment>
-                    )
-                }}
-            />
-            <TextField  className={classes.textField}
-                label="phone"
-                variant="filled"
-                onChange={(e) => {setPhone(e.target.value)}}
-                onKeyPress = {e => {handleEnter(e)}}
-                value={phone}
-                error={errors.phoneError}
-                helperText={errors.phoneError ? "Phone number is not valid" : null}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                                <Phone />
-                       </InputAdornment>
-                    )
-                }}
-            />
             <Grid
-                container
+                item
                 xs={12}
-                justify='center'
-                className={classes.updateCancelContainer}
-                >
-                <Button
-                    variant='contained'
-                    className={classes.confirmButton}
-                    onClick={checkErrorsHandler}
-                >Update</Button>
-                <Button
-                    variant='outlined'
-                    className={classes.cancelButton}
-                    onClick={CancelBtnClick}
-                >Cancel</Button>
-            </Grid>
-            <Button
-                fullWidth
-                className={classes.changeButton}
-                variant='text'
-                onClick={clickOpenChangePassword}
             >
-                Change password?
-            </Button>
-            <ChangePassword open={openChangePassword} setOpen={setOpenChangePassword}/>
-            <Button
-                fullWidth
-                color='secondary'
-                variant='contained'
-                onClick={clickOpenDeleteAccount}
-            >Delete</Button>
-            <DeleteAccount  open={openDeleteDialog} setOpen={setOpenDeleteDialog}/>
+                <Grid
+                    container
+                    alignItems="center"
+                    justify="center"
+                >
+                    <TextField  className={classes.textField}
+                        label="email"
+                        variant="filled"
+                        onChange={(e) => {setEmail(e.target.value)}}
+                        onKeyPress = {e => {handleEnter(e)}}
+                        value={email}
+                        error={errors.emailError.bool}
+                        helperText={errors.emailError ? errors.emailError.errText : null}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <Email/>
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                    <TextField  className={classes.textField}
+                        label="phone"
+                        variant="filled"
+                        onChange={(e) => {setPhone(e.target.value)}}
+                        onKeyPress = {e => {handleEnter(e)}}
+                        value={phone}
+                        error={errors.phoneError}
+                        helperText={errors.phoneError ? "Phone number is not valid" : null}
+                        InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <Phone />
+                            </InputAdornment>
+                            )
+                        }}
+                    />
+                </Grid>
+                <Grid
+                    container
+                    className={classes.updateCancelContainer}
+                >
+                    <Button
+                        variant='contained'
+                        className={classes.confirmButton}
+                        onClick={checkErrorsHandler}
+                    >Update</Button>
+                    <Button
+                        variant='outlined'
+                        className={classes.cancelButton}
+                        onClick={CancelBtnClick}
+                    >Cancel</Button>
+                    <ChangePassword/>
+                    <Button
+                        fullWidth
+                        color='secondary'
+                        variant='contained'
+                        onClick={clickOpenDeleteAccount}
+                    >Delete</Button>
+                    <DeleteAccount  open={openDeleteDialog} setOpen={setOpenDeleteDialog}/>
+                </Grid>
+            </Grid>
         </Grid>
     );
 }

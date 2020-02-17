@@ -32,7 +32,6 @@ function App() {
     },[dispatch])
     return (
         <div className='App'>
-            
                 <Router>
                     <Header />
                     <AlertDialogSlide />

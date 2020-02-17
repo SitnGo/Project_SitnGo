@@ -16,12 +16,10 @@ const About = () => {
             <div className={classes.textContainer}>
                 <h1 className={classes.aboutHeader}>About Us</h1>
                 <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                    been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
-                    type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
-                    leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-                    release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                    like Aldus PageMaker including versions of Lorem Ipsum.
+                SitnGo is an online carpooling system that provides a simple riding platform for car owners and passengers. This project enables users to access mobility assets owned by others at the exact time they need it. 
+                SitnGo personal ride booking and sharing service maps the available cars in the area, their capacities, intended routes and destinations, allowing customers to arrange their transportation quickly.
+                In this online system, the customer receives an estimated pickup time and a description of the arriving vehicle. Users can pay the cost upon their arrival at the destination.
+
                 </p>
             </div>
             <div className={classes.imageCover}></div>

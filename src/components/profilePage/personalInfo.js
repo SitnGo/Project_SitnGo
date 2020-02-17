@@ -3,7 +3,7 @@ import {Typography, Button, Avatar, Paper, Grid} from '@material-ui/core';
 import {Phone, Email, AccountBox, Edit} from '@material-ui/icons'
 import Skeleton from '@material-ui/lab/Skeleton';
 import UpdateForm from './userUpdateForm/userUpdateForm';
-import ConfirmPassword from './ConfirmPassword/confirmPassword';
+import ConfirmPassword from './ConfirmPassword/confirmPassword'
 import fire from '../../ConfigFirebase/Fire';
 import FadeIn from 'react-fade-in';
 import DropzoneDialog from './uploadImage/upload';
@@ -17,7 +17,6 @@ function mapStateToProps(state) {
     return {
         user: state.user,
         isLoggedInUser: state.isLoggedInUser,
-        isEdit1:state.isEdit1,
         openUpdateForm:state.openUpdateForm,
     };
 }
@@ -36,7 +35,7 @@ function PersonalInfo() {
     const classes = styles();
     let update = useSelector(state => state.confirmUpdate);
     let user1 = useSelector(state => state.user);
-    useEffect(()=>{
+    useEffect(()=>{ 
         async function getMarker(user={}) {
             let userId = fire.auth().currentUser.uid;
             user = await fire.firestore().collection('users').doc(userId).get()
@@ -168,10 +167,11 @@ function PersonalInfo() {
 
                                 />
                              ) : <ConfirmPassword
-                                    isEdit={isEdit}
+                                   isEdit={isEdit}
                                    setIsEdit={setIsEdit}
                                    setOpenUpdateForm={setOpenUpdateForm}
                              />}
+                        
                         </>
                     )
                 }

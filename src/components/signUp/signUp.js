@@ -48,7 +48,7 @@ const SignUp = (props) => {
                     let userInfo = {
                             name: name,
                             surname: surname,
-                            email: email,
+                            email: email.toLowerCase(),
                             gender: gender,
                             phone: phone,
                             url: "",
