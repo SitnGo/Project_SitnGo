@@ -10,7 +10,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "email-validator": "^2.0.4",
-    "firebase": "^7.5.2",
+    "firebase": "^10.9.0",
     "install": "^0.13.0",
     "leaflet": "^1.6.0",
     "leaflet-control-geocoder": "^1.10.0",
